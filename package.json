@@ -2,5 +2,8 @@
   "dependencies": {
     "discord.js": "^14.12.1",
     "fs": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
   }
 }

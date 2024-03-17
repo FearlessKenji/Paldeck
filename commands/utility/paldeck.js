@@ -16,17 +16,28 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.setName('element')
-				.setDescription('List pals of element type.'))
+				.setDescription('List pals based on element type.'))
 		.addStringOption(option =>
 			option
 				.setName('suitability')
-				.setDescription('List pals of certain suitabilities.')),
+				.setDescription('List pals based on suitabilities.'))
+		.addStringOption(option =>
+			option
+				.setName('rarity')
+				.setDescription('List pals based on rarity.')
+				.addChoices(
+					{ name: 'Common', value: 'Common' },
+					{ name: 'Rare', value: 'Rare' },
+					{ name: 'Epic', value: 'Epic' },
+					{ name: 'Legendary', value: 'Legendary' },
+				)),
 
 	async execute(interaction) {
 		const palName = interaction.options.getString('name') || '';
 		let palNumber = interaction.options.getString('number') || '';
 		const palElement = interaction.options.getString('element') || '';
 		const palSuitability = interaction.options.getString('suitability') || '';
+		const palRarity = interaction.options.getString('rarity') || '';
 
 		if (!Number(palNumber)) {
 			palNumber = palNumber.padStart(4, 0);
@@ -73,14 +84,17 @@ module.exports = {
 				await interaction.reply({ embeds: [palEmbed] });
 				return;
 			}
+			else if (palRarity === rarity && palElement === '' && palSuitability === '') {
+				results.push(`${palData.name}, ${rarity}(${palData.rarity})`);
+			}
 			else if (palData.element.toLowerCase().includes(palElement.toLowerCase()) && palElement !== '' && palSuitability === '') {
-				results.push(palData.name);
+				results.push(`${palData.name}, ${palData.element}`);
 			}
 			else if (palData.suitability.toLowerCase().includes(palSuitability.toLowerCase()) && palSuitability !== '' && palElement === '') {
-				results.push(palData.name);
+				results.push(`${palData.name}, ${palData.suitability}`);
 			}
 			else if (palData.element.toLowerCase().includes(palElement.toLowerCase()) && palData.suitability.toLowerCase().includes(palSuitability.toLowerCase()) && palElement !== '' && palSuitability !== '') {
-				results.push(palData.name);
+				results.push(`${palData.name}, ${palData.element}, ${palData.suitability}`);
 			}
 		}
 		if (results[0]) {

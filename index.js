@@ -1,5 +1,5 @@
 // Require the necessary discord.js classes
-const { Client, Collection, GatewayIntentBits, EmbedBuilder } = require('discord.js');
+const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { writeLog } = require('./modules/writeLog.js');
 const config = require('./config.json');
 const path = require('node:path');
