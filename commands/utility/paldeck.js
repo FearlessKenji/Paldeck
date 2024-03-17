@@ -49,19 +49,19 @@ module.exports = {
 		let rarity = '';
 		const results = [];
 		for (const palData of palFile.Pals) {
+			if (palData.rarity <= 4) {
+				rarity = 'Common';
+			}
+			else if (palData.rarity > 4 && palData.rarity <= 7) {
+				rarity = 'Rare';
+			}
+			else if (palData.rarity > 7 && palData.rarity <= 10) {
+				rarity = 'Epic';
+			}
+			else {
+				rarity = 'Legendary';
+			}
 			if (palName.toLowerCase() === palData.name.toLowerCase() || palNumber === palData.number) {
-				if (palData.rarity <= 4) {
-					rarity = 'Common';
-				}
-				else if (palData.rarity > 4 && palData.rarity <= 7) {
-					rarity = 'Rare';
-				}
-				else if (palData.rarity > 7 && palData.rarity <= 10) {
-					rarity = 'Epic';
-				}
-				else {
-					rarity = 'Legendary';
-				}
 				const breed = palData.name.toLowerCase().replace(' ', '-');
 				const wiki = palData.name.toLowerCase().replace(' ', '_');
 				const palEmbed = new EmbedBuilder()
@@ -98,8 +98,7 @@ module.exports = {
 			}
 		}
 		if (results[0]) {
-			const lengthMax = Math.ceil(Math.log10(results.length));
-			const palEmbed = new EmbedBuilder().setDescription(results.map((e, i) => (i + 1 + '').padStart(lengthMax) + '. ' + e).join('\n'));
+			const palEmbed = new EmbedBuilder().setDescription(results.map((e, i) => (i + 1 + '') + '. ' + e).join('\n'));
 			await interaction.reply({ embeds: [palEmbed] });
 			return;
 		}
