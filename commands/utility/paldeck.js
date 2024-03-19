@@ -84,17 +84,51 @@ module.exports = {
 				await interaction.reply({ embeds: [palEmbed] });
 				return;
 			}
-			else if (palRarity === rarity && palElement === '' && palSuitability === '') {
-				results.push(`${palData.name}, ${rarity}(${palData.rarity})`);
+
+			const matchesRarity = palRarity !== '' && palRarity === rarity;
+			const matchesElement = palElement !== '' && palData.element.toLowerCase().includes(palElement.toLowerCase());
+			const matchesSuitability = palSuitability !== '' && palData.suitability.toLowerCase().includes(palSuitability.toLowerCase());
+			// Solo Element
+			if (matchesElement && palSuitability === '' && palRarity === '') {
+				results.push(
+					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
+				);
 			}
-			else if (palData.element.toLowerCase().includes(palElement.toLowerCase()) && palElement !== '' && palSuitability === '') {
-				results.push(`${palData.name}, ${palData.element}`);
+			// Element + Suitability
+			else if (matchesElement && matchesSuitability && palRarity === '') {
+				results.push(
+					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
+				);
 			}
-			else if (palData.suitability.toLowerCase().includes(palSuitability.toLowerCase()) && palSuitability !== '' && palElement === '') {
-				results.push(`${palData.name}, ${palData.suitability}`);
+			// Element + Rarity
+			else if (matchesElement && matchesRarity && palSuitability === '') {
+				results.push(
+					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
+				);
 			}
-			else if (palData.element.toLowerCase().includes(palElement.toLowerCase()) && palData.suitability.toLowerCase().includes(palSuitability.toLowerCase()) && palElement !== '' && palSuitability !== '') {
-				results.push(`${palData.name}, ${palData.element}, ${palData.suitability}`);
+			// Element + Suitability + Rarity
+			else if (matchesElement && matchesSuitability && matchesRarity) {
+				results.push(
+					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
+				);
+			}
+			// Solo Suitability
+			else if (matchesSuitability && palElement === '' && palRarity === '') {
+				results.push(
+					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
+				);
+			}
+			// Suitability + Rarity
+			else if (matchesSuitability && matchesRarity && palElement === '') {
+				results.push(
+					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
+				);
+			}
+			// Solo Rarity
+			else if (matchesRarity && palElement === '' && palSuitability === '') {
+				results.push(
+					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
+				);
 			}
 		}
 		if (results[0]) {
