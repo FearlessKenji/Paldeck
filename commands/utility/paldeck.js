@@ -16,11 +16,36 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.setName('element')
-				.setDescription('List pals based on element type.'))
+				.setDescription('List pals based on element type.')
+				.addChoices(
+					{ name: 'Neutral', value: 'Neutral' },
+					{ name: 'Fire', value: 'Fire' },
+					{ name: 'Water', value: 'Water' },
+					{ name: 'Grass', value: 'Grass' },
+					{ name: 'Electric', value: 'Electric' },
+					{ name: 'Ice', value: 'Ice' },
+					{ name: 'Ground', value: 'Ground' },
+					{ name: 'Dark', value: 'Dark' },
+					{ name: 'Dragon', value: 'Dragon' },
+				))
 		.addStringOption(option =>
 			option
 				.setName('suitability')
-				.setDescription('List pals based on suitabilities.'))
+				.setDescription('List pals based on suitabilities.'),
+			/* .setChoices(
+					{ name: 'Kindling', value: 'Kindling' },
+					{ name: 'Watering', value: 'Watering' },
+					{ name: 'Planting', value: 'Planting' },
+					{ name: 'Generating Electricity', value: 'Generating Electricity' },
+					{ name: 'Handiwork', value: 'Handiwork' },
+					{ name: 'Gathering', value:'Gathering' },
+					{ name: 'Lumbering', value: 'Lumbering' },
+					{ name: 'Mining', value: 'Mining' },
+					{ name: 'Medicine Production', value: 'Medicine Production' },
+					{ name: 'Cooling', value: 'Cooling' },
+					{ name: 'Transporting', value: 'Transporting' },
+					{ name: 'Farming', value: 'Farming' },
+				)*/)
 		.addStringOption(option =>
 			option
 				.setName('rarity')
@@ -30,7 +55,11 @@ module.exports = {
 					{ name: 'Rare', value: 'Rare' },
 					{ name: 'Epic', value: 'Epic' },
 					{ name: 'Legendary', value: 'Legendary' },
-				)),
+				))
+		.addStringOption(option =>
+			option
+				.setName('drops')
+				.setDescription('Lists pals based on drops.')),
 
 	async execute(interaction) {
 		const palName = interaction.options.getString('name') || '';
@@ -38,6 +67,7 @@ module.exports = {
 		const palElement = interaction.options.getString('element') || '';
 		const palSuitability = interaction.options.getString('suitability') || '';
 		const palRarity = interaction.options.getString('rarity') || '';
+		const palDrops = interaction.options.getString('drops') || '';
 
 		if (!Number(palNumber)) {
 			palNumber = palNumber.padStart(4, 0);
@@ -47,7 +77,9 @@ module.exports = {
 		}
 
 		let rarity = '';
-		const results = [];
+		const resNames = [];
+		const resElement = [];
+		const resRarity = [];
 		for (const palData of palFile.Pals) {
 			if (palData.rarity <= 4) {
 				rarity = 'Common';
@@ -88,51 +120,96 @@ module.exports = {
 			const matchesRarity = palRarity !== '' && palRarity === rarity;
 			const matchesElement = palElement !== '' && palData.element.toLowerCase().includes(palElement.toLowerCase());
 			const matchesSuitability = palSuitability !== '' && palData.suitability.toLowerCase().includes(palSuitability.toLowerCase());
+			const matchesDrops = palDrops !== '' && palData.drops.toLowerCase().includes(palDrops.toLowerCase());
 			// Solo Element
-			if (matchesElement && palSuitability === '' && palRarity === '') {
-				results.push(
-					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
-				);
+			if (matchesElement && palSuitability === '' && palRarity === '' && palDrops === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
 			}
 			// Element + Suitability
-			else if (matchesElement && matchesSuitability && palRarity === '') {
-				results.push(
-					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
-				);
+			else if (matchesElement && matchesSuitability && palRarity === '' && palDrops === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
 			}
 			// Element + Rarity
-			else if (matchesElement && matchesRarity && palSuitability === '') {
-				results.push(
-					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
-				);
+			else if (matchesElement && matchesRarity && palSuitability === '' && palDrops === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
+			}
+			// Element + Drops
+			else if (matchesElement && matchesDrops && palSuitability === '' && palRarity === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
 			}
 			// Element + Suitability + Rarity
-			else if (matchesElement && matchesSuitability && matchesRarity) {
-				results.push(
-					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
-				);
+			else if (matchesElement && matchesSuitability && matchesRarity && palDrops === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
+			}
+			// Element + Suitability + Rarity + Drops
+			else if (matchesElement && matchesSuitability && matchesRarity && matchesDrops) {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
 			}
 			// Solo Suitability
-			else if (matchesSuitability && palElement === '' && palRarity === '') {
-				results.push(
-					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
-				);
+			else if (matchesSuitability && palElement === '' && palRarity === '' && palDrops === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
 			}
 			// Suitability + Rarity
-			else if (matchesSuitability && matchesRarity && palElement === '') {
-				results.push(
-					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
-				);
+			else if (matchesSuitability && matchesRarity && palElement === '' && palDrops === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
+			}
+			// Suitabiliy + Drops
+			else if (matchesSuitability && matchesDrops && palElement === '' && palRarity === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
+			}
+			// Suitability + Rarity + Drops
+			else if (matchesSuitability && matchesRarity && matchesDrops && palElement === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
 			}
 			// Solo Rarity
-			else if (matchesRarity && palElement === '' && palSuitability === '') {
-				results.push(
-					`${palData.name} | ${palData.element} | ${rarity}(${palData.rarity})`,
-				);
+			else if (matchesRarity && palElement === '' && palSuitability === '' && palDrops === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
+			}
+			// Rarity + Drops
+			else if (matchesRarity && matchesDrops && palElement === '' && palSuitability === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
+			}
+			// Solo Drops
+			else if (matchesDrops && palElement === '' && palSuitability === '' && palRarity === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
 			}
 		}
-		if (results[0]) {
-			const palEmbed = new EmbedBuilder().setDescription(results.map((e, i) => (i + 1 + '') + '. ' + e).join('\n'));
+		if (resNames[0] && resElement[0] && resRarity[0]) {
+			const palEmbed = new EmbedBuilder()
+				.setTitle('Matching:')
+				.setDescription(`Element: ${palElement}\nSuitability: ${palSuitability}\nRarity:        ${palRarity}\n Drops:        ${palDrops}`)
+				.addFields(
+					{ name: 'Name\n-------\n', value: resNames.join('\n-------\n'), inline:true },
+					{ name: 'Element\n-------\n', value: resElement.join('\n-------\n'), inline:true },
+					{ name: 'Rarity\n-------\n', value: resRarity.join('\n-------\n'), inline: true },
+				);
+				// .setDescription(results.map((e, i) => (i + 1 + '') + '. ' + e).join('\n'));
 			await interaction.reply({ embeds: [palEmbed] });
 			return;
 		}
