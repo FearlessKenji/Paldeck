@@ -31,21 +31,7 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.setName('suitability')
-				.setDescription('List pals based on suitabilities.'),
-			/* .setChoices(
-					{ name: 'Kindling', value: 'Kindling' },
-					{ name: 'Watering', value: 'Watering' },
-					{ name: 'Planting', value: 'Planting' },
-					{ name: 'Generating Electricity', value: 'Generating Electricity' },
-					{ name: 'Handiwork', value: 'Handiwork' },
-					{ name: 'Gathering', value:'Gathering' },
-					{ name: 'Lumbering', value: 'Lumbering' },
-					{ name: 'Mining', value: 'Mining' },
-					{ name: 'Medicine Production', value: 'Medicine Production' },
-					{ name: 'Cooling', value: 'Cooling' },
-					{ name: 'Transporting', value: 'Transporting' },
-					{ name: 'Farming', value: 'Farming' },
-				)*/)
+				.setDescription('List pals based on suitabilities.'))
 		.addStringOption(option =>
 			option
 				.setName('rarity')
@@ -116,11 +102,38 @@ module.exports = {
 				await interaction.reply({ embeds: [palEmbed] });
 				return;
 			}
-
 			const matchesRarity = palRarity !== '' && palRarity === rarity;
 			const matchesElement = palElement !== '' && palData.element.toLowerCase().includes(palElement.toLowerCase());
 			const matchesSuitability = palSuitability !== '' && palData.suitability.toLowerCase().includes(palSuitability.toLowerCase());
 			const matchesDrops = palDrops !== '' && palData.drops.toLowerCase().includes(palDrops.toLowerCase());
+
+			/* // Split the input into individual keywords
+			const keywords = palSuitability.split(',').map(keyword => keyword.trim().toLowerCase());
+
+			// Split the string into skill and level pairs
+			const pairs = palData.suitability.split(',').map(pair => pair.trim());
+
+			// Track matched keywords
+			const matchedKeywords = {};
+
+			// Find matches
+			const results = [];
+			keywords.forEach(keyword => {
+				let found = false;
+				pairs.forEach(pair => {
+					const lastSpaceIndex = pair.lastIndexOf(' ');
+					const skill = pair.substring(0, lastSpaceIndex);
+					if (skill.toLowerCase().includes(keyword) || keyword.includes(skill.toLowerCase())) {
+						found = true;
+						results.push({ skill, level: parseInt(pair.substring(lastSpaceIndex + 1)) });
+					}
+				});
+				matchedKeywords[keyword] = found;
+			});
+
+			console.log(results);
+			console.log(matchedKeywords); */
+
 			// Solo Element
 			if (matchesElement && palSuitability === '' && palRarity === '' && palDrops === '') {
 				resNames.push(palData.name);
