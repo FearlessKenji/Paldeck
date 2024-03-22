@@ -54,6 +54,30 @@ module.exports = {
 		const palSuitability = interaction.options.getString('suitability') || '';
 		const palRarity = interaction.options.getString('rarity') || '';
 		const palDrops = interaction.options.getString('drops') || '';
+		// Match Drops
+		// Split the input into individual keywords
+		function matchDrops(input, str) {
+			const keywords = input.split(',').map(keyword => keyword.trim().toLowerCase());
+
+			// Split the string into skill and level pairs
+			const pairs = str.split(',').map(pair => pair.trim().toLowerCase());
+
+			// Find matches
+			let allFound = true;
+			keywords.forEach(keyword => {
+				let found = false;
+				pairs.forEach(pair => {
+					if (pair.includes(keyword)) {
+						found = true;
+					}
+				});
+				if (!found) {
+					allFound = false;
+				}
+			});
+
+			return allFound;
+		}
 
 		if (!Number(palNumber)) {
 			palNumber = palNumber.padStart(4, 0);
@@ -105,9 +129,9 @@ module.exports = {
 			const matchesRarity = palRarity !== '' && palRarity === rarity;
 			const matchesElement = palElement !== '' && palData.element.toLowerCase().includes(palElement.toLowerCase());
 			const matchesSuitability = palSuitability !== '' && palData.suitability.toLowerCase().includes(palSuitability.toLowerCase());
-			const matchesDrops = palDrops !== '' && palData.drops.toLowerCase().includes(palDrops.toLowerCase());
+			const matchesDrops = palDrops !== '' && matchDrops(palDrops, palData.drops.toLowerCase());
 
-			/* Match Suitability
+			/* // Match Suitability
 			// Split the input into individual keywords
 			const keywords = palSuitability.split(',').map(keyword => keyword.trim().toLowerCase());
 
@@ -131,32 +155,9 @@ module.exports = {
 				});
 				matchedKeywords[keyword] = found;
 			});
-
+			// const allKeywordsMatched = Object.values(matchedKeywords).every(value => value);
 			console.log(results);
-			console.log(matchedKeywords); */
-
-			/* Match Drops
-			// Split the input into individual keywords
-			const keywords = input.split(',').map(keyword => keyword.trim().toLowerCase());
-
-			// Split the string into skill and level pairs
-			const pairs = str.split(',').map(pair => pair.trim().toLowerCase());
-
-			// Find matches
-			let allFound = true;
-			keywords.forEach(keyword => {
-				let found = false;
-				pairs.forEach(pair => {
-					if (pair.includes(keyword)) {
-						found = true;
-					}
-				});
-				if (!found) {
-					allFound = false;
-				}
-			});
-
-			console.log(allFound); */
+			console.log(matchedKeywords); // array of objects: [{skill: skill, level: level}] */
 
 			// Solo Element
 			if (matchesElement && palSuitability === '' && palRarity === '' && palDrops === '') {
@@ -184,6 +185,12 @@ module.exports = {
 			}
 			// Element + Suitability + Rarity
 			else if (matchesElement && matchesSuitability && matchesRarity && palDrops === '') {
+				resNames.push(palData.name);
+				resElement.push(palData.element);
+				resRarity.push(rarity);
+			}
+			// Element + Rarity + Drops
+			else if (matchesElement && matchesRarity && matchesDrops && palSuitability === '') {
 				resNames.push(palData.name);
 				resElement.push(palData.element);
 				resRarity.push(rarity);
@@ -246,7 +253,6 @@ module.exports = {
 					{ name: 'Element\n-------\n', value: resElement.join('\n-------\n'), inline:true },
 					{ name: 'Rarity\n-------\n', value: resRarity.join('\n-------\n'), inline: true },
 				);
-				// .setDescription(results.map((e, i) => (i + 1 + '') + '. ' + e).join('\n'));
 			await interaction.reply({ embeds: [palEmbed] });
 			return;
 		}
