@@ -83,7 +83,7 @@ module.exports = {
 				const breed = palData.name.toLowerCase().replace(' ', '-');
 				const wiki = palData.name.toLowerCase().replace(' ', '_');
 				const palEmbed = new EmbedBuilder()
-					.setAuthor({ name: `Rarity: ${rarity}(${palData.rarity}) `, url: `https://palworld.fandom.com/wiki/${wiki}` })
+					.setAuthor({ name: `Rarity: ${rarity}) `, url: `https://palworld.fandom.com/wiki/${wiki}` })
 					.setColor(palData.color)
 					.setTitle(palData.name)
 					.setURL(`https://paldex.gg/breeding-calculator?child=${breed}&parent1=${breed}`)
@@ -107,7 +107,8 @@ module.exports = {
 			const matchesSuitability = palSuitability !== '' && palData.suitability.toLowerCase().includes(palSuitability.toLowerCase());
 			const matchesDrops = palDrops !== '' && palData.drops.toLowerCase().includes(palDrops.toLowerCase());
 
-			/* // Split the input into individual keywords
+			/* Match Suitability
+			// Split the input into individual keywords
 			const keywords = palSuitability.split(',').map(keyword => keyword.trim().toLowerCase());
 
 			// Split the string into skill and level pairs
@@ -133,6 +134,29 @@ module.exports = {
 
 			console.log(results);
 			console.log(matchedKeywords); */
+
+			/* Match Drops
+			// Split the input into individual keywords
+			const keywords = input.split(',').map(keyword => keyword.trim().toLowerCase());
+
+			// Split the string into skill and level pairs
+			const pairs = str.split(',').map(pair => pair.trim().toLowerCase());
+
+			// Find matches
+			let allFound = true;
+			keywords.forEach(keyword => {
+				let found = false;
+				pairs.forEach(pair => {
+					if (pair.includes(keyword)) {
+						found = true;
+					}
+				});
+				if (!found) {
+					allFound = false;
+				}
+			});
+
+			console.log(allFound); */
 
 			// Solo Element
 			if (matchesElement && palSuitability === '' && palRarity === '' && palDrops === '') {
