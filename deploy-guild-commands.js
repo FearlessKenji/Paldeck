@@ -1,12 +1,11 @@
-// eslint-disable-next-line no-unused-vars
-const { clientId, guildId, token } = require('./config.json');
 const { REST, Routes } = require('discord.js');
+const { clientId, guildId, token } = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
 
 const commands = [];
 // Grab all the command folders from the commands directory you created earlier
-const foldersPath = path.join(__dirname, 'commands');
+const foldersPath = path.join(__dirname, 'commands/guildCommands');
 const commandFolders = fs.readdirSync(foldersPath);
 
 for (const folder of commandFolders) {
@@ -29,36 +28,19 @@ for (const folder of commandFolders) {
 // Construct and prepare an instance of the REST module
 const rest = new REST().setToken(token);
 
-// Delete specific commands
-// for guild-based commands
-/* rest.delete(Routes.applicationGuildCommand(clientId, guildId, 'commandId'))
+/* for guild-based commands
+rest.delete(Routes.applicationGuildCommand(clientId, guildId, 'commandId'))
 	.then(() => console.log('Successfully deleted guild command'))
-	.catch(console.error);
-
-// for global commands
-rest.delete(Routes.applicationCommand(clientId, 'commandId'))
-	.then(() => console.log('Successfully deleted application command'))
 	.catch(console.error); */
 
-// Delete all commands
-// for guild-based commands
-/* rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: [] })
-	.then(() => console.log('Successfully deleted all guild commands.'))
-	.catch(console.error);
-
-// for global commands
-rest.put(Routes.applicationCommands(clientId), { body: [] })
-	.then(() => console.log('Successfully deleted all application commands.'))
-	.catch(console.error); */
-
-// and deploy your GLOBAL commands!
+// and deploy your commands!
 (async () => {
 	try {
 		console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
 		// The put method is used to fully refresh all commands in the guild with the current set
 		const data = await rest.put(
-			Routes.applicationCommands(clientId),
+			Routes.applicationGuildCommands(clientId, guildId),
 			{ body: commands },
 		);
 
