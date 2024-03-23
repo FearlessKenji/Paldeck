@@ -11,7 +11,7 @@
 			"suitability": "Handiwork 1, Transporting 1, Farming 1",
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Wool",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/47/Lamball.png/revision/latest?cb=20240202133852",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/42/Lamball_Day_Habitat.png/revision/latest?cb=20240128181942",
 			"rarity": 1
@@ -27,7 +27,7 @@
 			"suitability": "Handiwork 1, Gathering 1, Mining 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/59/Cattiva.png/revision/latest?cb=20240123163546",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/6/6b/Cattiva_Day_Habitat.png/revision/latest?cb=20240129030630",
 			"rarity": 1
@@ -43,7 +43,7 @@
 			"suitability": "Gathering 1, Farming 1",
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Eggs",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/e9/Chikipi.png/revision/latest?cb=20240123163515",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/22/Chikipi_Day_Habitat.png/revision/latest?cb=20240129062628",
 			"rarity": 1
@@ -60,7 +60,7 @@
 			"suitability": "Planting 1, Handiwork 1, Gathering 1, Lumbering 1, Medicine Production 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c4/Lifmunk.png/revision/latest?cb=20240123163444",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/8e/Lifmunk_Day_Habitat.png/revision/latest?cb=20240129063222",
 			"rarity": 1
@@ -77,7 +77,7 @@
 			"suitability": "Kindling 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/dd/Foxparks.png/revision/latest?cb=20240123163335",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/33/Foxparks_Day_Habitat.png/revision/latest?cb=20240129062848",
 			"rarity": 1
@@ -93,7 +93,7 @@
 			"suitability": "Watering 1, Handiwork 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2123412,
+			"color": "#0000ff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/6c/Fuack.png/revision/latest?cb=20240123163258",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/3a/Fuack_Day_Habitat.png/revision/latest?cb=20240129062901",
 			"rarity": 1
@@ -109,7 +109,7 @@
 			"suitability": "Generating Electricity 1, Handiwork 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16705372,
+			"color": "#ffff00",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/ee/Sparkit.png/revision/latest?cb=20240123163229",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/89/Sparkit_Day_Habitat.png/revision/latest?cb=20240129063602",
 			"rarity": 1
@@ -126,7 +126,7 @@
 			"suitability": "Planting 1, Handiwork 1, Gathering 1, Lumbering 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/34/Tanzee.png/revision/latest?cb=20240123163156",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/d3/Tanzee_Day_Habitat.png/revision/latest?cb=20240129063649",
 			"rarity": 1
@@ -142,7 +142,7 @@
 			"suitability": "Kindling 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/e5/Rooby.png/revision/latest?cb=20240123163133",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/e9/Rooby_Day_Habitat.png/revision/latest?cb=20240129063538",
 			"rarity": 2
@@ -159,7 +159,7 @@
 			"suitability": "Watering 1, Handiwork 1, Cooling 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 3447003,
+			"color": "#00ccff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b3/Pengullet.png/revision/latest?cb=20240223181545",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/6/6f/Pengullet_Day_Habitat.png/revision/latest?cb=20240129063406",
 			"rarity": 1
@@ -175,7 +175,7 @@
 			"suitability": "Watering 2, Handiwork 2, Mining 2, Cooling 2, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 3447003,
+			"color": "#00ccff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/5c/Penking.png/revision/latest?cb=20240123162544",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/2b/Penking_Day_Habitat.png/revision/latest?cb=20240129063411",
 			"rarity": 6
@@ -209,7 +209,7 @@
 			"suitability": "Cooling 1",
 			"spawnTime": "With factions",
 			"farmable": "No",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/dc/Jolthog_Cryst.png/revision/latest?cb=20240210111838",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
 			"rarity": 2
@@ -225,7 +225,7 @@
 			"suitability": "Planting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2067276,
+			"color": "#60641b",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f3/Gumoss.png/revision/latest?cb=20240123165935",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/01/Gumoss_Day_Habitat.png/revision/latest?cb=20240129063007",
 			"rarity": 1
@@ -241,7 +241,7 @@
 			"suitability": "Gathering 1, Farming 1",
 			"spawnTime": "Day",
 			"farmable": "Yes - Spheres, Arrows, Gold Coins",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/79/Vixy.png/revision/latest?cb=20240123170135",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/a4/Vixy_Day_Habitat.png/revision/latest?cb=20240129063802",
 			"rarity": 2
@@ -257,7 +257,7 @@
 			"suitability": "Gathering 1",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c5/Hoocrates.png/revision/latest?cb=20240123170255",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/a8/Hoocrates_Night_Habitat.png/revision/latest?cb=20240128233959",
 			"rarity": 1
@@ -273,7 +273,7 @@
 			"suitability": "Watering 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2123412,
+			"color": "#0000ff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/2b/Teafant.png/revision/latest?cb=20240123170333",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/1e/Teafant_Day_Habitat.png/revision/latest?cb=20240129063656",
 			"rarity": 1
@@ -289,7 +289,7 @@
 			"suitability": "Handiwork 1, Mining 1, Transporting 1",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/8b/Depresso.png/revision/latest?cb=20240123165847",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/ed/Depresso_Night_Habitat.png/revision/latest?cb=20240129062720",
 			"rarity": 1
@@ -305,7 +305,7 @@
 			"suitability": "Gathering 1, Farming 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/96/Cremis.png/revision/latest?cb=20240123170416",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/4e/Cremis_Day_Habitat.png/revision/latest?cb=20240129062656",
 			"rarity": 1
@@ -322,7 +322,7 @@
 			"suitability": "Handiwork 1, Gathering 1",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/d7/Daedream.png/revision/latest?cb=20240123170458",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f3/Daedream_Night_Habitat.png/revision/latest?cb=20240129062711",
 			"rarity": 1
@@ -339,7 +339,7 @@
 			"suitability": "Mining 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1236300,
+			"color": "#a0522d",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/6d/Rushoar.png/revision/latest?cb=20240123170615",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f2/Rushoar_Day_Habitat.png/revision/latest?cb=20240129063545",
 			"rarity": 1
@@ -355,7 +355,7 @@
 			"suitability": "Gathering 1",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/2e/Nox.png/revision/latest?cb=20240123170533",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/7/7f/Nox_Night_Habitat.png/revision/latest?cb=20240129063353",
 			"rarity": 6
@@ -371,7 +371,7 @@
 			"suitability": "Handiwork 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1236300,
+			"color": "#a0522d",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/ba/Fuddler.png/revision/latest?cb=20240123175507",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/c/c8/Fuddler_Day_Habitat.png/revision/latest?cb=20240129062907",
 			"rarity": 1
@@ -388,7 +388,7 @@
 			"suitability": "Gathering 1, Transporting 2",
 			"spawnTime": "Dungeons; Nocturnal",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/bf/Killamari.png/revision/latest?cb=20240123181512",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
 			"rarity": 1
@@ -404,7 +404,7 @@
 			"suitability": "Farming 1",
 			"spawnTime": "Dungeons/Factions",
 			"farmable": "Yes - Gold Coin",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/21/Mau.png/revision/latest?cb=20240122143301",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
 			"rarity": 1
@@ -420,7 +420,7 @@
 			"suitability": "Cooling 1, Farming 1",
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Gold Coin",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/bf/Mau_Cryst.png/revision/latest?cb=20240122142108",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/7/71/Mau_Cryst_Day_Habitat.png/revision/latest?cb=20240129063256",
 			"rarity": 2
@@ -437,7 +437,7 @@
 			"suitability": "Watering 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2123412,
+			"color": "#0000ff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/aa/Celaray.png/revision/latest?cb=20240123181336",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/be/Celaray_Day_Habitat.png/revision/latest?cb=20240129062618",
 			"rarity": 3
@@ -454,7 +454,7 @@
 			"suitability": "Gathering 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/14/Direhowl.png/revision/latest?cb=20240123181301",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/af/Direhowl_Day_Habitat.png/revision/latest?cb=20240129062743",
 			"rarity": 2
@@ -471,7 +471,7 @@
 			"suitability": "Gathering 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/d9/Tocotoco.png/revision/latest?cb=20240123181236",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/5e/Tocotoco_Day_Habitat.png/revision/latest?cb=20240129063705",
 			"rarity": 1
@@ -488,7 +488,7 @@
 			"suitability": "Planting 1, Handiwork 1, Gathering 1, Medicine Production 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f0/Flopie.png/revision/latest?cb=20240123181203",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f8/Flopie_Day_Habitat.png/revision/latest?cb=20240129062837",
 			"rarity": 1
@@ -504,7 +504,7 @@
 			"suitability": "Farming 1",
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Milk",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/9d/Mozzarina.png/revision/latest?cb=20240123181057",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/4d/Mozzarina_Day_Habitat.png/revision/latest?cb=20240129063333",
 			"rarity": 2
@@ -520,7 +520,7 @@
 			"suitability": "Planting 1, Handiwork 1, Gathering 1, Medicine Production 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/40/Bristla.png/revision/latest?cb=20240123181033",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/ff/Bristla_Day_Habitat.png/revision/latest?cb=20240129062538",
 			"rarity": 1
@@ -536,7 +536,7 @@
 			"suitability": "Watering 2, Handiwork 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2123412,
+			"color": "#0000ff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f9/Gobfin.png/revision/latest?cb=20240122145054",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/35/Gobfin_Day_Habitat.png/revision/latest?cb=20240129062931",
 			"rarity": 2
@@ -552,7 +552,7 @@
 			"suitability": "Kindling 2, Handiwork 1, Transporting 1",
 			"spawnTime": "Day",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/67/Gobfin_Ignis.png/revision/latest?cb=20240122145037",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/59/Gobfin_Ignis_Day_Habitat.png/revision/latest?cb=20240129062926",
 			"rarity": 3
@@ -569,7 +569,7 @@
 			"suitability": "Handiwork 1, Gathering 1, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1236300,
+			"color": "#a0522d",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/6c/Hangyu.png/revision/latest?cb=20240207185559",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/06/Hangyu_Day_Habitat.png/revision/latest?cb=20240129063023",
 			"rarity": 1
@@ -586,7 +586,7 @@
 			"suitability": "Handiwork 1, Gathering 1, Cooling 1, Transporting 2",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/df/Hangyu_Cryst.png/revision/latest?cb=20240207185718",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/83/Hangyu_Cryst_Night_Habitat.png/revision/latest?cb=20240129063018",
 			"rarity": 2
@@ -603,7 +603,7 @@
 			"suitability": "Planting 2, Handiwork 2, Lumbering 2, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b5/Mossanda.png/revision/latest?cb=20240122170308",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/92/Mossanda_Day_Habitat.png/revision/latest?cb=20240129063329",
 			"rarity": 6
@@ -620,7 +620,7 @@
 			"suitability": "Generating Electricity 2, Handiwork 2, Lumbering 2, Transporting 3",
 			"spawnTime": "Alpha only",
 			"farmable": "No",
-			"color": 16705372,
+			"color": "#ffff00",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/4b/Mossanda_Lux.png/revision/latest?cb=20240122170350",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/23/Mossanda_Lux_Day_Habitat.png/revision/latest?cb=20240129063323",
 			"rarity": 7
@@ -636,7 +636,7 @@
 			"suitability": "Farming 1",
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Cotton",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/0f/Woolipop.png/revision/latest?cb=20240123181007",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/7/78/Woolipop_Day_Habitat.png/revision/latest?cb=20240129063823",
 			"rarity": 3
@@ -652,7 +652,7 @@
 			"suitability": "Planting 2, Farming 1",
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Red Berries",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/5f/Caprity.png/revision/latest?cb=20240123180701",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/20/Caprity_Day_Habitat.png/revision/latest?cb=20240129062604",
 			"rarity": 3
@@ -669,7 +669,7 @@
 			"suitability": "Farming 1",
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Wool",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a0/Melpaca.png/revision/latest?cb=20240123180635",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/9a/Melpaca_Day_Habitat.png/revision/latest?cb=20240129063307",
 			"rarity": 3
@@ -686,7 +686,7 @@
 			"suitability": "Lumbering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/59/Eikthyrdeer.png/revision/latest?cb=20240122183848",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f1/Eikthyrdeer_Day_Habitat.png/revision/latest?cb=20240129062759",
 			"rarity": 4
@@ -703,7 +703,7 @@
 			"suitability": "Lumbering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1236300,
+			"color": "#a0522d",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/ac/Eikthyrdeer_Terra.png/revision/latest?cb=20240122184647",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b0/Eikthyrdeer_Terra_Day_Habitat.png/revision/latest?cb=20240129062754",
 			"rarity": 6
@@ -720,7 +720,7 @@
 			"suitability": "Gathering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/bf/Nitewing.png/revision/latest?cb=20240123180604",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/86/Nitewing_Day_Habitat.png/revision/latest?cb=20240129063347",
 			"rarity": 3
@@ -736,7 +736,7 @@
 			"suitability": "Handiwork 1, Gathering 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f1/Ribbuny.png/revision/latest?cb=20240123180541",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/a1/Ribbuny_Day_Habitat.png/revision/latest?cb=20240129063515",
 			"rarity": 1
@@ -752,7 +752,7 @@
 			"suitability": "Kindling 1, Handiwork 2, Mining 1, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 10038562,
+			"color": "#a6005a",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b1/Incineram.png/revision/latest?cb=20240122183815",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/dd/Incineram_Day_Habitat.png/revision/latest?cb=20240129063053",
 			"rarity": 4
@@ -768,7 +768,7 @@
 			"suitability": "Handiwork 2, Mining 1, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/76/Incineram_Noct.png/revision/latest?cb=20240122185015",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/33/Incineram_Noct_Day_Habitat.png/revision/latest?cb=20240129063044",
 			"rarity": 5
@@ -784,7 +784,7 @@
 			"suitability": "Planting 2, Medicine Production 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/cb/Cinnamoth.png/revision/latest?cb=20240123180518",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/3a/Cinnamoth_Day_Habitat.png/revision/latest?cb=20240129062644",
 			"rarity": 4
@@ -801,7 +801,7 @@
 			"suitability": "Kindling 2, Lumbering 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a4/Arsox.png/revision/latest?cb=20240123180056",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/7/71/Arsox_Day_Habitat.png/revision/latest?cb=20240129062502",
 			"rarity": 4
@@ -817,7 +817,7 @@
 			"suitability": "Watering 1, Mining 2, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1236300,
+			"color": "#a0522d",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/89/Dumud.png/revision/latest?cb=20240123180029",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/c/cc/Dumud_Day_Habitat.png/revision/latest?cb=20240129062749",
 			"rarity": 4
@@ -833,7 +833,7 @@
 			"suitability": "Lumbering 1",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/d1/Cawgnito.png/revision/latest?cb=20240123175955",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/94/Cawgnito_Night_Habitat.png/revision/latest?cb=20240129062613",
 			"rarity": 3
@@ -849,7 +849,7 @@
 			"suitability": "Handiwork 1, Gathering 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/4d/Leezpunk.png/revision/latest?cb=20240122183738",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b3/Leezpunk_Day_Habitat.png/revision/latest?cb=20240129063217",
 			"rarity": 2
@@ -865,7 +865,7 @@
 			"suitability": "Kindling 1, Handiwork 1, Gathering 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/ba/Leezpunk_Ignis.png/revision/latest?cb=20240122185128",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/96/Leezpunk_Ignis_Day_Habitat.png/revision/latest?cb=20240129063210",
 			"rarity": 3
@@ -881,7 +881,7 @@
 			"suitability": "Handiwork 2",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f8/Loupmoon.png/revision/latest?cb=20240123175932",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/ad/Loupmoon_Night_Habitat.png/revision/latest?cb=20240129063228",
 			"rarity": 3
@@ -898,7 +898,7 @@
 			"suitability": "Gathering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/8a/Galeclaw.png/revision/latest?cb=20240123175720",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/02/Galeclaw_Day_Habitat.png/revision/latest?cb=20240129062917",
 			"rarity": 2
@@ -914,7 +914,7 @@
 			"suitability": "Palnting 1, Handiwork 2, Gathering 2, Lumbering 1, Medicine Production 1, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/13/Robinquill.png/revision/latest?cb=20240123063928",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/bb/Robinquill_Day_Habitat.png/revision/latest?cb=20240129063530",
 			"rarity": 5
@@ -930,7 +930,7 @@
 			"suitability": "Handiwork 2, Gathering 2, Lumbering 1, Medicine Production 1, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2067276,
+			"color": "#60641b",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/42/Robinquill_Terra.png/revision/latest?cb=20240122185224",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/d0/Robinquill_Terra_Day_Habitat.png/revision/latest?cb=20240129063525",
 			"rarity": 6
@@ -946,7 +946,7 @@
 			"suitability": "Handiwork 1, Lumbering 2, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/8f/Gorirat.png/revision/latest?cb=20240124001220",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/8d/Gorirat_Day_Habitat.png/revision/latest?cb=20240129062940",
 			"rarity": 5
@@ -962,7 +962,7 @@
 			"suitability": "Planting 1, Handiwork 1, Gathering 1, Lumbering 1, Medicine Production 1, Transporting 2, Farming 1",
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Honey",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/56/Beegarde.png/revision/latest?cb=20240124001139",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/5d/Beegarde_Day_Habitat.png/revision/latest?cb=20240129062522",
 			"rarity": 4
@@ -978,7 +978,7 @@
 			"suitability": "Planting 2, Handiwork 2, Gathering 2, Lumbering 2, Medicine Production 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/6d/Elizabee.png/revision/latest?cb=20240124001045",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/11/Elizabee_Day_Habitat.png/revision/latest?cb=20240129062807",
 			"rarity": 8
@@ -995,7 +995,7 @@
 			"suitability": "Gathering 2",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/09/Grintale.png/revision/latest?cb=20240124000845",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/85/Grintale_Night_Habitat.png/revision/latest?cb=20240129062953",
 			"rarity": 6
@@ -1011,7 +1011,7 @@
 			"suitability": "Gathering 1, Cooling 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/73/Swee.png/revision/latest?cb=20240124000804",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b4/Swee_Day_Habitat.png/revision/latest?cb=20240129063632",
 			"rarity": 1
@@ -1027,7 +1027,7 @@
 			"suitability": "Gathering 2, Cooling 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/93/Sweepa.png/revision/latest?cb=20240124000541",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Sweepa_Day_Habitat.png/revision/latest?cb=20240129063642",
 			"rarity": 6
@@ -1044,7 +1044,7 @@
 			"suitability": "Gathering 1, Cooling 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 3426654,
+			"color": "#5a4da6",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/50/Chillet.png/revision/latest?cb=20240124000212",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/9c/Chillet_Day_Habitat.png/revision/latest?cb=20240129062637",
 			"rarity": 4
@@ -1061,7 +1061,7 @@
 			"suitability": "Generating Electricity 2, Lumbering 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16705372,
+			"color": "#ffff00",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/25/Univolt.png/revision/latest?cb=20240124103319",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/e6/Univolt_Day_Habitat.png/revision/latest?cb=20240129063721",
 			"rarity": 5
@@ -1077,7 +1077,7 @@
 			"suitability": "Cooling 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/7b/Foxcicle.png/revision/latest?cb=20240124103155",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/9a/Foxcicle_Day_Habitat.png/revision/latest?cb=20240129062842",
 			"rarity": 5
@@ -1094,7 +1094,7 @@
 			"suitability": "Kindling 2, Lumbering 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/ab/Pyrin.png/revision/latest?cb=20240123063856",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/a5/Pyrin_Day_Habitat.png/revision/latest?cb=20240129063424",
 			"rarity": 6
@@ -1111,7 +1111,7 @@
 			"suitability": "Kindling 2, Lumbering 1",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 10038562,
+			"color": "#a6005a",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/72/Pyrin_Noct.png/revision/latest?cb=20240122185332",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/88/Pyrin_Noct_Night_Habitat.png/revision/latest?cb=20240129063421",
 			"rarity": 7
@@ -1128,7 +1128,7 @@
 			"suitability": "Lumbering 2, Cooling 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/5f/Reindrix.png/revision/latest?cb=20240124103127",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/2b/Reindrix_Day_Habitat.png/revision/latest?cb=20240129063453",
 			"rarity": 4
@@ -1145,7 +1145,7 @@
 			"suitability": "Generating Electricity 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16705372,
+			"color": "#ffff00",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/26/Rayhound.png/revision/latest?cb=20240124103009",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/4a/Rayhound_Day_Habitat.png/revision/latest?cb=20240129063445",
 			"rarity": 5
@@ -1162,7 +1162,7 @@
 			"suitability": "Kindling 2",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c4/Kitsun.png/revision/latest?cb=20240124104452",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/2e/Kitsun_Night_Habitat.png/revision/latest?cb=20240129063205",
 			"rarity": 6
@@ -1179,7 +1179,7 @@
 			"suitability": "Generating Electricity 1, Handiwork 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16705372,
+			"color": "#ffff00",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/99/Dazzi.png/revision/latest?cb=20240124102802",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/3e/Dazzi_Day_Habitat.png/revision/latest?cb=20240129062714",
 			"rarity": 2
@@ -1195,7 +1195,7 @@
 			"suitability": "Handiwork 3, Gathering 1, Transporting 1",
 			"spawnTime": "Alpha/Dungeons",
 			"farmable": "a",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/ce/Lunaris.png/revision/latest?cb=20240124102710",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/c/c9/Lunaris_Day_Habitat.png/revision/latest?cb=20240215203307",
 			"rarity": 6
@@ -1212,7 +1212,7 @@
 			"suitability": "Planting 2, Lumbering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2899536,
+			"color": "#404040",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/99/Dinossom.png/revision/latest?cb=20240122181507",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/49/Dinossom_Day_Habitat.png/revision/latest?cb=20240129062736",
 			"rarity": 6
@@ -1229,7 +1229,7 @@
 			"suitability": "Generating Electricity 2, Lumbering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15844367,
+			"color": "#a04060",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b7/Dinossom_Lux.png/revision/latest?cb=20240122185435",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/ad/Dinossom_Lux_Day_Habitat.png/revision/latest?cb=20240129062728",
 			"rarity": 7
@@ -1246,7 +1246,7 @@
 			"suitability": "Watering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2123412,
+			"color": "#0000ff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f9/Surfent.png/revision/latest?cb=20240122182116",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/46/Surfent_Day_Habitat.png/revision/latest?cb=20240129063614",
 			"rarity": 4
@@ -1263,7 +1263,7 @@
 			"suitability": "Gathering 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1236300,
+			"color": "#a0522d",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/63/Surfent_Terra.png/revision/latest?cb=20240122182251",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/da/Surfent_Terra_Day_Habitat.png/revision/latest?cb=20240129063607",
 			"rarity": 5
@@ -1280,7 +1280,7 @@
 			"suitability": "Gathering 2, Mining 1",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/7c/Maraith.png/revision/latest?cb=20240124102441",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/e3/Maraith_Night_Habitat.png/revision/latest?cb=20240129063253",
 			"rarity": 6
@@ -1296,7 +1296,7 @@
 			"suitability": "Mining 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1236300,
+			"color": "#a0522d",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/98/Digtoise.png/revision/latest?cb=20240124102412",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/23/Digtoise_Day_Habitat.png/revision/latest?cb=20240129062723",
 			"rarity": 5
@@ -1312,7 +1312,7 @@
 			"suitability": "Gathering 2, Mining 2, Transporting 2",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/17/Tombat.png/revision/latest?cb=20240124104318",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/57/Tombat_Night_Habitat.png/revision/latest?cb=20240129063716",
 			"rarity": 5
@@ -1328,7 +1328,7 @@
 			"suitability": "Handiwork 2, Mining 1, Medicine Production 2, Transporting 2",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/af/Lovander.png/revision/latest?cb=20240125041214",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b0/Lovander_Night_Habitat.png/revision/latest?cb=20240129063231",
 			"rarity": 5
@@ -1344,7 +1344,7 @@
 			"suitability": "Kindling 1, Handiwork 1, Transporting 1, Farming 1",
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Flame Organ",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/19/Flambelle.png/revision/latest?cb=20240124101852",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/88/Flambelle_Day_Habitat.png/revision/latest?cb=20240129062829",
 			"rarity": 1
@@ -1361,7 +1361,7 @@
 			"suitability": "Kindling 1, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 10038562,
+			"color": "#a6005a",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/89/Vanwyrm.png/revision/latest?cb=20240122182701",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/6/6a/Vanwyrm_Day_Habitat.png/revision/latest?cb=20240129063745",
 			"rarity": 4
@@ -1378,7 +1378,7 @@
 			"suitability": "Cooling 2, Transporting 2",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 9807270,
+			"color": "#005959",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/42/Vanwyrm_Cryst.png/revision/latest?cb=20240122185550",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/dd/Vanwyrm_Cryst_Night_Habitat.png/revision/latest?cb=20240129063740",
 			"rarity": 5
@@ -1394,7 +1394,7 @@
 			"suitability": "Kindling 2, Handiwork 1, Gathering 1, Lumbering 3, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c0/Bushi.png/revision/latest?cb=20240124104338",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/92/Bushi_Day_Habitat.png/revision/latest?cb=20240129062556",
 			"rarity": 7
@@ -1411,7 +1411,7 @@
 			"suitability": "Generating Electricity 2, Gathering 1, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16705372,
+			"color": "#ffff00",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/67/Beakon.png/revision/latest?cb=20240124104253",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/59/Beakon_Day_Habitat.png/revision/latest?cb=20240129062517",
 			"rarity": 6
@@ -1428,7 +1428,7 @@
 			"suitability": "Kindling 3, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c3/Ragnahawk.png/revision/latest?cb=20240124105350",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/1f/Ragnahawk_Day_Habitat.png/revision/latest?cb=20240129063435",
 			"rarity": 7
@@ -1444,7 +1444,7 @@
 			"suitability": "Handiwork 2, Medicine Production 2, Transporting 2",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/8d/Katress.png/revision/latest?cb=20240124102054",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/1b/Katress_Night_Habitat.png/revision/latest?cb=20240129063139",
 			"rarity": 6
@@ -1460,7 +1460,7 @@
 			"suitability": "Kindling 2, Handiwork 3, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/fd/Wixen.png/revision/latest?cb=20240124102218",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/07/Wixen_Day_Habitat.png/revision/latest?cb=20240129063817",
 			"rarity": 6
@@ -1476,7 +1476,7 @@
 			"suitability": "Planting 2, Handiwork 3, Gathering 3, Lumbering 2, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c5/Verdash.png/revision/latest?cb=20240124101557",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/af/Verdash_Day_Habitat.png/revision/latest?cb=20240129063753",
 			"rarity": 8
@@ -1492,7 +1492,7 @@
 			"suitability": "Planting 2, Handiwork 2, Gathering 2, Medicine Production 3, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a0/Vaelet.png/revision/latest?cb=20240124101530",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/1e/Vaelet_Day_Habitat.png/revision/latest?cb=20240129063729",
 			"rarity": 8
@@ -1508,7 +1508,7 @@
 			"suitability": "Medicine Production 2, Cooling 2, Farming 1",
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - High Quality Cloth",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/cb/Sibelyx.png/revision/latest?cb=20240124101500",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/98/Sibelyx_Day_Habitat.png/revision/latest?cb=20240129063555",
 			"rarity": 7
@@ -1525,7 +1525,7 @@
 			"suitability": "Lumbering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15418782,
+			"color": "#800080",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/34/Elphidran.png/revision/latest?cb=20240123121131",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/c/cc/Elphidran_Day_Habitat.png/revision/latest?cb=20240129062812",
 			"rarity": 7
@@ -1542,7 +1542,7 @@
 			"suitability": "Watering 3, Lumbering 2",
 			"spawnTime": "Breeding Only",
 			"farmable": "No",
-			"color": 5793266,
+			"color": "#191970",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/65/Elphidran_Aqua.png/revision/latest?cb=20240125042716",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
 			"rarity": 8
@@ -1558,7 +1558,7 @@
 			"suitability": "Watering 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2123412,
+			"color": "#0000ff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/17/Kelpsea.png/revision/latest?cb=20240122182549",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/2d/Kelpsea_Day_Habitat.png/revision/latest?cb=20240129063150",
 			"rarity": 1
@@ -1574,7 +1574,7 @@
 			"suitability": "Kindling 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/d7/Kelpsea_Ignis.png/revision/latest?cb=20240122182408",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/fb/Kelpsea_Ignis_Day_Habitat.png/revision/latest?cb=20240129063143",
 			"rarity": 2
@@ -1591,7 +1591,7 @@
 			"suitability": "Watering 3",
 			"spawnTime": "Alpha only",
 			"farmable": "No",
-			"color": 5793266,
+			"color": "#191970",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/bc/Azurobe.png/revision/latest?cb=20240124101431",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/14/Azurobe_Day_Habitat.png/revision/latest?cb=20240129062512",
 			"rarity": 7
@@ -1607,7 +1607,7 @@
 			"suitability": "Handiwork 1, Lumbering 2, Cooling 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/89/Cryolinx.png/revision/latest?cb=20240124101403",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/40/Cryolinx_Day_Habitat.png/revision/latest?cb=20240129062702",
 			"rarity": 7
@@ -1624,7 +1624,7 @@
 			"suitability": "Kindling 3, Lumbering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/6a/Blazehowl.png/revision/latest?cb=20240122182838",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/96/Blazehowl_Day_Habitat.png/revision/latest?cb=20240129062533",
 			"rarity": 7
@@ -1641,7 +1641,7 @@
 			"suitability": "Kindling 3, Lumbering 2",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 10038562,
+			"color": "#a6005a",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a2/Blazehowl_Noct.png/revision/latest?cb=20240122185623",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/bb/Blazehowl_Noct_Night_Habitat.png/revision/latest?cb=20240129062531",
 			"rarity": 8
@@ -1658,7 +1658,7 @@
 			"suitability": "Watering 2, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5793266,
+			"color": "#191970",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/0d/Relaxaurus.png/revision/latest?cb=20240122182945",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/59/Relaxaurus_Day_Habitat.png/revision/latest?cb=20240129063459",
 			"rarity": 8
@@ -1675,7 +1675,7 @@
 			"suitability": "Generating Electricity 3, Transporting 1",
 			"spawnTime": "Dungeons/Factions",
 			"farmable": "a",
-			"color": 15844367,
+			"color": "#a04060",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/72/Relaxaurus_Lux.png/revision/latest?cb=20240122185752",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
 			"rarity": 9
@@ -1692,7 +1692,7 @@
 			"suitability": "Planting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/81/Broncherry.png/revision/latest?cb=20240122183038",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b4/Broncherry_Day_Habitat.png/revision/latest?cb=20240129062548",
 			"rarity": 7
@@ -1709,7 +1709,7 @@
 			"suitability": "Watering 3",
 			"spawnTime": "Alpha only",
 			"farmable": "No",
-			"color": 12370112,
+			"color": "#7fffd4",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/18/Broncherry_Aqua.png/revision/latest?cb=20240122134248",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/3e/Broncherry_Aqua_Day_Habitat.png/revision/latest?cb=20240129062543",
 			"rarity": 8
@@ -1725,7 +1725,7 @@
 			"suitability": "Planting 3, Handiwork 2, Gathering 2, Medicine Production 2, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/4e/Petallia.png/revision/latest?cb=20240124101336",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/32/Petallia_Day_Habitat.png/revision/latest?cb=20240129063416",
 			"rarity": 8
@@ -1742,7 +1742,7 @@
 			"suitability": "Kindling 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15105570,
+			"color": "#a54e2b",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/e4/Reptyro.png/revision/latest?cb=20240123055942",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/3d/Reptyro_Day_Habitat.png/revision/latest?cb=20240129063506",
 			"rarity": 6
@@ -1759,7 +1759,7 @@
 			"suitability": "Mining 3, Cooling 3",
 			"spawnTime": "Breeding Only",
 			"farmable": "No",
-			"color": 12745742,
+			"color": "#787d62",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/57/Ice_Reptyro.png/revision/latest?cb=20240123060101",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
 			"rarity": 7
@@ -1776,7 +1776,7 @@
 			"suitability": "Gathering 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/0d/Kingpaca.png/revision/latest?cb=20240122183201",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/ea/Kingpaca_Day_Habitat.png/revision/latest?cb=20240129063157",
 			"rarity": 8
@@ -1793,7 +1793,7 @@
 			"suitability": "Gathering 1, Cooling 3",
 			"spawnTime": "Alpha only",
 			"farmable": "No",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c3/Ice_Kingpaca_Day_Habitat.png/revision/latest?cb=20240129063036",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/c/c3/Ice_Kingpaca_Day_Habitat.png/revision/latest?cb=20240129063036",
 			"rarity": 9
@@ -1810,7 +1810,7 @@
 			"suitability": "Planting 2, Lumbering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/26/Mammorest.png/revision/latest?cb=20240122183236",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/27/Mammorest_Day_Habitat.png/revision/latest?cb=20240129063248",
 			"rarity": 8
@@ -1827,7 +1827,7 @@
 			"suitability": "Lumbering 2, Mining 2, Cooling 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/34/Mammorest_Cryst.png/revision/latest?cb=20240122190602",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/dd/Mammorest_Cryst_Day_Habitat.png/revision/latest?cb=20240129063243",
 			"rarity": 9
@@ -1844,7 +1844,7 @@
 			"suitability": "Handiwork 2, Lumbering 3, Cooling 2, Transporting 4",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/9b/Wumpo.png/revision/latest?cb=20240122183424",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/7/76/Wumpo_Day_Habitat.png/revision/latest?cb=20240129063838",
 			"rarity": 7
@@ -1861,7 +1861,7 @@
 			"suitability": "Planting 1, Handiwork 2, Lumbering 3, Transporting 4",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a2/Wumpo_Botan.png/revision/latest?cb=20240122190707",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/e8/Wumpo_Botan_Day_Habitat.png/revision/latest?cb=20240129063830",
 			"rarity": 8
@@ -1877,7 +1877,7 @@
 			"suitability": "Planting 1, Handiwork 1, Lumbering 3, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2067276,
+			"color": "#60641b",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/3a/Warsect.png/revision/latest?cb=20240124101144",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/15/Warsect_Day_Habitat.png/revision/latest?cb=20240129063810",
 			"rarity": 8
@@ -1894,7 +1894,7 @@
 			"suitability": "Lumbering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/31/Fenglope.png/revision/latest?cb=20240124101043",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/eb/Fenglope_Day_Habitat.png/revision/latest?cb=20240129062822",
 			"rarity": 3
@@ -1910,7 +1910,7 @@
 			"suitability": "Medicine Production 3",
 			"spawnTime": "Dungeons; Nocturnal",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c7/Felbat.png/revision/latest?cb=20240123194642",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
 			"rarity": 6
@@ -1927,7 +1927,7 @@
 			"suitability": "Handiwork 1, Gathering 2, Mining 2, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15418782,
+			"color": "#800080",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/cc/Quivern.png/revision/latest?cb=20240123194754",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/bd/Quivern_Day_Habitat.png/revision/latest?cb=20240129063428",
 			"rarity": 7
@@ -1944,7 +1944,7 @@
 			"suitability": "Kindling 3, Mining 4",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/00/Blazamut.png/revision/latest?cb=20240123194911",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/0c/Blazamut_Day_Habitat.png/revision/latest?cb=20240129062526",
 			"rarity": 9
@@ -1961,7 +1961,7 @@
 			"suitability": "Transporting 3",
 			"spawnTime": "Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/9d/Helzephyr.png/revision/latest?cb=20240124101016",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/88/Helzephyr_Night_Habitat.png/revision/latest?cb=20240129063031",
 			"rarity": 7
@@ -1978,7 +1978,7 @@
 			"suitability": "Handiwork 1, Mining 4",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 10181046,
+			"color": "#530053",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/48/Astegon.png/revision/latest?cb=20240123195133",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/d8/Astegon_Day_Habitat.png/revision/latest?cb=20240129062507",
 			"rarity": 9
@@ -1994,7 +1994,7 @@
 			"suitability": "Lumbering 2, Mining 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 10070709,
+			"color": "#68351d",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/2e/Menasting.png/revision/latest?cb=20240201071541",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/89/Menasting_Day_Habitat.png/revision/latest?cb=20240129063314",
 			"rarity": 9
@@ -2010,7 +2010,7 @@
 			"suitability": "Handiwork 4, Mining 3, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 1236300,
+			"color": "#a0522d",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/26/Anubis.png/revision/latest?cb=20240123194707",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/9b/Anubis_Day_Habitat.png/revision/latest?cb=20240215202937",
 			"rarity": 10
@@ -2027,7 +2027,7 @@
 			"suitability": "Watering 4",
 			"spawnTime": "Alpha only",
 			"farmable": "No",
-			"color": 5793266,
+			"color": "#191970",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/95/Jormuntide.png/revision/latest?cb=20240122183458",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/0f/Jormuntide_Day_Habitat.png/revision/latest?cb=20240129063130",
 			"rarity": 8
@@ -2044,7 +2044,7 @@
 			"suitability": "Kindling 4",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 11027200,
+			"color": "#a6005a",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f8/Jormuntide_Ignis.png/revision/latest?cb=20240122190807",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f6/Jormuntide_Ignis_Day_Habitat.png/revision/latest?cb=20240129063119",
 			"rarity": 9
@@ -2061,7 +2061,7 @@
 			"suitability": "Kindling 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/1a/Suzaku.png/revision/latest?cb=20240320131342",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/01/Suzaku_Day_Habitat.png/revision/latest?cb=20240129063623",
 			"rarity": 8
@@ -2078,7 +2078,7 @@
 			"suitability": "Watering 3",
 			"spawnTime": "Dungeons/Factions",
 			"farmable": "No",
-			"color": 2123412,
+			"color": "#0000ff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/22/Suzaku_Aqua.png/revision/latest?cb=20240320131418",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
 			"rarity": 9
@@ -2095,7 +2095,7 @@
 			"suitability": "Generating Electricity 3, Handiwork 2, Lumbering 2, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 16705372,
+			"color": "#ffff00",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/dd/Grizzbolt.png/revision/latest?cb=20240123195342",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/5c/Grizzbolt_Day_Habitat.png/revision/latest?cb=20240129062959",
 			"rarity": 8
@@ -2111,7 +2111,7 @@
 			"suitability": "Planting 4, Handiwork 3, Gathering 2, Medicine Production 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 5763719,
+			"color": "#008000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/2b/Lyleen.png/revision/latest?cb=20240122193916",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/08/Lyleen_Day_Habitat.png/revision/latest?cb=20240129063238",
 			"rarity": 9
@@ -2127,7 +2127,7 @@
 			"suitability": "Handiwork 3, Gathering 2, Medicine Production 3",
 			"spawnTime": "Alpha only",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a0/Lyleen_Noct.png/revision/latest?cb=20240122191031",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/6/6b/Lyleen_Noct_Day_Habitat.png/revision/latest?cb=20240129063233",
 			"rarity": 10
@@ -2144,7 +2144,7 @@
 			"suitability": "Kindling 3, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15548997,
+			"color": "#ff0000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/84/Faleris.png/revision/latest?cb=20240124100953",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/bf/Faleris_Day_Habitat.png/revision/latest?cb=20240129062817",
 			"rarity": 9
@@ -2160,7 +2160,7 @@
 			"suitability": "Generating Electricity 4, Handiwork 2, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 15844367,
+			"color": "#a04060",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/14/Orserk.png/revision/latest?cb=20240124104213",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/d3/Orserk_Day_Habitat.png/revision/latest?cb=20240129063355",
 			"rarity": 9
@@ -2177,7 +2177,7 @@
 			"suitability": "Gathering 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/16/Shadowbeak.png/revision/latest?cb=20240123195848",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/84/Shadowbeak_Day_Habitat.png/revision/latest?cb=20240129063550",
 			"rarity": 10
@@ -2194,7 +2194,7 @@
 			"suitability": "Lumbering 2, Mining 2",
 			"spawnTime": "Alpha only",
 			"farmable": "No",
-			"color": 16777215,
+			"color": "#ffffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b8/Paladius.png/revision/latest?cb=20240123200037",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f4/Paladius_Day_Habitat.png/revision/latest?cb=20240129063400",
 			"rarity": 20
@@ -2211,7 +2211,7 @@
 			"suitability": "Lumbering 2, Mining 2",
 			"spawnTime": "Alpha only",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/20/Necromus.png/revision/latest?cb=20240123200106",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/a0/Necromus_Day_Habitat.png/revision/latest?cb=20240129063341",
 			"rarity": 20
@@ -2228,7 +2228,7 @@
 			"suitability": "Cooling 4",
 			"spawnTime": "Alpha only",
 			"farmable": "No",
-			"color": 1752220,
+			"color": "#00ffff",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/4f/Frostallion.png/revision/latest?cb=20240320133607",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/33/Frostallion_Day_Habitat.png/revision/latest?cb=20240129062853",
 			"rarity": 20
@@ -2245,7 +2245,7 @@
 			"suitability": "Gathering 4",
 			"spawnTime": "Alpha only",
 			"farmable": "No",
-			"color": 2303786,
+			"color": "#000000",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b7/Frostallion_Noct.png/revision/latest?cb=20240320133624",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
 			"rarity": 20
@@ -2262,7 +2262,7 @@
 			"suitability": "Gathering 3",
 			"spawnTime": "Alpha only",
 			"farmable": "No",
-			"color": 15418782,
+			"color": "#800080",
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/fd/Jetragon.png/revision/latest?cb=20240123200132",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b4/Jetragon_Day_Habitat.png/revision/latest?cb=20240129063102",
 			"rarity": 20
@@ -2270,29 +2270,29 @@
 	],
 	"Colors": [
 		{
-			"Neutral": 16777215,
-			"Fire": 15548997,
-			"Fire, Ground": 15105570,
-			"Fire, Dark": 10038562,
-			"Fire, Dragon": 11027200,
-			"Water": 2123412,
-			"Water, Grass": 12370112,
-			"Water, Ice": 3447003,
-			"Water, Dragon": 5793266,
-			"Grass": 5763719,
-			"Grass, Ground": 2067276,
-			"Grass, Dragon": 2899536,
-			"Electric": 16705372,
-			"Electric, Dragon": 15844367,
-			"Ice": 1752220,
-			"Ice, Ground": 12745742,
-			"Ice, Dark": 9807270,
-			"Ice, Dragon": 3426654,
-			"Ground": 1236300,
-			"Ground, Dark": 10070709,
-			"Dark": 2303786,
-			"Dark, Dragon": 10181046,
-			"Dragon": 15418782
+			"Neutral": "#ffffff",
+			"Fire": "#ff0000",
+			"Fire, Ground": "#a54e2b",
+			"Fire, Dark": "#a6005a",
+			"Fire, Dragon": "#a6005a",
+			"Water": "#0000ff",
+			"Water, Grass": "#7fffd4",
+			"Water, Ice": "#00ccff",
+			"Water, Dragon": "#191970",
+			"Grass": "#008000",
+			"Grass, Ground": "#60641b",
+			"Grass, Dragon": "#404040",
+			"Electric": "#ffff00",
+			"Electric, Dragon": "#a04060",
+			"Ice": "#00ffff",
+			"Ice, Ground": "#787d62",
+			"Ice, Dark": "#005959",
+			"Ice, Dragon": "#5a4da6",
+			"Ground": "#a0522d",
+			"Ground, Dark": "#68351d",
+			"Dark": "#000000",
+			"Dark, Dragon": "#530053",
+			"Dragon": "#800080"
 		}
 	]
 }

@@ -63,7 +63,7 @@ module.exports = {
 			const pairs = str.split(',').map(pair => pair.trim().toLowerCase());
 
 			// Find matches
-			let allFound = true;
+			let foundDrops = true;
 			keywords.forEach(keyword => {
 				let found = false;
 				pairs.forEach(pair => {
@@ -72,11 +72,11 @@ module.exports = {
 					}
 				});
 				if (!found) {
-					allFound = false;
+					foundDrops = false;
 				}
 			});
 
-			return allFound;
+			return foundDrops;
 		}
 
 		if (!Number(palNumber)) {
@@ -130,34 +130,6 @@ module.exports = {
 			const matchesElement = palElement !== '' && palData.element.toLowerCase().includes(palElement.toLowerCase());
 			const matchesSuitability = palSuitability !== '' && palData.suitability.toLowerCase().includes(palSuitability.toLowerCase());
 			const matchesDrops = palDrops !== '' && matchDrops(palDrops, palData.drops.toLowerCase());
-
-			/* // Match Suitability
-			// Split the input into individual keywords
-			const keywords = palSuitability.split(',').map(keyword => keyword.trim().toLowerCase());
-
-			// Split the string into skill and level pairs
-			const pairs = palData.suitability.split(',').map(pair => pair.trim());
-
-			// Track matched keywords
-			const matchedKeywords = {};
-
-			// Find matches
-			const results = [];
-			keywords.forEach(keyword => {
-				let found = false;
-				pairs.forEach(pair => {
-					const lastSpaceIndex = pair.lastIndexOf(' ');
-					const skill = pair.substring(0, lastSpaceIndex);
-					if (skill.toLowerCase().includes(keyword) || keyword.includes(skill.toLowerCase())) {
-						found = true;
-						results.push({ skill, level: parseInt(pair.substring(lastSpaceIndex + 1)) });
-					}
-				});
-				matchedKeywords[keyword] = found;
-			});
-			// const allKeywordsMatched = Object.values(matchedKeywords).every(value => value);
-			console.log(results);
-			console.log(matchedKeywords); // array of objects: [{skill: skill, level: level}] */
 
 			// Solo Element
 			if (matchesElement && palSuitability === '' && palRarity === '' && palDrops === '') {
