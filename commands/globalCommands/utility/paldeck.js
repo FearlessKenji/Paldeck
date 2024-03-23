@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const palFile = require('../../palData.json');
+const palFile = require('../../../palData.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
