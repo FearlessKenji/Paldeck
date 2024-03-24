@@ -79,6 +79,36 @@ module.exports = {
 			return foundDrops;
 		}
 
+		function matchSuitabilities(input, str) {
+			// Split palData into individual keyword/level pairs
+			const palDataPairs = str.split(',').map(entry => {
+				const [keyword, level] = entry.split(/\s+(\d+)/);
+				return { keyword: keyword.trim(), level: parseInt(level.trim()) };
+			});
+
+			// Split palData into individual keyword/level pairs
+			const palSuitabilityPairs = input.split(',').map(entry => {
+				const parts = entry.split(/\s+(\d+)/);
+				const keyword = parts[0].trim();
+				const level = parts.length > 1 ? parseInt(parts[1]) : 0;
+				return { keyword, level };
+			});
+			const results = [];
+			for (const dataPairs of palDataPairs) {
+				for (const inputPairs of palSuitabilityPairs) {
+					if (dataPairs.keyword.toLocaleLowerCase().includes(inputPairs.keyword.toLocaleLowerCase()) && (dataPairs.level === inputPairs.level || inputPairs.level === 0)) {
+						results.push(`${dataPairs.keyword} ${dataPairs.level}`);
+					}
+				}
+			}
+			if (results.length === palSuitabilityPairs.length) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
 		if (!Number(palNumber)) {
 			palNumber = palNumber.padStart(4, 0);
 		}
@@ -128,8 +158,8 @@ module.exports = {
 			}
 			const matchesRarity = palRarity !== '' && palRarity === rarity;
 			const matchesElement = palElement !== '' && palData.element.toLowerCase().includes(palElement.toLowerCase());
-			const matchesSuitability = palSuitability !== '' && palData.suitability.toLowerCase().includes(palSuitability.toLowerCase());
-			const matchesDrops = palDrops !== '' && matchDrops(palDrops, palData.drops.toLowerCase());
+			const matchesSuitability = palSuitability !== '' && matchSuitabilities(palSuitability, palData.suitability);
+			const matchesDrops = palDrops !== '' && matchDrops(palDrops, palData.drops);
 
 			// Solo Element
 			if (matchesElement && palSuitability === '' && palRarity === '' && palDrops === '') {
