@@ -12,8 +12,7 @@ module.exports = {
 				.addStringOption(option =>
 					option
 						.setName('name')
-						.setDescription('Name of a pal.')
-						.setAutocomplete(true)))
+						.setDescription('Name of a pal.')))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('number')
@@ -21,44 +20,46 @@ module.exports = {
 				.addStringOption(option =>
 					option
 						.setName('number')
-						.setDescription('Number of a pal.')
-						.setAutocomplete(true)))
-		.addStringOption(option =>
-			option
-				.setName('element')
-				.setDescription('List pals based on element type.')
-				.addChoices([
-					['Neutral', 'Neutral'],
-					['Fire', 'Fire'],
-					['Water', 'Water'],
-					['Grass', 'Grass'],
-					['Electric', 'Electric'],
-					['Ice', 'Ice'],
-					['Ground', 'Ground'],
-					['Dark', 'Dark'],
-					['Dragon', 'Dragon'],
-				]))
-		.addStringOption(option =>
-			option
-				.setName('suitability')
-				.setDescription('List pals based on suitabilities.')
-				.setAutocomplete(true))
-		.addStringOption(option =>
-			option
-				.setName('rarity')
-				.setDescription('List pals based on rarity.')
-				.addChoices([
-					['Common', 'Common'],
-					['Rare', 'Rare'],
-					['Epic', 'Epic'],
-					['Legendary', 'Legendary'],
-				])
-				.setAutocomplete(true))
-		.addStringOption(option =>
-			option
-				.setName('drops')
-				.setDescription('Lists pals based on drops.')
-				.setAutocomplete(true)),
+						.setDescription('Number of a pal.')))
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('search')
+				.setDescription('Search for pals based on various criteria.')
+				.addStringOption(option =>
+					option
+						.setName('element')
+						.setDescription('List pals based on element type.')
+						.addChoices(
+							{ name: 'Neutral', value: 'Neutral' },
+							{ name: 'Fire', value: 'Fire' },
+							{ name: 'Water', value: 'Water' },
+							{ name: 'Grass', value: 'Grass' },
+							{ name: 'Electric', value: 'Electric' },
+							{ name: 'Ice', value: 'Ice' },
+							{ name: 'Ground', value: 'Ground' },
+							{ name: 'Dark', value: 'Dark' },
+							{ name: 'Dragon', value: 'Dragon' },
+						))
+				.addStringOption(option =>
+					option
+						.setName('suitability')
+						.setDescription('List pals based on suitabilities.')
+						.setAutocomplete(true))
+				.addStringOption(option =>
+					option
+						.setName('rarity')
+						.setDescription('List pals based on rarity.')
+						.addChoices(
+							{ name: 'Common', value: 'Common' },
+							{ name: 'Rare', value: 'Rare' },
+							{ name: 'Epic', value: 'Epic' },
+							{ name: 'Legendary', value: 'Legendary' },
+						))
+				.addStringOption(option =>
+					option
+						.setName('drops')
+						.setDescription('Lists pals based on drops.')
+						.setAutocomplete(true))),
 	async autocomplete(interaction) {
 		const focusedOption = interaction.options.getFocused(true);
 		let choices;
@@ -181,7 +182,7 @@ module.exports = {
 						{ name: 'Drops:', value: palData.drops },
 						{ name: 'Work Suitability:', value: palData.suitability },
 						{ name: 'Partner Skill:', value: palData.partner },
-						(palData.tech ? {	name: 'Tech:', value: palData.tech } : {	name: '\u200B',	value: '\u200B' }),
+						(palData.tech ? { name: 'Tech:', value: palData.tech } : { name: '\u200B', value: '\u200B' }),
 					);
 				await interaction.reply({ embeds: [palEmbed] });
 				return;
@@ -281,8 +282,8 @@ module.exports = {
 				.setTitle('Matching:')
 				.setDescription(`Element: ${palElement}\nSuitability: ${palSuitability}\nRarity:        ${palRarity}\n Drops:        ${palDrops}`)
 				.addFields(
-					{ name: 'Name\n-------\n', value: resNames.join('\n-------\n'), inline:true },
-					{ name: 'Element\n-------\n', value: resElement.join('\n-------\n'), inline:true },
+					{ name: 'Name\n-------\n', value: resNames.join('\n-------\n'), inline: true },
+					{ name: 'Element\n-------\n', value: resElement.join('\n-------\n'), inline: true },
 					{ name: 'Rarity\n-------\n', value: resRarity.join('\n-------\n'), inline: true },
 				);
 			await interaction.reply({ embeds: [palEmbed] });
