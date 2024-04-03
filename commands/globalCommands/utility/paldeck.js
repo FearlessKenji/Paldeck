@@ -1,51 +1,81 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 const palFile = require('../../../palData.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('paldeck')
 		.setDescription('Access the paldeck.')
-		.addStringOption(option =>
-			option
+		.addSubcommand(subcommand =>
+			subcommand
 				.setName('name')
-				.setDescription('Name of a pal.'))
-		.addStringOption(option =>
-			option
+				.setDescription('Search for a pal by name.')
+				.addStringOption(option =>
+					option
+						.setName('name')
+						.setDescription('Name of a pal.')
+						.setAutocomplete(true)))
+		.addSubcommand(subcommand =>
+			subcommand
 				.setName('number')
-				.setDescription('Number of a pal.'))
+				.setDescription('Search for a pal by number.')
+				.addStringOption(option =>
+					option
+						.setName('number')
+						.setDescription('Number of a pal.')
+						.setAutocomplete(true)))
 		.addStringOption(option =>
 			option
 				.setName('element')
 				.setDescription('List pals based on element type.')
-				.addChoices(
-					{ name: 'Neutral', value: 'Neutral' },
-					{ name: 'Fire', value: 'Fire' },
-					{ name: 'Water', value: 'Water' },
-					{ name: 'Grass', value: 'Grass' },
-					{ name: 'Electric', value: 'Electric' },
-					{ name: 'Ice', value: 'Ice' },
-					{ name: 'Ground', value: 'Ground' },
-					{ name: 'Dark', value: 'Dark' },
-					{ name: 'Dragon', value: 'Dragon' },
-				))
+				.addChoices([
+					['Neutral', 'Neutral'],
+					['Fire', 'Fire'],
+					['Water', 'Water'],
+					['Grass', 'Grass'],
+					['Electric', 'Electric'],
+					['Ice', 'Ice'],
+					['Ground', 'Ground'],
+					['Dark', 'Dark'],
+					['Dragon', 'Dragon'],
+				]))
 		.addStringOption(option =>
 			option
 				.setName('suitability')
-				.setDescription('List pals based on suitabilities.'))
+				.setDescription('List pals based on suitabilities.')
+				.setAutocomplete(true))
 		.addStringOption(option =>
 			option
 				.setName('rarity')
 				.setDescription('List pals based on rarity.')
-				.addChoices(
-					{ name: 'Common', value: 'Common' },
-					{ name: 'Rare', value: 'Rare' },
-					{ name: 'Epic', value: 'Epic' },
-					{ name: 'Legendary', value: 'Legendary' },
-				))
+				.addChoices([
+					['Common', 'Common'],
+					['Rare', 'Rare'],
+					['Epic', 'Epic'],
+					['Legendary', 'Legendary'],
+				])
+				.setAutocomplete(true))
 		.addStringOption(option =>
 			option
 				.setName('drops')
-				.setDescription('Lists pals based on drops.')),
+				.setDescription('Lists pals based on drops.')
+				.setAutocomplete(true)),
+	async autocomplete(interaction) {
+		const focusedOption = interaction.options.getFocused(true);
+		let choices;
+
+		if (focusedOption.name === 'suitability') {
+			choices = ['Kindling', 'Watering', 'Planting', 'Generating Electricity', 'Handiwork', 'Gathering', 'Lumbering', 'Mining', 'Medicine Production', 'Cooling', 'Transporting', 'Farming']; // Add actual suitabilities here
+		}
+
+		if (focusedOption.name === 'drops') {
+			choices = ['Wool', 'Lamball Mutton', 'Red Berries, Egg, Chikipi Poultry', 'Berry Seeds', 'Low Grade Medical Supplies', 'Leather', 'Flame Organ', 'Pal Fluids', 'Electric Organ', 'Mushroom', 'Ice Organ', 'Penking Plume', 'Gumoss Leaf', 'Bone', 'Fiber', 'High Grade Technical Manual', 'Venom Gland', 'Small Pal Soul', 'Rushoar Pork', 'Gold Coin', 'Sapphire', 'Ruby', 'Gunpowder', 'Tocotoco Feather', 'Wheat Seeds', 'Mozzarina Steak', 'Milk', 'Lettuce Seeds', 'Tomato Seeds', 'Cotton Candy', 'High Quality Pal Oil', 'Caprity Meat', 'Horn', 'Eikthyrdeer Venison', 'Beautiful Flower', 'Honey', 'Raw Dumud', 'Copper Key', 'Silver Key', 'Galeclaw Poultry', 'Arrow', 'Elizabee\'s Staff', 'Reindrix Venison', 'Paldium Fragment', 'Ore', 'Cake', 'Suspicious Juice', 'Strange Juice', 'Memory Wiping Medicine', 'Ingot', 'Kattress Hair', 'High Quality Cloth', 'Raw Kelpsea', 'Precious Dragon Stone', 'Broncherry Meat', 'Mammorest Meat', 'Cloth', 'Coal', 'Medium Pal Soul', 'Pal Metal Ingot', 'Pure Quartz', 'Large Pal Soul', 'Innovative Technical Manual', 'Diamond', 'Polymer', 'Carbon Fiber']; // Add actual drop options here
+		}
+
+		const filtered = choices.filter(choice => choice.startsWith(focusedOption.value));
+		await interaction.respond(
+			filtered.map(choice => ({ name: choice, value: choice })),
+		);
+	},
 
 	async execute(interaction) {
 		const palName = interaction.options.getString('name') || '';
