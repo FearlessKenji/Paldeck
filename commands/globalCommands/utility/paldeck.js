@@ -79,12 +79,23 @@ module.exports = {
 	},
 
 	async execute(interaction) {
-		const palName = interaction.options.getString('name') || '';
-		let palNumber = interaction.options.getString('number') || '';
-		const palElement = interaction.options.getString('element') || '';
-		const palSuitability = interaction.options.getString('suitability') || '';
-		const palRarity = interaction.options.getString('rarity') || '';
-		const palDrops = interaction.options.getString('drops') || '';
+		let palName = '', palNumber = '', palElement = '', palSuitability = '', palRarity = '', palDrops = '';
+		if (interaction.options.getSubcommand() === 'name') {
+			palName = interaction.options.getString('name') || '';
+
+			// Your logic for searching by name
+		}
+		else if (interaction.options.getSubcommand() === 'number') {
+			palNumber = interaction.options.getString('number') || '';
+
+			// Your logic for searching by number
+		}
+		else if (interaction.options.getSubcommand() === 'search') {
+			palElement = interaction.options.getString('element') || '';
+			palSuitability = interaction.options.getString('suitability') || '';
+			palRarity = interaction.options.getString('rarity') || '';
+			palDrops = interaction.options.getString('drops') || '';
+		}
 		// Match Drops
 		// Split the input into individual keywords
 		function matchDrops(input, str) {
