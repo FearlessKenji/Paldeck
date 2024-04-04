@@ -61,6 +61,7 @@ module.exports = {
 						.setDescription('Lists pals based on drops.')
 						.setAutocomplete(true))),
 	async autocomplete(interaction) {
+		if (!interaction.isAutocomplete()) return;
 		const focusedOption = interaction.options.getFocused(true);
 		let choices;
 
