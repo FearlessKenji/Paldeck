@@ -77,10 +77,10 @@ module.exports = {
 
 		let options;
 		if (filtered.length > 25) {
-			options = filtered.slice(0, 25);
+			options = filtered.slice(0, 25).toLowerCase();
 		}
 		else {
-			options = filtered;
+			options = filtered.toLowerCase();
 		}
 		await interaction.respond(
 			options.map(choice => ({ name: choice, value: choice })),
