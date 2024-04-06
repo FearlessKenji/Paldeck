@@ -10,5 +10,12 @@ module.exports = {
 	execute(client) {
 		// Ready
 		console.log(writeLog(`Ready! Logged in as ${client.user.tag}`));
+		client.user.setPresence({
+			status: 'online',
+			activity: {
+				name: `with pals in ${client.guilds.cache.size} servers.`, // Customize this to your desired status message
+				type: 'PLAYING', // You can choose from WATCHING, PLAYING, STREAMING, and LISTENING
+			},
+		});
 	},
 };
