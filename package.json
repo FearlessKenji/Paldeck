@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "cron": "^3.1.6",
     "discord.js": "^14.12.1",
     "fs": "^0.0.1-security"
   },

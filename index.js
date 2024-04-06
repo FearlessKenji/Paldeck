@@ -1,7 +1,8 @@
 // Require the necessary discord.js classes
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, ActivityType } = require('discord.js');
 const { writeLog } = require('./modules/writeLog.js');
 const config = require('./config.json');
+const { CronJob } = require('cron');
 const path = require('node:path');
 const fs = require('node:fs');
 
@@ -47,9 +48,22 @@ for (const file of eventFiles) {
 	}
 }
 
+const updateStatus = new CronJob('*/10 * * * *', async function () {
+	client.user.setActivity({
+		type: ActivityType.Custom,
+		name: 'customstatus',
+		state: `Catching pals in ${client.guilds.cache.size} servers.`, // Customize this to your desired status message
+	});
+});
+
+
+// Catch errors
 process.on('uncaughtException', function (err) {
 	console.error(writeLog('Caught exception: ', err));
 });
+
+// Update status periodically
+updateStatus.start();
 
 // Log in to Discord with your client's token
 client.login(config.token);

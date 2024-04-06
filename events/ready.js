@@ -1,4 +1,4 @@
-const { Events, ActivityType } = require('discord.js');
+const { Events } = require('discord.js');
 const { writeLog } = require('../modules/writeLog.js');
 
 // When the client is ready, run this code (only once).
@@ -10,10 +10,5 @@ module.exports = {
 	execute(client) {
 		// Ready
 		console.log(writeLog(`Ready! Logged in as ${client.user.tag}`));
-		client.user.setActivity({
-			type: ActivityType.Custom,
-			name: 'customstatus',
-			state: `Catching pals in ${client.guilds.cache.size} servers.`, // Customize this to your desired status message
-		});
 	},
 };
