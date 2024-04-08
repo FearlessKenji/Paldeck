@@ -2268,6 +2268,22 @@
 			"rarity": 20
 		},
 		{
+			"name": "Bellanoir",
+			"description": "Eclipsed Siren",
+			"number": "112",
+			"element": "Dark",
+			"drops": "Huge Dark Egg, Ancient Civilization Core, Multiclimate Undershirt",
+			"Food": "4/10",
+			"partner": "Nightmare Iris - When activated, attacks targeted enemy with a powerful Nightmare Ray.",
+			"suitability": "Handiwork 2, Medicine Production 2, Transporting 2",
+			"spawnTime": "Summoning altar",
+			"farmable": "No",
+			"color": [0, 0, 0],
+			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/8a/Bellanoir.png/revision/latest?cb=20240404154635",
+			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"rarity": 20
+		},
+		{
 			"name": "Bellanoir Libero",
 			"description": "Twilight Siren",
 			"number": "112b",
@@ -2276,7 +2292,7 @@
 			"food": "4/10",
 			"partner": "Nightmare Stare - When activated, attacks targeted enemy with a powerful Nightmare Bloom.",
 			"suitability": "Handiwork 2, Medicine Production 4, Transporting 2",
-			"spawnTime": "Summoning Altar",
+			"spawnTime": "Summoning altar",
 			"farmable": "No",
 			"color": [0, 0, 0],
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c0/Bellanoir_Libero.png/revision/latest?cb=20240404154711",
