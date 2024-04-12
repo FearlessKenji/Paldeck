@@ -5,7 +5,7 @@ module.exports = {
 	name: Events.GuildCreate,
 	async execute(guild) {
 		try {
-			console.log(writeLog(`Added to new server: ${guild.name})\nID: ${guild.id}.`));
+			console.log(writeLog(`Added to new server: ${guild.name} ID: ${guild.id}.`));
 		}
 		catch (error) {
 			console.error(writeLog('Failed to update server table upon arrival.', error));
