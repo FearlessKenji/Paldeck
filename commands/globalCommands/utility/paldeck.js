@@ -70,7 +70,7 @@ module.exports = {
 		}
 
 		if (focusedOption.name === 'drops') {
-			choices = ['Wool', 'Lamball Mutton', 'Red Berries', 'Egg', 'Chikipi Poultry', 'Berry Seeds', 'Low Grade Medical Supplies', 'Leather', 'Flame Organ', 'Pal Fluids', 'Electric Organ', 'Mushroom', 'Ice Organ', 'Penking Plume', 'Gumoss Leaf', 'Bone', 'Fiber', 'High Grade Technical Manual', 'Venom Gland', 'Small Pal Soul', 'Rushoar Pork', 'Gold Coin', 'Sapphire', 'Ruby', 'Gunpowder', 'Tocotoco Feather', 'Wheat Seeds', 'Mozzarina Steak', 'Milk', 'Lettuce Seeds', 'Tomato Seeds', 'Cotton Candy', 'High Quality Pal Oil', 'Caprity Meat', 'Horn', 'Eikthyrdeer Venison', 'Beautiful Flower', 'Honey', 'Raw Dumud', 'Copper Key', 'Silver Key', 'Galeclaw Poultry', 'Arrow', 'Elizabee\'s Staff', 'Reindrix Venison', 'Paldium Fragment', 'Ore', 'Cake', 'Suspicious Juice', 'Strange Juice', 'Memory Wiping Medicine', 'Ingot', 'Kattress Hair', 'High Quality Cloth', 'Raw Kelpsea', 'Precious Dragon Stone', 'Broncherry Meat', 'Mammorest Meat', 'Cloth', 'Coal', 'Medium Pal Soul', 'Pal Metal Ingot', 'Pure Quartz', 'Large Pal Soul', 'Innovative Technical Manual', 'Diamond', 'Polymer', 'Carbon Fiber', 'Huge Dark Egg', 'Bellanoir Libero (Ultra) Slab', 'Ancient Civilization Core', 'Power Fruit', 'Stout Fruit', 'Life Fruit', 'Multiclimate Undershirt']; // Add actual drop options here
+			choices = ['Wool', 'Lamball Mutton', 'Red Berries', 'Egg', 'Chikipi Poultry', 'Berry Seeds', 'Low Grade Medical Supplies', 'Leather', 'Flame Organ', 'Pal Fluids', 'Electric Organ', 'Mushroom', 'Ice Organ', 'Penking Plume', 'Gumoss Leaf', 'Bone', 'Fiber', 'High Grade Technical Manual', 'Venom Gland', 'Small Pal Soul', 'Rushoar Pork', 'Gold Coin', 'Sapphire', 'Ruby', 'Gunpowder', 'Tocotoco Feather', 'Wheat Seeds', 'Mozzarina Steak', 'Milk', 'Lettuce Seeds', 'Tomato Seeds', 'Cotton Candy', 'High Quality Pal Oil', 'Caprity Meat', 'Horn', 'Eikthyrdeer Venison', 'Beautiful Flower', 'Honey', 'Raw Dumud', 'Copper Key', 'Silver Key', 'Galeclaw Poultry', 'Arrow', 'Elizabee\'s Staff', 'Reindrix Venison', 'Paldium Fragment', 'Ore', 'Cake', 'Suspicious Juice', 'Strange Juice', 'Memory Wiping Medicine', 'Ingot', 'Kattress Hair', 'High Quality Cloth', 'Raw Kelpsea', 'Precious Dragon Stone', 'Broncherry Meat', 'Mammorest Meat', 'Cloth', 'Coal', 'Medium Pal Soul', 'Pal Metal Ingot', 'Pure Quartz', 'Large Pal Soul', 'Innovative Technical Manual', 'Diamond', 'Polymer', 'Carbon Fiber', 'Huge Dark Egg', 'Bellanoir Libero (Ultra) Slab', 'Ancient Civilization Core', 'Power Fruit', 'Stout Fruit', 'Life Fruit', 'Multiclimate Undershirt', 'Training Crystal', 'Training Manual (XL)']; // Add actual drop options here
 		}
 
 		const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedOption.value.toLowerCase()));
@@ -189,6 +189,7 @@ module.exports = {
 				const wiki = palData.name.toLowerCase().replace(' ', '_');
 				const palEmbed = new EmbedBuilder()
 					.setAuthor({ name: `Rarity: ${rarity}`, url: `https://palworld.fandom.com/wiki/${wiki}` })
+					.setDescription(palData.description)
 					.setColor(palData.color)
 					.setTitle(palData.name)
 					.setURL(`https://paldex.gg/breeding-calculator?child=${breed}&parent1=${breed}`)

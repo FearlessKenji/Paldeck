@@ -7,12 +7,14 @@ module.exports = {
 
 	async execute(interaction) {
 		await interaction.reply({ content: `## Using the Paldeck:\n
-		- Name\n - Enter the name of the pal to be searched for.\n - Returns a single pal.\n - One name only.
-		- Number\n - Enter the paldeck number you wish to look up.\n - Returns a single pal.\n - One number only.
+		- Name\n - Enter the name of the pal to be searched for.\n - One name only.
+		- Number\n - Enter the paldeck number you wish to look up.\n - One number only.
 ### Combine the following criteria to narrow search:\n
-		- Drops\n - Enter the item that drops from the pal you wish to look up.\n - Returns a list of pals.
-		- Element\n - Enter the element you wish to look for.\n - Returns a list of pals.
-		- Suitability\n - Enter the work suitability you wish to look for.\n - You can add numbers to specify tiers.\n - Returns a list of pals.
-		- Rarity\n - Enter the rarity you wish to search for.\n - Returns a list of pals.`, ephemeral: true });
+		- Drops\n - Enter the item that drops from the pals you wish to look up.
+		- Element\n - Enter the element you wish to look for.
+		- Suitability\n - Enter the work suitability you wish to look for.\n - You can add numbers to specify tiers (Medicine 4, Mining 2).
+		- Rarity\n - Enter the rarity you wish to search for.
+### Support/Feedback:\n
+		- [Join the Discord](https://discord.gg/FBBnC3jCFa)`, ephemeral: true });
 	},
 };
