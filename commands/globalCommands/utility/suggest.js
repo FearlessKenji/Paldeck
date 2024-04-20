@@ -13,7 +13,7 @@ module.exports = {
 
 	async execute(interaction) {
 		const tempData = JSON.parse(fs.readFileSync('./config.json'));
-		const channel = interaction.guild.channels.cache.get('1221954020424421437');
+		const channel = interaction.client.channels.cache.get('1221954020424421437');
 
 		const suggestion = new EmbedBuilder()
 			.setAuthor({ name: `Suggestion number ${tempData.count}` })
