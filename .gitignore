@@ -6,6 +6,7 @@ logs
 node_modules/
 
 # startup config files
+database/database.sqlite
 ecosystem.config.js
 ecosystem.config.cjs
 config.json
