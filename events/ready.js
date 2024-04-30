@@ -13,7 +13,7 @@ module.exports = {
 		const guilds = client.guilds.cache.map(guild => guild);
 		for (const guild of guilds) {
 			const owner = await guild.fetchOwner();
-			console.log(guild.id, guild.name, owner.user.id, owner.user.username);
+			console.log(writeLog(guild.id, guild.name, owner.user.id, owner.user.username));
 			await JoinedServers.upsert({
 				guild_id: guild.id,
 				guild_name: guild.name,
