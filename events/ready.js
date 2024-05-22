@@ -7,8 +7,8 @@ module.exports = {
 	once: true,
 	async execute(client) {
 		client.user.setActivity({
-			type: ActivityType.Custom,
-			name: `Catching pals in ${client.guilds.cache.size} servers`,
+			type: ActivityType.Playing,
+			name: `with pals in ${client.guilds.cache.size} servers`,
 		});
 		const guilds = client.guilds.cache.map(guild => guild);
 		for (const guild of guilds) {

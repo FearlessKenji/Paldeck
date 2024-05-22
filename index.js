@@ -50,8 +50,8 @@ for (const file of eventFiles) {
 
 const updateStatus = new CronJob('*/10 * * * *', async function () {
 	client.user.setActivity({
-		type: ActivityType.Custom,
-		name: `Catching pals in ${client.guilds.cache.size} servers`,
+		type: ActivityType.Playing,
+		name: `with pals in ${client.guilds.cache.size} servers`,
 	});
 });
 
