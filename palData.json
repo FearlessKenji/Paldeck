@@ -953,7 +953,7 @@
 		},
 		{
 			"name": "Gorirat Terra",
-			"description": "Desert Punk",
+			"description": "Up for a Brawl",
 			"number":"049B",
 			"element":"Ground",
 			"drops":"Ore, Bone",
@@ -965,7 +965,7 @@
 			"color": [166, 82, 45],
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/26/Gorirat_Terra.png/revision/latest?cb=20240625084104",
 			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity": 1
+			"rarity": 5
 		},
 		{
 			"name": "Beegarde",
@@ -1080,7 +1080,7 @@
 			"color": [166, 0, 90],
 			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/e2/Chillet_Ignis.png/revision/latest?cb=20240625084714",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":5
 		},
 		{
 			"name": "Univolt",
@@ -1446,7 +1446,7 @@
 			"color":[100, 0, 0],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/5/56/Bushi_Noct.png/revision/latest?cb=20240625070800",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":7
 		},
 		{
 			"name": "Beakon",
@@ -1512,7 +1512,7 @@
 			"color":[100, 0, 0],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/9/9e/Katress_Ignis.png/revision/latest?cb=20240625085711",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":6
 		},
 		{
 			"name": "Wixen",
@@ -1544,7 +1544,7 @@
 			"color":[100, 0, 0],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/b/bd/Wixen_Noct.png/revision/latest?cb=20240625090144",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":6
 		},
 		{
 			"name": "Verdash",
@@ -2028,7 +2028,7 @@
 			"color":[64, 64, 64],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/6/67/Quivern_Botan.png/revision/latest?cb=20240625072051",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":8
 		},
 		{
 			"name": "Blazamut",
@@ -2062,7 +2062,7 @@
 			"color":[166, 0, 90],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/d/d9/Blazamut_Ryu.png/revision/latest?cb=20240625091141",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":10
 		},
 		{
 			"name": "Helzephyr",
@@ -2096,7 +2096,7 @@
 			"color":[128, 128, 0],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/0/0f/Helzephyr_Lux.png/revision/latest?cb=20240625072006",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":8
 		},
 		{
 			"name": "Astegon",
@@ -2145,7 +2145,7 @@
 			"color":[166, 82, 45],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/b/b8/Menasting_Terra.png/revision/latest?cb=20240625072413",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":10
 		},
 		{
 			"name": "Anubis",
@@ -2461,7 +2461,7 @@
 			"color":[128, 128, 128],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/1/17/Selyne.png/revision/latest?cb=20240628092011",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":9
 		},
 		{
 			"name":"Croajiro",
@@ -2477,7 +2477,7 @@
 			"color":[0, 0, 255],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/1/17/Croajiro.png/revision/latest?cb=20240625092447",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":4
 		},
 		{
 			"name":"Lullu",
@@ -2493,7 +2493,7 @@
 			"color":[25, 128, 0],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/1/14/Lullu.png/revision/latest?cb=20240625093344",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":4
 		},
 		{
 			"name":"Shroomer",
@@ -2510,7 +2510,7 @@
 			"color":[25, 128, 0],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/a/a6/Shroomer.png/revision/latest?cb=20240625093850",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":4
 		},
 		{
 			"name":"Shroomer Noct",
@@ -2527,7 +2527,7 @@
 			"color":[12, 64, 0],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/6/66/Shroomer_Noct.png/revision/latest?cb=20240625094237",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":5
 		},
 		{
 			"name":"Kikit",
@@ -2543,7 +2543,7 @@
 			"color":[166, 82, 45],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/e/e0/Kikit.png/revision/latest?cb=20240625081943",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":4
 		},
 		{
 			"name":"Sootseer",
@@ -2559,7 +2559,7 @@
 			"color":[100, 0, 0],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/f/f0/Sootseer.png/revision/latest?cb=20240625082311",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":7
 		},
 		{
 			"name":"Prixter",
@@ -2575,7 +2575,7 @@
 			"color":[104, 53, 29],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/d/dd/Prixter.png/revision/latest?cb=20240625095013",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":5
 		},
 		{
 			"name":"Knocklem",
@@ -2591,7 +2591,7 @@
 			"color":[166, 82, 45],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/3/3c/Knocklem.png/revision/latest?cb=20240625080028",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":9
 		},
 		{
 			"name":"Yakumo",
@@ -2608,7 +2608,7 @@
 			"color":[255, 255, 255],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/b/ba/Yakumo.png/revision/latest?cb=20240625095349",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":4
 		},
 		{
 			"name":"Dogen",
@@ -2624,7 +2624,7 @@
 			"color":[255, 255, 255],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/b/ba/Yakumo.png/revision/latest?cb=20240625095349",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":6
 		},
 		{
 			"name":"Dazemu",
@@ -2641,7 +2641,7 @@
 			"color":[255, 255, 255],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/1/13/Dogen.png/revision/latest?cb=20240625080842",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":5
 		},
 		{
 			"name":"Mimog",
@@ -2657,7 +2657,7 @@
 			"color":[255, 255, 255],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/d/d6/Mimog.png/revision/latest?cb=20240630020923",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":7
 		},
 		{
 			"name":"Xenovader",
@@ -2673,7 +2673,7 @@
 			"color":[0, 0, 0],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/a/a4/Xenovader.png/revision/latest?cb=20240625100714",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":7
 		},
 		{
 			"name":"Xenogard",
@@ -2690,9 +2690,18 @@
 			"color":[255, 0, 255],
 			"thumbnail":"https://static.wikia.nocookie.net/palworld/images/b/b2/Xenogard.png/revision/latest?cb=20240625101205",
 			"habitat":"https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
-			"rarity":1
+			"rarity":9
 		}
 
+	],
+	"Rarity": [
+		{
+			"from": "https://palworld.gg/pals",
+			"rarity <= 4": "Common",
+			"rarity > 4 && palData.rarity <= 7": "Rare",
+			"rarity > 7 && palData.rarity <= 10": "Epic",
+			"rarity >10": "Legendary"
+		}
 	],
 	"Colors": [
 		{
