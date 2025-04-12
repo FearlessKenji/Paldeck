@@ -188,11 +188,11 @@ module.exports = {
 				const breed = palData.name.toLowerCase().replace(' ', '-');
 				const wiki = palData.name.toLowerCase().replace(' ', '_');
 				const palEmbed = new EmbedBuilder()
-					.setAuthor({ name: `Rarity: ${rarity}`, url: `https://palworld.fandom.com/wiki/${wiki}` })
+					.setAuthor({ name: `Rarity: ${rarity}`, url: `https://palworld.gg/breeding-calculator` }) //?child=${breed}&parent1=${breed}`)
 					.setDescription(palData.description)
 					.setColor(palData.color)
 					.setTitle(palData.name)
-					.setURL(`https://paldex.gg/breeding-calculator?child=${breed}&parent1=${breed}`)
+					.setURL(`https://palworld.fandom.com/wiki/${wiki}`)
 					.setThumbnail(palData.thumbnail)
 					.setImage(palData.habitat)
 					.setFooter({ text: `Spawns: ${palData.spawnTime}. Farmable: ${palData.farmable}.` })
