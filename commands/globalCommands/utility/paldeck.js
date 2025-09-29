@@ -12,7 +12,8 @@ module.exports = {
 				.addStringOption(option =>
 					option
 						.setName('name')
-						.setDescription('Name of a pal.')))
+						.setDescription('Name of a pal.')
+						.setAutocomplete(true)))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('number')
@@ -65,12 +66,20 @@ module.exports = {
 		const focusedOption = interaction.options.getFocused(true);
 		let choices;
 
+		if (focusedOption.name === 'name') {
+			 // Add actual pal names here
+			choices = ['Lamball', 'Cattiva', 'Chikipi', 'Lifmunk', 'Foxparks', 'Foxparks Cryst', 'Fuack', 'Fuack Ignis', 'Sparkit', 'Tanzee', 'Rooby', 'Pengullet', 'Bengullet Lux', 'Penking', 'Penking Lux', 'Jolthog', 'Jolthog Cryst', 'Gumoss', 'Vixy', 'Hoocrates', 'Teafant', 'Depresso', 'Cremis', 'Daedream', 'Rushoar', 'Nox', 'Fuddler', 'Killamari', 'Killamari Primo', 'Mau', 'Mau Cryst', 'Celaray', 'Celaray Lux', 'Direhowl', 'Tocotoco', 'Flopie', 'Mozzarina', 'Bristla', 'Gobfin', 'Gobfin Ignis', 'Hangyu', 'Hangyu Cryst', 'Mossanda', 'Mossanda Lux', 'Woolipop', 'Caprity', 'Caprity Noct', 'Melpaca', 'Eikthyrdeer', 'Eikthyrdeer Terra', 'Nitewing', 'Ribbuny', 'Ribbuny Botan', 'Incineram', 'Incineram Noct', 'Cinnamoth', 'Arsox', 'Dumud', 'Dumud Gild', 'Cawgnito', 'Leezpunk', 'Leezpunk Ignis', 'Loupmoon', 'Loupmoon Cryst', 'Galeclaw', 'Robinquil', 'Robinquil Terra', 'Gorirat', 'Gorirat Terra', 'Beegarde', 'Elizabee', 'Grintale', 'Swee', 'Sweepa', 'Chillet', 'Chillet Ignis', 'Univolt', 'Foxcicle', 'Pyrin', 'Pyrin Noct', 'Reindrix', 'Rayhound', 'Kitsun', 'Kitsun Noct', 'Dazzi', 'Dazzi Noct', 'Lunaris', 'Dinossom', 'Dinossom Lux', 'Surfent', 'Surfent Terra', 'Maraith', 'Digitoise', 'Tombat', 'Lovander', 'Flambelle', 'Vanwyrm', 'Vanwyrm Cryst', 'Bushi', 'Bushi Noct', 'Beakon', 'Ragnahawk', 'Katress', 'Katress Ignis', 'Wixen', 'Wixen Noct', 'Verdash', 'Vaelet', 'Sibelyx', 'Elphidran', 'Elphidran Aqua', 'Kelpsea', 'Kelpsea Ignis', 'Azurobe', 'Azurobe Cryst', 'Cryolinx', 'Cryolinx Terra', 'Blazehowl', 'Blazehowl Noct', 'Relaxaurus', 'RElaxaurus Lux', 'Broncherry', 'Broncherry Aqua', 'Petallia', 'Reptyro', 'Reptyro Cryst', 'Kingpaca', 'Kingpaca Cryst', 'Mammorest', 'Mammorest Cryst', 'Wumpo', 'Wumpo Botan', 'Warsect', 'Warsect Terra', 'Fenglope', 'Fenglope Lux', 'Felbat', 'Quivern', 'Quivern Botan', 'Blazamut', 'Blazamut Ryu', 'Helzephyr', 'Helzephyr Lux', 'Astegon', 'Menasting', 'Menasting Terra', 'Anubis', 'Jormuntide', 'Jormuntide Ignis', 'Suzaku', 'Suzaku Aqua', 'Grizzbolt', 'Lyleen', 'Lyleen Noct', 'Faleris', 'Faleris Aqua', 'Orserk', 'Shadowbeak', 'Paladius', 'Necromus', 'Frostallion', 'Frostallion Noct', 'Jetragon', 'Bellanoir', 'Bellanoir Libero', 'Selyne', 'Croajiro', 'Croajiro Noct', 'Lullu', 'Shroomer', 'Shroomer Noct', 'Kikit', 'Sootseer', 'Prixter', 'Knocklem', 'Yakumo', 'Dogen', 'Dazemu', 'Mimog', 'Xenovader', 'Xenogard', 'Xenolord', 'Nitemary', 'Starryon', 'Silvegas', 'Smokie', 'Celesdir', 'Omascul', 'Splatterina', 'Tarantriss', 'Azurmane', 
+				'Bastigor', 'Prunelia', 'Nyafia', 'Gildane', 'Herbil', 'Icelyn', 'Frostplume', 'Palumba', 'Braloha', 'Munchill', 'Polapup', 'Turtacle', 'Turtacle Terra', 'Jellroy', 'Jelliette', 'Gloopie', 'Finsinder', 'Finsider Ignis', 'Ghangler', 'Ghangler Ignis', 'Whalaska', 'Whalaska Ignis', 'Neptilius'];
+		}
+
 		if (focusedOption.name === 'suitability') {
-			choices = ['Kindling', 'Watering', 'Planting', 'Generating Electricity', 'Handiwork', 'Gathering', 'Lumbering', 'Mining', 'Medicine Production', 'Cooling', 'Transporting', 'Farming']; // Add actual suitabilities here
+			// Add actual suitabilities here
+			choices = ['Kindling', 'Kindling 1', 'Kindling 2', 'Kindling 3', 'Kindling 4', 'Watering', 'Watering 1', 'Watering 2', 'Watering 3', 'Watering 4', 'Planting', 'Planting 1', 'Planting 2', 'Planting 3', 'Planting 4', 'Generating Electricity', 'Generating Electricity 1', 'Generating Electricity 2', 'Generating Electricity 3', 'Generating Electricity 4', 'Handiwork', 'Handiwork 1', 'Handiwork 2', 'Handiwork 3', 'Handiwork 4', 'Gathering', 'Gathering 1', 'Gathering 2', 'Gathering 3', 'Gathering 4', 'Lumbering', 'Lumbering 1', 'Lumbering 2', 'Lumbering 3', 'Lumbering 4', 'Mining', 'Mining 1', 'Mining 2', 'Mining 3', 'Mining 4', 'Medicine Production', 'Medicine Production 1', 'Medicine Production 2', 'Medicine Production 3', 'Medicine Production 4', 'Cooling', 'Cooling 1', 'Cooling 2', 'Cooling 3', 'Cooling 4', 'Transporting', 'Transporting 1', 'Transporting 2', 'Transporting 3', 'Transporting 4', 'Farming', 'Farming 1', 'Farming 2', 'Farming 3', 'Farming 4'];
 		}
 
 		if (focusedOption.name === 'drops') {
-			choices = ['Wool', 'Lamball Mutton', 'Red Berries', 'Egg', 'Chikipi Poultry', 'Berry Seeds', 'Low Grade Medical Supplies', 'Leather', 'Flame Organ', 'Pal Fluids', 'Electric Organ', 'Mushroom', 'Ice Organ', 'Penking Plume', 'Gumoss Leaf', 'Bone', 'Fiber', 'High Grade Technical Manual', 'Venom Gland', 'Small Pal Soul', 'Rushoar Pork', 'Gold Coin', 'Sapphire', 'Ruby', 'Gunpowder', 'Tocotoco Feather', 'Wheat Seeds', 'Mozzarina Steak', 'Milk', 'Lettuce Seeds', 'Tomato Seeds', 'Cotton Candy', 'High Quality Pal Oil', 'Caprity Meat', 'Horn', 'Eikthyrdeer Venison', 'Beautiful Flower', 'Honey', 'Raw Dumud', 'Copper Key', 'Silver Key', 'Galeclaw Poultry', 'Arrow', 'Elizabee\'s Staff', 'Reindrix Venison', 'Paldium Fragment', 'Ore', 'Cake', 'Suspicious Juice', 'Strange Juice', 'Memory Wiping Medicine', 'Ingot', 'Kattress Hair', 'High Quality Cloth', 'Raw Kelpsea', 'Precious Dragon Stone', 'Broncherry Meat', 'Mammorest Meat', 'Cloth', 'Coal', 'Medium Pal Soul', 'Pal Metal Ingot', 'Pure Quartz', 'Large Pal Soul', 'Innovative Technical Manual', 'Diamond', 'Polymer', 'Carbon Fiber', 'Huge Dark Egg', 'Bellanoir Libero (Ultra) Slab', 'Ancient Civilization Core', 'Power Fruit', 'Stout Fruit', 'Life Fruit', 'Multiclimate Undershirt', 'Training Crystal', 'Training Manual (XL)']; // Add actual drop options here
+			 // Add actual drop options here
+			choices = ['Wool', 'Lamball Mutton', 'Red Berries', 'Egg', 'Chikipi Poultry', 'Berry Seeds', 'Low Grade Medical Supplies', 'Leather', 'Flame Organ', 'Pal Fluids', 'Electric Organ', 'Mushroom', 'Ice Organ', 'Penking Plume', 'Gumoss Leaf', 'Bone', 'Fiber', 'High Grade Technical Manual', 'Venom Gland', 'Small Pal Soul', 'Rushoar Pork', 'Gold Coin', 'Sapphire', 'Ruby', 'Gunpowder', 'Tocotoco Feather', 'Wheat Seeds', 'Mozzarina Steak', 'Milk', 'Lettuce Seeds', 'Tomato Seeds', 'Cotton Candy', 'High Quality Pal Oil', 'Caprity Meat', 'Horn', 'Eikthyrdeer Venison', 'Beautiful Flower', 'Honey', 'Raw Dumud', 'Copper Key', 'Silver Key', 'Galeclaw Poultry', 'Arrow', 'Elizabee\'s Staff', 'Reindrix Venison', 'Paldium Fragment', 'Ore', 'Cake', 'Suspicious Juice', 'Strange Juice', 'Memory Wiping Medicine', 'Ingot', 'Kattress Hair', 'High Quality Cloth', 'Raw Kelpsea', 'Precious Dragon Stone', 'Broncherry Meat', 'Mammorest Meat', 'Cloth', 'Coal', 'Medium Pal Soul', 'Pal Metal Ingot', 'Pure Quartz', 'Large Pal Soul', 'Innovative Technical Manual', 'Diamond', 'Polymer', 'Carbon Fiber', 'Huge Dark Egg', 'Bellanoir Libero (Ultra) Slab', 'Ancient Civilization Core', 'Power Fruit', 'Stout Fruit', 'Life Fruit', 'Multiclimate Undershirt', 'Training Crystal', 'Training Manual (XL)', 'Meteorite Fragment'];
 		}
 
 		const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedOption.value.toLowerCase()));
@@ -134,13 +143,13 @@ module.exports = {
 			// Split palData into individual keyword/level pairs
 			const palDataPairs = str.split(',').map(entry => {
 				const [keyword, level] = entry.split(/\s+(\d+)/);
-				return { keyword: keyword.trim(), level: parseInt(level.trim()) };
+				return { keyword: keyword/*.trim()*/, level: parseInt(level/*.trim()*/) };
 			});
 
 			// Split palData into individual keyword/level pairs
 			const palSuitabilityPairs = input.split(',').map(entry => {
 				const parts = entry.split(/\s+(\d+)/);
-				const keyword = parts[0].trim();
+				const keyword = parts[0]/*.trim()*/;
 				const level = parts.length > 1 ? parseInt(parts[1]) : 0;
 				return { keyword, level };
 			});
