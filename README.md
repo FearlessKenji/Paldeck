@@ -1,35 +1,36 @@
 # Paldeck
-
 Paldeck is an unofficial Discord companion bot for Palworld. It lets Discord users search pal information by name, number, element, work suitability, rarity, and drops.
-
 Paldeck is not affiliated with, endorsed by, or sponsored by Discord, Pocketpair, Palworld, Fandom, Top.gg, or any other third-party service.
 
-## Features
+## How does it work?
+Paldeck uses Discord slash commands and autocomplete interactions through `discord.js`. Pal data is stored locally in `palData.json`, so pal lookups do not require a live Palworld API. When a user runs `/paldeck`, the bot searches that local data and replies with a Discord embed containing matching pal details, images, drops, work suitability, partner skill, and reference links.
 
-- Search the paldeck by pal name or paldeck number
-- Search by element, work suitability, rarity, and drops
+The bot uses SQLite through Sequelize for local operational data such as joined servers, server owners, ban records, bot channel records, and suggestion-related state. Bot secrets are loaded from `.env`; non-secret local settings are kept in `config.json`.
+
+## Features
+- Pal lookup by name or paldeck number
+- Pal search by element, work suitability, rarity, and drops
 - Autocomplete for supported pal names, suitabilities, and drops
-- Embed responses with pal details, drops, work suitability, partner skill, images, and reference links
-- `/suggest` command for bot feedback
+- Discord embeds with pal details, images, and reference links
+- `/suggest` command for feature ideas and feedback
 - `/vote` command for the Top.gg voting link
-- Owner-only ban and unban commands for users or servers
-- Local SQLite storage for joined servers, ban records, bot channels, and other operational data
+- Owner-only user and server restriction controls
+- Local SQLite storage for bot operation
+- GitHub Pages-ready privacy policy and terms
 
 ## Commands
 
 ### Global Commands
-
 | Command | Description |
 | --- | --- |
 | `/paldeck name` | Look up a pal by name. |
 | `/paldeck number` | Look up a pal by paldeck number. |
 | `/paldeck search` | Search pals by element, suitability, rarity, and/or drops. |
-| `/help` | Show command usage help. |
+| `/help` | Show Paldeck command usage help. |
 | `/suggest` | Send a feature suggestion to the configured suggestions channel. |
 | `/vote` | Return the Top.gg voting link for Paldeck. |
 
 ### Guild Commands
-
 | Command | Description |
 | --- | --- |
 | `/ban user` | Owner-only command to restrict a Discord user from Paldeck. |
@@ -37,154 +38,120 @@ Paldeck is not affiliated with, endorsed by, or sponsored by Discord, Pocketpair
 | `/unban user` | Owner-only command to remove a user restriction. |
 | `/unban server` | Owner-only command to remove a server restriction. |
 
-The guild commands are also guarded by the `botOwner` value in `config.json`.
+Global command updates can take time to appear in Discord. Guild commands are deployed only to the server matched by `guildId` in `config.json`, and usually appear much faster for testing.
 
 ## Requirements
-
 - Node.js compatible with `discord.js` v14
 - A Discord application and bot token
 - A Discord server for testing guild commands
 
-## Setup
-
-Install dependencies:
-
-```powershell
-npm install
-```
-
-Create a local config file:
+## Installation
+First you will have to download or clone the project.
 
 ```powershell
-Copy-Item blank_config.json config.json
+$ git clone https://github.com/FearlessKenji/Paldeck
 ```
 
-Create a local environment file:
+## Dependencies
+Install the required node packages outlined in `package.json` with:
 
 ```powershell
-Copy-Item blank.env .env
+$ npm install
 ```
 
-Fill in `.env`:
+## Edit .env
+Copy `blank.env` to `.env` and fill in the required fields.
 
-```text
-token=your Discord bot token
-clientId=your Discord application/client ID
+```powershell
+$ Copy-Item blank.env .env
 ```
 
-Fill in `config.json`:
+- token - Enter your [Discord bot token](https://discord.com/developers/applications) here.
+- clientId - Copy and paste your Discord application ID. You need this to register commands.
 
-```json
-{
-  "botOwner": "your Discord user ID",
-  "guildId": "your test or owner-command guild ID",
-  "count": 1
-}
+## Edit config.json
+Copy `blank_config.json` to `config.json` and fill in the required fields.
+
+```powershell
+$ Copy-Item blank_config.json config.json
 ```
 
-Environment fields:
-
-- `token`: Discord bot token.
-- `clientId`: Discord application ID.
-
-Config fields:
-
-- `botOwner`: Discord user ID allowed to run owner-only controls.
-- `guildId`: Guild used when deploying guild commands.
-- `count`: Suggestion counter used by `/suggest`.
+- botOwner - Copy and paste your Discord user ID for owner-only commands.
+- guildId - Copy and paste your Discord server ID for private guild-access commands.
+- count - Suggestion counter used by `/suggest`.
 
 `.env` and `config.json` are ignored by Git. Do not commit bot tokens or private IDs you do not want public.
 
 ## Database
-
 Paldeck uses SQLite through Sequelize. Initialize the database before first run:
 
 ```powershell
-node database/dbInit.js
+$ node database/dbInit.js
 ```
 
 To rebuild the database from scratch:
 
 ```powershell
-node database/dbInit.js --force
+$ node database/dbInit.js --force
 ```
 
-The SQLite database file is generated at `database/database.sqlite` and is ignored by Git.
-
-## Deploy Discord Commands
-
-Deploy global commands:
-
+## Register Slash Commands
+Register global commands with:
 ```powershell
-node deploy-global-commands.js
+$ node deploy-global-commands.js
 ```
 
-Deploy guild commands:
-
+Register guild commands with:
 ```powershell
-node deploy-guild-commands.js
+$ node deploy-guild-commands.js
 ```
 
-Global command updates can take time to appear in Discord. Guild command updates usually appear much faster and are better for testing.
+The global commands will be available in all servers where Paldeck is installed. The guild commands will only be available in the server whose ID matches `guildId` in `config.json`.
 
 To clear registered commands:
-
 ```powershell
-node delete-all-commands.js
+$ node delete-all-commands.js
 ```
 
-## Run
-
-Start the bot:
-
+## Run the bot
+After you update `.env`, `config.json`, and initialize the database, start the bot from the project folder:
 ```powershell
-node index.js
+$ node index.js
 ```
 
-Paldeck creates logs in `logs/console.log` when needed. The `logs` directory and log files are ignored by Git.
+## Logs
+Paldeck writes operational logs to `logs/console.log` when needed. The `logs` folder and `.log` files are ignored by Git.
+Logs may include startup events, server join or leave events, owner-control actions, and error details used for debugging.
 
-## Project Structure
+## Search pals
+Use `/paldeck name` to search for one pal by name.
+Use `/paldeck number` to search for one pal by paldeck number.
+Use `/paldeck search` to combine criteria:
 
-```text
-commands/
-  globalCommands/    Public slash commands
-  guildCommands/     Owner/admin slash commands
-database/
-  models/            Sequelize models
-  dbInit.js          SQLite initialization
-  dbObjects.js       Database model exports
-events/              Discord event handlers
-modules/             Shared helpers
-docs/                GitHub Pages legal pages
-palData.json         Palworld data used by /paldeck
-```
+- element - Filter by element type.
+- suitability - Filter by work suitability, optionally including a level such as `Mining 2`.
+- rarity - Filter by common, rare, epic, or legendary.
+- drops - Filter by item drops.
+
+The bot replies with matching pal information in Discord embeds. If no match is found, it replies with a private "Nothing found" message.
+
+## Suggestions and voting
+Use `/suggest` to send a feature idea or feedback message. Suggestions are posted to the configured suggestions channel and numbered using the `count` value in `config.json`.
+Use `/vote` to get the Paldeck Top.gg voting link.
+
+Do not submit private, confidential, or sensitive information through `/suggest`.
+
+## Owner controls
+The `/ban` and `/unban` commands are intended for the bot owner. They are guarded by the `botOwner` value in `config.json`.
+Owner controls can restrict or unrestrict users and servers. Server restrictions may store server IDs, server names, owner IDs, and owner usernames so the bot can prevent abuse and avoid rejoining restricted servers.
 
 ## GitHub Pages
-
 The `docs` folder contains the public legal pages for GitHub Pages:
 
 - [Privacy Policy](docs/privacy-policy.md)
 - [Terms of Service](docs/terms-of-service.md)
 
-If GitHub Pages is configured to publish from `/docs`, these Markdown files are built as public `.html` pages.
-
-## Privacy and Data
-
-Paldeck stores only the data needed to operate the bot, such as server IDs, server names, owner IDs/usernames, ban records, channel records, suggestion text, and operational logs. See the [Privacy Policy](docs/privacy-policy.md) for details.
-
-## Contributing Notes
-
-Command modules should export both `data` and `execute`. Autocomplete commands should also export `autocomplete`.
-
-When adding commands, place them under the correct scope:
-
-- `commands/globalCommands/...` for public global commands
-- `commands/guildCommands/...` for owner or guild-scoped commands
-
-After adding or changing slash commands, rerun the relevant deploy script.
-
 ## License
-
 Paldeck is licensed under the GNU General Public License version 3. See [LICENSE](LICENSE).
 
 Copyright (C) 2026 FearlessKenji
