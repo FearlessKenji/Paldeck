@@ -1,7 +1,7 @@
 // Require the necessary discord.js classes
+require('dotenv').config({ quiet: true });
 const { Client, Collection, GatewayIntentBits, ActivityType } = require('discord.js');
 const { writeLog } = require('./modules/writeLog.js');
-const config = require('./config.json');
 const { CronJob } = require('cron');
 const path = require('node:path');
 const fs = require('node:fs');
@@ -65,4 +65,4 @@ process.on('uncaughtException', function (err) {
 updateStatus.start();
 
 // Log in to Discord with your client's token
-client.login(config.token);
+client.login(process.env.TOKEN);

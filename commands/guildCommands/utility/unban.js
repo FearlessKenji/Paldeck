@@ -1,4 +1,4 @@
-const config = require('../../../config.json');
+const config = require('../../../modules/config.js');
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const { writeLog } = require('../../../modules/writeLog.js');
 const { BannedUsers, BannedServers } = require('../../../database/dbObjects.js');

@@ -1,12 +1,19 @@
 {
+  "license": "GPL-3.0-only",
   "dependencies": {
     "cron": "^3.1.6",
-    "discord.js": "^14.12.1",
+    "discord.js": "^14.26.4",
+    "dotenv": "^17.4.2",
     "fs": "^0.0.1-security",
     "sequelize": "^6.37.3",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^6.0.1"
   },
   "devDependencies": {
     "eslint": "^8.57.0"
+  },
+  "overrides": {
+    "sequelize": {
+      "uuid": "^11.1.1"
+    }
   }
 }

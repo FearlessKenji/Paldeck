@@ -4,8 +4,10 @@ logs
 
 # Dependency directories
 node_modules/
+.npm-cache/
 
 # startup config files
+.env
 database/database.sqlite
 ecosystem.config.js
 ecosystem.config.cjs
