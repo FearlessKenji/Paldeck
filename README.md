@@ -27,7 +27,7 @@ The bot uses SQLite through Sequelize for local operational data such as joined 
 | `/paldeck number` | Look up a pal by paldeck number. |
 | `/paldeck search` | Search pals by element, suitability, rarity, and/or drops. |
 | `/help` | Show Paldeck command usage help. |
-| `/suggest` | Send a feature suggestion to the configured suggestions channel. |
+| `/suggest` | Send a feature suggestion to the configured suggestions channel. Do not submit sensitive data. |
 | `/vote` | Return the Top.gg voting link for Paldeck. |
 
 ### Guild Commands
@@ -48,14 +48,14 @@ Global command updates can take time to appear in Discord. Guild commands are de
 ## Installation
 First you will have to download or clone the project.
 
-```powershell
+```console
 $ git clone https://github.com/FearlessKenji/Paldeck
 ```
 
 ## Dependencies
 Install the required node packages outlined in `package.json` with:
 
-```powershell
+```console
 $ npm install
 ```
 
@@ -85,37 +85,37 @@ $ Copy-Item blank_config.json config.json
 ## Database
 Paldeck uses SQLite through Sequelize. Initialize the database before first run:
 
-```powershell
+```console
 $ node database/dbInit.js
 ```
 
 To rebuild the database from scratch:
 
-```powershell
+```console
 $ node database/dbInit.js --force
 ```
 
 ## Register Slash Commands
 Register global commands with:
-```powershell
+```console
 $ node deploy-global-commands.js
 ```
 
 Register guild commands with:
-```powershell
+```console
 $ node deploy-guild-commands.js
 ```
 
 The global commands will be available in all servers where Paldeck is installed. The guild commands will only be available in the server whose ID matches `guildId` in `config.json`.
 
 To clear registered commands:
-```powershell
+```console
 $ node delete-all-commands.js
 ```
 
 ## Run the bot
 After you update `.env`, `config.json`, and initialize the database, start the bot from the project folder:
-```powershell
+```console
 $ node index.js
 ```
 
