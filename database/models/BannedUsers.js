@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	return sequelize.define('BannedUsers', {
+	return sequelize.define(`BannedUsers`, {
 		user_id: {
 			type: DataTypes.STRING,
 			primaryKey: true,

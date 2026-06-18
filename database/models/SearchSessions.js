@@ -1,19 +1,23 @@
 module.exports = (sequelize, DataTypes) => {
-	return sequelize.define(`JoinedServers`, {
-		guild_id: {
+	return sequelize.define(`SearchSessions`, {
+		search_id: {
 			type: DataTypes.STRING,
 			primaryKey: true,
 		},
-		guild_name: {
+		user_id: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-		owner_id: {
-			type: DataTypes.STRING,
+		criteria: {
+			type: DataTypes.TEXT,
 			allowNull: false,
 		},
-		owner_username: {
-			type: DataTypes.STRING,
+		results: {
+			type: DataTypes.TEXT,
+			allowNull: false,
+		},
+		expires_at: {
+			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
 	}, {

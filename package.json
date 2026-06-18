@@ -1,12 +1,24 @@
 {
+  "name": "paldeck",
+  "private": true,
   "license": "GPL-3.0-only",
+  "scripts": {
+    "start": "node index.js",
+    "deploy:global": "node deploy-global-commands.js",
+    "deploy:guild": "node deploy-guild-commands.js",
+    "commands:clear": "node delete-all-commands.js",
+    "db:init": "node database/dbInit.js",
+    "db:reset": "node database/dbInit.js --force",
+    "lint": "node scripts/lint.js",
+    "pm2:start": "pm2 start config/ecosystem.config.js"
+  },
   "dependencies": {
     "cron": "^3.1.6",
     "discord.js": "^14.26.4",
     "dotenv": "^17.4.2",
-    "fs": "^0.0.1-security",
     "sequelize": "^6.37.3",
-    "sqlite3": "^6.0.1"
+    "sqlite3": "^6.0.1",
+    "tar": "^7.5.16"
   },
   "devDependencies": {
     "eslint": "^8.57.0"

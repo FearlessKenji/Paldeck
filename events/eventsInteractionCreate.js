@@ -1,4 +1,5 @@
-const { Events } = require('discord.js');
+const { Events } = require(`discord.js`);
+const { error } = require(`../utils/writeLog.js`);
 
 module.exports = {
 	name: Events.InteractionCreate,
@@ -8,36 +9,51 @@ module.exports = {
 			const command = interaction.client.commands.get(interaction.commandName);
 
 			if (!command) {
-				console.error(`No command matching ${interaction.commandName} was found.`);
+				error(`No command matching ${interaction.commandName} was found.`);
 				return;
 			}
 
 			try {
 				await command.execute(interaction);
-			}
-			catch (error) {
-				console.error(error);
+			} catch (err) {
+				error(`There was an error while executing a command.`, err);
 				if (interaction.replied || interaction.deferred) {
-					await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-				}
-				else {
-					await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+					await interaction.followUp({ content: `There was an error while executing this command!`, ephemeral: true });
+				} else {
+					await interaction.reply({ content: `There was an error while executing this command!`, ephemeral: true });
 				}
 			}
-		}
-		else if (interaction.isAutocomplete()) {
+		} else if (interaction.isButton()) {
+			const [commandName] = interaction.customId.split(`:`);
+			const command = interaction.client.commands.get(commandName);
+
+			if (!command?.handleButton) {
+				error(`No button handler matching ${interaction.customId} was found.`);
+				return;
+			}
+
+			try {
+				await command.handleButton(interaction);
+			} catch (err) {
+				error(`There was an error while handling a button.`, err);
+				if (interaction.replied || interaction.deferred) {
+					await interaction.followUp({ content: `There was an error while handling this button!`, ephemeral: true });
+				} else {
+					await interaction.reply({ content: `There was an error while handling this button!`, ephemeral: true });
+				}
+			}
+		} else if (interaction.isAutocomplete()) {
 			const command = interaction.client.commands.get(interaction.commandName);
 
 			if (!command) {
-				console.error(`No command matching ${interaction.commandName} was found.`);
+				error(`No command matching ${interaction.commandName} was found.`);
 				return;
 			}
 
 			try {
 				await command.autocomplete(interaction);
-			}
-			catch (error) {
-				console.error(error);
+			} catch (err) {
+				error(`There was an error while running autocomplete.`, err);
 			}
 		}
 	},

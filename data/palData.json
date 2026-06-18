@@ -1631,7 +1631,7 @@
 		{
 			"name": "Kelpsea",
 			"description": "Child of the Deep",
-			"number": "080",
+			"number": "081",
 			"element": "Water",
 			"drops": "Raw Kelpsea, Pal Fluids",
 			"food": "1/10",
@@ -2514,7 +2514,7 @@
 		{
 			"name": "Shroomer",
 			"description": "Creeping Mushroom",
-			"number": "115",
+			"number": "116",
 			"element": "Grass",
 			"drops": "Mushroom, Red Berries",
 			"food": "3/10",
@@ -2531,7 +2531,7 @@
 		{
 			"name": "Shroomer Noct",
 			"description": "Dangerous Mushroom",
-			"number": "116B",
+			"number": "116b",
 			"element": "Grass, Dark",
 			"drops": "Venom Gland, Mysterious Mushroom",
 			"food": "3/10",

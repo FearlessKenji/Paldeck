@@ -1,28 +1,42 @@
-const Sequelize = require('sequelize');
+const { sequelize, Channels } = require(`./dbObjects.js`);
+const { runMigrations } = require(`./migrations.js`);
+const { info } = require(`../utils/writeLog.js`);
+const path = require(`node:path`);
+const fs = require(`node:fs`);
 
-const sequelize = new Sequelize('database', 'username', 'password', {
-	host: 'localhost',
-	dialect: 'sqlite',
-	logging: false,
-	storage: 'database/database.sqlite',
-});
-
-const Channels = require('./models/Channels.js')(sequelize, Sequelize.DataTypes);
-require('./models/JoinedServers.js')(sequelize, Sequelize.DataTypes);
-require('./models/Suggestions.js')(sequelize, Sequelize.DataTypes);
-require('./models/BannedUsers.js')(sequelize, Sequelize.DataTypes);
-require('./models/BannedServers.js')(sequelize, Sequelize.DataTypes);
-
-const force = process.argv.includes('--force') || process.argv.includes('-f');
-
-sequelize.sync({ force }).then(async () => {
+async function seedChannels() {
 	const channels = [
-		Channels.upsert({ id: '1221954020424421437', name: 'Suggestions' }),
+		Channels.upsert({ id: `1221954020424421437`, name: `Suggestions` }),
 	];
 
 	await Promise.all(channels);
-	console.log('Database synced');
+}
 
-	sequelize.close();
-}).catch(console.error);
+async function dbInit({ force = false } = {}) {
+	const dbPath = path.join(__dirname, `database.sqlite`);
+	const exists = fs.existsSync(dbPath);
 
+	await sequelize.sync({ force });
+	await runMigrations();
+	await seedChannels();
+
+	if (force) {
+		info(`Database reset and synced`);
+		return;
+	}
+
+	info(exists ? `Database synced` : `Database created and synced`);
+}
+
+if (require.main === module) {
+	const force = process.argv.includes(`--force`) || process.argv.includes(`-f`);
+
+	dbInit({ force })
+		.catch(err => {
+			console.error(err);
+			process.exitCode = 1;
+		})
+		.finally(() => sequelize.close());
+}
+
+module.exports = { dbInit };

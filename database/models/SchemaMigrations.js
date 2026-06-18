@@ -1,20 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
-	return sequelize.define(`JoinedServers`, {
-		guild_id: {
+	return sequelize.define(`schemaMigrations`, {
+		id: {
 			type: DataTypes.STRING,
 			primaryKey: true,
 		},
-		guild_name: {
+		description: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-		owner_id: {
-			type: DataTypes.STRING,
+		appliedAt: {
+			type: DataTypes.DATE,
 			allowNull: false,
-		},
-		owner_username: {
-			type: DataTypes.STRING,
-			allowNull: false,
+			defaultValue: DataTypes.NOW,
 		},
 	}, {
 		timestamps: false,

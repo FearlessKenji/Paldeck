@@ -54,7 +54,7 @@ Suggestions may be sent to a Discord channel controlled by the bot owner for rev
 
 When you use Paldeck commands or autocomplete, Discord sends Paldeck the command name, command options, user context, server context, and related interaction data needed to respond. Paldeck uses this data to run commands such as searching pal information, returning help text, generating a voting link, or processing suggestions.
 
-Paldeck does not intentionally store ordinary pal search queries after responding, unless the information appears in error logs or Discord-retained interaction records.
+Paldeck may store ordinary pal search criteria and generated search results temporarily so pagination buttons can continue working after the initial response. This temporary search-session data is intended to expire after about 15 minutes. Search information may also appear in error logs or Discord-retained interaction records.
 
 ### Message Content
 
@@ -126,6 +126,7 @@ Paldeck keeps information only as long as reasonably needed for the purposes des
 - Joined server records are generally kept while Paldeck remains in the server and may be removed when Paldeck leaves or is removed.
 - Ban records may be kept until the restriction is removed.
 - Suggestions may be kept as long as needed to review feedback or maintain a record of requested features.
+- Temporary pal search-session records are intended to expire after about 15 minutes.
 - Operational logs may be kept as long as needed for security, debugging, abuse prevention, maintenance, or legal compliance.
 
 Some data may also remain in Discord, GitHub, Top.gg, backups, logs, or other third-party systems according to their own retention policies.

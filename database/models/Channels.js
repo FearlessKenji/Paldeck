@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	return sequelize.define('Channels', {
+	return sequelize.define(`Channels`, {
 		id: {
 			type: DataTypes.STRING,
 			primaryKey: true,

@@ -1,5 +1,5 @@
 # Logs
-logs
+logs/
 *.log
 
 # Dependency directories
@@ -8,10 +8,11 @@ node_modules/
 
 # startup config files
 .env
+*.env
+!blank.env
 database/database.sqlite
+database/database.sqlite.pre-*
 ecosystem.config.js
 ecosystem.config.cjs
 config.json
-
-# dependency versions
-package-lock.json
+config/config.json

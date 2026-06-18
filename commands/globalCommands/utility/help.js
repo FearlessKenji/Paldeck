@@ -1,9 +1,9 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require(`discord.js`);
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('help')
-		.setDescription('Returns command usage parameters.'),
+		.setName(`help`)
+		.setDescription(`Returns command usage parameters.`),
 
 	async execute(interaction) {
 		await interaction.reply({ content: `## Using the Paldeck:\n

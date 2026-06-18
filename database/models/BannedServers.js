@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	return sequelize.define('BannedServers', {
+	return sequelize.define(`BannedServers`, {
 		guild_id: {
 			type: DataTypes.STRING,
 			primaryKey: true,

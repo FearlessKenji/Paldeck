@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
-	return sequelize.define('Suggestions', {
+	return sequelize.define(`Suggestions`, {
 		suggestion: {
-			type: DataTypes.STRING,
-			allowNull: true,
+			type: DataTypes.TEXT,
+			allowNull: false,
 		},
 		author:{
 			type: DataTypes.STRING,
-			allowNull: true,
+			allowNull: false,
 		},
 		suggestion_id: {
 			type: DataTypes.STRING,
@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		accepted: {
 			type: DataTypes.BOOLEAN,
-			allowNull: true,
+			allowNull: false,
+			defaultValue: false,
 		},
 	}, {
 		timestamps: false,
