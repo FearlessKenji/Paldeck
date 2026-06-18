@@ -157,25 +157,7 @@ function criteriaHasValue(criteria) {
 }
 
 function buildCriteriaLine(criteria) {
-	const parts = [];
-
-	if (criteria.element) {
-		parts.push(`Element: ${criteria.element}`);
-	}
-
-	if (criteria.suitability) {
-		parts.push(`Suitability: ${criteria.suitability}`);
-	}
-
-	if (criteria.rarity) {
-		parts.push(`Rarity: ${criteria.rarity}`);
-	}
-
-	if (criteria.drops) {
-		parts.push(`Drops: ${criteria.drops}`);
-	}
-
-	return parts.join(` | `);
+	return `Element: ${criteria.element}\nSuitability: ${criteria.suitability}\nRarity:        ${criteria.rarity}\n Drops:        ${criteria.drops}`;
 }
 
 function findSearchResults(criteria) {
@@ -217,11 +199,16 @@ function buildSearchEmbed(criteria, results, page) {
 	const totalPages = getTotalPages(results);
 	const currentPage = clampPage(page, totalPages);
 	const pageResults = results.slice(currentPage * RESULTS_PER_PAGE, (currentPage + 1) * RESULTS_PER_PAGE);
-	const resultLines = pageResults.map(result => `**${result.number}** ${result.name} - ${result.element} - ${result.rarity}`);
 
 	return new EmbedBuilder()
 		.setTitle(`Matching:`)
-		.setDescription(`${buildCriteriaLine(criteria)}\nPage ${currentPage + 1}/${totalPages} | ${results.length} result(s)\n\n${resultLines.join(`\n`)}`);
+		.setDescription(buildCriteriaLine(criteria))
+		.setFooter({ text: `Page ${currentPage + 1}/${totalPages} | ${results.length} result(s)` })
+		.addFields(
+			{ name: `Name\n-------\n`, value: pageResults.map(result => result.name).join(`\n-------\n`), inline: true },
+			{ name: `Element\n-------\n`, value: pageResults.map(result => result.element).join(`\n-------\n`), inline: true },
+			{ name: `Rarity\n-------\n`, value: pageResults.map(result => result.rarity).join(`\n-------\n`), inline: true },
+		);
 }
 
 function buildSearchComponents(searchId, page, totalPages) {
