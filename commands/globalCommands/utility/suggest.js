@@ -8,7 +8,7 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.setName(`idea`)
-				.setDescription(`Include the command, what changed, and exact Pal names or numbers if relevant.`)
+				.setDescription(`Please be as specific as possible, especially if reporting a problem.`)
 				.setMaxLength(1000)
 				.setRequired(true)),
 
