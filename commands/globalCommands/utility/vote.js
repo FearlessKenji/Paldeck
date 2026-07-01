@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require(`discord.js`);
+const { SlashCommandBuilder, MessageFlags } = require(`discord.js`);
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -9,7 +9,7 @@ module.exports = {
 			await interaction.reply({ content: `https://top.gg/bot/1218928129628966963/vote` });
 		} catch (error) {
 			console.error(`Failed to update server settings:`, error);
-			await interaction.reply({ content: `Failed to generate vote link.`, ephemeral: true });
+			await interaction.reply({ content: `Failed to generate vote link.`, flags: MessageFlags.Ephemeral });
 		}
 	},
 };

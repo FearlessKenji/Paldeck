@@ -1,4 +1,4 @@
-const { Events } = require(`discord.js`);
+const { Events, MessageFlags } = require(`discord.js`);
 const { error } = require(`../utils/writeLog.js`);
 
 module.exports = {
@@ -18,9 +18,9 @@ module.exports = {
 			} catch (err) {
 				error(`There was an error while executing a command.`, err);
 				if (interaction.replied || interaction.deferred) {
-					await interaction.followUp({ content: `There was an error while executing this command!`, ephemeral: true });
+					await interaction.followUp({ content: `There was an error while executing this command!`, flags: MessageFlags.Ephemeral });
 				} else {
-					await interaction.reply({ content: `There was an error while executing this command!`, ephemeral: true });
+					await interaction.reply({ content: `There was an error while executing this command!`, flags: MessageFlags.Ephemeral });
 				}
 			}
 		} else if (interaction.isButton()) {
@@ -37,9 +37,9 @@ module.exports = {
 			} catch (err) {
 				error(`There was an error while handling a button.`, err);
 				if (interaction.replied || interaction.deferred) {
-					await interaction.followUp({ content: `There was an error while handling this button!`, ephemeral: true });
+					await interaction.followUp({ content: `There was an error while handling this button!`, flags: MessageFlags.Ephemeral });
 				} else {
-					await interaction.reply({ content: `There was an error while handling this button!`, ephemeral: true });
+					await interaction.reply({ content: `There was an error while handling this button!`, flags: MessageFlags.Ephemeral });
 				}
 			}
 		} else if (interaction.isAutocomplete()) {

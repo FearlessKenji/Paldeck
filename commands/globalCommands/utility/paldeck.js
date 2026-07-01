@@ -4,6 +4,7 @@ const {
 	ButtonBuilder,
 	ButtonStyle,
 	EmbedBuilder,
+	MessageFlags,
 	SlashCommandBuilder,
 } = require(`discord.js`);
 const crypto = require(`node:crypto`);
@@ -407,7 +408,7 @@ module.exports = {
 			const pal = PALS.find(palData => normalizeText(palData.name) === normalizeText(palName));
 
 			if (!pal) {
-				await interaction.reply({ content: `Nothing found.`, ephemeral: true });
+				await interaction.reply({ content: `Nothing found.`, flags: MessageFlags.Ephemeral });
 				return;
 			}
 
@@ -420,7 +421,7 @@ module.exports = {
 			const pal = PALS.find(palData => normalizeNumber(palData.number) === palNumber);
 
 			if (!pal) {
-				await interaction.reply({ content: `Nothing found.`, ephemeral: true });
+				await interaction.reply({ content: `Nothing found.`, flags: MessageFlags.Ephemeral });
 				return;
 			}
 
@@ -436,14 +437,14 @@ module.exports = {
 		};
 
 		if (!criteriaHasValue(criteria)) {
-			await interaction.reply({ content: `Choose at least one search filter.`, ephemeral: true });
+			await interaction.reply({ content: `Choose at least one search filter.`, flags: MessageFlags.Ephemeral });
 			return;
 		}
 
 		const results = findSearchResults(criteria);
 
 		if (!results.length) {
-			await interaction.reply({ content: `Nothing found.`, ephemeral: true });
+			await interaction.reply({ content: `Nothing found.`, flags: MessageFlags.Ephemeral });
 			return;
 		}
 
@@ -461,19 +462,19 @@ module.exports = {
 		const [, action, searchId, rawPage] = interaction.customId.split(`:`);
 
 		if (action !== `page`) {
-			await interaction.reply({ content: `Unknown Paldeck action.`, ephemeral: true });
+			await interaction.reply({ content: `Unknown Paldeck action.`, flags: MessageFlags.Ephemeral });
 			return;
 		}
 
 		const state = await getSearch(searchId);
 
 		if (!state) {
-			await interaction.reply({ content: `This search has expired. Run the command again.`, ephemeral: true });
+			await interaction.reply({ content: `This search has expired. Run the command again.`, flags: MessageFlags.Ephemeral });
 			return;
 		}
 
 		if (state.userId !== interaction.user.id) {
-			await interaction.reply({ content: `Only the original searcher can page through these results.`, ephemeral: true });
+			await interaction.reply({ content: `Only the original searcher can page through these results.`, flags: MessageFlags.Ephemeral });
 			return;
 		}
 

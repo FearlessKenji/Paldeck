@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require(`discord.js`);
+const { SlashCommandBuilder, MessageFlags } = require(`discord.js`);
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -15,6 +15,6 @@ module.exports = {
 		- Suitability\n - Enter the work suitability you wish to look for.\n - You can add numbers to specify tiers (Medicine 4, Mining 2).
 		- Rarity\n - Enter the rarity you wish to search for.
 ### Support/Feedback:\n
-		- [Join the Discord](https://discord.gg/FBBnC3jCFa)`, ephemeral: true });
+		- [Join the Discord](https://discord.gg/FBBnC3jCFa)`, flags: MessageFlags.Ephemeral });
 	},
 };

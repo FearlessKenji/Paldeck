@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require(`discord.js`);
+const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require(`discord.js`);
 const { Channels, Suggestions } = require(`../../../database/dbObjects.js`);
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
 				.setRequired(true)),
 
 	async execute(interaction) {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 		const idea = interaction.options.getString(`idea`);
 		const suggestionChannel = await Channels.findOne({ where: { name: `Suggestions` } });

@@ -1,5 +1,5 @@
 const config = require(`../../../config/configCheck.js`);
-const { SlashCommandBuilder, PermissionFlagsBits } = require(`discord.js`);
+const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require(`discord.js`);
 const { info } = require(`../../../utils/writeLog.js`);
 const { BannedUsers, BannedServers } = require(`../../../database/dbObjects.js`);
 const { isSnowflake } = require(`../../../utils/discordIds.js`);
@@ -31,11 +31,11 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),
 	async execute(interaction) {
 		if (interaction.user.id !== config.botOwner) {
-			await interaction.reply({ content: `You are not authorized to use this command.`, ephemeral: true });
+			await interaction.reply({ content: `You are not authorized to use this command.`, flags: MessageFlags.Ephemeral });
 			return;
 		}
 
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
 		const subcommand = interaction.options.getSubcommand();
 		const id = interaction.options.getString(`id`);
