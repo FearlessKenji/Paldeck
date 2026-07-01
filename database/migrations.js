@@ -190,6 +190,51 @@ async function migrateSuggestionsSchema() {
 	await rebuildSuggestionsTable(columns);
 }
 
+async function addColumnIfMissing(tableName, columns, columnName, definition) {
+	if (columns.has(columnName)) {
+		return false;
+	}
+
+	await sequelize.query(`ALTER TABLE ${quoteIdentifier(tableName)} ADD COLUMN ${quoteIdentifier(columnName)} ${definition}`);
+	columns.set(columnName, { name: columnName });
+	return true;
+}
+
+async function migrateSuggestionReplyContext() {
+	if (!await tableExists(`Suggestions`)) {
+		return;
+	}
+
+	const columns = await getTableColumns(`Suggestions`);
+	const addedColumns = [];
+	const columnDefinitions = [
+		[`author_id`, `VARCHAR(255)`],
+		[`guild_id`, `VARCHAR(255)`],
+		[`guild_name`, `VARCHAR(255)`],
+		[`channel_id`, `VARCHAR(255)`],
+		[`channel_name`, `VARCHAR(255)`],
+	];
+
+	for (const [columnName, definition] of columnDefinitions) {
+		if (await addColumnIfMissing(`Suggestions`, columns, columnName, definition)) {
+			addedColumns.push(columnName);
+		}
+	}
+
+	await sequelize.query(`
+		CREATE INDEX IF NOT EXISTS SuggestionsSuggestionId
+		ON Suggestions (suggestion_id)
+	`);
+	await sequelize.query(`
+		CREATE INDEX IF NOT EXISTS SuggestionsAuthorId
+		ON Suggestions (author_id)
+	`);
+
+	if (addedColumns.length) {
+		info(`Added suggestion reply context column(s): ${addedColumns.join(`, `)}`);
+	}
+}
+
 async function migrateSearchSessionIndexes() {
 	if (!await tableExists(`SearchSessions`)) {
 		return;
@@ -234,6 +279,11 @@ const migrations = [
 		description: `Repair suggestion storage for longer text and required fields.`,
 		id: `20260618_suggestions_text_and_required_fields`,
 		run: migrateSuggestionsSchema,
+	},
+	{
+		description: `Store context needed to reply to suggestions.`,
+		id: `20260701_suggestion_reply_context`,
+		run: migrateSuggestionReplyContext,
 	},
 	{
 		description: `Add indexes for temporary Paldeck search sessions.`,

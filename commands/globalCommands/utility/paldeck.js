@@ -1,16 +1,19 @@
 const {
 	ActionRowBuilder,
+	AttachmentBuilder,
 	ButtonBuilder,
 	ButtonStyle,
 	EmbedBuilder,
 	SlashCommandBuilder,
 } = require(`discord.js`);
 const crypto = require(`node:crypto`);
+const path = require(`node:path`);
 const { Op } = require(`sequelize`);
 const { SearchSessions } = require(`../../../database/dbObjects.js`);
 const palFile = require(`../../../data/palData.json`);
 
 const PALS = palFile.Pals;
+const PROJECT_ROOT = path.resolve(__dirname, `..`, `..`, `..`);
 const RESULTS_PER_PAGE = 25;
 const SEARCH_TTL_MS = 15 * 60 * 1000;
 const searchCache = new Map();
@@ -82,6 +85,32 @@ function getRarity(pal) {
 	return `Legendary`;
 }
 
+function isRemoteImage(value) {
+	return /^https?:\/\//i.test(String(value || ``));
+}
+
+function resolveLocalImage(imagePath) {
+	const localPath = String(imagePath || ``).trim();
+
+	if (!localPath || isRemoteImage(localPath)) {
+		return { url: localPath, files: [] };
+	}
+
+	const filePath = path.resolve(PROJECT_ROOT, localPath);
+	const relativePath = path.relative(PROJECT_ROOT, filePath);
+
+	if (relativePath.startsWith(`..`) || path.isAbsolute(relativePath)) {
+		return { url: localPath, files: [] };
+	}
+
+	const name = path.basename(filePath);
+
+	return {
+		url: `attachment://${name}`,
+		files: [new AttachmentBuilder(filePath, { name })],
+	};
+}
+
 function parseSuitability(entry) {
 	const match = String(entry || ``).trim().match(/^(.*?)(?:\s+(\d+))?$/);
 
@@ -124,7 +153,7 @@ function matchesList(input, value) {
 	);
 }
 
-function buildPalEmbed(pal) {
+function buildPalEmbed(pal, thumbnailUrl = pal.thumbnail, habitatUrl = pal.habitat) {
 	const rarity = getRarity(pal);
 	const wiki = encodeURIComponent(pal.name.replace(/\s+/g, `_`));
 	const fields = [
@@ -140,16 +169,34 @@ function buildPalEmbed(pal) {
 		fields.push({ name: `Tech:`, value: pal.tech });
 	}
 
-	return new EmbedBuilder()
+	const embed = new EmbedBuilder()
 		.setAuthor({ name: `Rarity: ${rarity}`, url: `https://palworld.gg/breeding-calculator` })
 		.setDescription(pal.description)
 		.setColor(pal.color)
 		.setTitle(pal.name)
 		.setURL(`https://palworld.fandom.com/wiki/${wiki}`)
-		.setThumbnail(pal.thumbnail)
-		.setImage(pal.habitat)
 		.setFooter({ text: `Spawns: ${pal.spawnTime}. Farmable: ${pal.farmable}.` })
 		.addFields(fields);
+
+	if (thumbnailUrl) {
+		embed.setThumbnail(thumbnailUrl);
+	}
+
+	if (habitatUrl) {
+		embed.setImage(habitatUrl);
+	}
+
+	return embed;
+}
+
+function buildPalResponse(pal) {
+	const thumbnail = resolveLocalImage(pal.thumbnail);
+	const habitat = resolveLocalImage(pal.habitat);
+
+	return {
+		embeds: [buildPalEmbed(pal, thumbnail.url, habitat.url)],
+		files: [...thumbnail.files, ...habitat.files],
+	};
 }
 
 function criteriaHasValue(criteria) {
@@ -364,7 +411,7 @@ module.exports = {
 				return;
 			}
 
-			await interaction.reply({ embeds: [buildPalEmbed(pal)] });
+			await interaction.reply(buildPalResponse(pal));
 			return;
 		}
 
@@ -377,7 +424,7 @@ module.exports = {
 				return;
 			}
 
-			await interaction.reply({ embeds: [buildPalEmbed(pal)] });
+			await interaction.reply(buildPalResponse(pal));
 			return;
 		}
 

@@ -8,7 +8,7 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.setName(`idea`)
-				.setDescription(`Your idea goes here.`)
+				.setDescription(`Include the command, what changed, and exact Pal names or numbers if relevant.`)
 				.setMaxLength(1000)
 				.setRequired(true)),
 
@@ -33,14 +33,25 @@ module.exports = {
 		const savedSuggestion = await Suggestions.create({
 			suggestion: idea,
 			author: `${interaction.user.username} (${interaction.user.id})`,
+			author_id: interaction.user.id,
+			guild_id: interaction.guildId,
+			guild_name: interaction.guild?.name || null,
+			channel_id: interaction.channelId,
+			channel_name: interaction.channel?.name || null,
 			accepted: false,
 		});
+
+		const sourceParts = [
+			interaction.guild?.name ? `Server: ${interaction.guild.name}` : null,
+			interaction.channel?.name ? `Channel: #${interaction.channel.name}` : null,
+		].filter(Boolean);
 
 		const suggestion = new EmbedBuilder()
 			.setAuthor({ name: `Suggestion number ${savedSuggestion.id}` })
 			.setColor([255, 255, 255])
 			.setTitle(`${interaction.user.username}'s suggestion:`)
-			.setDescription(idea);
+			.setDescription(idea)
+			.setFooter({ text: sourceParts.join(` | `) || `Direct message or unknown source` });
 
 		try {
 			const message = await channel.send({ embeds: [suggestion] });

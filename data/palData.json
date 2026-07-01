@@ -12,8 +12,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Wool",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/47/Lamball.png/revision/latest?cb=20240202133852",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/42/Lamball_Day_Habitat.png/revision/latest?cb=20240128181942",
+			"thumbnail": "data/pals/pal-001-lamball.png",
+			"habitat": "data/maps/001-lamball.png",
 			"rarity": 1
 		},
 		{
@@ -28,8 +28,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/59/Cattiva.png/revision/latest?cb=20240123163546",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/6/6b/Cattiva_Day_Habitat.png/revision/latest?cb=20240129030630",
+			"thumbnail": "data/pals/pal-002-cattiva.png",
+			"habitat": "data/maps/002-cattiva.png",
 			"rarity": 1
 		},
 		{
@@ -44,8 +44,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Eggs",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/e9/Chikipi.png/revision/latest?cb=20240123163515",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/22/Chikipi_Day_Habitat.png/revision/latest?cb=20240129062628",
+			"thumbnail": "data/pals/pal-003-chikipi.png",
+			"habitat": "data/maps/003-chikipi.png",
 			"rarity": 1
 		},
 		{
@@ -61,8 +61,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c4/Lifmunk.png/revision/latest?cb=20240123163444",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/8e/Lifmunk_Day_Habitat.png/revision/latest?cb=20240129063222",
+			"thumbnail": "data/pals/pal-004-lifmunk.png",
+			"habitat": "data/maps/004-lifmunk.png",
 			"rarity": 1
 		},
 		{
@@ -78,8 +78,25 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/dd/Foxparks.png/revision/latest?cb=20240123163335",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/33/Foxparks_Day_Habitat.png/revision/latest?cb=20240129062848",
+			"thumbnail": "data/pals/pal-005-foxparks.png",
+			"habitat": "data/maps/005-foxparks.png",
+			"rarity": 1
+		},
+		{
+			"name": "Foxparks Cryst",
+			"description": "Icy Blossom Voyager",
+			"number": "005B",
+			"element": "Ice",
+			"drops": "Leather, Ice Organ",
+			"food": "2/10",
+			"partner": "Huggy Frost - When activated, equips to the player and attacks using frigid air.",
+			"tech": "Foxparks Cryst's Harness, Lvl 24",
+			"suitability": "Cooling 1",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [0, 255, 255],
+			"thumbnail": "data/pals/pal-005b-foxparks-cryst.png",
+			"habitat": "data/maps/005b-foxparks-cryst.png",
 			"rarity": 1
 		},
 		{
@@ -94,9 +111,25 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/6c/Fuack.png/revision/latest?cb=20240123163258",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/3a/Fuack_Day_Habitat.png/revision/latest?cb=20240129062901",
+			"thumbnail": "data/pals/pal-006-fuack.png",
+			"habitat": "data/maps/006-fuack.png",
 			"rarity": 1
+		},
+		{
+			"name": "Fuack Ignis",
+			"description": "Runaway Wave Rider",
+			"number": "006B",
+			"element": "Water, Fire",
+			"drops": "Leather, Pal Fluids, Flame Organ",
+			"food": "2/10",
+			"partner": "Fire Tackle - When activated, Fuack Ignis fire surfs towards an enemy and slams into them.",
+			"suitability": "Kindling 1, Watering 1, Handiwork 1, Transporting 1",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [255, 0, 0],
+			"thumbnail": "data/pals/pal-006b-fuack-ignis.png",
+			"habitat": "data/maps/006b-fuack-ignis.png",
+			"rarity": 2
 		},
 		{
 			"name": "Sparkit",
@@ -110,8 +143,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/ee/Sparkit.png/revision/latest?cb=20240123163229",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/89/Sparkit_Day_Habitat.png/revision/latest?cb=20240129063602",
+			"thumbnail": "data/pals/pal-007-sparkit.png",
+			"habitat": "data/maps/007-sparkit.png",
 			"rarity": 1
 		},
 		{
@@ -127,8 +160,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/34/Tanzee.png/revision/latest?cb=20240123163156",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/d3/Tanzee_Day_Habitat.png/revision/latest?cb=20240129063649",
+			"thumbnail": "data/pals/pal-008-tanzee.png",
+			"habitat": "data/maps/008-tanzee.png",
 			"rarity": 1
 		},
 		{
@@ -143,8 +176,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/e5/Rooby.png/revision/latest?cb=20240123163133",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/e9/Rooby_Day_Habitat.png/revision/latest?cb=20240129063538",
+			"thumbnail": "data/pals/pal-009-rooby.png",
+			"habitat": "data/maps/009-rooby.png",
 			"rarity": 2
 		},
 		{
@@ -160,9 +193,26 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 204, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b3/Pengullet.png/revision/latest?cb=20240223181545",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/6/6f/Pengullet_Day_Habitat.png/revision/latest?cb=20240129063406",
+			"thumbnail": "data/pals/pal-010-pengullet.png",
+			"habitat": "data/maps/010-pengullet.png",
 			"rarity": 1
+		},
+		{
+			"name": "Pengullet Lux",
+			"description": "Had One Too Many",
+			"number": "010B",
+			"element": "Water, Electric",
+			"drops": "Electric Organ, Pal Fluids",
+			"food": "2/10",
+			"partner": "Pengullet Lux Launcher - When activated, the player equips a Rocket Launcher and fires Pengullet Lux as ammunition. Pengullet Lux explodes on contact and is incapacitated.",
+			"tech": "Pengullet Lux's Rocket Launcher, Lvl 39",
+			"suitability": "Watering 1, Generating Electricity 2, Handiwork 1, Transporting 1",
+			"spawnTime": "Night",
+			"farmable": "No",
+			"color": [255, 255, 0],
+			"thumbnail": "data/pals/pal-010b-pengullet-lux.png",
+			"habitat": "data/maps/010b-pengullet-lux.png",
+			"rarity": 2
 		},
 		{
 			"name": "Penking",
@@ -176,9 +226,25 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 204, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/5c/Penking.png/revision/latest?cb=20240123162544",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/2b/Penking_Day_Habitat.png/revision/latest?cb=20240129063411",
+			"thumbnail": "data/pals/pal-011-penking.png",
+			"habitat": "data/maps/011-penking.png",
 			"rarity": 6
+		},
+		{
+			"name": "Penking Lux",
+			"description": "Pioneer of the Black",
+			"number": "011B",
+			"element": "Water, Electric",
+			"drops": "Electric Organ, Penking Plume",
+			"food": "8/10",
+			"partner": "Unyielding Storm Commander - While fighting together, Water Pals drop more items when defeated.",
+			"suitability": "Watering 2, Generating Electricity 2, Handiwork 2, Mining 2, Transporting 2",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [255, 255, 0],
+			"thumbnail": "data/pals/pal-011b-penking-lux.png",
+			"habitat": "data/maps/011b-penking-lux.png",
+			"rarity": 7
 		},
 		{
 			"name": "Jolthog",
@@ -193,8 +259,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": 16776960,
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/50/Jolthog.png/revision/latest?cb=20240210111817",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/06/Jolthog_Day_Habitat.png/revision/latest?cb=20240129063110",
+			"thumbnail": "data/pals/pal-012-jolthog.png",
+			"habitat": "data/maps/012-jolthog.png",
 			"rarity": 1
 		},
 		{
@@ -210,8 +276,8 @@
 			"spawnTime": "With factions",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/dc/Jolthog_Cryst.png/revision/latest?cb=20240210111838",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-012b-jolthog-cryst.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 2
 		},
 		{
@@ -226,8 +292,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [96, 100, 27],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f3/Gumoss.png/revision/latest?cb=20240123165935",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/01/Gumoss_Day_Habitat.png/revision/latest?cb=20240129063007",
+			"thumbnail": "data/pals/pal-013-gumoss.png",
+			"habitat": "data/maps/013-gumoss.png",
 			"rarity": 1
 		},
 		{
@@ -242,8 +308,8 @@
 			"spawnTime": "Day",
 			"farmable": "Yes - Spheres, Arrows, Gold Coins",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/79/Vixy.png/revision/latest?cb=20240123170135",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/a4/Vixy_Day_Habitat.png/revision/latest?cb=20240129063802",
+			"thumbnail": "data/pals/pal-014-vixy.png",
+			"habitat": "data/maps/014-vixy.png",
 			"rarity": 2
 		},
 		{
@@ -258,8 +324,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c5/Hoocrates.png/revision/latest?cb=20240123170255",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/a8/Hoocrates_Night_Habitat.png/revision/latest?cb=20240128233959",
+			"thumbnail": "data/pals/pal-015-hoocrates.png",
+			"habitat": "data/maps/015-hoocrates.png",
 			"rarity": 1
 		},
 		{
@@ -274,8 +340,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/2b/Teafant.png/revision/latest?cb=20240123170333",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/1e/Teafant_Day_Habitat.png/revision/latest?cb=20240129063656",
+			"thumbnail": "data/pals/pal-016-teafant.png",
+			"habitat": "data/maps/016-teafant.png",
 			"rarity": 1
 		},
 		{
@@ -290,8 +356,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/8b/Depresso.png/revision/latest?cb=20240123165847",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/ed/Depresso_Night_Habitat.png/revision/latest?cb=20240129062720",
+			"thumbnail": "data/pals/pal-017-depresso.png",
+			"habitat": "data/maps/017-depresso.png",
 			"rarity": 1
 		},
 		{
@@ -306,8 +372,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/96/Cremis.png/revision/latest?cb=20240123170416",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/4e/Cremis_Day_Habitat.png/revision/latest?cb=20240129062656",
+			"thumbnail": "data/pals/pal-018-cremis.png",
+			"habitat": "data/maps/018-cremis.png",
 			"rarity": 1
 		},
 		{
@@ -323,8 +389,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/d7/Daedream.png/revision/latest?cb=20240123170458",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f3/Daedream_Night_Habitat.png/revision/latest?cb=20240129062711",
+			"thumbnail": "data/pals/pal-019-daedream.png",
+			"habitat": "data/maps/019-daedream.png",
 			"rarity": 1
 		},
 		{
@@ -340,8 +406,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/6d/Rushoar.png/revision/latest?cb=20240123170615",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f2/Rushoar_Day_Habitat.png/revision/latest?cb=20240129063545",
+			"thumbnail": "data/pals/pal-020-rushoar.png",
+			"habitat": "data/maps/020-rushoar.png",
 			"rarity": 1
 		},
 		{
@@ -356,8 +422,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/2e/Nox.png/revision/latest?cb=20240123170533",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/7/7f/Nox_Night_Habitat.png/revision/latest?cb=20240129063353",
+			"thumbnail": "data/pals/pal-021-nox.png",
+			"habitat": "data/maps/021-nox.png",
 			"rarity": 6
 		},
 		{
@@ -372,8 +438,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/ba/Fuddler.png/revision/latest?cb=20240123175507",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/c/c8/Fuddler_Day_Habitat.png/revision/latest?cb=20240129062907",
+			"thumbnail": "data/pals/pal-022-fuddler.png",
+			"habitat": "data/maps/022-fuddler.png",
 			"rarity": 1
 		},
 		{
@@ -389,9 +455,26 @@
 			"spawnTime": "Dungeons; Nocturnal",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/bf/Killamari.png/revision/latest?cb=20240123181512",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-023-killamari.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 1
+		},
+		{
+			"name": "Killamari Primo",
+			"description": "Devoid of Emotion",
+			"number": "023B",
+			"element": "Neutral, Water",
+			"drops": "Pal Fluids, Killamari Tentacle",
+			"food": "3/10",
+			"partner": "Fried Killamari - While in team, modifies the performance of the equipped glider. Enables gentle floating while gliding for an extended time.",
+			"tech": "Killamari Primo's Gloves, Lvl 23",
+			"suitability": "Watering 1, Gathering 1, Transporting 2",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [0, 0, 255],
+			"thumbnail": "data/pals/pal-023b-killamari-primo.png",
+			"habitat": "data/maps/023b-killamari-primo.png",
+			"rarity": 2
 		},
 		{
 			"name": "Mau",
@@ -405,8 +488,8 @@
 			"spawnTime": "Dungeons/Factions",
 			"farmable": "Yes - Gold Coin",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/21/Mau.png/revision/latest?cb=20240122143301",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-024-mau.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 1
 		},
 		{
@@ -421,8 +504,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Gold Coin",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/bf/Mau_Cryst.png/revision/latest?cb=20240122142108",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/7/71/Mau_Cryst_Day_Habitat.png/revision/latest?cb=20240129063256",
+			"thumbnail": "data/pals/pal-024b-mau-cryst.png",
+			"habitat": "data/maps/024b-mau-cryst.png",
 			"rarity": 2
 		},
 		{
@@ -438,9 +521,26 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/aa/Celaray.png/revision/latest?cb=20240123181336",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/be/Celaray_Day_Habitat.png/revision/latest?cb=20240129062618",
+			"thumbnail": "data/pals/pal-025-celaray.png",
+			"habitat": "data/maps/025-celaray.png",
 			"rarity": 3
+		},
+		{
+			"name": "Celaray Lux",
+			"description": "Sky-Swimming Fish",
+			"number": "025B",
+			"element": "Water, Electric",
+			"drops": "Pal Fluids",
+			"food": "3/10",
+			"partner": "Jolt Glider - While in team, modifies the performance of the equipped glider. Increases speed while gliding for an extended time.",
+			"tech": "Celaray Lux's Gloves, Lvl 26",
+			"suitability": "Watering 1, Generating Electricity 1, Transporting 1",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [255, 255, 0],
+			"thumbnail": "data/pals/pal-025b-celaray-lux.png",
+			"habitat": "data/maps/025b-celaray-lux.png",
+			"rarity": 4
 		},
 		{
 			"name": "Direhowl",
@@ -455,8 +555,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/14/Direhowl.png/revision/latest?cb=20240123181301",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/af/Direhowl_Day_Habitat.png/revision/latest?cb=20240129062743",
+			"thumbnail": "data/pals/pal-026-direhowl.png",
+			"habitat": "data/maps/026-direhowl.png",
 			"rarity": 2
 		},
 		{
@@ -472,8 +572,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/d9/Tocotoco.png/revision/latest?cb=20240123181236",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/5e/Tocotoco_Day_Habitat.png/revision/latest?cb=20240129063705",
+			"thumbnail": "data/pals/pal-027-tocotoco.png",
+			"habitat": "data/maps/027-tocotoco.png",
 			"rarity": 1
 		},
 		{
@@ -489,8 +589,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f0/Flopie.png/revision/latest?cb=20240123181203",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f8/Flopie_Day_Habitat.png/revision/latest?cb=20240129062837",
+			"thumbnail": "data/pals/pal-028-flopie.png",
+			"habitat": "data/maps/028-flopie.png",
 			"rarity": 1
 		},
 		{
@@ -505,8 +605,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Milk",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/9d/Mozzarina.png/revision/latest?cb=20240123181057",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/4d/Mozzarina_Day_Habitat.png/revision/latest?cb=20240129063333",
+			"thumbnail": "data/pals/pal-029-mozzarina.png",
+			"habitat": "data/maps/029-mozzarina.png",
 			"rarity": 2
 		},
 		{
@@ -521,8 +621,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/40/Bristla.png/revision/latest?cb=20240123181033",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/ff/Bristla_Day_Habitat.png/revision/latest?cb=20240129062538",
+			"thumbnail": "data/pals/pal-030-bristla.png",
+			"habitat": "data/maps/030-bristla.png",
 			"rarity": 1
 		},
 		{
@@ -537,8 +637,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f9/Gobfin.png/revision/latest?cb=20240122145054",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/35/Gobfin_Day_Habitat.png/revision/latest?cb=20240129062931",
+			"thumbnail": "data/pals/pal-031-gobfin.png",
+			"habitat": "data/maps/031-gobfin.png",
 			"rarity": 2
 		},
 		{
@@ -553,8 +653,8 @@
 			"spawnTime": "Day",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/67/Gobfin_Ignis.png/revision/latest?cb=20240122145037",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/59/Gobfin_Ignis_Day_Habitat.png/revision/latest?cb=20240129062926",
+			"thumbnail": "data/pals/pal-031b-gobfin-ignis.png",
+			"habitat": "data/maps/031b-gobfin-ignis.png",
 			"rarity": 3
 		},
 		{
@@ -570,8 +670,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/6c/Hangyu.png/revision/latest?cb=20240207185559",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/06/Hangyu_Day_Habitat.png/revision/latest?cb=20240129063023",
+			"thumbnail": "data/pals/pal-032-hangyu.png",
+			"habitat": "data/maps/032-hangyu.png",
 			"rarity": 1
 		},
 		{
@@ -587,8 +687,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/df/Hangyu_Cryst.png/revision/latest?cb=20240207185718",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/83/Hangyu_Cryst_Night_Habitat.png/revision/latest?cb=20240129063018",
+			"thumbnail": "data/pals/pal-032b-hangyu-cryst.png",
+			"habitat": "data/maps/032b-hangyu-cryst.png",
 			"rarity": 2
 		},
 		{
@@ -604,8 +704,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b5/Mossanda.png/revision/latest?cb=20240122170308",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/92/Mossanda_Day_Habitat.png/revision/latest?cb=20240129063329",
+			"thumbnail": "data/pals/pal-033-mossanda.png",
+			"habitat": "data/maps/033-mossanda.png",
 			"rarity": 6
 		},
 		{
@@ -621,8 +721,8 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [255, 255, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/4b/Mossanda_Lux.png/revision/latest?cb=20240122170350",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/23/Mossanda_Lux_Day_Habitat.png/revision/latest?cb=20240129063323",
+			"thumbnail": "data/pals/pal-033b-mossanda-lux.png",
+			"habitat": "data/maps/033b-mossanda-lux.png",
 			"rarity": 7
 		},
 		{
@@ -637,8 +737,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Cotton",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/0f/Woolipop.png/revision/latest?cb=20240123181007",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/7/78/Woolipop_Day_Habitat.png/revision/latest?cb=20240129063823",
+			"thumbnail": "data/pals/pal-034-woolipop.png",
+			"habitat": "data/maps/034-woolipop.png",
 			"rarity": 3
 		},
 		{
@@ -653,8 +753,24 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Red Berries",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/5f/Caprity.png/revision/latest?cb=20240123180701",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/20/Caprity_Day_Habitat.png/revision/latest?cb=20240129062604",
+			"thumbnail": "data/pals/pal-035-caprity.png",
+			"habitat": "data/maps/035-caprity.png",
+			"rarity": 3
+		},
+		{
+			"name": "Caprity Noct",
+			"description": "Tainted Farm",
+			"number": "035B",
+			"element": "Dark",
+			"drops": "Caprity Meat, Red Berries, Horn, Venom Gland",
+			"food": "4/10",
+			"partner": "Venom Picker - Sometimes drops Venom Gland from its back when assigned to Ranch.",
+			"suitability": "Planting 2, Farming 1",
+			"spawnTime": "Day/Night",
+			"farmable": "Yes - Venom Gland",
+			"color": [0, 0, 0],
+			"thumbnail": "data/pals/pal-035b-caprity-noct.png",
+			"habitat": "data/maps/035b-caprity-noct.png",
 			"rarity": 3
 		},
 		{
@@ -670,8 +786,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Wool",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a0/Melpaca.png/revision/latest?cb=20240123180635",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/9a/Melpaca_Day_Habitat.png/revision/latest?cb=20240129063307",
+			"thumbnail": "data/pals/pal-036-melpaca.png",
+			"habitat": "data/maps/036-melpaca.png",
 			"rarity": 3
 		},
 		{
@@ -687,8 +803,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/59/Eikthyrdeer.png/revision/latest?cb=20240122183848",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f1/Eikthyrdeer_Day_Habitat.png/revision/latest?cb=20240129062759",
+			"thumbnail": "data/pals/pal-037-eikthyrdeer.png",
+			"habitat": "data/maps/037-eikthyrdeer.png",
 			"rarity": 4
 		},
 		{
@@ -704,8 +820,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/ac/Eikthyrdeer_Terra.png/revision/latest?cb=20240122184647",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b0/Eikthyrdeer_Terra_Day_Habitat.png/revision/latest?cb=20240129062754",
+			"thumbnail": "data/pals/pal-037b-eikthyrdeer-terra.png",
+			"habitat": "data/maps/037b-eikthyrdeer-terra.png",
 			"rarity": 6
 		},
 		{
@@ -721,8 +837,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/bf/Nitewing.png/revision/latest?cb=20240123180604",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/86/Nitewing_Day_Habitat.png/revision/latest?cb=20240129063347",
+			"thumbnail": "data/pals/pal-038-nitewing.png",
+			"habitat": "data/maps/038-nitewing.png",
 			"rarity": 3
 		},
 		{
@@ -737,8 +853,24 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f1/Ribbuny.png/revision/latest?cb=20240123180541",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/a1/Ribbuny_Day_Habitat.png/revision/latest?cb=20240129063515",
+			"thumbnail": "data/pals/pal-039-ribbuny.png",
+			"habitat": "data/maps/039-ribbuny.png",
+			"rarity": 1
+		},
+		{
+			"name": "Ribbuny Botan",
+			"description": "Sparkling Smile",
+			"number": "039B",
+			"element": "Grass",
+			"drops": "Leather, Beautiful Flower, Ribbuny Ribbon, Potato Seeds",
+			"food": "2/10",
+			"partner": "Grass Weaver - While in team, increases Attack of Grass Pals. While at a base, increases work efficiency when working at Weapon Workbench, Weapon Assembly Line, and other related facilities.",
+			"suitability": "Planting 1, Handiwork 1, Gathering 1, Transporting 1",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [25, 128, 0],
+			"thumbnail": "data/pals/pal-039b-ribbuny-botan.png",
+			"habitat": "data/maps/039b-ribbuny-botan.png",
 			"rarity": 1
 		},
 		{
@@ -753,8 +885,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [100, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b1/Incineram.png/revision/latest?cb=20240122183815",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/dd/Incineram_Day_Habitat.png/revision/latest?cb=20240129063053",
+			"thumbnail": "data/pals/pal-040-incineram.png",
+			"habitat": "data/maps/040-incineram.png",
 			"rarity": 4
 		},
 		{
@@ -769,8 +901,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/76/Incineram_Noct.png/revision/latest?cb=20240122185015",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/33/Incineram_Noct_Day_Habitat.png/revision/latest?cb=20240129063044",
+			"thumbnail": "data/pals/pal-040b-incineram-noct.png",
+			"habitat": "data/maps/040b-incineram-noct.png",
 			"rarity": 5
 		},
 		{
@@ -785,8 +917,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/cb/Cinnamoth.png/revision/latest?cb=20240123180518",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/3a/Cinnamoth_Day_Habitat.png/revision/latest?cb=20240129062644",
+			"thumbnail": "data/pals/pal-041-cinnamoth.png",
+			"habitat": "data/maps/041-cinnamoth.png",
 			"rarity": 4
 		},
 		{
@@ -802,8 +934,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a4/Arsox.png/revision/latest?cb=20240123180056",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/7/71/Arsox_Day_Habitat.png/revision/latest?cb=20240129062502",
+			"thumbnail": "data/pals/pal-042-arsox.png",
+			"habitat": "data/maps/042-arsox.png",
 			"rarity": 4
 		},
 		{
@@ -818,9 +950,25 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/89/Dumud.png/revision/latest?cb=20240123180029",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/c/cc/Dumud_Day_Habitat.png/revision/latest?cb=20240129062749",
+			"thumbnail": "data/pals/pal-043-dumud.png",
+			"habitat": "data/maps/043-dumud.png",
 			"rarity": 4
+		},
+		{
+			"name": "Dumud Gild",
+			"description": "Piece of Cake",
+			"number": "043B",
+			"element": "Ground, Water",
+			"drops": "Raw Dumud, High Quality Pal Oil, Gold Coin",
+			"food": "4/10",
+			"partner": "Golden Harvest - While in team, increases Attack of Ground Pals. Sometimes drops High Quality Pal Oil when assigned to Ranch, with a small chance to drop Gold Coin.",
+			"suitability": "Watering 1, Mining 2, Transporting 1, Farming 1",
+			"spawnTime": "Day/Night",
+			"farmable": "Yes - High Quality Pal Oil, Gold Coin",
+			"color": [166, 82, 45],
+			"thumbnail": "data/pals/pal-043b-dumud-gild.png",
+			"habitat": "data/maps/043b-dumud-gild.png",
+			"rarity": 5
 		},
 		{
 			"name": "Cawgnito",
@@ -834,8 +982,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/d1/Cawgnito.png/revision/latest?cb=20240123175955",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/94/Cawgnito_Night_Habitat.png/revision/latest?cb=20240129062613",
+			"thumbnail": "data/pals/pal-044-cawgnito.png",
+			"habitat": "data/maps/044-cawgnito.png",
 			"rarity": 3
 		},
 		{
@@ -850,8 +998,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/4d/Leezpunk.png/revision/latest?cb=20240122183738",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b3/Leezpunk_Day_Habitat.png/revision/latest?cb=20240129063217",
+			"thumbnail": "data/pals/pal-045-leezpunk.png",
+			"habitat": "data/maps/045-leezpunk.png",
 			"rarity": 2
 		},
 		{
@@ -866,8 +1014,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/ba/Leezpunk_Ignis.png/revision/latest?cb=20240122185128",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/96/Leezpunk_Ignis_Day_Habitat.png/revision/latest?cb=20240129063210",
+			"thumbnail": "data/pals/pal-045b-leezpunk-ignis.png",
+			"habitat": "data/maps/045b-leezpunk-ignis.png",
 			"rarity": 3
 		},
 		{
@@ -882,8 +1030,24 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f8/Loupmoon.png/revision/latest?cb=20240123175932",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/ad/Loupmoon_Night_Habitat.png/revision/latest?cb=20240129063228",
+			"thumbnail": "data/pals/pal-046-loupmoon.png",
+			"habitat": "data/maps/046-loupmoon.png",
+			"rarity": 3
+		},
+		{
+			"name": "Loupmoon Cryst",
+			"description": "Enraptured by the Frozen Moonlight",
+			"number": "046B",
+			"element": "Ice",
+			"drops": "Bone",
+			"food": "5/10",
+			"partner": "Frozen Gleam Strike - When activated, attacks targeted enemy with a powerful Snow Claw.",
+			"suitability": "Handiwork 2, Cooling 3",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [0, 255, 255],
+			"thumbnail": "data/pals/pal-046b-loupmoon-cryst.png",
+			"habitat": "data/maps/046b-loupmoon-cryst.png",
 			"rarity": 3
 		},
 		{
@@ -899,8 +1063,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/8a/Galeclaw.png/revision/latest?cb=20240123175720",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/02/Galeclaw_Day_Habitat.png/revision/latest?cb=20240129062917",
+			"thumbnail": "data/pals/pal-047-galeclaw.png",
+			"habitat": "data/maps/047-galeclaw.png",
 			"rarity": 2
 		},
 		{
@@ -915,8 +1079,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/13/Robinquill.png/revision/latest?cb=20240123063928",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/bb/Robinquill_Day_Habitat.png/revision/latest?cb=20240129063530",
+			"thumbnail": "data/pals/pal-048-robinquill.png",
+			"habitat": "data/maps/048-robinquill.png",
 			"rarity": 5
 		},
 		{
@@ -931,8 +1095,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [96, 100, 27],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/42/Robinquill_Terra.png/revision/latest?cb=20240122185224",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/d0/Robinquill_Terra_Day_Habitat.png/revision/latest?cb=20240129063525",
+			"thumbnail": "data/pals/pal-048b-robinquill-terra.png",
+			"habitat": "data/maps/048b-robinquill-terra.png",
 			"rarity": 6
 		},
 		{
@@ -947,8 +1111,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/8f/Gorirat.png/revision/latest?cb=20240124001220",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/8d/Gorirat_Day_Habitat.png/revision/latest?cb=20240129062940",
+			"thumbnail": "data/pals/pal-049-gorirat.png",
+			"habitat": "data/maps/049-gorirat.png",
 			"rarity": 5
 		},
 		{
@@ -963,8 +1127,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/26/Gorirat_Terra.png/revision/latest?cb=20240625084104",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-049b-gorirat-terra.png",
+			"habitat": "data/maps/049b-gorirat-terra.png",
 			"rarity": 5
 		},
 		{
@@ -979,8 +1143,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Honey",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/56/Beegarde.png/revision/latest?cb=20240124001139",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/5d/Beegarde_Day_Habitat.png/revision/latest?cb=20240129062522",
+			"thumbnail": "data/pals/pal-050-beegarde.png",
+			"habitat": "data/maps/050-beegarde.png",
 			"rarity": 4
 		},
 		{
@@ -995,8 +1159,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/6d/Elizabee.png/revision/latest?cb=20240124001045",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/11/Elizabee_Day_Habitat.png/revision/latest?cb=20240129062807",
+			"thumbnail": "data/pals/pal-051-elizabee.png",
+			"habitat": "data/maps/051-elizabee.png",
 			"rarity": 8
 		},
 		{
@@ -1012,8 +1176,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/09/Grintale.png/revision/latest?cb=20240124000845",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/85/Grintale_Night_Habitat.png/revision/latest?cb=20240129062953",
+			"thumbnail": "data/pals/pal-052-grintale.png",
+			"habitat": "data/maps/052-grintale.png",
 			"rarity": 6
 		},
 		{
@@ -1028,8 +1192,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/73/Swee.png/revision/latest?cb=20240124000804",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b4/Swee_Day_Habitat.png/revision/latest?cb=20240129063632",
+			"thumbnail": "data/pals/pal-053-swee.png",
+			"habitat": "data/maps/053-swee.png",
 			"rarity": 1
 		},
 		{
@@ -1044,8 +1208,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/93/Sweepa.png/revision/latest?cb=20240124000541",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Sweepa_Day_Habitat.png/revision/latest?cb=20240129063642",
+			"thumbnail": "data/pals/pal-054-sweepa.png",
+			"habitat": "data/maps/054-sweepa.png",
 			"rarity": 6
 		},
 		{
@@ -1061,8 +1225,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [90, 77, 166],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/50/Chillet.png/revision/latest?cb=20240124000212",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/9c/Chillet_Day_Habitat.png/revision/latest?cb=20240129062637",
+			"thumbnail": "data/pals/pal-055-chillet.png",
+			"habitat": "data/maps/055-chillet.png",
 			"rarity": 4
 		},
 		{
@@ -1078,8 +1242,8 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"color": [166, 0, 90],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/e2/Chillet_Ignis.png/revision/latest?cb=20240625084714",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-055b-chillet-ignis.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 5
 		},
 		{
@@ -1095,8 +1259,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/25/Univolt.png/revision/latest?cb=20240124103319",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/e6/Univolt_Day_Habitat.png/revision/latest?cb=20240129063721",
+			"thumbnail": "data/pals/pal-056-univolt.png",
+			"habitat": "data/maps/056-univolt.png",
 			"rarity": 5
 		},
 		{
@@ -1111,8 +1275,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/7b/Foxcicle.png/revision/latest?cb=20240124103155",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/9a/Foxcicle_Day_Habitat.png/revision/latest?cb=20240129062842",
+			"thumbnail": "data/pals/pal-057-foxcicle.png",
+			"habitat": "data/maps/057-foxcicle.png",
 			"rarity": 5
 		},
 		{
@@ -1128,8 +1292,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/ab/Pyrin.png/revision/latest?cb=20240123063856",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/a5/Pyrin_Day_Habitat.png/revision/latest?cb=20240129063424",
+			"thumbnail": "data/pals/pal-058-pyrin.png",
+			"habitat": "data/maps/058-pyrin.png",
 			"rarity": 6
 		},
 		{
@@ -1145,8 +1309,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [100, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/72/Pyrin_Noct.png/revision/latest?cb=20240122185332",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/88/Pyrin_Noct_Night_Habitat.png/revision/latest?cb=20240129063421",
+			"thumbnail": "data/pals/pal-058b-pyrin-noct.png",
+			"habitat": "data/maps/058b-pyrin-noct.png",
 			"rarity": 7
 		},
 		{
@@ -1162,8 +1326,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/5f/Reindrix.png/revision/latest?cb=20240124103127",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/2b/Reindrix_Day_Habitat.png/revision/latest?cb=20240129063453",
+			"thumbnail": "data/pals/pal-059-reindrix.png",
+			"habitat": "data/maps/059-reindrix.png",
 			"rarity": 4
 		},
 		{
@@ -1179,8 +1343,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/26/Rayhound.png/revision/latest?cb=20240124103009",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/4a/Rayhound_Day_Habitat.png/revision/latest?cb=20240129063445",
+			"thumbnail": "data/pals/pal-060-rayhound.png",
+			"habitat": "data/maps/060-rayhound.png",
 			"rarity": 5
 		},
 		{
@@ -1196,8 +1360,25 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c4/Kitsun.png/revision/latest?cb=20240124104452",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/2e/Kitsun_Night_Habitat.png/revision/latest?cb=20240129063205",
+			"thumbnail": "data/pals/pal-061-kitsun.png",
+			"habitat": "data/maps/061-kitsun.png",
+			"rarity": 6
+		},
+		{
+			"name": "Kitsun Noct",
+			"description": "Guardian of the Dark Flame",
+			"number": "061B",
+			"element": "Dark",
+			"drops": "Flame Organ, Leather, Dark Fragment",
+			"food": "4/10",
+			"partner": "Fogged Mind - Can be ridden. Changes the player's attack type to Dark while mounted.",
+			"tech": "Kitsun Noct Saddle, Lvl 53",
+			"suitability": "Kindling 2",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [0, 0, 0],
+			"thumbnail": "data/pals/pal-061b-kitsun-noct.png",
+			"habitat": "data/maps/061b-kitsun-noct.png",
 			"rarity": 6
 		},
 		{
@@ -1213,8 +1394,25 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/99/Dazzi.png/revision/latest?cb=20240124102802",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/3e/Dazzi_Day_Habitat.png/revision/latest?cb=20240129062714",
+			"thumbnail": "data/pals/pal-062-dazzi.png",
+			"habitat": "data/maps/062-dazzi.png",
+			"rarity": 2
+		},
+		{
+			"name": "Dazzi Noct",
+			"description": "Born of the Thunderclouds",
+			"number": "062B",
+			"element": "Dark, Electric",
+			"drops": "Electric Organ, Dazzi Cloud, Dark Fragment",
+			"food": "2/10",
+			"partner": "Lady of Dark Lightning - While in team, appears near the player. Follows up player attacks with dark lightning bolts.",
+			"tech": "Dazzi Noct's Necklace, Lvl 51",
+			"suitability": "Generating Electricity 1, Handiwork 1, Medicine Production 1, Transporting 1",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [0, 0, 0],
+			"thumbnail": "data/pals/pal-062b-dazzi-noct.png",
+			"habitat": "data/maps/062b-dazzi-noct.png",
 			"rarity": 2
 		},
 		{
@@ -1229,8 +1427,8 @@
 			"spawnTime": "Alpha/Dungeons",
 			"farmable": "a",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/ce/Lunaris.png/revision/latest?cb=20240124102710",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/c/c9/Lunaris_Day_Habitat.png/revision/latest?cb=20240215203307",
+			"thumbnail": "data/pals/pal-063-lunaris.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 6
 		},
 		{
@@ -1246,8 +1444,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [64, 64, 64],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/99/Dinossom.png/revision/latest?cb=20240122181507",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/49/Dinossom_Day_Habitat.png/revision/latest?cb=20240129062736",
+			"thumbnail": "data/pals/pal-064-dinossom.png",
+			"habitat": "data/maps/064-dinossom.png",
 			"rarity": 6
 		},
 		{
@@ -1263,8 +1461,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [160, 64, 96],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b7/Dinossom_Lux.png/revision/latest?cb=20240122185435",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/ad/Dinossom_Lux_Day_Habitat.png/revision/latest?cb=20240129062728",
+			"thumbnail": "data/pals/pal-064b-dinossom-lux.png",
+			"habitat": "data/maps/064b-dinossom-lux.png",
 			"rarity": 7
 		},
 		{
@@ -1280,8 +1478,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f9/Surfent.png/revision/latest?cb=20240122182116",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/46/Surfent_Day_Habitat.png/revision/latest?cb=20240129063614",
+			"thumbnail": "data/pals/pal-065-surfent.png",
+			"habitat": "data/maps/065-surfent.png",
 			"rarity": 4
 		},
 		{
@@ -1297,8 +1495,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/63/Surfent_Terra.png/revision/latest?cb=20240122182251",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/da/Surfent_Terra_Day_Habitat.png/revision/latest?cb=20240129063607",
+			"thumbnail": "data/pals/pal-065b-surfent-terra.png",
+			"habitat": "data/maps/065b-surfent-terra.png",
 			"rarity": 5
 		},
 		{
@@ -1314,12 +1512,12 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/7c/Maraith.png/revision/latest?cb=20240124102441",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/e3/Maraith_Night_Habitat.png/revision/latest?cb=20240129063253",
+			"thumbnail": "data/pals/pal-066-maraith.png",
+			"habitat": "data/maps/066-maraith.png",
 			"rarity": 6
 		},
 		{
-			"name": "Digitoise",
+			"name": "Digtoise",
 			"description": "Drilling Machine",
 			"number": "067",
 			"element": "Ground",
@@ -1330,8 +1528,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/98/Digtoise.png/revision/latest?cb=20240124102412",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/23/Digtoise_Day_Habitat.png/revision/latest?cb=20240129062723",
+			"thumbnail": "data/pals/pal-067-digtoise.png",
+			"habitat": "data/maps/067-digtoise.png",
 			"rarity": 5
 		},
 		{
@@ -1346,8 +1544,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/17/Tombat.png/revision/latest?cb=20240124104318",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/57/Tombat_Night_Habitat.png/revision/latest?cb=20240129063716",
+			"thumbnail": "data/pals/pal-068-tombat.png",
+			"habitat": "data/maps/068-tombat.png",
 			"rarity": 5
 		},
 		{
@@ -1362,8 +1560,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/af/Lovander.png/revision/latest?cb=20240125041214",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b0/Lovander_Night_Habitat.png/revision/latest?cb=20240129063231",
+			"thumbnail": "data/pals/pal-069-lovander.png",
+			"habitat": "data/maps/069-lovander.png",
 			"rarity": 5
 		},
 		{
@@ -1378,8 +1576,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Flame Organ",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/19/Flambelle.png/revision/latest?cb=20240124101852",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/88/Flambelle_Day_Habitat.png/revision/latest?cb=20240129062829",
+			"thumbnail": "data/pals/pal-070-flambelle.png",
+			"habitat": "data/maps/070-flambelle.png",
 			"rarity": 1
 		},
 		{
@@ -1395,8 +1593,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [100, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/89/Vanwyrm.png/revision/latest?cb=20240122182701",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/6/6a/Vanwyrm_Day_Habitat.png/revision/latest?cb=20240129063745",
+			"thumbnail": "data/pals/pal-071-vanwyrm.png",
+			"habitat": "data/maps/071-vanwyrm.png",
 			"rarity": 4
 		},
 		{
@@ -1412,8 +1610,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 89, 89],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/42/Vanwyrm_Cryst.png/revision/latest?cb=20240122185550",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/dd/Vanwyrm_Cryst_Night_Habitat.png/revision/latest?cb=20240129063740",
+			"thumbnail": "data/pals/pal-071b-vanwyrm-cryst.png",
+			"habitat": "data/maps/071b-vanwyrm-cryst.png",
 			"rarity": 5
 		},
 		{
@@ -1428,8 +1626,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c0/Bushi.png/revision/latest?cb=20240124104338",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/92/Bushi_Day_Habitat.png/revision/latest?cb=20240129062556",
+			"thumbnail": "data/pals/pal-072-bushi.png",
+			"habitat": "data/maps/072-bushi.png",
 			"rarity": 7
 		},
 		{
@@ -1444,8 +1642,8 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"color": [100, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/56/Bushi_Noct.png/revision/latest?cb=20240625070800",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-072b-bushi-noct.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 7
 		},
 		{
@@ -1461,8 +1659,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/67/Beakon.png/revision/latest?cb=20240124104253",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/59/Beakon_Day_Habitat.png/revision/latest?cb=20240129062517",
+			"thumbnail": "data/pals/pal-073-beakon.png",
+			"habitat": "data/maps/073-beakon.png",
 			"rarity": 6
 		},
 		{
@@ -1478,8 +1676,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c3/Ragnahawk.png/revision/latest?cb=20240124105350",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/1f/Ragnahawk_Day_Habitat.png/revision/latest?cb=20240129063435",
+			"thumbnail": "data/pals/pal-074-ragnahawk.png",
+			"habitat": "data/maps/074-ragnahawk.png",
 			"rarity": 7
 		},
 		{
@@ -1494,8 +1692,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/8d/Katress.png/revision/latest?cb=20240124102054",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/1b/Katress_Night_Habitat.png/revision/latest?cb=20240129063139",
+			"thumbnail": "data/pals/pal-075-katress.png",
+			"habitat": "data/maps/075-katress.png",
 			"rarity": 6
 		},
 		{
@@ -1510,8 +1708,8 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"color": [100, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/9e/Katress_Ignis.png/revision/latest?cb=20240625085711",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-075b-katress-ignis.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 6
 		},
 		{
@@ -1526,8 +1724,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/fd/Wixen.png/revision/latest?cb=20240124102218",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/07/Wixen_Day_Habitat.png/revision/latest?cb=20240129063817",
+			"thumbnail": "data/pals/pal-076-wixen.png",
+			"habitat": "data/maps/076-wixen.png",
 			"rarity": 6
 		},
 		{
@@ -1542,8 +1740,8 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"color": [100, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/bd/Wixen_Noct.png/revision/latest?cb=20240625090144",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-076b-wixen-noct.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 6
 		},
 		{
@@ -1558,8 +1756,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c5/Verdash.png/revision/latest?cb=20240124101557",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/af/Verdash_Day_Habitat.png/revision/latest?cb=20240129063753",
+			"thumbnail": "data/pals/pal-077-verdash.png",
+			"habitat": "data/maps/077-verdash.png",
 			"rarity": 8
 		},
 		{
@@ -1574,8 +1772,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a0/Vaelet.png/revision/latest?cb=20240124101530",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/1e/Vaelet_Day_Habitat.png/revision/latest?cb=20240129063729",
+			"thumbnail": "data/pals/pal-078-vaelet.png",
+			"habitat": "data/maps/078-vaelet.png",
 			"rarity": 8
 		},
 		{
@@ -1590,8 +1788,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - High Quality Cloth",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/cb/Sibelyx.png/revision/latest?cb=20240124101500",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/98/Sibelyx_Day_Habitat.png/revision/latest?cb=20240129063555",
+			"thumbnail": "data/pals/pal-079-sibelyx.png",
+			"habitat": "data/maps/079-sibelyx.png",
 			"rarity": 7
 		},
 		{
@@ -1607,8 +1805,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/34/Elphidran.png/revision/latest?cb=20240123121131",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/c/cc/Elphidran_Day_Habitat.png/revision/latest?cb=20240129062812",
+			"thumbnail": "data/pals/pal-080-elphidran.png",
+			"habitat": "data/maps/080-elphidran.png",
 			"rarity": 7
 		},
 		{
@@ -1624,8 +1822,8 @@
 			"spawnTime": "Breeding Only",
 			"farmable": "No",
 			"color": [25, 25, 112],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/65/Elphidran_Aqua.png/revision/latest?cb=20240125042716",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-080b-elphidran-aqua.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 8
 		},
 		{
@@ -1640,8 +1838,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/17/Kelpsea.png/revision/latest?cb=20240122182549",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/2d/Kelpsea_Day_Habitat.png/revision/latest?cb=20240129063150",
+			"thumbnail": "data/pals/pal-081-kelpsea.png",
+			"habitat": "data/maps/081-kelpsea.png",
 			"rarity": 1
 		},
 		{
@@ -1656,8 +1854,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/d7/Kelpsea_Ignis.png/revision/latest?cb=20240122182408",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/fb/Kelpsea_Ignis_Day_Habitat.png/revision/latest?cb=20240129063143",
+			"thumbnail": "data/pals/pal-081b-kelpsea-ignis.png",
+			"habitat": "data/maps/081b-kelpsea-ignis.png",
 			"rarity": 2
 		},
 		{
@@ -1673,9 +1871,26 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [25, 25, 112],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/bc/Azurobe.png/revision/latest?cb=20240124101431",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/14/Azurobe_Day_Habitat.png/revision/latest?cb=20240129062512",
+			"thumbnail": "data/pals/pal-082-azurobe.png",
+			"habitat": "data/maps/082-azurobe.png",
 			"rarity": 7
+		},
+		{
+			"name": "Azurobe Cryst",
+			"description": "Lady of the Frozen Lake",
+			"number": "082B",
+			"element": "Ice, Dragon",
+			"drops": "Cloth, Pal Fluids, Ice Organ",
+			"food": "6/10",
+			"partner": "Icewing Dance - Can be ridden to travel on water. Changes the player's attack type to Ice while mounted.",
+			"tech": "Azurobe Cryst Saddle, Lvl 29",
+			"suitability": "Cooling 3",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [0, 255, 255],
+			"thumbnail": "data/pals/pal-082b-azurobe-cryst.png",
+			"habitat": "data/maps/082b-azurobe-cryst.png",
+			"rarity": 8
 		},
 		{
 			"name": "Cryolinx",
@@ -1689,8 +1904,24 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/89/Cryolinx.png/revision/latest?cb=20240124101403",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/40/Cryolinx_Day_Habitat.png/revision/latest?cb=20240129062702",
+			"thumbnail": "data/pals/pal-083-cryolinx.png",
+			"habitat": "data/maps/083-cryolinx.png",
+			"rarity": 7
+		},
+		{
+			"name": "Cryolinx Terra",
+			"description": "Predator of the Earth",
+			"number": "083B",
+			"element": "Ground",
+			"drops": "Ore",
+			"food": "7/10",
+			"partner": "Electro Hunter - While fighting together, Electric Pals drop more items when defeated.",
+			"suitability": "Handiwork 1, Lumbering 2, Mining 3, Transporting 3",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [166, 82, 45],
+			"thumbnail": "data/pals/pal-083b-cryolinx-terra.png",
+			"habitat": "data/maps/083b-cryolinx-terra.png",
 			"rarity": 7
 		},
 		{
@@ -1706,8 +1937,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/6a/Blazehowl.png/revision/latest?cb=20240122182838",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/96/Blazehowl_Day_Habitat.png/revision/latest?cb=20240129062533",
+			"thumbnail": "data/pals/pal-084-blazehowl.png",
+			"habitat": "data/maps/084-blazehowl.png",
 			"rarity": 7
 		},
 		{
@@ -1723,8 +1954,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [100, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a2/Blazehowl_Noct.png/revision/latest?cb=20240122185623",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/bb/Blazehowl_Noct_Night_Habitat.png/revision/latest?cb=20240129062531",
+			"thumbnail": "data/pals/pal-084b-blazehowl-noct.png",
+			"habitat": "data/maps/084b-blazehowl-noct.png",
 			"rarity": 8
 		},
 		{
@@ -1740,8 +1971,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 25, 112],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/0d/Relaxaurus.png/revision/latest?cb=20240122182945",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/59/Relaxaurus_Day_Habitat.png/revision/latest?cb=20240129063459",
+			"thumbnail": "data/pals/pal-085-relaxaurus.png",
+			"habitat": "data/maps/085-relaxaurus.png",
 			"rarity": 8
 		},
 		{
@@ -1757,8 +1988,8 @@
 			"spawnTime": "Dungeons/Factions",
 			"farmable": "a",
 			"color": [160, 64, 96],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/72/Relaxaurus_Lux.png/revision/latest?cb=20240122185752",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-085b-relaxaurus-lux.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 9
 		},
 		{
@@ -1774,8 +2005,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/81/Broncherry.png/revision/latest?cb=20240122183038",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b4/Broncherry_Day_Habitat.png/revision/latest?cb=20240129062548",
+			"thumbnail": "data/pals/pal-086-broncherry.png",
+			"habitat": "data/maps/086-broncherry.png",
 			"rarity": 7
 		},
 		{
@@ -1791,8 +2022,8 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [127, 255, 212],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/18/Broncherry_Aqua.png/revision/latest?cb=20240122134248",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/3e/Broncherry_Aqua_Day_Habitat.png/revision/latest?cb=20240129062543",
+			"thumbnail": "data/pals/pal-086b-broncherry-aqua.png",
+			"habitat": "data/maps/086b-broncherry-aqua.png",
 			"rarity": 8
 		},
 		{
@@ -1807,8 +2038,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/4e/Petallia.png/revision/latest?cb=20240124101336",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/32/Petallia_Day_Habitat.png/revision/latest?cb=20240129063416",
+			"thumbnail": "data/pals/pal-087-petallia.png",
+			"habitat": "data/maps/087-petallia.png",
 			"rarity": 8
 		},
 		{
@@ -1824,8 +2055,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [165, 78, 43],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/e4/Reptyro.png/revision/latest?cb=20240123055942",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/3d/Reptyro_Day_Habitat.png/revision/latest?cb=20240129063506",
+			"thumbnail": "data/pals/pal-088-reptyro.png",
+			"habitat": "data/maps/088-reptyro.png",
 			"rarity": 6
 		},
 		{
@@ -1841,8 +2072,8 @@
 			"spawnTime": "Breeding Only",
 			"farmable": "No",
 			"color": [120, 125, 96],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/57/Ice_Reptyro.png/revision/latest?cb=20240123060101",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-088b-reptyro-cryst.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 7
 		},
 		{
@@ -1858,8 +2089,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/0d/Kingpaca.png/revision/latest?cb=20240122183201",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/ea/Kingpaca_Day_Habitat.png/revision/latest?cb=20240129063157",
+			"thumbnail": "data/pals/pal-089-kingpaca.png",
+			"habitat": "data/maps/089-kingpaca.png",
 			"rarity": 8
 		},
 		{
@@ -1875,8 +2106,8 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c3/Ice_Kingpaca_Day_Habitat.png/revision/latest?cb=20240129063036",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/c/c3/Ice_Kingpaca_Day_Habitat.png/revision/latest?cb=20240129063036",
+			"thumbnail": "data/pals/pal-089b-kingpaca-cryst.png",
+			"habitat": "data/maps/089b-kingpaca-cryst.png",
 			"rarity": 9
 		},
 		{
@@ -1892,8 +2123,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/26/Mammorest.png/revision/latest?cb=20240122183236",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/2/27/Mammorest_Day_Habitat.png/revision/latest?cb=20240129063248",
+			"thumbnail": "data/pals/pal-090-mammorest.png",
+			"habitat": "data/maps/090-mammorest.png",
 			"rarity": 8
 		},
 		{
@@ -1909,8 +2140,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/34/Mammorest_Cryst.png/revision/latest?cb=20240122190602",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/dd/Mammorest_Cryst_Day_Habitat.png/revision/latest?cb=20240129063243",
+			"thumbnail": "data/pals/pal-090b-mammorest-cryst.png",
+			"habitat": "data/maps/090b-mammorest-cryst.png",
 			"rarity": 9
 		},
 		{
@@ -1926,8 +2157,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/9b/Wumpo.png/revision/latest?cb=20240122183424",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/7/76/Wumpo_Day_Habitat.png/revision/latest?cb=20240129063838",
+			"thumbnail": "data/pals/pal-091-wumpo.png",
+			"habitat": "data/maps/091-wumpo.png",
 			"rarity": 7
 		},
 		{
@@ -1943,8 +2174,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a2/Wumpo_Botan.png/revision/latest?cb=20240122190707",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/e8/Wumpo_Botan_Day_Habitat.png/revision/latest?cb=20240129063830",
+			"thumbnail": "data/pals/pal-091b-wumpo-botan.png",
+			"habitat": "data/maps/091b-wumpo-botan.png",
 			"rarity": 8
 		},
 		{
@@ -1959,9 +2190,25 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [96, 100, 27],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/3a/Warsect.png/revision/latest?cb=20240124101144",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/1/15/Warsect_Day_Habitat.png/revision/latest?cb=20240129063810",
+			"thumbnail": "data/pals/pal-092-warsect.png",
+			"habitat": "data/maps/092-warsect.png",
 			"rarity": 8
+		},
+		{
+			"name": "Warsect Terra",
+			"description": "Golden Armor Warrior",
+			"number": "092B",
+			"element": "Ground",
+			"drops": "Honey",
+			"food": "6/10",
+			"partner": "Fortified Shell - While fighting together, increases the player's defense and reduces damage received from Fire.",
+			"suitability": "Handiwork 1, Mining 3, Transporting 3",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [166, 82, 45],
+			"thumbnail": "data/pals/pal-092b-warsect-terra.png",
+			"habitat": "data/maps/092b-warsect-terra.png",
+			"rarity": 9
 		},
 		{
 			"name": "Fenglope",
@@ -1976,8 +2223,25 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/31/Fenglope.png/revision/latest?cb=20240124101043",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/e/eb/Fenglope_Day_Habitat.png/revision/latest?cb=20240129062822",
+			"thumbnail": "data/pals/pal-093-fenglope.png",
+			"habitat": "data/maps/093-fenglope.png",
+			"rarity": 3
+		},
+		{
+			"name": "Fenglope Lux",
+			"description": "Drifting Thundercloud",
+			"number": "093B",
+			"element": "Electric",
+			"drops": "Leather, Horn, Electric Organ",
+			"food": "6/10",
+			"partner": "Stormcloud - Can be ridden. Can double jump while mounted. While fighting together, Water Pals drop more items when defeated.",
+			"tech": "Fenglope Lux Saddle, Lvl 52",
+			"suitability": "Generating Electricity 2, Lumbering 2",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [255, 255, 0],
+			"thumbnail": "data/pals/pal-093b-fenglope-lux.png",
+			"habitat": "data/maps/093b-fenglope-lux.png",
 			"rarity": 3
 		},
 		{
@@ -1992,8 +2256,8 @@
 			"spawnTime": "Dungeons; Nocturnal",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c7/Felbat.png/revision/latest?cb=20240123194642",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-094-felbat.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 6
 		},
 		{
@@ -2009,8 +2273,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/cc/Quivern.png/revision/latest?cb=20240123194754",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/bd/Quivern_Day_Habitat.png/revision/latest?cb=20240129063428",
+			"thumbnail": "data/pals/pal-095-quivern.png",
+			"habitat": "data/maps/095-quivern.png",
 			"rarity": 7
 		},
 		{
@@ -2026,8 +2290,8 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"color": [64, 64, 64],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/67/Quivern_Botan.png/revision/latest?cb=20240625072051",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-095b-quivern-botan.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 8
 		},
 		{
@@ -2043,8 +2307,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/00/Blazamut.png/revision/latest?cb=20240123194911",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/0c/Blazamut_Day_Habitat.png/revision/latest?cb=20240129062526",
+			"thumbnail": "data/pals/pal-096-blazamut.png",
+			"habitat": "data/maps/096-blazamut.png",
 			"rarity": 9
 		},
 		{
@@ -2060,8 +2324,8 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"color": [166, 0, 90],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/d9/Blazamut_Ryu.png/revision/latest?cb=20240625091141",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-096b-blazamut-ryu.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 10
 		},
 		{
@@ -2077,8 +2341,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/9d/Helzephyr.png/revision/latest?cb=20240124101016",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/88/Helzephyr_Night_Habitat.png/revision/latest?cb=20240129063031",
+			"thumbnail": "data/pals/pal-097-helzephyr.png",
+			"habitat": "data/maps/097-helzephyr.png",
 			"rarity": 7
 		},
 		{
@@ -2094,8 +2358,8 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"color": [128, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/0f/Helzephyr_Lux.png/revision/latest?cb=20240625072006",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-097b-helzephyr-lux.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 8
 		},
 		{
@@ -2111,8 +2375,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [83, 0, 83],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/48/Astegon.png/revision/latest?cb=20240123195133",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/d8/Astegon_Day_Habitat.png/revision/latest?cb=20240129062507",
+			"thumbnail": "data/pals/pal-098-astegon.png",
+			"habitat": "data/maps/098-astegon.png",
 			"rarity": 9
 		},
 		{
@@ -2127,8 +2391,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [104, 53, 29],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/2e/Menasting.png/revision/latest?cb=20240201071541",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/89/Menasting_Day_Habitat.png/revision/latest?cb=20240129063314",
+			"thumbnail": "data/pals/pal-099-menasting.png",
+			"habitat": "data/maps/099-menasting.png",
 			"rarity": 9
 		},
 		{
@@ -2143,8 +2407,8 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b8/Menasting_Terra.png/revision/latest?cb=20240625072413",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-099b-menasting-terra.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 10
 		},
 		{
@@ -2159,8 +2423,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/26/Anubis.png/revision/latest?cb=20240123194707",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/9/9b/Anubis_Day_Habitat.png/revision/latest?cb=20240215202937",
+			"thumbnail": "data/pals/pal-100-anubis.png",
+			"habitat": "data/maps/100-anubis.png",
 			"rarity": 10
 		},
 		{
@@ -2176,8 +2440,8 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [25, 25, 112],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/95/Jormuntide.png/revision/latest?cb=20240122183458",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/0f/Jormuntide_Day_Habitat.png/revision/latest?cb=20240129063130",
+			"thumbnail": "data/pals/pal-101-jormuntide.png",
+			"habitat": "data/maps/101-jormuntide.png",
 			"rarity": 8
 		},
 		{
@@ -2193,8 +2457,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 0, 90],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f8/Jormuntide_Ignis.png/revision/latest?cb=20240122190807",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f6/Jormuntide_Ignis_Day_Habitat.png/revision/latest?cb=20240129063119",
+			"thumbnail": "data/pals/pal-101b-jormuntide-ignis.png",
+			"habitat": "data/maps/101b-jormuntide-ignis.png",
 			"rarity": 9
 		},
 		{
@@ -2210,8 +2474,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/1a/Suzaku.png/revision/latest?cb=20240320131342",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/01/Suzaku_Day_Habitat.png/revision/latest?cb=20240129063623",
+			"thumbnail": "data/pals/pal-102-suzaku.png",
+			"habitat": "data/maps/102-suzaku.png",
 			"rarity": 8
 		},
 		{
@@ -2227,8 +2491,8 @@
 			"spawnTime": "Dungeons/Factions",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/22/Suzaku_Aqua.png/revision/latest?cb=20240320131418",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-102b-suzaku-aqua.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 9
 		},
 		{
@@ -2244,8 +2508,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/dd/Grizzbolt.png/revision/latest?cb=20240123195342",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/5/5c/Grizzbolt_Day_Habitat.png/revision/latest?cb=20240129062959",
+			"thumbnail": "data/pals/pal-103-grizzbolt.png",
+			"habitat": "data/maps/103-grizzbolt.png",
 			"rarity": 8
 		},
 		{
@@ -2260,8 +2524,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/2b/Lyleen.png/revision/latest?cb=20240122193916",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/0/08/Lyleen_Day_Habitat.png/revision/latest?cb=20240129063238",
+			"thumbnail": "data/pals/pal-104-lyleen.png",
+			"habitat": "data/maps/104-lyleen.png",
 			"rarity": 9
 		},
 		{
@@ -2276,8 +2540,8 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a0/Lyleen_Noct.png/revision/latest?cb=20240122191031",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/6/6b/Lyleen_Noct_Day_Habitat.png/revision/latest?cb=20240129063233",
+			"thumbnail": "data/pals/pal-104b-lyleen-noct.png",
+			"habitat": "data/maps/104b-lyleen-noct.png",
 			"rarity": 10
 		},
 		{
@@ -2293,8 +2557,25 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/84/Faleris.png/revision/latest?cb=20240124100953",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/bf/Faleris_Day_Habitat.png/revision/latest?cb=20240129062817",
+			"thumbnail": "data/pals/pal-105-faleris.png",
+			"habitat": "data/maps/105-faleris.png",
+			"rarity": 9
+		},
+		{
+			"name": "Faleris Aqua",
+			"description": "Sentinel of the Tides",
+			"number": "105B",
+			"element": "Water",
+			"drops": "Pal Fluids",
+			"food": "8/10",
+			"partner": "Tidal Predator - Can be ridden as a flying mount. While fighting together, Fire Pals drop more items when defeated.",
+			"tech": "Faleris Aqua Saddle, Lvl 55",
+			"suitability": "Watering 4, Transporting 3",
+			"spawnTime": "Day/Night",
+			"farmable": "No",
+			"color": [0, 0, 255],
+			"thumbnail": "data/pals/pal-105b-faleris-aqua.png",
+			"habitat": "data/maps/105b-faleris-aqua.png",
 			"rarity": 9
 		},
 		{
@@ -2309,8 +2590,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [160, 64, 96],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/14/Orserk.png/revision/latest?cb=20240124104213",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/d/d3/Orserk_Day_Habitat.png/revision/latest?cb=20240129063355",
+			"thumbnail": "data/pals/pal-106-orserk.png",
+			"habitat": "data/maps/106-orserk.png",
 			"rarity": 9
 		},
 		{
@@ -2326,12 +2607,12 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/16/Shadowbeak.png/revision/latest?cb=20240123195848",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/8/84/Shadowbeak_Day_Habitat.png/revision/latest?cb=20240129063550",
+			"thumbnail": "data/pals/pal-107-shadowbeak.png",
+			"habitat": "data/maps/107-shadowbeak.png",
 			"rarity": 10
 		},
 		{
-			"name": "Paldius",
+			"name": "Paladius",
 			"description": "Holy Knight of Legend",
 			"number": "108",
 			"element": "Neutral",
@@ -2343,8 +2624,8 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b8/Paladius.png/revision/latest?cb=20240123200037",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/f/f4/Paladius_Day_Habitat.png/revision/latest?cb=20240129063400",
+			"thumbnail": "data/pals/pal-108-paladius.png",
+			"habitat": "data/maps/108-paladius.png",
 			"rarity": 20
 		},
 		{
@@ -2360,8 +2641,8 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/20/Necromus.png/revision/latest?cb=20240123200106",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/a/a0/Necromus_Day_Habitat.png/revision/latest?cb=20240129063341",
+			"thumbnail": "data/pals/pal-109-necromus.png",
+			"habitat": "data/maps/109-necromus.png",
 			"rarity": 20
 		},
 		{
@@ -2377,8 +2658,8 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/4f/Frostallion.png/revision/latest?cb=20240320133607",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/3/33/Frostallion_Day_Habitat.png/revision/latest?cb=20240129062853",
+			"thumbnail": "data/pals/pal-110-frostallion.png",
+			"habitat": "data/maps/110-frostallion.png",
 			"rarity": 20
 		},
 		{
@@ -2394,8 +2675,8 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b7/Frostallion_Noct.png/revision/latest?cb=20240320133624",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-110b-frostallion-noct.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 20
 		},
 		{
@@ -2411,8 +2692,8 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [255, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/fd/Jetragon.png/revision/latest?cb=20240123200132",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/b/b4/Jetragon_Day_Habitat.png/revision/latest?cb=20240129063102",
+			"thumbnail": "data/pals/pal-111-jetragon.png",
+			"habitat": "data/maps/111-jetragon.png",
 			"rarity": 20
 		},
 		{
@@ -2427,8 +2708,8 @@
 			"spawnTime": "Summoning altar",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/8a/Bellanoir.png/revision/latest?cb=20240404154635",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-112-bellanoir.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 20
 		},
 		{
@@ -2443,8 +2724,8 @@
 			"spawnTime": "Summoning altar",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c0/Bellanoir_Libero.png/revision/latest?cb=20240404154711",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-112b-bellanoir-libero.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 20
 		},
 		{
@@ -2459,8 +2740,8 @@
 			"spawnTime": "Meteorite event; Sakurajima only",
 			"farmable": "No",
 			"color": [128, 128, 128],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/17/Selyne.png/revision/latest?cb=20240628092011",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-113-selyne.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 9
 		},
 		{
@@ -2475,8 +2756,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/17/Croajiro.png/revision/latest?cb=20240625092447",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-114-croajiro.png",
+			"habitat": "data/maps/114-croajiro.png",
 			"rarity": 4
 		},
 		{
@@ -2491,8 +2772,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 25, 112],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/fb/Croajiro_Noct.png/revision/latest?cb=20250626220124",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-114b-croajiro-noct.png",
+			"habitat": "data/maps/114b-croajiro-noct.png",
 			"rarity": 5
 		},
 		{
@@ -2507,8 +2788,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/14/Lullu.png/revision/latest?cb=20240625093344",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-115-lullu.png",
+			"habitat": "data/maps/115-lullu.png",
 			"rarity": 4
 		},
 		{
@@ -2524,8 +2805,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a6/Shroomer.png/revision/latest?cb=20240625093850",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-116-shroomer.png",
+			"habitat": "data/maps/116-shroomer.png",
 			"rarity": 4
 		},
 		{
@@ -2541,8 +2822,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [12, 64, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/66/Shroomer_Noct.png/revision/latest?cb=20240625094237",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-116b-shroomer-noct.png",
+			"habitat": "data/maps/116b-shroomer-noct.png",
 			"rarity": 5
 		},
 		{
@@ -2557,8 +2838,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/e0/Kikit.png/revision/latest?cb=20240625081943",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-117-kikit.png",
+			"habitat": "data/maps/117-kikit.png",
 			"rarity": 4
 		},
 		{
@@ -2573,8 +2854,8 @@
 			"spawnTime": "Night",
 			"farmable": "Yes - Bone",
 			"color": [100, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f0/Sootseer.png/revision/latest?cb=20240625082311",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-118-sootseer.png",
+			"habitat": "data/maps/118-sootseer.png",
 			"rarity": 7
 		},
 		{
@@ -2589,8 +2870,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [104, 53, 29],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/dd/Prixter.png/revision/latest?cb=20240625095013",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-119-prixter.png",
+			"habitat": "data/maps/119-prixter.png",
 			"rarity": 5
 		},
 		{
@@ -2605,8 +2886,8 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/3c/Knocklem.png/revision/latest?cb=20240625080028",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-120-knocklem.png",
+			"habitat": "data/maps/120-knocklem.png",
 			"rarity": 9
 		},
 		{
@@ -2622,8 +2903,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/ba/Yakumo.png/revision/latest?cb=20240625095349",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-121-yakumo.png",
+			"habitat": "data/maps/121-yakumo.png",
 			"rarity": 4
 		},
 		{
@@ -2638,8 +2919,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/13/Dogen.png/revision/latest?cb=20240625080842",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-122-dogen.png",
+			"habitat": "data/maps/122-dogen.png",
 			"rarity": 6
 		},
 		{
@@ -2655,8 +2936,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b0/Dazemu.png/revision/latest?cb=20240703074312",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-123-dazemu.png",
+			"habitat": "data/maps/123-dazemu.png",
 			"rarity": 5
 		},
 		{
@@ -2671,8 +2952,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/d6/Mimog.png/revision/latest?cb=20240630020923",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-124-mimog.png",
+			"habitat": "data/maps/124-mimog.png",
 			"rarity": 7
 		},
 		{
@@ -2687,8 +2968,8 @@
 			"spawnTime": "Meteorite event",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/a/a4/Xenovader.png/revision/latest?cb=20240625100714",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-125-xenovader.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 7
 		},
 		{
@@ -2704,8 +2985,8 @@
 			"spawnTime": "Meteorite event",
 			"farmable": "No",
 			"color": [255, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b2/Xenogard.png/revision/latest?cb=20240625101205",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-126-xenogard.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 9
 		},
 		{
@@ -2721,8 +3002,8 @@
 			"spawnTime": "Summoning altar",
 			"farmable": "No",
 			"color": [83, 0, 83],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/90/Xenolord.png/revision/latest?cb=20241230184716",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-127-xenolord.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 8
 		},
 		{
@@ -2737,8 +3018,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/5/55/Nitemary.png/revision/latest?cb=20250622055255",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-128-nitemary.png",
+			"habitat": "data/maps/128-nitemary.png",
 			"rarity": 6
 		},
 		{
@@ -2754,8 +3035,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/6b/Starryon.png/revision/latest?cb=20250120152914",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-129-starryon.png",
+			"habitat": "data/maps/129-starryon.png",
 			"rarity": 7
 		},
 		{
@@ -2771,8 +3052,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/00/Silvegis.png/revision/latest?cb=20250120160959",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-130-silvegis.png",
+			"habitat": "data/maps/130-silvegis.png",
 			"rarity": 8
 		},
 		{
@@ -2787,8 +3068,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/1/1f/Smokie.png/revision/latest?cb=20250120160740",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-131-smokie.png",
+			"habitat": "data/maps/131-smokie.png",
 			"rarity": 2
 		},
 		{
@@ -2804,8 +3085,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/bc/Celesdir.png/revision/latest?cb=20250120152742",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-132-celesdir.png",
+			"habitat": "data/maps/132-celesdir.png",
 			"rarity": 6
 		},
 		{
@@ -2820,8 +3101,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/9f/Omascul.png/revision/latest?cb=20250120152558",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-133-omascul.png",
+			"habitat": "data/maps/133-omascul.png",
 			"rarity": 4
 		},
 		{
@@ -2836,8 +3117,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c9/Splatterina.png/revision/latest?cb=20250120152351",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-134-splatterina.png",
+			"habitat": "data/maps/134-splatterina.png",
 			"rarity": 4
 		},
 		{
@@ -2853,8 +3134,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b8/Tarantriss.png/revision/latest?cb=20250120152155",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-135-tarantriss.png",
+			"habitat": "data/maps/135-tarantriss.png",
 			"rarity": 3
 		},
 		{
@@ -2870,8 +3151,8 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"color": [255, 255, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/6/68/Azurmane.png/revision/latest?cb=20250120152652",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-136-azurmane.png",
+			"habitat": "data/maps/136-azurmane.png",
 			"rarity": 7
 		},
 		{
@@ -2887,8 +3168,8 @@
 			"spawnTime": "Breeding Only",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/4f/Bastigor.png/revision/latest?cb=20250120160858",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-137-bastigor.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 8
 		},
 		{
@@ -2903,8 +3184,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [12, 64, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/72/Prunelia.png/revision/latest?cb=20250120152110",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-138-prunelia.png",
+			"habitat": "data/maps/138-prunelia.png",
 			"rarity": 5
 		},
 		{
@@ -2919,8 +3200,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/d/d9/Nyafia.png/revision/latest?cb=20250622055612",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-139-nyafia.png",
+			"habitat": "data/maps/139-nyafia.png",
 			"rarity": 4
 		},
 		{
@@ -2935,8 +3216,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [166, 82, 45],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/42/Gildane.png/revision/latest?cb=20250120152015",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-140-gildane.png",
+			"habitat": "data/maps/140-gildane.png",
 			"rarity": 8
 		},
 		{
@@ -2951,8 +3232,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/9/9d/Herbil.png/revision/latest?cb=20250625232604",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-141-herbil.png",
+			"habitat": "data/maps/141-herbil.png",
 			"rarity": 3
 		},
 		{
@@ -2967,8 +3248,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c0/Icelyn.png/revision/latest?cb=20250627102301",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-142-icelyn.png",
+			"habitat": "data/maps/142-icelyn.png",
 			"rarity": 4
 		},
 		{
@@ -2983,8 +3264,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 255, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/e4/Frostplume.png/revision/latest?cb=20250626000011",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-143-frostplume.png",
+			"habitat": "data/maps/143-frostplume.png",
 			"rarity": 4
 		},
 		{
@@ -3000,8 +3281,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [25, 128, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/f4/Palumba.png/revision/latest?cb=20250626094906",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-144-palumba.png",
+			"habitat": "data/maps/144-palumba.png",
 			"rarity": 4
 		},
 		{
@@ -3017,8 +3298,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [96, 100, 27],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/8/89/Braloha.png/revision/latest?cb=20250627102834",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-145-braloha.png",
+			"habitat": "data/maps/145-braloha.png",
 			"rarity": 6
 		},
 		{
@@ -3033,8 +3314,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 204, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/0/0b/Munchill.png/revision/latest?cb=20250626092247",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-146-munchill.png",
+			"habitat": "data/maps/146-munchill.png",
 			"rarity": 3
 		},
 		{
@@ -3050,8 +3331,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 204, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/ff/Polapup.png/revision/latest?cb=20250625195029",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-147-polapup.png",
+			"habitat": "data/maps/147-polapup.png",
 			"rarity": 5
 		},
 		{
@@ -3066,8 +3347,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c2/Turtacle.png/revision/latest?cb=20250625195050",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-148-turtacle.png",
+			"habitat": "data/maps/148-turtacle.png",
 			"rarity": 3
 		},
 		{
@@ -3082,8 +3363,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/bf/Turtacle_Terra.png/revision/latest?cb=20250625215805",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-148b-turtacle-terra.png",
+			"habitat": "data/maps/148b-turtacle-terra.png",
 			"rarity": 4
 		},
 		{
@@ -3098,8 +3379,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/28/Jellroy.png/revision/latest?cb=20250626110637",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-149-jellroy.png",
+			"habitat": "data/maps/149-jellroy.png",
 			"rarity": 3
 		},
 		{
@@ -3114,8 +3395,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/7/75/Jelliette.png/revision/latest?cb=20250625194935",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-150-jelliette.png",
+			"habitat": "data/maps/150-jelliette.png",
 			"rarity": 3
 		},
 		{
@@ -3130,8 +3411,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/37/Gloopie.png/revision/latest?cb=20250625231621",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-151-gloopie.png",
+			"habitat": "data/maps/151-gloopie.png",
 			"rarity": 5
 		},
 		{
@@ -3146,8 +3427,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/4/41/Finsider.png/revision/latest?cb=20250625220449",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-152-finsider.png",
+			"habitat": "data/maps/152-finsider.png",
 			"rarity": 3
 		},
 		{
@@ -3162,8 +3443,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/3/39/Finsider_Ignis.png/revision/latest?cb=20250629111115",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-152b-finsider-ignis.png",
+			"habitat": "data/maps/152b-finsider-ignis.png",
 			"rarity": 4
 		},
 		{
@@ -3179,8 +3460,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/e/e5/Ghangler.png/revision/latest?cb=20250627105112",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-153-ghangler.png",
+			"habitat": "data/maps/153-ghangler.png",
 			"rarity": 5
 		},
 		{
@@ -3196,8 +3477,8 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/2/2c/Ghangler_Ignis.png/revision/latest?cb=20250630115249",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-153b-ghangler-ignis.png",
+			"habitat": "data/maps/153b-ghangler-ignis.png",
 			"rarity": 6
 		},
 		{
@@ -3213,8 +3494,8 @@
 			"spawnTime": "Day",
 			"farmable": "No",
 			"color": [0, 204, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/c/c1/Whalaska.png/revision/latest?cb=20250627121453",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-154-whalaska.png",
+			"habitat": "data/maps/154-whalaska.png",
 			"rarity": 7
 		},
 		{
@@ -3230,8 +3511,8 @@
 			"spawnTime": "Day",
 			"farmable": "No",
 			"color": [255, 0, 0],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/b/b9/Whalaska_Ignis.png/revision/latest?cb=20250627234236",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-154b-whalaska-ignis.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 8
 		},
 		{
@@ -3247,9 +3528,26 @@
 			"spawnTime": "Dungeon Only",
 			"farmable": "No",
 			"color": [0, 0, 255],
-			"thumbnail": "https://static.wikia.nocookie.net/palworld/images/f/fb/Neptilius.png/revision/latest?cb=20250626004730",
-			"habitat": "https://static.wikia.nocookie.net/palworld/images/4/47/Habitat_Unknown.png/revision/latest?cb=20240215203931",
+			"thumbnail": "data/pals/pal-155-neptilius.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 20
+		},
+		{
+			"name": "Hartalis",
+			"description": "King of Salvation",
+			"number": "156",
+			"element": "Neutral",
+			"drops": "Horn, Leather, Large Pal Soul, Precious Pelt",
+			"food": "7/10",
+			"partner": "Sacred Barrier - Can be ridden. While mounted, generates a barrier that blocks all attacks. Can triple jump while mounted.",
+			"tech": "Hartalis Saddle, Lvl 65",
+			"suitability": "Gathering 3, Lumbering 4",
+			"spawnTime": "Raid/Egg",
+			"farmable": "No",
+			"color": [255, 255, 255],
+			"thumbnail": "data/pals/pal-156-hartalis.png",
+			"habitat": "data/maps/unknown-habitat.png",
+			"rarity": 10
 		}
 	],
 	"Rarity": [
