@@ -34,6 +34,7 @@ const ELEMENT_CHOICES = [
 ];
 
 const RARITY_CHOICES = [
+	{ name: `Unknown`, value: `Unknown` },
 	{ name: `Common`, value: `Common` },
 	{ name: `Rare`, value: `Rare` },
 	{ name: `Epic`, value: `Epic` },
@@ -73,6 +74,10 @@ function normalizeNumber(value) {
 }
 
 function getRarity(pal) {
+	if (!Number.isFinite(pal.rarity) || pal.rarity <= 0) {
+		return `Unknown`;
+	}
+
 	if (pal.rarity <= 4) {
 		return `Common`;
 	}

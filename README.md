@@ -136,6 +136,79 @@ Use `/paldeck search` to combine criteria:
 
 The bot replies with matching pal information in Discord embeds. Search results are paginated in batches of 25 with previous and next buttons. Search pagination sessions expire after about 15 minutes. If no match is found, it replies with a private "Nothing found" message.
 
+## Audit Palworld data
+Palworld updates can change Paldeck numbers, work suitabilities, elements, internal breeding IDs, and available Pals. To compare the local JSON files against current PalDB data:
+
+```console
+$ npm run audit:palworld-data
+```
+
+The audit is read-only. It reports added Pals, missing Pals, changed `palData.json` fields, and changed breeding numbers or IDs.
+
+To apply safe updates for existing local Pals, run the updater in dry-run mode first:
+
+```console
+$ npm run update:palworld-data
+```
+
+If the report looks correct, write the updates:
+
+```console
+$ npm run update:palworld-data:write
+```
+
+The updater refreshes existing Pal numbers, elements, work suitabilities, missing `Colors` palette entries, and breeding IDs from PalDB. It also removes redundant per-Pal `color` overrides so embed colors come from `palData.json`'s `Colors` palette. It intentionally does not auto-add full `palData.json` profile entries for new Pals or rewrite breeding ranks/special combinations; review those separately because they require richer source data than the Pal list and IV JSON expose.
+
+To add newly discovered Pals to `palData.json` with safe placeholders, dry-run first:
+
+```console
+$ npm run add:missing-paldata
+```
+
+Then write the generated entries:
+
+```console
+$ npm run add:missing-paldata:write
+```
+
+Missing profile fields are filled as `Unknown. Too new.`, missing food is filled as `Unknown/10`, and unknown rarity uses `0`, which `/paldeck` displays as `Unknown`. If an exact Palworld Fandom page exposes a thumbnail, the generated row downloads it into `data/pals`; otherwise it uses the local `data/pals/pal-unknown.png` fallback.
+
+To spot-check calculated breeding outcomes against PalDB's live two-parent endpoint:
+
+```console
+$ npm run audit:palworld-breeding-results
+```
+
+That command samples parent pairs by default. Use `node scripts/audit-palworld-breeding-results.js --sample 250` for a larger sample, or `npm run audit:palworld-breeding-results:full` for every local parent pair.
+
+To rebuild the local breeding pair-result cache from PalDB's child endpoint, dry-run first:
+
+```console
+$ npm run update:palworld-breeding-results
+```
+
+Then write the generated cache:
+
+```console
+$ npm run update:palworld-breeding-results:write
+```
+
+When `PairResults` exists in `data/palBreeding.json`, `/breed` prefers those known results over the older breeding-rank fallback.
+
+Convenience commands are also available:
+
+```console
+$ npm run audit:palworld-data:summary
+$ npm run audit:palworld-data:json
+$ npm run audit:palworld-data:ci
+```
+
+To pass custom options, run the script directly:
+
+```console
+$ node scripts/audit-palworld-data.js --limit 10
+```
+
 ## Suggestions and voting
 Use `/suggest` to send a feature idea or feedback message. Suggestions are posted to the suggestions channel configured in the SQLite database and numbered from saved suggestion records.
 Use `/vote` to get the Paldeck Top.gg voting link.

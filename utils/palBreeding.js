@@ -25,6 +25,10 @@ function formatBreedingMethod(method) {
 		return `Special combination`;
 	}
 
+	if (method === `pair-result`) {
+		return `Known pair result`;
+	}
+
 	return `Standard rank`;
 }
 
@@ -37,8 +41,28 @@ function createBreedingCalculator(breedingFile) {
 	const childPals = pals.filter(pal => pal.canBeChild);
 	const standardChildren = pals.filter(pal => pal.canBeStandardChild);
 	const palsByName = new Map(pals.map(pal => [normalizeBreedingName(pal.name), pal]));
+	const pairResults = new Map();
 	const specialCombinations = new Map();
 	const resultCache = new Map();
+
+	for (const pairResult of breedingFile.PairResults || []) {
+		const [parentAName, parentBName, childName] = Array.isArray(pairResult) ?
+			pairResult :
+			[pairResult.parentA, pairResult.parentB, pairResult.child];
+		const parentA = palsByName.get(normalizeBreedingName(parentAName));
+		const parentB = palsByName.get(normalizeBreedingName(parentBName));
+		const child = palsByName.get(normalizeBreedingName(childName));
+
+		if (!parentA || !parentB || !child) {
+			continue;
+		}
+
+		pairResults.set(pairKey(parentA.name, parentB.name), {
+			child,
+			parentA,
+			parentB,
+		});
+	}
 
 	for (const combination of breedingFile.SpecialCombinations || []) {
 		specialCombinations.set(pairKey(combination.parentA, combination.parentB), combination);
@@ -70,6 +94,22 @@ function createBreedingCalculator(breedingFile) {
 
 		if (cachedResult) {
 			return cachedResult;
+		}
+
+		const pairResult = pairResults.get(cacheKey);
+
+		if (pairResult) {
+			const result = {
+				parentA,
+				parentB,
+				child: pairResult.child,
+				method: `pair-result`,
+				targetRank: null,
+				specialCombination: null,
+			};
+
+			resultCache.set(cacheKey, result);
+			return result;
 		}
 
 		if (parentA.breedingId === parentB.breedingId) {

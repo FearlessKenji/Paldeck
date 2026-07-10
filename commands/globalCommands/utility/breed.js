@@ -40,7 +40,7 @@ function getResultColor(pal) {
 }
 
 function formatRank(pal) {
-	return `${pal.breedingRank}`;
+	return Number.isFinite(pal.breedingRank) ? `${pal.breedingRank}` : `Unknown`;
 }
 
 function formatMethod(result) {
@@ -74,9 +74,14 @@ function buildResultEmbed(result) {
 	const fields = [
 		{ name: `Child`, value: formatPalLabel(result.child), inline: false },
 		{ name: `Method`, value: formatMethod(result), inline: false },
-		{ name: `Parent Ranks`, value: `${formatRank(result.parentA)} + ${formatRank(result.parentB)}`, inline: true },
-		{ name: `Child Rank`, value: formatRank(result.child), inline: true },
 	];
+
+	if (result.method !== `pair-result`) {
+		fields.push(
+			{ name: `Parent Ranks`, value: `${formatRank(result.parentA)} + ${formatRank(result.parentB)}`, inline: true },
+			{ name: `Child Rank`, value: formatRank(result.child), inline: true },
+		);
+	}
 
 	return new EmbedBuilder()
 		.setColor(getResultColor(result.child))

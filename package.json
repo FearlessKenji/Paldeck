@@ -1,6 +1,6 @@
 {
   "name": "paldeck",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "license": "GPL-3.0-only",
   "scripts": {
@@ -10,6 +10,18 @@
     "commands:clear": "node delete-all-commands.js",
     "db:init": "node database/dbInit.js",
     "db:reset": "node database/dbInit.js --force",
+    "audit:palworld-data": "node scripts/audit-palworld-data.js",
+    "audit:palworld-data:summary": "node scripts/audit-palworld-data.js --limit 0",
+    "audit:palworld-data:json": "node scripts/audit-palworld-data.js --json",
+    "audit:palworld-data:ci": "node scripts/audit-palworld-data.js --fail-on-drift",
+    "audit:palworld-breeding-results": "node scripts/audit-palworld-breeding-results.js",
+    "audit:palworld-breeding-results:full": "node scripts/audit-palworld-breeding-results.js --full",
+    "update:palworld-data": "node scripts/update-palworld-data.js",
+    "update:palworld-data:write": "node scripts/update-palworld-data.js --write",
+    "add:missing-paldata": "node scripts/add-missing-paldata-entries.js",
+    "add:missing-paldata:write": "node scripts/add-missing-paldata-entries.js --write",
+    "update:palworld-breeding-results": "node scripts/update-palworld-breeding-results.js",
+    "update:palworld-breeding-results:write": "node scripts/update-palworld-breeding-results.js --write",
     "validate:pal-data": "node scripts/validate-pal-data.js",
     "lint": "node scripts/lint.js",
     "pm2:start": "pm2 start config/ecosystem.config.js"

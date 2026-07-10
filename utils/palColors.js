@@ -66,6 +66,10 @@ function findPalColorProblems(pals, colors = {}) {
 			}];
 		}
 
+		if (pal.color === undefined) {
+			return [];
+		}
+
 		if (!isValidColor(pal.color)) {
 			return [{
 				name: pal.name,
@@ -73,7 +77,7 @@ function findPalColorProblems(pals, colors = {}) {
 				element: pal.element,
 				expectedColor,
 				actualColor: pal.color,
-				reason: `Invalid pal color`,
+				reason: `Invalid pal color override`,
 			}];
 		}
 
@@ -84,7 +88,7 @@ function findPalColorProblems(pals, colors = {}) {
 				element: pal.element,
 				expectedColor,
 				actualColor: pal.color,
-				reason: `Pal color does not match palette`,
+				reason: `Pal color override does not match palette`,
 			}];
 		}
 
