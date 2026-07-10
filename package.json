@@ -1,5 +1,6 @@
 {
   "name": "paldeck",
+  "version": "1.1.0",
   "private": true,
   "license": "GPL-3.0-only",
   "scripts": {
@@ -9,6 +10,7 @@
     "commands:clear": "node delete-all-commands.js",
     "db:init": "node database/dbInit.js",
     "db:reset": "node database/dbInit.js --force",
+    "validate:pal-data": "node scripts/validate-pal-data.js",
     "lint": "node scripts/lint.js",
     "pm2:start": "pm2 start config/ecosystem.config.js"
   },

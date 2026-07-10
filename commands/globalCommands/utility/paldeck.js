@@ -12,8 +12,10 @@ const path = require(`node:path`);
 const { Op } = require(`sequelize`);
 const { SearchSessions } = require(`../../../database/dbObjects.js`);
 const palFile = require(`../../../data/palData.json`);
+const { getPalColor } = require(`../../../utils/palColors.js`);
 
 const PALS = palFile.Pals;
+const PAL_COLORS = palFile.Colors?.[0] || {};
 const PROJECT_ROOT = path.resolve(__dirname, `..`, `..`, `..`);
 const RESULTS_PER_PAGE = 25;
 const SEARCH_TTL_MS = 15 * 60 * 1000;
@@ -173,7 +175,7 @@ function buildPalEmbed(pal, thumbnailUrl = pal.thumbnail, habitatUrl = pal.habit
 	const embed = new EmbedBuilder()
 		.setAuthor({ name: `Rarity: ${rarity}`, url: `https://palworld.gg/breeding-calculator` })
 		.setDescription(pal.description)
-		.setColor(pal.color)
+		.setColor(getPalColor(pal, PAL_COLORS))
 		.setTitle(pal.name)
 		.setURL(`https://palworld.fandom.com/wiki/${wiki}`)
 		.setFooter({ text: `Spawns: ${pal.spawnTime}. Farmable: ${pal.farmable}.` })
@@ -256,6 +258,17 @@ function buildSearchEmbed(criteria, results, page) {
 			{ name: `Name\n-------\n`, value: pageResults.map(result => result.name).join(`\n-------\n`), inline: true },
 			{ name: `Element\n-------\n`, value: pageResults.map(result => result.element).join(`\n-------\n`), inline: true },
 			{ name: `Rarity\n-------\n`, value: pageResults.map(result => result.rarity).join(`\n-------\n`), inline: true },
+		);
+}
+
+function buildNumberMatchesEmbed(number, results) {
+	return new EmbedBuilder()
+		.setTitle(`Pals numbered ${number}:`)
+		.setDescription(`Multiple Pals share this number.`)
+		.addFields(
+			{ name: `Name\n-------\n`, value: results.map(result => result.name).join(`\n-------\n`), inline: true },
+			{ name: `Element\n-------\n`, value: results.map(result => result.element).join(`\n-------\n`), inline: true },
+			{ name: `Rarity\n-------\n`, value: results.map(result => getRarity(result)).join(`\n-------\n`), inline: true },
 		);
 }
 
@@ -418,14 +431,19 @@ module.exports = {
 
 		if (subcommand === `number`) {
 			const palNumber = normalizeNumber(interaction.options.getString(`number`));
-			const pal = PALS.find(palData => normalizeNumber(palData.number) === palNumber);
+			const matches = PALS.filter(palData => normalizeNumber(palData.number) === palNumber);
 
-			if (!pal) {
+			if (!matches.length) {
 				await interaction.reply({ content: `Nothing found.`, flags: MessageFlags.Ephemeral });
 				return;
 			}
 
-			await interaction.reply(buildPalResponse(pal));
+			if (matches.length > 1) {
+				await interaction.reply({ embeds: [buildNumberMatchesEmbed(interaction.options.getString(`number`), matches)] });
+				return;
+			}
+
+			await interaction.reply(buildPalResponse(matches[0]));
 			return;
 		}
 

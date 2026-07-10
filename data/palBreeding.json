@@ -1,0 +1,2395 @@
+{
+	"Pals": [
+		{
+			"name": "Lamball",
+			"number": "001",
+			"breedingId": "sheepball",
+			"breedingRank": 1470,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Cattiva",
+			"number": "002",
+			"breedingId": "pinkcat",
+			"breedingRank": 1460,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Chikipi",
+			"number": "003",
+			"breedingId": "chickenpal",
+			"breedingRank": 1500,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Lifmunk",
+			"number": "004",
+			"breedingId": "carbunclo",
+			"breedingRank": 1430,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Foxparks",
+			"number": "005",
+			"breedingId": "kitsunebi",
+			"breedingRank": 1400,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Foxparks Cryst",
+			"number": "005B",
+			"breedingId": "kitsunebi_ice",
+			"breedingRank": 1305,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Fuack",
+			"number": "006",
+			"breedingId": "blueplatypus",
+			"breedingRank": 1330,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Fuack Ignis",
+			"number": "006B",
+			"breedingId": "blueplatypus_fire",
+			"breedingRank": 1290,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Sparkit",
+			"number": "007",
+			"breedingId": "eleccat",
+			"breedingRank": 1410,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Tanzee",
+			"number": "008",
+			"breedingId": "monkey",
+			"breedingRank": 1250,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Rooby",
+			"number": "009",
+			"breedingId": "flamebambi",
+			"breedingRank": 1155,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Pengullet",
+			"number": "010",
+			"breedingId": "penguin",
+			"breedingRank": 1350,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Pengullet Lux",
+			"number": "010B",
+			"breedingId": "penguin_electric",
+			"breedingRank": 1310,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Penking",
+			"number": "011",
+			"breedingId": "captainpenguin",
+			"breedingRank": 520,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Penking Lux",
+			"number": "011B",
+			"breedingId": "captainpenguin_black",
+			"breedingRank": 490,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Jolthog",
+			"number": "012",
+			"breedingId": "hedgehog",
+			"breedingRank": 1370,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Jolthog Cryst",
+			"number": "012b",
+			"breedingId": "hedgehog_ice",
+			"breedingRank": 1360,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Gumoss",
+			"number": "013",
+			"breedingId": "plantslime",
+			"breedingRank": 1240,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Vixy",
+			"number": "014",
+			"breedingId": "cutefox",
+			"breedingRank": 1450,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Hoocrates",
+			"number": "015",
+			"breedingId": "wizardowl",
+			"breedingRank": 1390,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Teafant",
+			"number": "016",
+			"breedingId": "ganesha",
+			"breedingRank": 1490,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Depresso",
+			"number": "017",
+			"breedingId": "negativekoala",
+			"breedingRank": 1380,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Cremis",
+			"number": "018",
+			"breedingId": "woolfox",
+			"breedingRank": 1455,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Daedream",
+			"number": "019",
+			"breedingId": "dreamdemon",
+			"breedingRank": 1230,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Rushoar",
+			"number": "020",
+			"breedingId": "boar",
+			"breedingRank": 1130,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Nox",
+			"number": "021",
+			"breedingId": "nightfox",
+			"breedingRank": 1180,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Fuddler",
+			"number": "022",
+			"breedingId": "cutemole",
+			"breedingRank": 1220,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Killamari",
+			"number": "023",
+			"breedingId": "negativeoctopus",
+			"breedingRank": 1290,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Killamari Primo",
+			"number": "023B",
+			"breedingId": "negativeoctopus_neutral",
+			"breedingRank": 1250,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Mau",
+			"number": "024",
+			"breedingId": "bastet",
+			"breedingRank": 1480,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Mau Cryst",
+			"number": "024b",
+			"breedingId": "bastet_ice",
+			"breedingRank": 1440,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Celaray",
+			"number": "025",
+			"breedingId": "flyingmanta",
+			"breedingRank": 870,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Celaray Lux",
+			"number": "025B",
+			"breedingId": "flyingmanta_thunder",
+			"breedingRank": 830,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Direhowl",
+			"number": "026",
+			"breedingId": "garm",
+			"breedingRank": 1060,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Tocotoco",
+			"number": "027",
+			"breedingId": "colorfulbird",
+			"breedingRank": 1340,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Flopie",
+			"number": "028",
+			"breedingId": "flowerrabbit",
+			"breedingRank": 1280,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Mozzarina",
+			"number": "029",
+			"breedingId": "cowpal",
+			"breedingRank": 910,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Bristla",
+			"number": "030",
+			"breedingId": "littlebriarrose",
+			"breedingRank": 1320,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Gobfin",
+			"number": "031",
+			"breedingId": "sharkkid",
+			"breedingRank": 1090,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Gobfin Ignis",
+			"number": "031b",
+			"breedingId": "sharkkid_fire",
+			"breedingRank": 1100,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Hangyu",
+			"number": "032",
+			"breedingId": "windchimes",
+			"breedingRank": 1420,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Hangyu Cryst",
+			"number": "032b",
+			"breedingId": "windchimes_ice",
+			"breedingRank": 1422,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Mossanda",
+			"number": "033",
+			"breedingId": "grasspanda",
+			"breedingRank": 430,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Mossanda Lux",
+			"number": "033b",
+			"breedingId": "grasspanda_electric",
+			"breedingRank": 390,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Woolipop",
+			"number": "034",
+			"breedingId": "sweetssheep",
+			"breedingRank": 1190,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Caprity",
+			"number": "035",
+			"breedingId": "berrygoat",
+			"breedingRank": 930,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Caprity Noct",
+			"number": "035B",
+			"breedingId": "berrygoat_dark",
+			"breedingRank": 855,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Melpaca",
+			"number": "036",
+			"breedingId": "alpaca",
+			"breedingRank": 890,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Eikthyrdeer",
+			"number": "037",
+			"breedingId": "deer",
+			"breedingRank": 920,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Eikthyrdeer Terra",
+			"number": "037b",
+			"breedingId": "deer_ground",
+			"breedingRank": 900,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Nitewing",
+			"number": "038",
+			"breedingId": "hawkbird",
+			"breedingRank": 420,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Ribbuny",
+			"number": "039",
+			"breedingId": "pinkrabbit",
+			"breedingRank": 1310,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Ribbuny Botan",
+			"number": "039B",
+			"breedingId": "pinkrabbit_grass",
+			"breedingRank": 1205,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Incineram",
+			"number": "040",
+			"breedingId": "baphomet",
+			"breedingRank": 590,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Incineram Noct",
+			"number": "040b",
+			"breedingId": "baphomet_dark",
+			"breedingRank": 580,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Cinnamoth",
+			"number": "041",
+			"breedingId": "cutebutterfly",
+			"breedingRank": 490,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Arsox",
+			"number": "042",
+			"breedingId": "flamebuffalo",
+			"breedingRank": 790,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Dumud",
+			"number": "043",
+			"breedingId": "lazycatfish",
+			"breedingRank": 895,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Dumud Gild",
+			"number": "043B",
+			"breedingId": "lazycatfish_gold",
+			"breedingRank": 855,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Cawgnito",
+			"number": "044",
+			"breedingId": "darkcrow",
+			"breedingRank": 1080,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Leezpunk",
+			"number": "045",
+			"breedingId": "lizardman",
+			"breedingRank": 1120,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Leezpunk Ignis",
+			"number": "045b",
+			"breedingId": "lizardman_fire",
+			"breedingRank": 1140,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Loupmoon",
+			"number": "046",
+			"breedingId": "werewolf",
+			"breedingRank": 950,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Loupmoon Cryst",
+			"number": "046B",
+			"breedingId": "werewolf_ice",
+			"breedingRank": 805,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Galeclaw",
+			"number": "047",
+			"breedingId": "eagle",
+			"breedingRank": 1030,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Robinquill",
+			"number": "048",
+			"breedingId": "robinhood",
+			"breedingRank": 1020,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Robinquill Terra",
+			"number": "048b",
+			"breedingId": "robinhood_ground",
+			"breedingRank": 1000,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Gorirat",
+			"number": "049",
+			"breedingId": "gorilla",
+			"breedingRank": 1040,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Gorirat Terra",
+			"number": "049B",
+			"breedingId": "gorilla_ground",
+			"breedingRank": 1030,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Beegarde",
+			"number": "050",
+			"breedingId": "soldierbee",
+			"breedingRank": 1070,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Elizabee",
+			"number": "051",
+			"breedingId": "queenbee",
+			"breedingRank": 330,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Grintale",
+			"number": "052",
+			"breedingId": "naughtycat",
+			"breedingRank": 510,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Swee",
+			"number": "053",
+			"breedingId": "mopbaby",
+			"breedingRank": 1300,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Sweepa",
+			"number": "054",
+			"breedingId": "mopking",
+			"breedingRank": 410,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Chillet",
+			"number": "055",
+			"breedingId": "weaseldragon",
+			"breedingRank": 800,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Chillet Ignis",
+			"number": "055B",
+			"breedingId": "weaseldragon_fire",
+			"breedingRank": 790,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Univolt",
+			"number": "056",
+			"breedingId": "kirin",
+			"breedingRank": 680,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Foxcicle",
+			"number": "057",
+			"breedingId": "icefox",
+			"breedingRank": 760,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Pyrin",
+			"number": "058",
+			"breedingId": "firekirin",
+			"breedingRank": 360,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Pyrin Noct",
+			"number": "058b",
+			"breedingId": "firekirin_dark",
+			"breedingRank": 240,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Reindrix",
+			"number": "059",
+			"breedingId": "icedeer",
+			"breedingRank": 880,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Rayhound",
+			"number": "060",
+			"breedingId": "thunderdog",
+			"breedingRank": 740,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Kitsun",
+			"number": "061",
+			"breedingId": "amaterasuwolf",
+			"breedingRank": 830,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Kitsun Noct",
+			"number": "061B",
+			"breedingId": "amaterasuwolf_dark",
+			"breedingRank": 735,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Dazzi",
+			"number": "062",
+			"breedingId": "raijindaughter",
+			"breedingRank": 1210,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Dazzi Noct",
+			"number": "062B",
+			"breedingId": "raijindaughter_water",
+			"breedingRank": 1115,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Lunaris",
+			"number": "063",
+			"breedingId": "mutant",
+			"breedingRank": 1110,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Dinossom",
+			"number": "064",
+			"breedingId": "flowerdinosaur",
+			"breedingRank": 820,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Dinossom Lux",
+			"number": "064b",
+			"breedingId": "flowerdinosaur_electric",
+			"breedingRank": 810,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Surfent",
+			"number": "065",
+			"breedingId": "serpent",
+			"breedingRank": 560,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Surfent Terra",
+			"number": "065b",
+			"breedingId": "serpent_ground",
+			"breedingRank": 550,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Maraith",
+			"number": "066",
+			"breedingId": "ghostbeast",
+			"breedingRank": 1150,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Digtoise",
+			"number": "067",
+			"breedingId": "drillgame",
+			"breedingRank": 850,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Tombat",
+			"number": "068",
+			"breedingId": "catbat",
+			"breedingRank": 750,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Lovander",
+			"number": "069",
+			"breedingId": "pinklizard",
+			"breedingRank": 940,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Flambelle",
+			"number": "070",
+			"breedingId": "lavagirl",
+			"breedingRank": 1405,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Vanwyrm",
+			"number": "071",
+			"breedingId": "birddragon",
+			"breedingRank": 660,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Vanwyrm Cryst",
+			"number": "071b",
+			"breedingId": "birddragon_ice",
+			"breedingRank": 620,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Bushi",
+			"number": "072",
+			"breedingId": "ronin",
+			"breedingRank": 640,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Bushi Noct",
+			"number": "072B",
+			"breedingId": "ronin_dark",
+			"breedingRank": 650,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Beakon",
+			"number": "073",
+			"breedingId": "thunderbird",
+			"breedingRank": 220,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Ragnahawk",
+			"number": "074",
+			"breedingId": "redarmorbird",
+			"breedingRank": 380,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Katress",
+			"number": "075",
+			"breedingId": "catmage",
+			"breedingRank": 700,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Katress Ignis",
+			"number": "075B",
+			"breedingId": "catmage_fire",
+			"breedingRank": 690,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Wixen",
+			"number": "076",
+			"breedingId": "foxmage",
+			"breedingRank": 1160,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Wixen Noct",
+			"number": "076B",
+			"breedingId": "foxmage_dark",
+			"breedingRank": 1150,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Verdash",
+			"number": "077",
+			"breedingId": "grassrabbitman",
+			"breedingRank": 990,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Vaelet",
+			"number": "078",
+			"breedingId": "violetfairy",
+			"breedingRank": 1050,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Sibelyx",
+			"number": "079",
+			"breedingId": "whitemoth",
+			"breedingRank": 450,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Elphidran",
+			"number": "080",
+			"breedingId": "fairydragon",
+			"breedingRank": 540,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Elphidran Aqua",
+			"number": "080b",
+			"breedingId": "fairydragon_water",
+			"breedingRank": 530,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Kelpsea",
+			"number": "081",
+			"breedingId": "kelpie",
+			"breedingRank": 1260,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Kelpsea Ignis",
+			"number": "081b",
+			"breedingId": "kelpie_fire",
+			"breedingRank": 1270,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Azurobe",
+			"number": "082",
+			"breedingId": "bluedragon",
+			"breedingRank": 500,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Azurobe Cryst",
+			"number": "082B",
+			"breedingId": "bluedragon_ice",
+			"breedingRank": 480,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Cryolinx",
+			"number": "083",
+			"breedingId": "whitetiger",
+			"breedingRank": 130,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Cryolinx Terra",
+			"number": "083B",
+			"breedingId": "whitetiger_ground",
+			"breedingRank": 160,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Blazehowl",
+			"number": "084",
+			"breedingId": "manticore",
+			"breedingRank": 710,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Blazehowl Noct",
+			"number": "084b",
+			"breedingId": "manticore_dark",
+			"breedingRank": 670,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Relaxaurus",
+			"number": "085",
+			"breedingId": "lazydragon",
+			"breedingRank": 280,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Relaxaurus Lux",
+			"number": "085b",
+			"breedingId": "lazydragon_electric",
+			"breedingRank": 270,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Broncherry",
+			"number": "086",
+			"breedingId": "sakurasaurus",
+			"breedingRank": 860,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Broncherry Aqua",
+			"number": "086b",
+			"breedingId": "sakurasaurus_water",
+			"breedingRank": 840,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Petallia",
+			"number": "087",
+			"breedingId": "flowerdoll",
+			"breedingRank": 780,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Reptyro",
+			"number": "088",
+			"breedingId": "volcanicmonster",
+			"breedingRank": 320,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Reptyro Cryst",
+			"number": "088b",
+			"breedingId": "volcanicmonster_ice",
+			"breedingRank": 230,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Kingpaca",
+			"number": "089",
+			"breedingId": "kingalpaca",
+			"breedingRank": 470,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Kingpaca Cryst",
+			"number": "089b",
+			"breedingId": "kingalpaca_ice",
+			"breedingRank": 440,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Mammorest",
+			"number": "090",
+			"breedingId": "grassmammoth",
+			"breedingRank": 300,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Mammorest Cryst",
+			"number": "090b",
+			"breedingId": "grassmammoth_ice",
+			"breedingRank": 290,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Wumpo",
+			"number": "091",
+			"breedingId": "yeti",
+			"breedingRank": 460,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Wumpo Botan",
+			"number": "091b",
+			"breedingId": "yeti_grass",
+			"breedingRank": 480,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Warsect",
+			"number": "092",
+			"breedingId": "herculesbeetle",
+			"breedingRank": 340,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Warsect Terra",
+			"number": "092B",
+			"breedingId": "herculesbeetle_ground",
+			"breedingRank": 275,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Fenglope",
+			"number": "093",
+			"breedingId": "fengyundeeper",
+			"breedingRank": 980,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Fenglope Lux",
+			"number": "093B",
+			"breedingId": "fengyundeeper_electric",
+			"breedingRank": 835,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Felbat",
+			"number": "094",
+			"breedingId": "catvampire",
+			"breedingRank": 1010,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Quivern",
+			"number": "095",
+			"breedingId": "skydragon",
+			"breedingRank": 350,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Quivern Botan",
+			"number": "095B",
+			"breedingId": "skydragon_grass",
+			"breedingRank": 340,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Blazamut",
+			"number": "096",
+			"breedingId": "kingbahamut",
+			"breedingRank": 10,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Blazamut Ryu",
+			"number": "096B",
+			"breedingId": "kingbahamut_dragon",
+			"breedingRank": 9,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Helzephyr",
+			"number": "097",
+			"breedingId": "hadesbird",
+			"breedingRank": 190,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Helzephyr Lux",
+			"number": "097B",
+			"breedingId": "hadesbird_electric",
+			"breedingRank": 180,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Astegon",
+			"number": "098",
+			"breedingId": "blackmetaldragon",
+			"breedingRank": 150,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Menasting",
+			"number": "099",
+			"breedingId": "darkscorpion",
+			"breedingRank": 260,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Menasting Terra",
+			"number": "099B",
+			"breedingId": "darkscorpion_ground",
+			"breedingRank": 250,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Anubis",
+			"number": "100",
+			"breedingId": "anubis",
+			"breedingRank": 570,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Jormuntide",
+			"number": "101",
+			"breedingId": "umihebi",
+			"breedingRank": 310,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Jormuntide Ignis",
+			"number": "101b",
+			"breedingId": "umihebi_fire",
+			"breedingRank": 315,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Suzaku",
+			"number": "102",
+			"breedingId": "suzaku",
+			"breedingRank": 50,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Suzaku Aqua",
+			"number": "102b",
+			"breedingId": "suzaku_water",
+			"breedingRank": 30,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Grizzbolt",
+			"number": "103",
+			"breedingId": "elecpanda",
+			"breedingRank": 200,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Lyleen",
+			"number": "104",
+			"breedingId": "lilyqueen",
+			"breedingRank": 250,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Lyleen Noct",
+			"number": "104b",
+			"breedingId": "lilyqueen_dark",
+			"breedingRank": 210,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Faleris",
+			"number": "105",
+			"breedingId": "horus",
+			"breedingRank": 370,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Faleris Aqua",
+			"number": "105B",
+			"breedingId": "horus_water",
+			"breedingRank": 245,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Orserk",
+			"number": "106",
+			"breedingId": "thunderdragonman",
+			"breedingRank": 140,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Shadowbeak",
+			"number": "107",
+			"breedingId": "blackgriffon",
+			"breedingRank": 60,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Paladius",
+			"number": "108",
+			"breedingId": "saintcentaur",
+			"breedingRank": 80,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Necromus",
+			"number": "109",
+			"breedingId": "blackcentaur",
+			"breedingRank": 70,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Frostallion",
+			"number": "110",
+			"breedingId": "icehorse",
+			"breedingRank": 120,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Frostallion Noct",
+			"number": "110b",
+			"breedingId": "icehorse_dark",
+			"breedingRank": 100,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Jetragon",
+			"number": "111",
+			"breedingId": "jetdragon",
+			"breedingRank": 90,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Bellanoir",
+			"number": "112",
+			"breedingId": "nightlady",
+			"breedingRank": 1,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Bellanoir Libero",
+			"number": "112b",
+			"breedingId": "nightlady_dark",
+			"breedingRank": 1,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Selyne",
+			"number": "113",
+			"breedingId": "moonqueen",
+			"breedingRank": 345,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Croajiro",
+			"number": "114",
+			"breedingId": "kendofrog",
+			"breedingRank": 795,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Croajiro Noct",
+			"number": "114b",
+			"breedingId": "kendofrog_dark",
+			"breedingRank": 765,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Lullu",
+			"number": "115",
+			"breedingId": "leafprincess",
+			"breedingRank": 905,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Shroomer",
+			"number": "116",
+			"breedingId": "mushroomdragon",
+			"breedingRank": 720,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Shroomer Noct",
+			"number": "116b",
+			"breedingId": "mushroomdragon_dark",
+			"breedingRank": 730,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Kikit",
+			"number": "117",
+			"breedingId": "smallarmadillo",
+			"breedingRank": 1125,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Sootseer",
+			"number": "118",
+			"breedingId": "candleghost",
+			"breedingRank": 545,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Prixter",
+			"number": "119",
+			"breedingId": "scorpionman",
+			"breedingRank": 355,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Knocklem",
+			"number": "120",
+			"breedingId": "winggolem",
+			"breedingRank": 265,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Yakumo",
+			"number": "121",
+			"breedingId": "guardiandog",
+			"breedingRank": 945,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Dogen",
+			"number": "122",
+			"breedingId": "sifudog",
+			"breedingRank": 665,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Dazemu",
+			"number": "123",
+			"breedingId": "featherostrich",
+			"breedingRank": 675,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Mimog",
+			"number": "124",
+			"breedingId": "mimicdog",
+			"breedingRank": 1200,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Xenovader",
+			"number": "125",
+			"breedingId": "darkalien",
+			"breedingRank": 465,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Xenogard",
+			"number": "126",
+			"breedingId": "whitealiendragon",
+			"breedingRank": 435,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Xenolord",
+			"number": "127",
+			"breedingId": "darkmechadragon",
+			"breedingRank": 265,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Nitemary",
+			"number": "128",
+			"breedingId": "ghostrabbit",
+			"breedingRank": 705,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Starryon",
+			"number": "129",
+			"breedingId": "nightbluehorse",
+			"breedingRank": 365,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Silvegis",
+			"number": "130",
+			"breedingId": "whiteshielddragon",
+			"breedingRank": 215,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Smokie",
+			"number": "131",
+			"breedingId": "blackpuppy",
+			"breedingRank": 1245,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Celesdir",
+			"number": "132",
+			"breedingId": "whitedeer",
+			"breedingRank": 815,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Omascul",
+			"number": "133",
+			"breedingId": "mysterymask",
+			"breedingRank": 630,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Splatterina",
+			"number": "134",
+			"breedingId": "grimgirl",
+			"breedingRank": 725,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Tarantriss",
+			"number": "135",
+			"breedingId": "purplespider",
+			"breedingRank": 825,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Azurmane",
+			"number": "136",
+			"breedingId": "bluethunderhorse",
+			"breedingRank": 400,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Bastigor",
+			"number": "137",
+			"breedingId": "snowtigerbeastman",
+			"breedingRank": 170,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Prunelia",
+			"number": "138",
+			"breedingId": "blueberryfairy",
+			"breedingRank": 755,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Nyafia",
+			"number": "139",
+			"breedingId": "badcatgirl",
+			"breedingRank": 645,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Gildane",
+			"number": "140",
+			"breedingId": "goldenhorse",
+			"breedingRank": 505,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Herbil",
+			"number": "141",
+			"breedingId": "leafmomonga",
+			"breedingRank": 1445,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Icelyn",
+			"number": "142",
+			"breedingId": "icewitch",
+			"breedingRank": 605,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Frostplume",
+			"number": "143",
+			"breedingId": "snowpeafowl",
+			"breedingRank": 655,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Palumba",
+			"number": "144",
+			"breedingId": "tropicalostrich",
+			"breedingRank": 455,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Braloha",
+			"number": "145",
+			"breedingId": "plesiosaur",
+			"breedingRank": 335,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Munchill",
+			"number": "146",
+			"breedingId": "icecrocodile",
+			"breedingRank": 1335,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Polapup",
+			"number": "147",
+			"breedingId": "iceseal",
+			"breedingRank": 745,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Turtacle",
+			"number": "148",
+			"breedingId": "tentacleturtle",
+			"breedingRank": 1105,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Turtacle Terra",
+			"number": "148b",
+			"breedingId": "tentacleturtle_ground",
+			"breedingRank": 1065,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Jellroy",
+			"number": "149",
+			"breedingId": "jellyfishghost",
+			"breedingRank": 1395,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Jelliette",
+			"number": "150",
+			"breedingId": "jellyfishfairy",
+			"breedingRank": 1385,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Gloopie",
+			"number": "151",
+			"breedingId": "octopusgirl",
+			"breedingRank": 1195,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Finsider",
+			"number": "152",
+			"breedingId": "stuffedshark",
+			"breedingRank": 1295,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Finsider Ignis",
+			"number": "152b",
+			"breedingId": "stuffedshark_fire",
+			"breedingRank": 1255,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Ghangler",
+			"number": "153",
+			"breedingId": "ghostanglerfish",
+			"breedingRank": 525,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Ghangler Ignis",
+			"number": "153b",
+			"breedingId": "ghostanglerfish_fire",
+			"breedingRank": 505,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Whalaska",
+			"number": "154",
+			"breedingId": "icenarwhal",
+			"breedingRank": 445,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Whalaska Ignis",
+			"number": "154b",
+			"breedingId": "icenarwhal_fire",
+			"breedingRank": 430,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Neptilius",
+			"number": "155",
+			"breedingId": "poseidonorca",
+			"breedingRank": 90,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Hartalis",
+			"number": "156",
+			"breedingId": "legenddeer",
+			"breedingRank": 20,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": true
+		},
+		{
+			"name": "Green Slime",
+			"number": "-1",
+			"breedingId": "yakushimamonster001",
+			"breedingRank": 1430,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Blue Slime",
+			"number": "-1",
+			"breedingId": "yakushimamonster001_blue",
+			"breedingRank": 1490,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Red Slime",
+			"number": "-1",
+			"breedingId": "yakushimamonster001_red",
+			"breedingRank": 1405,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Purple Slime",
+			"number": "-1",
+			"breedingId": "yakushimamonster001_purple",
+			"breedingRank": 1390,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Illuminant Slime",
+			"number": "-1",
+			"breedingId": "yakushimamonster001_pink",
+			"breedingRank": 1500,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Rainbow Slime",
+			"number": "-1",
+			"breedingId": "yakushimamonster001_rainbow",
+			"breedingRank": 1320,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Enchanted Sword",
+			"number": "-1",
+			"breedingId": "yakushimamonster002",
+			"breedingRank": 1380,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Cave Bat",
+			"number": "-1",
+			"breedingId": "yakushimamonster003",
+			"breedingRank": 1340,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Illuminant Bat",
+			"number": "-1",
+			"breedingId": "yakushimamonster003_purple",
+			"breedingRank": 1250,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Eye of Cthulhu",
+			"number": "-1",
+			"breedingId": "yakushimaboss001",
+			"breedingRank": 1380,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		},
+		{
+			"name": "Demon Eye",
+			"number": "-1",
+			"breedingId": "yakushimaboss001_small",
+			"breedingRank": 1390,
+			"canBeParent": true,
+			"canBeChild": true,
+			"canBeStandardChild": false
+		}
+	],
+	"SpecialCombinations": [
+		{
+			"parentA": "Foxparks",
+			"parentB": "Foxcicle",
+			"child": "Foxparks Cryst"
+		},
+		{
+			"parentA": "Fuack",
+			"parentB": "Flambelle",
+			"child": "Fuack Ignis"
+		},
+		{
+			"parentA": "Pengullet",
+			"parentB": "Sparkit",
+			"child": "Pengullet Lux"
+		},
+		{
+			"parentA": "Penking",
+			"parentB": "Rayhound",
+			"child": "Penking Lux"
+		},
+		{
+			"parentA": "Jolthog",
+			"parentB": "Pengullet",
+			"child": "Jolthog Cryst"
+		},
+		{
+			"parentA": "Killamari",
+			"parentB": "Ribbuny",
+			"child": "Killamari Primo"
+		},
+		{
+			"parentA": "Mau",
+			"parentB": "Pengullet",
+			"child": "Mau Cryst"
+		},
+		{
+			"parentA": "Celaray",
+			"parentB": "Univolt",
+			"child": "Celaray Lux"
+		},
+		{
+			"parentA": "Gobfin",
+			"parentB": "Rooby",
+			"child": "Gobfin Ignis"
+		},
+		{
+			"parentA": "Hangyu",
+			"parentB": "Swee",
+			"child": "Hangyu Cryst"
+		},
+		{
+			"parentA": "Mossanda",
+			"parentB": "Grizzbolt",
+			"child": "Mossanda Lux"
+		},
+		{
+			"parentA": "Caprity",
+			"parentB": "Tarantriss",
+			"child": "Caprity Noct"
+		},
+		{
+			"parentA": "Eikthyrdeer",
+			"parentB": "Hangyu",
+			"child": "Eikthyrdeer Terra"
+		},
+		{
+			"parentA": "Ribbuny",
+			"parentB": "Bristla",
+			"child": "Ribbuny Botan"
+		},
+		{
+			"parentA": "Incineram",
+			"parentB": "Maraith",
+			"child": "Incineram Noct"
+		},
+		{
+			"parentA": "Dumud",
+			"parentB": "Eikthyrdeer Terra",
+			"child": "Dumud Gild"
+		},
+		{
+			"parentA": "Leezpunk",
+			"parentB": "Flambelle",
+			"child": "Leezpunk Ignis"
+		},
+		{
+			"parentA": "Loupmoon",
+			"parentB": "Sweepa",
+			"child": "Loupmoon Cryst"
+		},
+		{
+			"parentA": "Robinquill",
+			"parentB": "Fuddler",
+			"child": "Robinquill Terra"
+		},
+		{
+			"parentA": "Gorirat",
+			"parentB": "Kikit",
+			"child": "Gorirat Terra"
+		},
+		{
+			"parentA": "Chillet",
+			"parentB": "Arsox",
+			"child": "Chillet Ignis"
+		},
+		{
+			"parentA": "Pyrin",
+			"parentB": "Katress",
+			"child": "Pyrin Noct"
+		},
+		{
+			"parentA": "Kitsun",
+			"parentB": "Nyafia",
+			"child": "Kitsun Noct"
+		},
+		{
+			"parentA": "Dazzi",
+			"parentB": "Omascul",
+			"child": "Dazzi Noct"
+		},
+		{
+			"parentA": "Dinossom",
+			"parentB": "Rayhound",
+			"child": "Dinossom Lux"
+		},
+		{
+			"parentA": "Surfent",
+			"parentB": "Dumud",
+			"child": "Surfent Terra"
+		},
+		{
+			"parentA": "Vanwyrm",
+			"parentB": "Foxcicle",
+			"child": "Vanwyrm Cryst"
+		},
+		{
+			"parentA": "Bushi",
+			"parentB": "Sootseer",
+			"child": "Bushi Noct"
+		},
+		{
+			"parentA": "Katress",
+			"parentB": "Wixen",
+			"child": "Katress Ignis"
+		},
+		{
+			"parentA": "Katress",
+			"parentB": "Wixen",
+			"child": "Wixen Noct"
+		},
+		{
+			"parentA": "Elphidran",
+			"parentB": "Surfent",
+			"child": "Elphidran Aqua"
+		},
+		{
+			"parentA": "Azurobe",
+			"parentB": "Frostplume",
+			"child": "Azurobe Cryst"
+		},
+		{
+			"parentA": "Cryolinx",
+			"parentB": "Dazemu",
+			"child": "Cryolinx Terra"
+		},
+		{
+			"parentA": "Blazehowl",
+			"parentB": "Felbat",
+			"child": "Blazehowl Noct"
+		},
+		{
+			"parentA": "Relaxaurus",
+			"parentB": "Sparkit",
+			"child": "Relaxaurus Lux"
+		},
+		{
+			"parentA": "Broncherry",
+			"parentB": "Fuack",
+			"child": "Broncherry Aqua"
+		},
+		{
+			"parentA": "Reptyro",
+			"parentB": "Foxcicle",
+			"child": "Reptyro Cryst"
+		},
+		{
+			"parentA": "Kingpaca",
+			"parentB": "Reindrix",
+			"child": "Kingpaca Cryst"
+		},
+		{
+			"parentA": "Mammorest",
+			"parentB": "Wumpo",
+			"child": "Mammorest Cryst"
+		},
+		{
+			"parentA": "Warsect",
+			"parentB": "Digtoise",
+			"child": "Warsect Terra"
+		},
+		{
+			"parentA": "Fenglope",
+			"parentB": "Azurmane",
+			"child": "Fenglope Lux"
+		},
+		{
+			"parentA": "Quivern",
+			"parentB": "Lullu",
+			"child": "Quivern Botan"
+		},
+		{
+			"parentA": "Helzephyr",
+			"parentB": "Beakon",
+			"child": "Helzephyr Lux"
+		},
+		{
+			"parentA": "Menasting",
+			"parentB": "Knocklem",
+			"child": "Menasting Terra"
+		},
+		{
+			"parentA": "Jormuntide",
+			"parentB": "Blazehowl",
+			"child": "Jormuntide Ignis"
+		},
+		{
+			"parentA": "Suzaku",
+			"parentB": "Jormuntide",
+			"child": "Suzaku Aqua"
+		},
+		{
+			"parentA": "Mossanda",
+			"parentB": "Rayhound",
+			"child": "Grizzbolt"
+		},
+		{
+			"parentA": "Mossanda",
+			"parentB": "Petallia",
+			"child": "Lyleen"
+		},
+		{
+			"parentA": "Lyleen",
+			"parentB": "Menasting",
+			"child": "Lyleen Noct"
+		},
+		{
+			"parentA": "Vanwyrm",
+			"parentB": "Anubis",
+			"child": "Faleris"
+		},
+		{
+			"parentA": "Faleris",
+			"parentB": "Jormuntide",
+			"child": "Faleris Aqua"
+		},
+		{
+			"parentA": "Grizzbolt",
+			"parentB": "Relaxaurus",
+			"child": "Orserk"
+		},
+		{
+			"parentA": "Kitsun",
+			"parentB": "Astegon",
+			"child": "Shadowbeak"
+		},
+		{
+			"parentA": "Frostallion",
+			"parentB": "Helzephyr",
+			"child": "Frostallion Noct"
+		},
+		{
+			"parentA": "Bellanoir",
+			"parentB": "Bellanoir Libero",
+			"child": "Bellanoir"
+		},
+		{
+			"parentA": "Paladius",
+			"parentB": "Lunaris",
+			"child": "Selyne"
+		},
+		{
+			"parentA": "Croajiro",
+			"parentB": "Bushi Noct",
+			"child": "Croajiro Noct"
+		},
+		{
+			"parentA": "Gildane",
+			"parentB": "Eikthyrdeer Terra",
+			"child": "Celesdir"
+		},
+		{
+			"parentA": "Frostallion",
+			"parentB": "Anubis",
+			"child": "Bastigor"
+		},
+		{
+			"parentA": "Turtacle",
+			"parentB": "Digtoise",
+			"child": "Turtacle Terra"
+		},
+		{
+			"parentA": "Finsider",
+			"parentB": "Gobfin Ignis",
+			"child": "Finsider Ignis"
+		},
+		{
+			"parentA": "Ghangler",
+			"parentB": "Sootseer",
+			"child": "Ghangler Ignis"
+		},
+		{
+			"parentA": "Whalaska",
+			"parentB": "Chillet Ignis",
+			"child": "Whalaska Ignis"
+		}
+	],
+	"SourceOnlyPals": [],
+	"Rules": [
+		{
+			"name": "Same parent species",
+			"description": "Two parents with the same breedingId produce that same Pal before special combinations or rank calculation are applied."
+		},
+		{
+			"name": "Special combination override",
+			"description": "Pairs listed in SpecialCombinations produce the listed child regardless of breedingRank."
+		},
+		{
+			"name": "Standard rank result",
+			"description": "For normal combinations, calculate floor((parentA.breedingRank + parentB.breedingRank + 1) / 2), then choose the canBeStandardChild Pal with the closest breedingRank."
+		},
+		{
+			"name": "Standard result tie breaker",
+			"description": "If two eligible Pals are equally close to the target rank, the earlier Pal in Pals order wins."
+		}
+	],
+	"Sources": [
+		{
+			"name": "Palworld.gg Breeding Calculator",
+			"url": "https://palworld.gg/breeding-calculator",
+			"retrievedAt": "2026-07-09",
+			"usage": "Primary source for breedingId, breedingRank, standard-result exclusions, special combinations, and calculation rules."
+		},
+		{
+			"name": "PalDB Breed",
+			"url": "https://paldb.cc/en/Breed",
+			"version": "v0.7.3",
+			"retrievedAt": "2026-07-09",
+			"usage": "Cross-check source for current Pal roster/codes and sample breeding calculator API outputs."
+		},
+		{
+			"name": "Palbreed Breeding Tree",
+			"url": "https://palbreed.com/breeding-tree",
+			"retrievedAt": "2026-07-09",
+			"usage": "Additional calculator surface used to cross-check the current breeding roster."
+		}
+	]
+}
