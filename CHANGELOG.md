@@ -10,6 +10,7 @@ Notable changes to Paldeck are documented here.
 - Added owner-only `/announce patch-notes` broadcasts for servers that subscribed to Paldeck Updates.
 - Added user-facing patch notes in `docs/patch-notes.md`.
 - Added CI coverage for lint, smoke tests, and dependency audits.
+- Added a GitHub Pages theme and homepage links for the changelog and patch notes.
 - Added automatic GitHub tag and release creation when `package.json` version changes on `main`.
 
 ## v1.3.0 - 2026-07-13

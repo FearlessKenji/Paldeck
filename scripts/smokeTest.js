@@ -145,6 +145,7 @@ function validateRequiredProjectFiles() {
 		`.github/workflows/ci.yml`,
 		`.github/workflows/release.yml`,
 		`CHANGELOG.md`,
+		`docs/_config.yml`,
 		`docs/patch-notes.md`,
 		`commands/globalCommands/admin/announce.js`,
 		`commands/globalCommands/utility/updates.js`,
@@ -312,6 +313,18 @@ function validateCiWorkflow() {
 	assert(workflow.includes(`npm audit --audit-level=moderate`), `CI workflow does not run dependency audit.`);
 }
 
+function validateGithubPagesDocs() {
+	const config = fs.readFileSync(resolveProject(`docs`, `_config.yml`), `utf8`);
+	const index = fs.readFileSync(resolveProject(`docs`, `index.md`), `utf8`);
+
+	assert(config.includes(`theme: jekyll-theme-midnight`), `GitHub Pages should use the Hachi Pages theme.`);
+	assert(config.includes(`show_downloads: false`), `GitHub Pages should hide download links.`);
+	assert(index.includes(`https://github.com/FearlessKenji/Paldeck/blob/main/CHANGELOG.md`), `Pages index should link to the GitHub changelog.`);
+	assert(index.includes(`[Patch Notes](patch-notes.html)`), `Pages index should link to patch notes.`);
+	assert(index.includes(`[Privacy Policy](privacy-policy.html)`), `Pages index should link to the privacy policy.`);
+	assert(index.includes(`[Terms of Service](terms-of-service.html)`), `Pages index should link to the terms of service.`);
+}
+
 function validateReleaseWorkflow() {
 	const workflow = fs.readFileSync(resolveProject(`.github`, `workflows`, `release.yml`), `utf8`);
 
@@ -367,6 +380,7 @@ async function main() {
 	await test(`database models include update announcement fields`, validateDatabaseModels);
 	await test(`Paldeck data files remain valid`, validatePalData);
 	await test(`CI workflow includes lint, smoke, and audit jobs`, validateCiWorkflow);
+	await test(`GitHub Pages docs include theme and update links`, validateGithubPagesDocs);
 	await test(`release workflow creates package-version GitHub releases`, validateReleaseWorkflow);
 	await test(`config ID helpers normalize owner and guild IDs`, validateConfigValueHelpers);
 	await test(`git hygiene checks pass`, validateGitHygiene);

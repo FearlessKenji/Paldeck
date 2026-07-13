@@ -220,8 +220,10 @@ The `/ban` and `/unban` commands are intended for the bot owner. They are guarde
 Owner controls can restrict or unrestrict users and servers. Server restrictions may store server IDs, server names, owner IDs, and owner usernames so the bot can prevent abuse and avoid rejoining restricted servers.
 
 ## GitHub Pages
-The `docs` folder contains the public legal pages for GitHub Pages:
+The `docs` folder contains the public pages for GitHub Pages:
 
+- [Changelog](CHANGELOG.md)
+- [Patch Notes](docs/patch-notes.md)
 - [Privacy Policy](docs/privacy-policy.md)
 - [Terms of Service](docs/terms-of-service.md)
 
