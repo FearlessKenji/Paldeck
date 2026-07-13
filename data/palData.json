@@ -254,7 +254,7 @@
 			"suitability": "Planting 1, Gathering 1",
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
-			"thumbnail": "data/pals/pal-unknown.png",
+			"thumbnail": "data/pals/pal-014-clovee.png",
 			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 0
 		},
@@ -1010,7 +1010,7 @@
 			"suitability": "Watering 1, Handiwork 2, Transporting 1",
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
-			"thumbnail": "data/pals/pal-unknown.png",
+			"thumbnail": "data/pals/pal-047-amione.png",
 			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 0
 		},
@@ -2116,7 +2116,7 @@
 			"food": "7/10",
 			"partner": "Missile Party - Can be ridden. Can rapidly fire a missile launcher while mounted.",
 			"tech": "Relaxaurus Lux's Missile Launcher, Lvl 46",
-			"suitability": "Generating Electricity 6, Transporting 4",
+			"suitability": "Generating Electricity 4, Transporting 3",
 			"spawnTime": "Dungeons/Factions",
 			"farmable": "a",
 			"thumbnail": "data/pals/pal-085b-relaxaurus-lux.png",
@@ -4410,7 +4410,7 @@
 			"suitability": "Unknown. Too new.",
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
-			"thumbnail": "data/pals/pal-unknown.png",
+			"thumbnail": "data/pals/pal-203-panthalus.png",
 			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 0
 		},
