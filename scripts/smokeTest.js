@@ -323,6 +323,8 @@ function validateGithubPagesDocs() {
 	assert(index.includes(`[Patch Notes](patch-notes.html)`), `Pages index should link to patch notes.`);
 	assert(index.includes(`[Privacy Policy](privacy-policy.html)`), `Pages index should link to the privacy policy.`);
 	assert(index.includes(`[Terms of Service](terms-of-service.html)`), `Pages index should link to the terms of service.`);
+}
+
 function validateReleaseWorkflow() {
 	const workflow = fs.readFileSync(resolveProject(`.github`, `workflows`, `release.yml`), `utf8`);
 
