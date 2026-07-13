@@ -73,7 +73,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-006-fuack.png",
-			"habitat": "data/maps/006-fuack.png",
+			"habitat": "data/maps/005-fuack.png",
 			"rarity": 1
 		},
 		{
@@ -88,7 +88,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-006b-fuack-ignis.png",
-			"habitat": "data/maps/006b-fuack-ignis.png",
+			"habitat": "data/maps/005b-fuack-ignis.png",
 			"rarity": 2
 		},
 		{
@@ -103,7 +103,7 @@
 			"spawnTime": "Day",
 			"farmable": "Yes - Spheres, Arrows, Gold Coins",
 			"thumbnail": "data/pals/pal-014-vixy.png",
-			"habitat": "data/maps/014-vixy.png",
+			"habitat": "data/maps/006-vixy.png",
 			"rarity": 2
 		},
 		{
@@ -119,7 +119,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-025-celaray.png",
-			"habitat": "data/maps/025-celaray.png",
+			"habitat": "data/maps/007-celaray.png",
 			"rarity": 3
 		},
 		{
@@ -135,7 +135,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-025b-celaray-lux.png",
-			"habitat": "data/maps/025b-celaray-lux.png",
+			"habitat": "data/maps/007b-celaray-lux.png",
 			"rarity": 4
 		},
 		{
@@ -150,7 +150,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-018-cremis.png",
-			"habitat": "data/maps/018-cremis.png",
+			"habitat": "data/maps/008-cremis.png",
 			"rarity": 1
 		},
 		{
@@ -165,7 +165,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-114-croajiro.png",
-			"habitat": "data/maps/114-croajiro.png",
+			"habitat": "data/maps/009-croajiro.png",
 			"rarity": 4
 		},
 		{
@@ -180,7 +180,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-114b-croajiro-noct.png",
-			"habitat": "data/maps/114b-croajiro-noct.png",
+			"habitat": "data/maps/009b-croajiro-noct.png",
 			"rarity": 5
 		},
 		{
@@ -195,7 +195,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-141-herbil.png",
-			"habitat": "data/maps/141-herbil.png",
+			"habitat": "data/maps/010-herbil.png",
 			"rarity": 3
 		},
 		{
@@ -210,7 +210,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-016-teafant.png",
-			"habitat": "data/maps/016-teafant.png",
+			"habitat": "data/maps/011-teafant.png",
 			"rarity": 1
 		},
 		{
@@ -225,7 +225,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-013-gumoss.png",
-			"habitat": "data/maps/013-gumoss.png",
+			"habitat": "data/maps/012-gumoss.png",
 			"rarity": 1
 		},
 		{
@@ -240,7 +240,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/013-pupperai.png",
 			"rarity": 0
 		},
 		{
@@ -255,7 +255,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-014-clovee.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/014-clovee.png",
 			"rarity": 0
 		},
 		{
@@ -271,7 +271,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-012-jolthog.png",
-			"habitat": "data/maps/012-jolthog.png",
+			"habitat": "data/maps/015-jolthog.png",
 			"rarity": 1
 		},
 		{
@@ -287,7 +287,7 @@
 			"spawnTime": "With factions",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-012b-jolthog-cryst.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/015b-jolthog-cryst.png",
 			"rarity": 2
 		},
 		{
@@ -302,7 +302,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-017-depresso.png",
-			"habitat": "data/maps/017-depresso.png",
+			"habitat": "data/maps/016-depresso.png",
 			"rarity": 1
 		},
 		{
@@ -318,7 +318,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-010-pengullet.png",
-			"habitat": "data/maps/010-pengullet.png",
+			"habitat": "data/maps/017-pengullet.png",
 			"rarity": 1
 		},
 		{
@@ -334,7 +334,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-010b-pengullet-lux.png",
-			"habitat": "data/maps/010b-pengullet-lux.png",
+			"habitat": "data/maps/017b-pengullet-lux.png",
 			"rarity": 2
 		},
 		{
@@ -349,7 +349,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-011-penking.png",
-			"habitat": "data/maps/011-penking.png",
+			"habitat": "data/maps/018-penking.png",
 			"rarity": 6
 		},
 		{
@@ -364,7 +364,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-011b-penking-lux.png",
-			"habitat": "data/maps/011b-penking-lux.png",
+			"habitat": "data/maps/018b-penking-lux.png",
 			"rarity": 7
 		},
 		{
@@ -379,7 +379,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-015-hoocrates.png",
-			"habitat": "data/maps/015-hoocrates.png",
+			"habitat": "data/maps/019-hoocrates.png",
 			"rarity": 1
 		},
 		{
@@ -395,7 +395,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Wool",
 			"thumbnail": "data/pals/pal-036-melpaca.png",
-			"habitat": "data/maps/036-melpaca.png",
+			"habitat": "data/maps/020-melpaca.png",
 			"rarity": 3
 		},
 		{
@@ -411,7 +411,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-089-kingpaca.png",
-			"habitat": "data/maps/089-kingpaca.png",
+			"habitat": "data/maps/021-kingpaca.png",
 			"rarity": 8
 		},
 		{
@@ -427,7 +427,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-089b-kingpaca-cryst.png",
-			"habitat": "data/maps/089b-kingpaca-cryst.png",
+			"habitat": "data/maps/021b-kingpaca-cryst.png",
 			"rarity": 9
 		},
 		{
@@ -443,7 +443,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-019-daedream.png",
-			"habitat": "data/maps/019-daedream.png",
+			"habitat": "data/maps/022-daedream.png",
 			"rarity": 1
 		},
 		{
@@ -459,7 +459,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-008-tanzee.png",
-			"habitat": "data/maps/008-tanzee.png",
+			"habitat": "data/maps/023-tanzee.png",
 			"rarity": 1
 		},
 		{
@@ -474,7 +474,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/023b-tanzee-ignis.png",
 			"rarity": 0
 		},
 		{
@@ -489,7 +489,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-021-nox.png",
-			"habitat": "data/maps/021-nox.png",
+			"habitat": "data/maps/024-nox.png",
 			"rarity": 6
 		},
 		{
@@ -504,7 +504,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Flame Organ",
 			"thumbnail": "data/pals/pal-070-flambelle.png",
-			"habitat": "data/maps/070-flambelle.png",
+			"habitat": "data/maps/025-flambelle.png",
 			"rarity": 1
 		},
 		{
@@ -519,7 +519,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-009-rooby.png",
-			"habitat": "data/maps/009-rooby.png",
+			"habitat": "data/maps/026-rooby.png",
 			"rarity": 2
 		},
 		{
@@ -549,7 +549,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Gold Coin",
 			"thumbnail": "data/pals/pal-024b-mau-cryst.png",
-			"habitat": "data/maps/024b-mau-cryst.png",
+			"habitat": "data/maps/027b-mau-cryst.png",
 			"rarity": 2
 		},
 		{
@@ -565,7 +565,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-020-rushoar.png",
-			"habitat": "data/maps/020-rushoar.png",
+			"habitat": "data/maps/028-rushoar.png",
 			"rarity": 1
 		},
 		{
@@ -581,7 +581,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-005-foxparks.png",
-			"habitat": "data/maps/005-foxparks.png",
+			"habitat": "data/maps/029-foxparks.png",
 			"rarity": 1
 		},
 		{
@@ -597,7 +597,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-005b-foxparks-cryst.png",
-			"habitat": "data/maps/005b-foxparks-cryst.png",
+			"habitat": "data/maps/029b-foxparks-cryst.png",
 			"rarity": 1
 		},
 		{
@@ -613,7 +613,7 @@
 			"spawnTime": "Dungeons; Nocturnal",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-023-killamari.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/030-killamari.png",
 			"rarity": 1
 		},
 		{
@@ -629,7 +629,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-023b-killamari-primo.png",
-			"habitat": "data/maps/023b-killamari-primo.png",
+			"habitat": "data/maps/030b-killamari-primo.png",
 			"rarity": 2
 		},
 		{
@@ -644,7 +644,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-022-fuddler.png",
-			"habitat": "data/maps/022-fuddler.png",
+			"habitat": "data/maps/031-fuddler.png",
 			"rarity": 1
 		},
 		{
@@ -660,7 +660,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-037-eikthyrdeer.png",
-			"habitat": "data/maps/037-eikthyrdeer.png",
+			"habitat": "data/maps/032-eikthyrdeer.png",
 			"rarity": 4
 		},
 		{
@@ -676,7 +676,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-037b-eikthyrdeer-terra.png",
-			"habitat": "data/maps/037b-eikthyrdeer-terra.png",
+			"habitat": "data/maps/032b-eikthyrdeer-terra.png",
 			"rarity": 6
 		},
 		{
@@ -692,7 +692,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-026-direhowl.png",
-			"habitat": "data/maps/026-direhowl.png",
+			"habitat": "data/maps/033-direhowl.png",
 			"rarity": 2
 		},
 		{
@@ -707,7 +707,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Red Berries",
 			"thumbnail": "data/pals/pal-035-caprity.png",
-			"habitat": "data/maps/035-caprity.png",
+			"habitat": "data/maps/034-caprity.png",
 			"rarity": 3
 		},
 		{
@@ -722,7 +722,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Venom Gland",
 			"thumbnail": "data/pals/pal-035b-caprity-noct.png",
-			"habitat": "data/maps/035b-caprity-noct.png",
+			"habitat": "data/maps/034b-caprity-noct.png",
 			"rarity": 3
 		},
 		{
@@ -737,7 +737,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-053-swee.png",
-			"habitat": "data/maps/053-swee.png",
+			"habitat": "data/maps/035-swee.png",
 			"rarity": 1
 		},
 		{
@@ -752,7 +752,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-054-sweepa.png",
-			"habitat": "data/maps/054-sweepa.png",
+			"habitat": "data/maps/036-sweepa.png",
 			"rarity": 6
 		},
 		{
@@ -767,7 +767,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-148-turtacle.png",
-			"habitat": "data/maps/148-turtacle.png",
+			"habitat": "data/maps/037-turtacle.png",
 			"rarity": 3
 		},
 		{
@@ -782,7 +782,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-148b-turtacle-terra.png",
-			"habitat": "data/maps/148b-turtacle-terra.png",
+			"habitat": "data/maps/037b-turtacle-terra.png",
 			"rarity": 4
 		},
 		{
@@ -798,7 +798,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-032-hangyu.png",
-			"habitat": "data/maps/032-hangyu.png",
+			"habitat": "data/maps/038-hangyu.png",
 			"rarity": 1
 		},
 		{
@@ -814,7 +814,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-032b-hangyu-cryst.png",
-			"habitat": "data/maps/032b-hangyu-cryst.png",
+			"habitat": "data/maps/038b-hangyu-cryst.png",
 			"rarity": 2
 		},
 		{
@@ -829,7 +829,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Cotton",
 			"thumbnail": "data/pals/pal-034-woolipop.png",
-			"habitat": "data/maps/034-woolipop.png",
+			"habitat": "data/maps/039-woolipop.png",
 			"rarity": 3
 		},
 		{
@@ -844,7 +844,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/039b-woolipop-terra.png",
 			"rarity": 0
 		},
 		{
@@ -859,7 +859,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Milk",
 			"thumbnail": "data/pals/pal-029-mozzarina.png",
-			"habitat": "data/maps/029-mozzarina.png",
+			"habitat": "data/maps/040-mozzarina.png",
 			"rarity": 2
 		},
 		{
@@ -875,7 +875,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-082-azurobe.png",
-			"habitat": "data/maps/082-azurobe.png",
+			"habitat": "data/maps/041-azurobe.png",
 			"rarity": 7
 		},
 		{
@@ -891,7 +891,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-082b-azurobe-cryst.png",
-			"habitat": "data/maps/082b-azurobe-cryst.png",
+			"habitat": "data/maps/041b-azurobe-cryst.png",
 			"rarity": 8
 		},
 		{
@@ -906,7 +906,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-007-sparkit.png",
-			"habitat": "data/maps/007-sparkit.png",
+			"habitat": "data/maps/042-sparkit.png",
 			"rarity": 1
 		},
 		{
@@ -921,7 +921,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-081-kelpsea.png",
-			"habitat": "data/maps/081-kelpsea.png",
+			"habitat": "data/maps/043-kelpsea.png",
 			"rarity": 1
 		},
 		{
@@ -936,7 +936,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-081b-kelpsea-ignis.png",
-			"habitat": "data/maps/081b-kelpsea-ignis.png",
+			"habitat": "data/maps/043b-kelpsea-ignis.png",
 			"rarity": 2
 		},
 		{
@@ -951,7 +951,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-039-ribbuny.png",
-			"habitat": "data/maps/039-ribbuny.png",
+			"habitat": "data/maps/044-ribbuny.png",
 			"rarity": 1
 		},
 		{
@@ -966,7 +966,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-039b-ribbuny-botan.png",
-			"habitat": "data/maps/039b-ribbuny-botan.png",
+			"habitat": "data/maps/044b-ribbuny-botan.png",
 			"rarity": 1
 		},
 		{
@@ -981,7 +981,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-150-jelliette.png",
-			"habitat": "data/maps/150-jelliette.png",
+			"habitat": "data/maps/045-jelliette.png",
 			"rarity": 3
 		},
 		{
@@ -996,7 +996,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-149-jellroy.png",
-			"habitat": "data/maps/149-jellroy.png",
+			"habitat": "data/maps/046-jellroy.png",
 			"rarity": 3
 		},
 		{
@@ -1011,7 +1011,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-047-amione.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/047-amione.png",
 			"rarity": 0
 		},
 		{
@@ -1026,7 +1026,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-151-gloopie.png",
-			"habitat": "data/maps/151-gloopie.png",
+			"habitat": "data/maps/048-gloopie.png",
 			"rarity": 5
 		},
 		{
@@ -1041,7 +1041,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/048b-gloopie-primo.png",
 			"rarity": 0
 		},
 		{
@@ -1057,7 +1057,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-047-galeclaw.png",
-			"habitat": "data/maps/047-galeclaw.png",
+			"habitat": "data/maps/049-galeclaw.png",
 			"rarity": 2
 		},
 		{
@@ -1072,7 +1072,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/050-wispaw.png",
 			"rarity": 0
 		},
 		{
@@ -1088,7 +1088,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-038-nitewing.png",
-			"habitat": "data/maps/038-nitewing.png",
+			"habitat": "data/maps/051-nitewing.png",
 			"rarity": 3
 		},
 		{
@@ -1103,7 +1103,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-068-tombat.png",
-			"habitat": "data/maps/068-tombat.png",
+			"habitat": "data/maps/052-tombat.png",
 			"rarity": 5
 		},
 		{
@@ -1119,7 +1119,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-027-tocotoco.png",
-			"habitat": "data/maps/027-tocotoco.png",
+			"habitat": "data/maps/053-tocotoco.png",
 			"rarity": 1
 		},
 		{
@@ -1135,7 +1135,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-056-univolt.png",
-			"habitat": "data/maps/056-univolt.png",
+			"habitat": "data/maps/054-univolt.png",
 			"rarity": 5
 		},
 		{
@@ -1150,7 +1150,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/054b-univolt-cryst.png",
 			"rarity": 0
 		},
 		{
@@ -1165,7 +1165,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-031-gobfin.png",
-			"habitat": "data/maps/031-gobfin.png",
+			"habitat": "data/maps/055-gobfin.png",
 			"rarity": 2
 		},
 		{
@@ -1180,7 +1180,7 @@
 			"spawnTime": "Day",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-031b-gobfin-ignis.png",
-			"habitat": "data/maps/031b-gobfin-ignis.png",
+			"habitat": "data/maps/055b-gobfin-ignis.png",
 			"rarity": 3
 		},
 		{
@@ -1195,7 +1195,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-046-loupmoon.png",
-			"habitat": "data/maps/046-loupmoon.png",
+			"habitat": "data/maps/056-loupmoon.png",
 			"rarity": 3
 		},
 		{
@@ -1210,7 +1210,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-046b-loupmoon-cryst.png",
-			"habitat": "data/maps/046b-loupmoon-cryst.png",
+			"habitat": "data/maps/056b-loupmoon-cryst.png",
 			"rarity": 3
 		},
 		{
@@ -1225,7 +1225,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-044-cawgnito.png",
-			"habitat": "data/maps/044-cawgnito.png",
+			"habitat": "data/maps/057-cawgnito.png",
 			"rarity": 3
 		},
 		{
@@ -1241,7 +1241,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-042-arsox.png",
-			"habitat": "data/maps/042-arsox.png",
+			"habitat": "data/maps/058-arsox.png",
 			"rarity": 4
 		},
 		{
@@ -1256,7 +1256,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/059-muffly.png",
 			"rarity": 0
 		},
 		{
@@ -1271,7 +1271,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-030-bristla.png",
-			"habitat": "data/maps/030-bristla.png",
+			"habitat": "data/maps/060-bristla.png",
 			"rarity": 1
 		},
 		{
@@ -1286,7 +1286,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-041-cinnamoth.png",
-			"habitat": "data/maps/041-cinnamoth.png",
+			"habitat": "data/maps/061-cinnamoth.png",
 			"rarity": 4
 		},
 		{
@@ -1301,7 +1301,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/062-puffolt.png",
 			"rarity": 0
 		},
 		{
@@ -1317,7 +1317,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-080-elphidran.png",
-			"habitat": "data/maps/080-elphidran.png",
+			"habitat": "data/maps/063-elphidran.png",
 			"rarity": 7
 		},
 		{
@@ -1333,7 +1333,7 @@
 			"spawnTime": "Breeding Only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-080b-elphidran-aqua.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/063b-elphidran-aqua.png",
 			"rarity": 8
 		},
 		{
@@ -1349,7 +1349,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-071-vanwyrm.png",
-			"habitat": "data/maps/071-vanwyrm.png",
+			"habitat": "data/maps/064-vanwyrm.png",
 			"rarity": 4
 		},
 		{
@@ -1365,7 +1365,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-071b-vanwyrm-cryst.png",
-			"habitat": "data/maps/071b-vanwyrm-cryst.png",
+			"habitat": "data/maps/064b-vanwyrm-cryst.png",
 			"rarity": 5
 		},
 		{
@@ -1380,7 +1380,7 @@
 			"spawnTime": "Dungeons; Nocturnal",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-094-felbat.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/065-felbat.png",
 			"rarity": 6
 		},
 		{
@@ -1395,7 +1395,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-078-vaelet.png",
-			"habitat": "data/maps/078-vaelet.png",
+			"habitat": "data/maps/066-vaelet.png",
 			"rarity": 8
 		},
 		{
@@ -1410,7 +1410,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Honey",
 			"thumbnail": "data/pals/pal-050-beegarde.png",
-			"habitat": "data/maps/050-beegarde.png",
+			"habitat": "data/maps/067-beegarde.png",
 			"rarity": 4
 		},
 		{
@@ -1425,7 +1425,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-051-elizabee.png",
-			"habitat": "data/maps/051-elizabee.png",
+			"habitat": "data/maps/068-elizabee.png",
 			"rarity": 8
 		},
 		{
@@ -1456,7 +1456,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-052-grintale.png",
-			"habitat": "data/maps/052-grintale.png",
+			"habitat": "data/maps/070-grintale.png",
 			"rarity": 6
 		},
 		{
@@ -1472,7 +1472,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-135-tarantriss.png",
-			"habitat": "data/maps/135-tarantriss.png",
+			"habitat": "data/maps/071-tarantriss.png",
 			"rarity": 3
 		},
 		{
@@ -1488,7 +1488,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-147-polapup.png",
-			"habitat": "data/maps/147-polapup.png",
+			"habitat": "data/maps/072-polapup.png",
 			"rarity": 5
 		},
 		{
@@ -1503,7 +1503,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/072b-polapup-terra.png",
 			"rarity": 0
 		},
 		{
@@ -1518,7 +1518,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-045-leezpunk.png",
-			"habitat": "data/maps/045-leezpunk.png",
+			"habitat": "data/maps/073-leezpunk.png",
 			"rarity": 2
 		},
 		{
@@ -1533,7 +1533,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-045b-leezpunk-ignis.png",
-			"habitat": "data/maps/045b-leezpunk-ignis.png",
+			"habitat": "data/maps/073b-leezpunk-ignis.png",
 			"rarity": 3
 		},
 		{
@@ -1548,7 +1548,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-049-gorirat.png",
-			"habitat": "data/maps/049-gorirat.png",
+			"habitat": "data/maps/074-gorirat.png",
 			"rarity": 5
 		},
 		{
@@ -1563,7 +1563,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-049b-gorirat-terra.png",
-			"habitat": "data/maps/049b-gorirat-terra.png",
+			"habitat": "data/maps/074b-gorirat-terra.png",
 			"rarity": 5
 		},
 		{
@@ -1579,7 +1579,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-065-surfent.png",
-			"habitat": "data/maps/065-surfent.png",
+			"habitat": "data/maps/075-surfent.png",
 			"rarity": 4
 		},
 		{
@@ -1595,7 +1595,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-065b-surfent-terra.png",
-			"habitat": "data/maps/065b-surfent-terra.png",
+			"habitat": "data/maps/075b-surfent-terra.png",
 			"rarity": 5
 		},
 		{
@@ -1610,7 +1610,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-048-robinquill.png",
-			"habitat": "data/maps/048-robinquill.png",
+			"habitat": "data/maps/076-robinquill.png",
 			"rarity": 5
 		},
 		{
@@ -1625,7 +1625,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-048b-robinquill-terra.png",
-			"habitat": "data/maps/048b-robinquill-terra.png",
+			"habitat": "data/maps/076b-robinquill-terra.png",
 			"rarity": 6
 		},
 		{
@@ -1641,7 +1641,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-028-flopie.png",
-			"habitat": "data/maps/028-flopie.png",
+			"habitat": "data/maps/077-flopie.png",
 			"rarity": 1
 		},
 		{
@@ -1656,7 +1656,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-076-wixen.png",
-			"habitat": "data/maps/076-wixen.png",
+			"habitat": "data/maps/078-wixen.png",
 			"rarity": 6
 		},
 		{
@@ -1671,7 +1671,7 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-076b-wixen-noct.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/078b-wixen-noct.png",
 			"rarity": 6
 		},
 		{
@@ -1686,7 +1686,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-075-katress.png",
-			"habitat": "data/maps/075-katress.png",
+			"habitat": "data/maps/079-katress.png",
 			"rarity": 6
 		},
 		{
@@ -1717,7 +1717,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-097-helzephyr.png",
-			"habitat": "data/maps/097-helzephyr.png",
+			"habitat": "data/maps/080-helzephyr.png",
 			"rarity": 7
 		},
 		{
@@ -1733,7 +1733,7 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-097b-helzephyr-lux.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/080b-helzephyr-lux.png",
 			"rarity": 8
 		},
 		{
@@ -1748,7 +1748,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/081-elgrove.png",
 			"rarity": 0
 		},
 		{
@@ -1763,7 +1763,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/081b-elgrove-cryst.png",
 			"rarity": 0
 		},
 		{
@@ -1778,7 +1778,7 @@
 			"spawnTime": "Alpha/Dungeons",
 			"farmable": "a",
 			"thumbnail": "data/pals/pal-063-lunaris.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/082-lunaris.png",
 			"rarity": 6
 		},
 		{
@@ -1794,7 +1794,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-093-fenglope.png",
-			"habitat": "data/maps/093-fenglope.png",
+			"habitat": "data/maps/083-fenglope.png",
 			"rarity": 3
 		},
 		{
@@ -1810,7 +1810,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-093b-fenglope-lux.png",
-			"habitat": "data/maps/093b-fenglope-lux.png",
+			"habitat": "data/maps/083b-fenglope-lux.png",
 			"rarity": 3
 		},
 		{
@@ -1826,7 +1826,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-064-dinossom.png",
-			"habitat": "data/maps/064-dinossom.png",
+			"habitat": "data/maps/084-dinossom.png",
 			"rarity": 6
 		},
 		{
@@ -1842,7 +1842,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-064b-dinossom-lux.png",
-			"habitat": "data/maps/064b-dinossom-lux.png",
+			"habitat": "data/maps/084b-dinossom-lux.png",
 			"rarity": 7
 		},
 		{
@@ -1857,7 +1857,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-072-bushi.png",
-			"habitat": "data/maps/072-bushi.png",
+			"habitat": "data/maps/085-bushi.png",
 			"rarity": 7
 		},
 		{
@@ -1872,7 +1872,7 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-072b-bushi-noct.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/085b-bushi-noct.png",
 			"rarity": 7
 		},
 		{
@@ -1887,7 +1887,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-146-munchill.png",
-			"habitat": "data/maps/146-munchill.png",
+			"habitat": "data/maps/086-munchill.png",
 			"rarity": 3
 		},
 		{
@@ -1903,7 +1903,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-090-mammorest.png",
-			"habitat": "data/maps/090-mammorest.png",
+			"habitat": "data/maps/087-mammorest.png",
 			"rarity": 8
 		},
 		{
@@ -1919,7 +1919,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-090b-mammorest-cryst.png",
-			"habitat": "data/maps/090b-mammorest-cryst.png",
+			"habitat": "data/maps/087b-mammorest-cryst.png",
 			"rarity": 9
 		},
 		{
@@ -1934,7 +1934,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-152-finsider.png",
-			"habitat": "data/maps/152-finsider.png",
+			"habitat": "data/maps/088-finsider.png",
 			"rarity": 3
 		},
 		{
@@ -1949,7 +1949,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-152b-finsider-ignis.png",
-			"habitat": "data/maps/152b-finsider-ignis.png",
+			"habitat": "data/maps/088b-finsider-ignis.png",
 			"rarity": 4
 		},
 		{
@@ -1964,7 +1964,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-087-petallia.png",
-			"habitat": "data/maps/087-petallia.png",
+			"habitat": "data/maps/089-petallia.png",
 			"rarity": 8
 		},
 		{
@@ -1979,7 +1979,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/089b-petallia-ignis.png",
 			"rarity": 0
 		},
 		{
@@ -1994,7 +1994,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/090-leafan.png",
 			"rarity": 0
 		},
 		{
@@ -2009,7 +2009,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-040-incineram.png",
-			"habitat": "data/maps/040-incineram.png",
+			"habitat": "data/maps/091-incineram.png",
 			"rarity": 4
 		},
 		{
@@ -2024,7 +2024,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-040b-incineram-noct.png",
-			"habitat": "data/maps/040b-incineram-noct.png",
+			"habitat": "data/maps/091b-incineram-noct.png",
 			"rarity": 5
 		},
 		{
@@ -2040,7 +2040,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-062-dazzi.png",
-			"habitat": "data/maps/062-dazzi.png",
+			"habitat": "data/maps/092-dazzi.png",
 			"rarity": 2
 		},
 		{
@@ -2056,7 +2056,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-062b-dazzi-noct.png",
-			"habitat": "data/maps/062b-dazzi-noct.png",
+			"habitat": "data/maps/092b-dazzi-noct.png",
 			"rarity": 2
 		},
 		{
@@ -2072,7 +2072,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-058-pyrin.png",
-			"habitat": "data/maps/058-pyrin.png",
+			"habitat": "data/maps/093-pyrin.png",
 			"rarity": 6
 		},
 		{
@@ -2088,7 +2088,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-058b-pyrin-noct.png",
-			"habitat": "data/maps/058b-pyrin-noct.png",
+			"habitat": "data/maps/093b-pyrin-noct.png",
 			"rarity": 7
 		},
 		{
@@ -2104,7 +2104,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-085-relaxaurus.png",
-			"habitat": "data/maps/085-relaxaurus.png",
+			"habitat": "data/maps/094-relaxaurus.png",
 			"rarity": 8
 		},
 		{
@@ -2120,7 +2120,7 @@
 			"spawnTime": "Dungeons/Factions",
 			"farmable": "a",
 			"thumbnail": "data/pals/pal-085b-relaxaurus-lux.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/094b-relaxaurus-lux.png",
 			"rarity": 9
 		},
 		{
@@ -2135,7 +2135,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-057-foxcicle.png",
-			"habitat": "data/maps/057-foxcicle.png",
+			"habitat": "data/maps/095-foxcicle.png",
 			"rarity": 5
 		},
 		{
@@ -2151,7 +2151,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-073-beakon.png",
-			"habitat": "data/maps/073-beakon.png",
+			"habitat": "data/maps/096-beakon.png",
 			"rarity": 6
 		},
 		{
@@ -2166,7 +2166,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/096b-beakon-cryst.png",
 			"rarity": 0
 		},
 		{
@@ -2182,7 +2182,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-153-ghangler.png",
-			"habitat": "data/maps/153-ghangler.png",
+			"habitat": "data/maps/097-ghangler.png",
 			"rarity": 5
 		},
 		{
@@ -2198,7 +2198,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-153b-ghangler-ignis.png",
-			"habitat": "data/maps/153b-ghangler-ignis.png",
+			"habitat": "data/maps/097b-ghangler-ignis.png",
 			"rarity": 6
 		},
 		{
@@ -2214,7 +2214,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-060-rayhound.png",
-			"habitat": "data/maps/060-rayhound.png",
+			"habitat": "data/maps/098-rayhound.png",
 			"rarity": 5
 		},
 		{
@@ -2229,7 +2229,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/098b-rayhound-cryst.png",
 			"rarity": 0
 		},
 		{
@@ -2259,7 +2259,7 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-099b-menasting-terra.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/099b-menasting-terra.png",
 			"rarity": 10
 		},
 		{
@@ -2274,7 +2274,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/100-needoll.png",
 			"rarity": 0
 		},
 		{
@@ -2289,7 +2289,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/100b-needoll-noct.png",
 			"rarity": 0
 		},
 		{
@@ -2305,7 +2305,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-059-reindrix.png",
-			"habitat": "data/maps/059-reindrix.png",
+			"habitat": "data/maps/101-reindrix.png",
 			"rarity": 4
 		},
 		{
@@ -2321,7 +2321,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-033-mossanda.png",
-			"habitat": "data/maps/033-mossanda.png",
+			"habitat": "data/maps/102-mossanda.png",
 			"rarity": 6
 		},
 		{
@@ -2337,7 +2337,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-033b-mossanda-lux.png",
-			"habitat": "data/maps/033b-mossanda-lux.png",
+			"habitat": "data/maps/102b-mossanda-lux.png",
 			"rarity": 7
 		},
 		{
@@ -2353,7 +2353,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-055-chillet.png",
-			"habitat": "data/maps/055-chillet.png",
+			"habitat": "data/maps/103-chillet.png",
 			"rarity": 4
 		},
 		{
@@ -2369,7 +2369,7 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-055b-chillet-ignis.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/103b-chillet-ignis.png",
 			"rarity": 5
 		},
 		{
@@ -2385,7 +2385,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-074-ragnahawk.png",
-			"habitat": "data/maps/074-ragnahawk.png",
+			"habitat": "data/maps/104-ragnahawk.png",
 			"rarity": 7
 		},
 		{
@@ -2400,7 +2400,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/105-moldron.png",
 			"rarity": 0
 		},
 		{
@@ -2415,7 +2415,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/105b-moldron-cryst.png",
 			"rarity": 0
 		},
 		{
@@ -2431,7 +2431,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-144-palumba.png",
-			"habitat": "data/maps/144-palumba.png",
+			"habitat": "data/maps/106-palumba.png",
 			"rarity": 4
 		},
 		{
@@ -2446,7 +2446,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-067-digtoise.png",
-			"habitat": "data/maps/067-digtoise.png",
+			"habitat": "data/maps/107-digtoise.png",
 			"rarity": 5
 		},
 		{
@@ -2462,7 +2462,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-086-broncherry.png",
-			"habitat": "data/maps/086-broncherry.png",
+			"habitat": "data/maps/108-broncherry.png",
 			"rarity": 7
 		},
 		{
@@ -2478,7 +2478,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-086b-broncherry-aqua.png",
-			"habitat": "data/maps/086b-broncherry-aqua.png",
+			"habitat": "data/maps/108b-broncherry-aqua.png",
 			"rarity": 8
 		},
 		{
@@ -2493,7 +2493,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-043-dumud.png",
-			"habitat": "data/maps/043-dumud.png",
+			"habitat": "data/maps/109-dumud.png",
 			"rarity": 4
 		},
 		{
@@ -2508,7 +2508,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - High Quality Pal Oil, Gold Coin",
 			"thumbnail": "data/pals/pal-043b-dumud-gild.png",
-			"habitat": "data/maps/043b-dumud-gild.png",
+			"habitat": "data/maps/109b-dumud-gild.png",
 			"rarity": 5
 		},
 		{
@@ -2524,7 +2524,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-145-braloha.png",
-			"habitat": "data/maps/145-braloha.png",
+			"habitat": "data/maps/110-braloha.png",
 			"rarity": 6
 		},
 		{
@@ -2540,7 +2540,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-061-kitsun.png",
-			"habitat": "data/maps/061-kitsun.png",
+			"habitat": "data/maps/111-kitsun.png",
 			"rarity": 6
 		},
 		{
@@ -2556,7 +2556,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-061b-kitsun-noct.png",
-			"habitat": "data/maps/061b-kitsun-noct.png",
+			"habitat": "data/maps/111b-kitsun-noct.png",
 			"rarity": 6
 		},
 		{
@@ -2572,7 +2572,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-084-blazehowl.png",
-			"habitat": "data/maps/084-blazehowl.png",
+			"habitat": "data/maps/112-blazehowl.png",
 			"rarity": 7
 		},
 		{
@@ -2588,7 +2588,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-084b-blazehowl-noct.png",
-			"habitat": "data/maps/084b-blazehowl-noct.png",
+			"habitat": "data/maps/112b-blazehowl-noct.png",
 			"rarity": 8
 		},
 		{
@@ -2603,7 +2603,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-092-warsect.png",
-			"habitat": "data/maps/092-warsect.png",
+			"habitat": "data/maps/113-warsect.png",
 			"rarity": 8
 		},
 		{
@@ -2618,7 +2618,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-092b-warsect-terra.png",
-			"habitat": "data/maps/092b-warsect-terra.png",
+			"habitat": "data/maps/113b-warsect-terra.png",
 			"rarity": 9
 		},
 		{
@@ -2633,7 +2633,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-143-frostplume.png",
-			"habitat": "data/maps/143-frostplume.png",
+			"habitat": "data/maps/114-frostplume.png",
 			"rarity": 4
 		},
 		{
@@ -2648,7 +2648,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/115-majex.png",
 			"rarity": 0
 		},
 		{
@@ -2663,7 +2663,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - High Quality Cloth",
 			"thumbnail": "data/pals/pal-079-sibelyx.png",
-			"habitat": "data/maps/079-sibelyx.png",
+			"habitat": "data/maps/116-sibelyx.png",
 			"rarity": 7
 		},
 		{
@@ -2678,7 +2678,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/116b-sibelyx-primo.png",
 			"rarity": 0
 		},
 		{
@@ -2694,7 +2694,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-066-maraith.png",
-			"habitat": "data/maps/066-maraith.png",
+			"habitat": "data/maps/117-maraith.png",
 			"rarity": 6
 		},
 		{
@@ -2710,7 +2710,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-116-shroomer.png",
-			"habitat": "data/maps/116-shroomer.png",
+			"habitat": "data/maps/118-shroomer.png",
 			"rarity": 4
 		},
 		{
@@ -2726,7 +2726,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-116b-shroomer-noct.png",
-			"habitat": "data/maps/116b-shroomer-noct.png",
+			"habitat": "data/maps/118b-shroomer-noct.png",
 			"rarity": 5
 		},
 		{
@@ -2741,7 +2741,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-142-icelyn.png",
-			"habitat": "data/maps/142-icelyn.png",
+			"habitat": "data/maps/119-icelyn.png",
 			"rarity": 4
 		},
 		{
@@ -2756,7 +2756,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/120-gildra.png",
 			"rarity": 0
 		},
 		{
@@ -2772,7 +2772,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-101-jormuntide.png",
-			"habitat": "data/maps/101-jormuntide.png",
+			"habitat": "data/maps/121-jormuntide.png",
 			"rarity": 8
 		},
 		{
@@ -2788,7 +2788,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-101b-jormuntide-ignis.png",
-			"habitat": "data/maps/101b-jormuntide-ignis.png",
+			"habitat": "data/maps/121b-jormuntide-ignis.png",
 			"rarity": 9
 		},
 		{
@@ -2804,7 +2804,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-102-suzaku.png",
-			"habitat": "data/maps/102-suzaku.png",
+			"habitat": "data/maps/122-suzaku.png",
 			"rarity": 8
 		},
 		{
@@ -2820,7 +2820,7 @@
 			"spawnTime": "Dungeons/Factions",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-102b-suzaku-aqua.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/122b-suzaku-aqua.png",
 			"rarity": 9
 		},
 		{
@@ -2852,7 +2852,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-095-quivern.png",
-			"habitat": "data/maps/095-quivern.png",
+			"habitat": "data/maps/124-quivern.png",
 			"rarity": 7
 		},
 		{
@@ -2868,7 +2868,7 @@
 			"spawnTime": "Unknown",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-095b-quivern-botan.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/124b-quivern-botan.png",
 			"rarity": 8
 		},
 		{
@@ -2883,7 +2883,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-115-lullu.png",
-			"habitat": "data/maps/115-lullu.png",
+			"habitat": "data/maps/125-lullu.png",
 			"rarity": 4
 		},
 		{
@@ -2898,7 +2898,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-117-kikit.png",
-			"habitat": "data/maps/117-kikit.png",
+			"habitat": "data/maps/126-kikit.png",
 			"rarity": 4
 		},
 		{
@@ -2914,7 +2914,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-121-yakumo.png",
-			"habitat": "data/maps/121-yakumo.png",
+			"habitat": "data/maps/127-yakumo.png",
 			"rarity": 4
 		},
 		{
@@ -2929,7 +2929,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/128-skutlass.png",
 			"rarity": 0
 		},
 		{
@@ -2944,7 +2944,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/128b-skutlass-ignis.png",
 			"rarity": 0
 		},
 		{
@@ -2960,7 +2960,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-088-reptyro.png",
-			"habitat": "data/maps/088-reptyro.png",
+			"habitat": "data/maps/129-reptyro.png",
 			"rarity": 6
 		},
 		{
@@ -2976,7 +2976,7 @@
 			"spawnTime": "Breeding Only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-088b-reptyro-cryst.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/129b-reptyro-cryst.png",
 			"rarity": 7
 		},
 		{
@@ -2992,7 +2992,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-129-starryon.png",
-			"habitat": "data/maps/129-starryon.png",
+			"habitat": "data/maps/130-starryon.png",
 			"rarity": 7
 		},
 		{
@@ -3007,7 +3007,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/130b-starryon-primo.png",
 			"rarity": 0
 		},
 		{
@@ -3022,7 +3022,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/131-pierdon.png",
 			"rarity": 0
 		},
 		{
@@ -3037,7 +3037,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/131b-pierdon-cryst.png",
 			"rarity": 0
 		},
 		{
@@ -3052,7 +3052,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-083-cryolinx.png",
-			"habitat": "data/maps/083-cryolinx.png",
+			"habitat": "data/maps/132-cryolinx.png",
 			"rarity": 7
 		},
 		{
@@ -3067,7 +3067,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-083b-cryolinx-terra.png",
-			"habitat": "data/maps/083b-cryolinx-terra.png",
+			"habitat": "data/maps/132b-cryolinx-terra.png",
 			"rarity": 7
 		},
 		{
@@ -3082,7 +3082,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/133-snugloo.png",
 			"rarity": 0
 		},
 		{
@@ -3098,7 +3098,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-091-wumpo.png",
-			"habitat": "data/maps/091-wumpo.png",
+			"habitat": "data/maps/134-wumpo.png",
 			"rarity": 7
 		},
 		{
@@ -3114,7 +3114,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-091b-wumpo-botan.png",
-			"habitat": "data/maps/091b-wumpo-botan.png",
+			"habitat": "data/maps/134b-wumpo-botan.png",
 			"rarity": 8
 		},
 		{
@@ -3129,7 +3129,7 @@
 			"spawnTime": "Night",
 			"farmable": "Yes - Bone",
 			"thumbnail": "data/pals/pal-118-sootseer.png",
-			"habitat": "data/maps/118-sootseer.png",
+			"habitat": "data/maps/135-sootseer.png",
 			"rarity": 7
 		},
 		{
@@ -3144,7 +3144,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/136-carnibora.png",
 			"rarity": 0
 		},
 		{
@@ -3160,7 +3160,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-096-blazamut.png",
-			"habitat": "data/maps/096-blazamut.png",
+			"habitat": "data/maps/137-blazamut.png",
 			"rarity": 9
 		},
 		{
@@ -3191,7 +3191,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/138-dualith.png",
 			"rarity": 0
 		},
 		{
@@ -3206,7 +3206,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/138b-dualith-noct.png",
 			"rarity": 0
 		},
 		{
@@ -3221,7 +3221,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-100-anubis.png",
-			"habitat": "data/maps/100-anubis.png",
+			"habitat": "data/maps/139-anubis.png",
 			"rarity": 10
 		},
 		{
@@ -3236,7 +3236,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/140-sekhmet.png",
 			"rarity": 0
 		},
 		{
@@ -3251,7 +3251,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-119-prixter.png",
-			"habitat": "data/maps/119-prixter.png",
+			"habitat": "data/maps/141-prixter.png",
 			"rarity": 5
 		},
 		{
@@ -3266,7 +3266,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/141b-prixter-lux.png",
 			"rarity": 0
 		},
 		{
@@ -3281,7 +3281,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/142-tetroise.png",
 			"rarity": 0
 		},
 		{
@@ -3296,7 +3296,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/142b-tetroise-primo.png",
 			"rarity": 0
 		},
 		{
@@ -3311,7 +3311,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-139-nyafia.png",
-			"habitat": "data/maps/139-nyafia.png",
+			"habitat": "data/maps/143-nyafia.png",
 			"rarity": 4
 		},
 		{
@@ -3326,7 +3326,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-124-mimog.png",
-			"habitat": "data/maps/124-mimog.png",
+			"habitat": "data/maps/144-mimog.png",
 			"rarity": 7
 		},
 		{
@@ -3372,7 +3372,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-138-prunelia.png",
-			"habitat": "data/maps/138-prunelia.png",
+			"habitat": "data/maps/147-prunelia.png",
 			"rarity": 5
 		},
 		{
@@ -3387,7 +3387,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-128-nitemary.png",
-			"habitat": "data/maps/128-nitemary.png",
+			"habitat": "data/maps/148-nitemary.png",
 			"rarity": 6
 		},
 		{
@@ -3402,7 +3402,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/148b-nitemary-botan.png",
 			"rarity": 0
 		},
 		{
@@ -3417,7 +3417,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-131-smokie.png",
-			"habitat": "data/maps/131-smokie.png",
+			"habitat": "data/maps/149-smokie.png",
 			"rarity": 2
 		},
 		{
@@ -3432,7 +3432,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/149b-smokie-cryst.png",
 			"rarity": 0
 		},
 		{
@@ -3447,7 +3447,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-133-omascul.png",
-			"habitat": "data/maps/133-omascul.png",
+			"habitat": "data/maps/150-omascul.png",
 			"rarity": 4
 		},
 		{
@@ -3463,7 +3463,7 @@
 			"spawnTime": "Day",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-154-whalaska.png",
-			"habitat": "data/maps/154-whalaska.png",
+			"habitat": "data/maps/151-whalaska.png",
 			"rarity": 7
 		},
 		{
@@ -3479,7 +3479,7 @@
 			"spawnTime": "Day",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-154b-whalaska-ignis.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/151b-whalaska-ignis.png",
 			"rarity": 8
 		},
 		{
@@ -3494,7 +3494,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-077-verdash.png",
-			"habitat": "data/maps/077-verdash.png",
+			"habitat": "data/maps/152-verdash.png",
 			"rarity": 8
 		},
 		{
@@ -3509,7 +3509,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-134-splatterina.png",
-			"habitat": "data/maps/134-splatterina.png",
+			"habitat": "data/maps/153-splatterina.png",
 			"rarity": 4
 		},
 		{
@@ -3524,7 +3524,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-140-gildane.png",
-			"habitat": "data/maps/140-gildane.png",
+			"habitat": "data/maps/154-gildane.png",
 			"rarity": 8
 		},
 		{
@@ -3539,7 +3539,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-122-dogen.png",
-			"habitat": "data/maps/122-dogen.png",
+			"habitat": "data/maps/155-dogen.png",
 			"rarity": 6
 		},
 		{
@@ -3554,7 +3554,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/156-bulldosu.png",
 			"rarity": 0
 		},
 		{
@@ -3570,7 +3570,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-132-celesdir.png",
-			"habitat": "data/maps/132-celesdir.png",
+			"habitat": "data/maps/157-celesdir.png",
 			"rarity": 6
 		},
 		{
@@ -3585,7 +3585,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/157b-celesdir-noct.png",
 			"rarity": 0
 		},
 		{
@@ -3601,7 +3601,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-098-astegon.png",
-			"habitat": "data/maps/098-astegon.png",
+			"habitat": "data/maps/158-astegon.png",
 			"rarity": 9
 		},
 		{
@@ -3616,7 +3616,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-120-knocklem.png",
-			"habitat": "data/maps/120-knocklem.png",
+			"habitat": "data/maps/159-knocklem.png",
 			"rarity": 9
 		},
 		{
@@ -3631,7 +3631,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/159b-knocklem-ignis.png",
 			"rarity": 0
 		},
 		{
@@ -3647,7 +3647,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-130-silvegis.png",
-			"habitat": "data/maps/130-silvegis.png",
+			"habitat": "data/maps/160-silvegis.png",
 			"rarity": 8
 		},
 		{
@@ -3663,7 +3663,7 @@
 			"spawnTime": "Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-136-azurmane.png",
-			"habitat": "data/maps/136-azurmane.png",
+			"habitat": "data/maps/161-azurmane.png",
 			"rarity": 7
 		},
 		{
@@ -3678,7 +3678,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/162-valentail.png",
 			"rarity": 0
 		},
 		{
@@ -3693,7 +3693,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/163-snock.png",
 			"rarity": 0
 		},
 		{
@@ -3708,7 +3708,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/163b-snock-lux.png",
 			"rarity": 0
 		},
 		{
@@ -3723,7 +3723,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/164-souffline.png",
 			"rarity": 0
 		},
 		{
@@ -3738,7 +3738,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/165-lapiron.png",
 			"rarity": 0
 		},
 		{
@@ -3753,7 +3753,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/166-hoodle.png",
 			"rarity": 0
 		},
 		{
@@ -3768,7 +3768,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/167-slowatt.png",
 			"rarity": 0
 		},
 		{
@@ -3783,7 +3783,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/168-bakemi.png",
 			"rarity": 0
 		},
 		{
@@ -3798,7 +3798,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/169-solmora.png",
 			"rarity": 0
 		},
 		{
@@ -3813,7 +3813,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/169b-solmora-lux.png",
 			"rarity": 0
 		},
 		{
@@ -3828,7 +3828,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/170-lapure.png",
 			"rarity": 0
 		},
 		{
@@ -3843,7 +3843,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/171-eidrolon.png",
 			"rarity": 0
 		},
 		{
@@ -3858,7 +3858,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/171b-eidrolon-ignis.png",
 			"rarity": 0
 		},
 		{
@@ -3873,7 +3873,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/172-dynamoff.png",
 			"rarity": 0
 		},
 		{
@@ -3888,7 +3888,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/173-tropicaw.png",
 			"rarity": 0
 		},
 		{
@@ -3903,7 +3903,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/174-flaracle.png",
 			"rarity": 0
 		},
 		{
@@ -3918,7 +3918,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-175-ophydia.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/175-ophydia.png",
 			"rarity": 0
 		},
 		{
@@ -3933,7 +3933,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/176-dupin.png",
 			"rarity": 0
 		},
 		{
@@ -3948,7 +3948,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/177-roujay.png",
 			"rarity": 0
 		},
 		{
@@ -3963,7 +3963,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/178-venusa.png",
 			"rarity": 0
 		},
 		{
@@ -3978,7 +3978,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/179-mycora.png",
 			"rarity": 0
 		},
 		{
@@ -3993,7 +3993,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/180-loomen.png",
 			"rarity": 0
 		},
 		{
@@ -4008,7 +4008,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/181-wistella.png",
 			"rarity": 0
 		},
 		{
@@ -4023,7 +4023,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/182-solenne.png",
 			"rarity": 0
 		},
 		{
@@ -4038,7 +4038,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/183-renjishi.png",
 			"rarity": 0
 		},
 		{
@@ -4053,7 +4053,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/184-aegidron.png",
 			"rarity": 0
 		},
 		{
@@ -4069,7 +4069,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-103-grizzbolt.png",
-			"habitat": "data/maps/103-grizzbolt.png",
+			"habitat": "data/maps/185-grizzbolt.png",
 			"rarity": 8
 		},
 		{
@@ -4084,7 +4084,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-104-lyleen.png",
-			"habitat": "data/maps/104-lyleen.png",
+			"habitat": "data/maps/186-lyleen.png",
 			"rarity": 9
 		},
 		{
@@ -4099,7 +4099,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-104b-lyleen-noct.png",
-			"habitat": "data/maps/104b-lyleen-noct.png",
+			"habitat": "data/maps/186b-lyleen-noct.png",
 			"rarity": 10
 		},
 		{
@@ -4114,7 +4114,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-106-orserk.png",
-			"habitat": "data/maps/106-orserk.png",
+			"habitat": "data/maps/187-orserk.png",
 			"rarity": 9
 		},
 		{
@@ -4130,7 +4130,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-105-faleris.png",
-			"habitat": "data/maps/105-faleris.png",
+			"habitat": "data/maps/188-faleris.png",
 			"rarity": 9
 		},
 		{
@@ -4146,7 +4146,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-105b-faleris-aqua.png",
-			"habitat": "data/maps/105b-faleris-aqua.png",
+			"habitat": "data/maps/188b-faleris-aqua.png",
 			"rarity": 9
 		},
 		{
@@ -4162,7 +4162,7 @@
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-107-shadowbeak.png",
-			"habitat": "data/maps/107-shadowbeak.png",
+			"habitat": "data/maps/189-shadowbeak.png",
 			"rarity": 10
 		},
 		{
@@ -4177,7 +4177,7 @@
 			"spawnTime": "Meteorite event; Sakurajima only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-113-selyne.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/190-selyne.png",
 			"rarity": 9
 		},
 		{
@@ -4193,7 +4193,7 @@
 			"spawnTime": "Breeding Only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-137-bastigor.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/191-bastigor.png",
 			"rarity": 8
 		},
 		{
@@ -4208,7 +4208,7 @@
 			"spawnTime": "Unknown. Too new.",
 			"farmable": "Unknown. Too new.",
 			"thumbnail": "data/pals/pal-unknown.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/192-shaolong.png",
 			"rarity": 0
 		},
 		{
@@ -4316,7 +4316,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-108-paladius.png",
-			"habitat": "data/maps/108-paladius.png",
+			"habitat": "data/maps/198-paladius.png",
 			"rarity": 20
 		},
 		{
@@ -4332,7 +4332,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-109-necromus.png",
-			"habitat": "data/maps/109-necromus.png",
+			"habitat": "data/maps/unknown-habitat.png",
 			"rarity": 20
 		},
 		{
@@ -4348,7 +4348,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-110-frostallion.png",
-			"habitat": "data/maps/110-frostallion.png",
+			"habitat": "data/maps/200-frostallion.png",
 			"rarity": 20
 		},
 		{
@@ -4364,7 +4364,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-110b-frostallion-noct.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/200b-frostallion-noct.png",
 			"rarity": 20
 		},
 		{
@@ -4380,7 +4380,7 @@
 			"spawnTime": "Dungeon Only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-155-neptilius.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/201-neptilius.png",
 			"rarity": 20
 		},
 		{
@@ -4396,7 +4396,7 @@
 			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-111-jetragon.png",
-			"habitat": "data/maps/111-jetragon.png",
+			"habitat": "data/maps/202-jetragon.png",
 			"rarity": 20
 		},
 		{
@@ -4607,46 +4607,206 @@
 	],
 	"Colors": [
 		{
-			"Neutral": [255, 255, 255],
-			"Neutral, Dark": [128, 128, 128],
-			"Neutral, Grass": [140, 192, 128],
-			"Neutral, Water": [128, 128, 255],
-			"Fire": [255, 0, 0],
-			"Fire, Ground": [211, 41, 23],
-			"Fire, Dark": [128, 0, 0],
-			"Fire, Dragon": [255, 0, 128],
-			"Fire, Ice": [154, 123, 200],
-			"Water": [0, 0, 255],
-			"Water, Fire": [128, 0, 128],
-			"Water, Grass": [13, 64, 128],
-			"Water, Ice": [0, 128, 255],
-			"Water, Dragon": [128, 0, 255],
-			"Water, Electric": [0, 184, 192],
-			"Water, Dark": [0, 0, 128],
-			"Water, Ground": [83, 41, 150],
-			"Grass": [25, 128, 0],
-			"Grass, Water": [13, 64, 128],
-			"Grass, Ground": [96, 105, 23],
-			"Grass, Dark": [13, 64, 0],
-			"Grass, Dragon": [140, 64, 128],
-			"Electric": [255, 255, 0],
-			"Electric, Dark": [128, 128, 0],
-			"Electric, Dragon": [255, 128, 128],
-			"Ice": [0, 255, 255],
-			"Ice, Ground": [83, 169, 150],
-			"Ice, Dark": [0, 128, 128],
-			"Ice, Dragon": [90, 77, 166],
-			"Ground": [166, 82, 45],
-			"Ground, Dark": [83, 41, 23],
-			"Ground, Water": [83, 41, 150],
-			"Dark": [0, 0, 0],
-			"Dark, Electric": [128, 128, 0],
-			"Dark, Dragon": [83, 0, 83],
-			"Dragon": [255, 0, 255],
-			"Unknown. Too new.": [255, 255, 255],
-			"Fire, Grass": [140, 64, 0],
-			"Electric, Ground": [211, 169, 23],
-			"Dragon, Ground": [211, 41, 150]
+			"Neutral": [
+				255,
+				255,
+				255
+			],
+			"Neutral, Dark": [
+				128,
+				128,
+				128
+			],
+			"Neutral, Grass": [
+				140,
+				192,
+				128
+			],
+			"Neutral, Water": [
+				128,
+				128,
+				255
+			],
+			"Fire": [
+				255,
+				0,
+				0
+			],
+			"Fire, Ground": [
+				211,
+				41,
+				23
+			],
+			"Fire, Dark": [
+				128,
+				0,
+				0
+			],
+			"Fire, Dragon": [
+				255,
+				0,
+				128
+			],
+			"Fire, Ice": [
+				154,
+				123,
+				200
+			],
+			"Water": [
+				0,
+				0,
+				255
+			],
+			"Water, Fire": [
+				128,
+				0,
+				128
+			],
+			"Water, Grass": [
+				13,
+				64,
+				128
+			],
+			"Water, Ice": [
+				0,
+				128,
+				255
+			],
+			"Water, Dragon": [
+				128,
+				0,
+				255
+			],
+			"Water, Electric": [
+				0,
+				184,
+				192
+			],
+			"Water, Dark": [
+				0,
+				0,
+				128
+			],
+			"Water, Ground": [
+				83,
+				41,
+				150
+			],
+			"Grass": [
+				25,
+				128,
+				0
+			],
+			"Grass, Water": [
+				13,
+				64,
+				128
+			],
+			"Grass, Ground": [
+				96,
+				105,
+				23
+			],
+			"Grass, Dark": [
+				13,
+				64,
+				0
+			],
+			"Grass, Dragon": [
+				140,
+				64,
+				128
+			],
+			"Electric": [
+				255,
+				255,
+				0
+			],
+			"Electric, Dark": [
+				128,
+				128,
+				0
+			],
+			"Electric, Dragon": [
+				255,
+				128,
+				128
+			],
+			"Ice": [
+				0,
+				255,
+				255
+			],
+			"Ice, Ground": [
+				83,
+				169,
+				150
+			],
+			"Ice, Dark": [
+				0,
+				128,
+				128
+			],
+			"Ice, Dragon": [
+				90,
+				77,
+				166
+			],
+			"Ground": [
+				166,
+				82,
+				45
+			],
+			"Ground, Dark": [
+				83,
+				41,
+				23
+			],
+			"Ground, Water": [
+				83,
+				41,
+				150
+			],
+			"Dark": [
+				0,
+				0,
+				0
+			],
+			"Dark, Electric": [
+				128,
+				128,
+				0
+			],
+			"Dark, Dragon": [
+				83,
+				0,
+				83
+			],
+			"Dragon": [
+				255,
+				0,
+				255
+			],
+			"Unknown. Too new.": [
+				255,
+				255,
+				255
+			],
+			"Fire, Grass": [
+				140,
+				64,
+				0
+			],
+			"Electric, Ground": [
+				211,
+				169,
+				23
+			],
+			"Dragon, Ground": [
+				211,
+				41,
+				150
+			]
 		}
 	]
 }

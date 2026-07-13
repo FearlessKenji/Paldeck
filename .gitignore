@@ -2,6 +2,12 @@
 logs/
 *.log
 
+# Temporary generation output
+tmp/
+tmp-map-crops/
+__pycache__/
+*.pyc
+
 # Dependency directories
 node_modules/
 .npm-cache/
