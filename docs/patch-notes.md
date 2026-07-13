@@ -18,4 +18,15 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ### Paldeck
 
-- Paldeck is on version `1.3.0`.
+- Rebuilt habitat maps using the latest available PalDB map data.
+- Added updated World Tree location coverage where available.
+- Replaced old/stale habitat images across the Paldeck with freshly generated maps.
+- Added combined habitat maps for Pals that appear in multiple regions.
+- Added day/night habitat coloring:
+  - Red: appears during both day and night
+  - Orange: day-only
+  - Purple: night-only
+- Improved handling for unavailable habitat data so Pals without confirmed map data use the unknown habitat image instead of an empty map.
+- Added local thumbnails for Clovee, Amione, and Panthalus.
+- Corrected Relaxaurus Lux work suitabilities to Generating Electricity 4 and Transporting 3.
+- Updated the app version to 1.3.0.
