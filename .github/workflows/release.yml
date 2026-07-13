@@ -1,0 +1,120 @@
+name: Release Paldeck
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to create or update, for example v1.3.0"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release Paldeck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Resolve release tag
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ref_type="${{ github.ref_type }}"
+          ref_name="${{ github.ref_name }}"
+          input_tag="${{ github.event.inputs.tag }}"
+          before="${{ github.event.before }}"
+          should_release="true"
+          tag_exists="false"
+
+          if [[ -n "$input_tag" ]]; then
+            tag="$input_tag"
+          elif [[ "$ref_type" == "tag" ]]; then
+            tag="$ref_name"
+            tag_exists="true"
+          else
+            version="$(node -p "require('./package.json').version || ''")"
+
+            if [[ -z "$version" ]]; then
+              echo "package.json does not define a version." >&2
+              exit 1
+            fi
+
+            tag="v$version"
+            previous_version=""
+
+            if [[ -n "$before" && ! "$before" =~ ^0+$ ]]; then
+              previous_package_text="$(git show "$before:package.json" 2>/dev/null || true)"
+
+              if [[ -n "$previous_package_text" ]]; then
+                previous_version="$(node -e "let text = ''; process.stdin.on('data', chunk => text += chunk); process.stdin.on('end', () => { try { console.log(JSON.parse(text).version || ''); } catch { console.log(''); } });" <<< "$previous_package_text")"
+              fi
+            fi
+
+            if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+              echo "Release tag $tag already exists; skipping automatic release."
+              should_release="false"
+              tag_exists="true"
+            elif [[ "$previous_version" == "$version" ]]; then
+              echo "package.json version is still $version, but $tag does not exist; creating release for the current version."
+            elif [[ -n "$previous_version" ]]; then
+              echo "package.json version changed from $previous_version to $version; creating $tag."
+            else
+              echo "Could not read the previous package.json version; creating $tag because the tag does not exist."
+            fi
+          fi
+
+          if [[ "$ref_type" != "tag" && "$tag_exists" != "true" ]]; then
+            if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+              tag_exists="true"
+            fi
+          fi
+
+          if [[ ! "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([-+][0-9A-Za-z.-]+)?$ ]]; then
+            echo "Release tag '$tag' must look like v1.3.0." >&2
+            exit 1
+          fi
+
+          echo "release_tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "should_release=$should_release" >> "$GITHUB_OUTPUT"
+          echo "tag_exists=$tag_exists" >> "$GITHUB_OUTPUT"
+          echo "release_tag=$tag"
+          echo "should_release=$should_release"
+          echo "tag_exists=$tag_exists"
+
+      - name: Create release tag
+        if: steps.release.outputs.should_release == 'true' && github.ref_type != 'tag' && steps.release.outputs.tag_exists != 'true'
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.release_tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag "$RELEASE_TAG"
+          git push origin "$RELEASE_TAG"
+
+      - name: Create or update GitHub release
+        if: steps.release.outputs.should_release == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.release_tag }}
+        run: |
+          set -euo pipefail
+
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release edit "$RELEASE_TAG" --title "Paldeck $RELEASE_TAG" --latest
+          else
+            gh release create "$RELEASE_TAG" --title "Paldeck $RELEASE_TAG" --generate-notes --latest
+          fi

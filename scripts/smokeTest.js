@@ -143,6 +143,7 @@ function validatePackageMetadata() {
 function validateRequiredProjectFiles() {
 	const requiredFiles = [
 		`.github/workflows/ci.yml`,
+		`.github/workflows/release.yml`,
 		`CHANGELOG.md`,
 		`docs/patch-notes.md`,
 		`commands/globalCommands/admin/announce.js`,
@@ -311,6 +312,17 @@ function validateCiWorkflow() {
 	assert(workflow.includes(`npm audit --audit-level=moderate`), `CI workflow does not run dependency audit.`);
 }
 
+function validateReleaseWorkflow() {
+	const workflow = fs.readFileSync(resolveProject(`.github`, `workflows`, `release.yml`), `utf8`);
+
+	assert(workflow.includes(`name: Release Paldeck`), `Release workflow has the wrong name.`);
+	assert(workflow.includes(`branches:`) && workflow.includes(`- main`), `Release workflow should watch main.`);
+	assert(workflow.includes(`tags:`) && workflow.includes(`- "v*"`), `Release workflow should watch v* tags.`);
+	assert(workflow.includes(`require('./package.json').version`), `Release workflow should read package.json version.`);
+	assert(workflow.includes(`git tag "$RELEASE_TAG"`), `Release workflow should create missing release tags.`);
+	assert(workflow.includes(`gh release create "$RELEASE_TAG"`), `Release workflow should create GitHub releases.`);
+}
+
 function validateConfigValueHelpers() {
 	const {
 		getConfiguredGuildIds,
@@ -355,6 +367,7 @@ async function main() {
 	await test(`database models include update announcement fields`, validateDatabaseModels);
 	await test(`Paldeck data files remain valid`, validatePalData);
 	await test(`CI workflow includes lint, smoke, and audit jobs`, validateCiWorkflow);
+	await test(`release workflow creates package-version GitHub releases`, validateReleaseWorkflow);
 	await test(`config ID helpers normalize owner and guild IDs`, validateConfigValueHelpers);
 	await test(`git hygiene checks pass`, validateGitHygiene);
 
