@@ -24,6 +24,7 @@
     "update:palworld-breeding-results:write": "node scripts/update-palworld-breeding-results.js --write",
     "validate:pal-data": "node scripts/validate-pal-data.js",
     "lint": "node scripts/lint.js",
+    "smoke": "node scripts/smokeTest.js",
     "pm2:start": "pm2 start config/ecosystem.config.js"
   },
   "dependencies": {

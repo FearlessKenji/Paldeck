@@ -16,6 +16,14 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
+		paldeck_announcement_channel_id: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		},
+		paldeck_announcement_last_id: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		},
 	}, {
 		timestamps: false,
 	});

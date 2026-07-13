@@ -274,6 +274,29 @@ async function removeDuplicateSearchSessionIndexes() {
 	}
 }
 
+async function migratePaldeckUpdateAnnouncements() {
+	if (!await tableExists(`JoinedServers`)) {
+		return;
+	}
+
+	const columns = await getTableColumns(`JoinedServers`);
+	const addedColumns = [];
+	const columnDefinitions = [
+		[`paldeck_announcement_channel_id`, `VARCHAR(255)`],
+		[`paldeck_announcement_last_id`, `VARCHAR(255)`],
+	];
+
+	for (const [columnName, definition] of columnDefinitions) {
+		if (await addColumnIfMissing(`JoinedServers`, columns, columnName, definition)) {
+			addedColumns.push(columnName);
+		}
+	}
+
+	if (addedColumns.length) {
+		info(`Added Paldeck update announcement column(s): ${addedColumns.join(`, `)}`);
+	}
+}
+
 const migrations = [
 	{
 		description: `Repair suggestion storage for longer text and required fields.`,
@@ -294,6 +317,11 @@ const migrations = [
 		description: `Remove duplicate search-session indexes created by model sync.`,
 		id: `20260618_remove_duplicate_search_session_indexes`,
 		run: removeDuplicateSearchSessionIndexes,
+	},
+	{
+		description: `Store Paldeck update announcement settings for joined servers.`,
+		id: `20260713_paldeck_update_announcements`,
+		run: migratePaldeckUpdateAnnouncements,
 	},
 ];
 
