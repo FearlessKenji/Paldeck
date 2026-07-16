@@ -280,8 +280,9 @@ function validateAnnouncementHelpers() {
 	assert(announcements.splitAnnouncementText(`a`.repeat(3900)).every(chunk => chunk.length <= 1900), `Announcement splitter exceeded Discord-safe chunk size.`);
 
 	const realLatest = announcements.getLatestPatchNotes();
+	const pkg = readJson(`package.json`);
 
-	assert(realLatest?.id === `v1.3.0`, `docs/patch-notes.md should contain a latest v1.3.0 release section.`);
+	assert(realLatest?.id === `v${pkg.version}`, `docs/patch-notes.md should contain a latest v${pkg.version} release section.`);
 }
 
 function validateDatabaseModels() {
