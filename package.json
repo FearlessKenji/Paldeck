@@ -22,7 +22,10 @@
     "add:missing-paldata:write": "node scripts/add-missing-paldata-entries.js --write",
     "update:palworld-breeding-results": "node scripts/update-palworld-breeding-results.js",
     "update:palworld-breeding-results:write": "node scripts/update-palworld-breeding-results.js --write",
+    "update:palworld-items": "node scripts/update-palworld-items.js",
+    "update:palworld-items:write": "node scripts/update-palworld-items.js --write",
     "validate:pal-data": "node scripts/validate-pal-data.js",
+    "validate:item-data": "node scripts/validate-item-data.js",
     "lint": "node scripts/lint.js",
     "smoke": "node scripts/smokeTest.js",
     "pm2:start": "pm2 start config/ecosystem.config.js"

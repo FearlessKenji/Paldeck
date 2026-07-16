@@ -6,6 +6,19 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+### Paldeck Data
+
+- Updated Pal Gear information shown in `/paldeck` so tech names and unlock
+  levels match the current game data.
+- Removed obsolete Tech fields for Pal Gear that no longer exists, including
+  Celaray's Gloves.
+- Updated Pal drop and farmable item names to current item names.
+  `Pal Fluids` now appears as `Aquatic Pal Fluids`.
+- Normalized a few stale item names and typos, including Katress Hair, Medium
+  Pal Soul, High Quality Pal Oil, and Carrot Seeds.
+- Added local item icon data for future item-related displays, reducing
+  reliance on external image URLs.
+
 ### Paldeck Updates
 
 - Server admins can subscribe a channel to Paldeck Updates with

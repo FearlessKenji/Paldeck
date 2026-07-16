@@ -8,6 +8,9 @@ tmp-map-crops/
 __pycache__/
 *.pyc
 
+# Local Codex/agent instructions
+AGENTS.md
+
 # Dependency directories
 node_modules/
 .npm-cache/
