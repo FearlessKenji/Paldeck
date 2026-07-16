@@ -6,6 +6,8 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+## v1.4.0 - 2026-07-16
+
 ### Paldeck Data
 
 - Updated Pal Gear information shown in `/paldeck` so tech names and unlock

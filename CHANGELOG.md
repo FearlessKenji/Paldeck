@@ -4,6 +4,8 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+## v1.4.0 - 2026-07-16
+
 ### Added
 
 - Added Paldeck Updates subscriptions through `/updates channel`, `/updates clear`, and `/updates send-latest`.
