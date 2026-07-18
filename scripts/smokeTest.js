@@ -237,6 +237,31 @@ function validateCommandsLoad() {
 	assert(namesByScope.has(`global:announce`), `/announce command was not loaded.`);
 }
 
+async function validatePaldeckFarmableSearch() {
+	const paldeck = requireFresh(`commands`, `globalCommands`, `utility`, `paldeck.js`);
+	const searchCommand = paldeck.data.toJSON().options.find(option => option.name === `search`);
+	const farmableOption = searchCommand?.options?.find(option => option.name === `farmable`);
+	let autocompleteChoices = [];
+
+	assert(farmableOption, `/paldeck search is missing the farmable option.`);
+	assert(farmableOption.autocomplete === true, `/paldeck search farmable should use autocomplete.`);
+
+	await paldeck.autocomplete({
+		options: {
+			getFocused: () => ({ name: `farmable`, value: `oil` }),
+		},
+		respond: choices => {
+			autocompleteChoices = choices;
+		},
+	});
+
+	assert(autocompleteChoices.some(choice => choice.value === `High Quality Pal Oil`), `Farmable autocomplete did not include High Quality Pal Oil.`);
+	assert(
+		autocompleteChoices.every(choice => !choice.name.startsWith(`Yes - `) && !choice.value.startsWith(`Yes - `)),
+		`Farmable autocomplete should not include the Yes - prefix.`,
+	);
+}
+
 function validateEventsLoad() {
 	const eventFiles = listFiles(resolveProject(`events`), filePath => filePath.endsWith(`.js`));
 	const eventNames = new Set();
@@ -280,9 +305,12 @@ function validateAnnouncementHelpers() {
 	assert(announcements.splitAnnouncementText(`a`.repeat(3900)).every(chunk => chunk.length <= 1900), `Announcement splitter exceeded Discord-safe chunk size.`);
 
 	const realLatest = announcements.getLatestPatchNotes();
-	const pkg = readJson(`package.json`);
+	const expectedLatestPatchNoteId = `v${readJson(`package.json`).version}`;
 
-	assert(realLatest?.id === `v${pkg.version}`, `docs/patch-notes.md should contain a latest v${pkg.version} release section.`);
+	assert(
+		realLatest?.id === expectedLatestPatchNoteId,
+		`docs/patch-notes.md should contain a latest ${expectedLatestPatchNoteId} release section.`,
+	);
 }
 
 function validateDatabaseModels() {
@@ -376,6 +404,7 @@ async function main() {
 	await test(`package metadata and lockfile are consistent`, validatePackageMetadata);
 	await test(`required project files exist`, validateRequiredProjectFiles);
 	await test(`commands load and serialize for Discord deployment`, validateCommandsLoad);
+	await test(`Paldeck farmable search autocomplete stays prefix-free`, validatePaldeckFarmableSearch);
 	await test(`events load with valid handlers`, validateEventsLoad);
 	await test(`announcement helpers parse and format patch notes`, validateAnnouncementHelpers);
 	await test(`database models include update announcement fields`, validateDatabaseModels);

@@ -31,6 +31,7 @@ const ELEMENT_CHOICES = [
 	{ name: `Ground`, value: `Ground` },
 	{ name: `Dark`, value: `Dark` },
 	{ name: `Dragon`, value: `Dragon` },
+	{ name: `None`, value: `None` },
 ];
 
 const RARITY_CHOICES = [
@@ -40,6 +41,14 @@ const RARITY_CHOICES = [
 	{ name: `Epic`, value: `Epic` },
 	{ name: `Legendary`, value: `Legendary` },
 ];
+const ANCIENT_RELIC_LABEL = `Ancient Relics`;
+const ANCIENT_RELIC_DROPS = new Set([
+	`Decayed Ancient Relic`,
+	`Dormant Ancient Relic`,
+	`Glistening Ancient Relic`,
+	`Glowing Ancient Relic`,
+	`Gorgeous Ancient Relic`,
+].map(value => value.toLowerCase()));
 
 function splitValues(value) {
 	return String(value || ``)
@@ -52,10 +61,82 @@ function uniqueSorted(values) {
 	return [...new Set(values)].sort((a, b) => a.localeCompare(b));
 }
 
+function worldTreeDropEntries(pal) {
+	return Object.entries(pal.worldTreeDrops || {})
+		.filter(([, value]) => String(value || ``).trim())
+		.sort(([firstLevel], [secondLevel]) => Number(firstLevel) - Number(secondLevel));
+}
+
+function worldTreeDropValues(pal) {
+	return worldTreeDropEntries(pal).flatMap(([, value]) => splitValues(value));
+}
+
+function isAncientRelicDrop(value) {
+	return ANCIENT_RELIC_DROPS.has(String(value || ``).trim().toLowerCase());
+}
+
+function collapseAncientRelicDrops(values) {
+	const collapsed = [];
+	let addedRelicLabel = false;
+
+	for (const value of values) {
+		// Keep exact relic names in palData, but avoid repeating five relic variants in the embed.
+		if (isAncientRelicDrop(value)) {
+			if (!addedRelicLabel) {
+				collapsed.push(ANCIENT_RELIC_LABEL);
+				addedRelicLabel = true;
+			}
+
+			continue;
+		}
+
+		collapsed.push(value);
+	}
+
+	return collapsed;
+}
+
+function formatWorldTreeDrops(pal) {
+	return worldTreeDropEntries(pal)
+		.map(([level, value]) => `Lv.${level}: ${collapseAncientRelicDrops(splitValues(value)).join(`, `)}`)
+		.join(`\n`);
+}
+
+function searchableDropValues(pal) {
+	const values = [
+		...splitValues(pal.drops),
+		...worldTreeDropValues(pal),
+	];
+
+	if (values.some(isAncientRelicDrop)) {
+		values.push(ANCIENT_RELIC_LABEL);
+	}
+
+	return values;
+}
+
+function autocompleteDropValues(pal) {
+	return [
+		...splitValues(pal.drops),
+		...collapseAncientRelicDrops(worldTreeDropValues(pal)),
+	];
+}
+
+function farmableValues(pal) {
+	const farmable = String(pal.farmable || ``).trim();
+
+	if (!farmable.startsWith(`Yes - `)) {
+		return [];
+	}
+
+	return splitValues(farmable.slice(`Yes - `.length));
+}
+
 const AUTOCOMPLETE_CHOICES = {
 	name: uniqueSorted(PALS.map(pal => pal.name)),
 	suitability: uniqueSorted(PALS.flatMap(pal => splitValues(pal.suitability))),
-	drops: uniqueSorted(PALS.flatMap(pal => splitValues(pal.drops))),
+	drops: uniqueSorted(PALS.flatMap(autocompleteDropValues)),
+	farmable: uniqueSorted(PALS.flatMap(farmableValues)),
 };
 
 function normalizeText(value) {
@@ -150,7 +231,7 @@ function matchesSuitabilities(input, value) {
 
 function matchesList(input, value) {
 	const required = splitValues(input).map(normalizeText);
-	const available = splitValues(value).map(normalizeText);
+	const available = (Array.isArray(value) ? value : splitValues(value)).map(normalizeText);
 
 	if (!required.length) {
 		return true;
@@ -169,9 +250,17 @@ function buildPalEmbed(pal, thumbnailUrl = pal.thumbnail, habitatUrl = pal.habit
 		{ name: `Food:`, value: pal.food, inline: true },
 		{ name: `Elements:`, value: pal.element, inline: true },
 		{ name: `Drops:`, value: pal.drops },
+	];
+	const worldTreeDrops = formatWorldTreeDrops(pal);
+
+	if (worldTreeDrops) {
+		fields.push({ name: `World Tree Drops:`, value: worldTreeDrops });
+	}
+
+	fields.push(
 		{ name: `Work Suitability:`, value: pal.suitability },
 		{ name: `Partner Skill:`, value: pal.partner },
-	];
+	);
 
 	if (pal.tech) {
 		fields.push({ name: `Tech:`, value: pal.tech });
@@ -212,7 +301,7 @@ function criteriaHasValue(criteria) {
 }
 
 function buildCriteriaLine(criteria) {
-	return `Element: ${criteria.element}\nSuitability: ${criteria.suitability}\nRarity:        ${criteria.rarity}\n Drops:        ${criteria.drops}`;
+	return `Element: ${criteria.element}\nSuitability: ${criteria.suitability}\nRarity:        ${criteria.rarity}\n Drops:        ${criteria.drops}\nFarmable:      ${criteria.farmable}`;
 }
 
 function findSearchResults(criteria) {
@@ -229,7 +318,11 @@ function findSearchResults(criteria) {
 			return false;
 		}
 
-		if (criteria.drops && !matchesList(criteria.drops, pal.drops)) {
+		if (criteria.drops && !matchesList(criteria.drops, searchableDropValues(pal))) {
+			return false;
+		}
+
+		if (criteria.farmable && !matchesList(criteria.farmable, farmableValues(pal))) {
 			return false;
 		}
 
@@ -405,6 +498,11 @@ module.exports = {
 					option
 						.setName(`drops`)
 						.setDescription(`Lists pals based on drops.`)
+						.setAutocomplete(true))
+				.addStringOption(option =>
+					option
+						.setName(`farmable`)
+						.setDescription(`Lists pals based on farmed material.`)
 						.setAutocomplete(true))),
 	async autocomplete(interaction) {
 		const focusedOption = interaction.options.getFocused(true);
@@ -457,6 +555,7 @@ module.exports = {
 			suitability: interaction.options.getString(`suitability`) || ``,
 			rarity: interaction.options.getString(`rarity`) || ``,
 			drops: interaction.options.getString(`drops`) || ``,
+			farmable: interaction.options.getString(`farmable`) || ``,
 		};
 
 		if (!criteriaHasValue(criteria)) {

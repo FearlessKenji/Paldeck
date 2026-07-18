@@ -6,6 +6,30 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+## v1.5.0 - 2026-07-18
+
+### Paldeck Data
+
+- `/paldeck search` can now filter by farmable Ranch-produced materials.
+- Updated ranch/farmable Pal entries so farmable Pals now show the item they
+  can produce.
+- Updated Pal food and rarity values to match the current game data.
+- Expanded Pal descriptions with full Paldeck entry text where available.
+- Filled more Pal descriptions where available, with current game summaries
+  used for the newest Pals that still need full entries.
+- Updated partner skill names and descriptions for many Paldeck entries.
+- Replaced the remaining unknown Pal thumbnails with local images.
+- Updated Pal drops and spawn times with the latest available game data.
+- Added a separate World Tree Drops section to Paldeck entries, with Ancient
+  Relics grouped together for readability.
+- Filled the last missing Paldeck title prefixes from local Palworld text data.
+- Updated Panthalus with its current partner skill and story-boss spawn details.
+- Updated Astralym to show as typeless with its current game data instead of
+  using a temporary unknown placeholder.
+- Updated Necromus to show the same habitat map as Paladius for their paired
+  alpha encounter.
+- Typeless Pals can now be searched with the `None` element filter.
+
 ## v1.4.0 - 2026-07-16
 
 ### Paldeck Data
@@ -33,7 +57,7 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ### Paldeck
 
-- Rebuilt habitat maps using the latest available PalDB map data.
+- Rebuilt habitat maps using the latest available map data.
 - Added updated World Tree location coverage where available.
 - Replaced old/stale habitat images across the Paldeck with freshly generated maps.
 - Added combined habitat maps for Pals that appear in multiple regions.
