@@ -25,7 +25,7 @@ The bot uses SQLite through Sequelize for local operational data such as joined 
 | --- | --- |
 | `/paldeck name` | Look up a pal by name. |
 | `/paldeck number` | Look up a pal by paldeck number. |
-| `/paldeck search` | Search pals by element, suitability, rarity, and/or drops. |
+| `/paldeck search` | Search pals by element, suitability, rarity, drops, and/or farmed materials. |
 | `/help` | Show Paldeck command usage help. |
 | `/suggest` | Send a feature suggestion to the configured suggestions channel. Do not submit sensitive data. |
 | `/vote` | Return the Top.gg voting link for Paldeck. |
@@ -133,6 +133,7 @@ Use `/paldeck search` to combine criteria:
 - suitability - Filter by work suitability, optionally including a level such as `Mining 2`.
 - rarity - Filter by common, rare, epic, or legendary.
 - drops - Filter by item drops.
+- farmable - Filter by Ranch-produced materials.
 
 The bot replies with matching pal information in Discord embeds. Search results are paginated in batches of 25 with previous and next buttons. Search pagination sessions expire after about 15 minutes. If no match is found, it replies with a private "Nothing found" message.
 

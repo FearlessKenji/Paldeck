@@ -11,6 +11,7 @@ module.exports = {
 		- Number\n - Enter the paldeck number you wish to look up.\n - One number only.
 ### Combine the following criteria to narrow search:\n
 		- Drops\n - Enter the item that drops from the pals you wish to look up.
+		- Farmable\n - Enter the material produced by pals assigned to the Ranch.
 		- Element\n - Enter the element you wish to look for.
 		- Suitability\n - Enter the work suitability you wish to look for.\n - You can add numbers to specify tiers (Medicine 4, Mining 2).
 		- Rarity\n - Enter the rarity you wish to search for.
