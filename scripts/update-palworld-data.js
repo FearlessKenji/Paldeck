@@ -10,11 +10,11 @@ const {
 	normalizeNumber,
 	normalizeSuitability,
 	splitList,
+	visiblePals,
 } = require(`./lib/paldb-data.js`);
 
 const ROOT_DIR = path.resolve(__dirname, `..`);
 const PAL_DATA_PATH = path.join(ROOT_DIR, `data`, `palData.json`);
-const PAL_BREEDING_PATH = path.join(ROOT_DIR, `data`, `palBreeding.json`);
 
 function parseArgs(argv) {
 	const options = {
@@ -202,7 +202,7 @@ function updatePalData(palFile, currentByName, options) {
 	const paletteAdditions = [];
 	const missingFromPaldb = [];
 
-	for (const pal of palFile.Pals) {
+	for (const pal of visiblePals(palFile)) {
 		const current = currentByName.get(normalizeKey(pal.name));
 
 		if (!current) {
@@ -244,28 +244,40 @@ function updatePalData(palFile, currentByName, options) {
 	};
 }
 
-function updateBreedingEntries(entries, currentByName, options, groupName) {
+function setBreedingField(pal, field, currentValue, normalizer, changes) {
+	const localValue = pal.breeding?.[field];
+
+	if (normalizer(localValue) === normalizer(currentValue)) {
+		return;
+	}
+
+	pal.breeding = {
+		...(pal.breeding || {}),
+		[field]: currentValue || ``,
+	};
+	changes.push({
+		current: currentValue || ``,
+		field: `breeding.${field}`,
+		local: localValue || ``,
+		name: pal.name,
+	});
+}
+
+function updatePalBreedingMetadata(palFile, currentByName, options) {
 	const changes = [];
 	const missingFromPaldb = [];
 	const skippedBlankFields = [];
 
-	for (const pal of entries || []) {
+	for (const pal of visiblePals(palFile)) {
 		const current = currentByName.get(normalizeKey(pal.name));
 
 		if (!current) {
-			missingFromPaldb.push({
-				...pal,
-				groupName,
-			});
+			missingFromPaldb.push(pal);
 			continue;
 		}
 
-		if (!shouldSkipBlank(`number`, current.number, options, skippedBlankFields, pal.name)) {
-			setField(pal, `number`, current.number, normalizeNumber, changes, pal.name);
-		}
-
-		if (!shouldSkipBlank(`breedingId`, current.breedingId, options, skippedBlankFields, pal.name)) {
-			setField(pal, `breedingId`, current.breedingId, normalizeKey, changes, pal.name);
+		if (!shouldSkipBlank(`breeding.id`, current.breedingId, options, skippedBlankFields, pal.name)) {
+			setBreedingField(pal, `id`, current.breedingId, normalizeKey, changes);
 		}
 	}
 
@@ -273,22 +285,6 @@ function updateBreedingEntries(entries, currentByName, options, groupName) {
 		changes,
 		missingFromPaldb,
 		skippedBlankFields,
-	};
-}
-
-function updateBreedingData(breedingFile, currentByName, options) {
-	const pals = updateBreedingEntries(breedingFile.Pals, currentByName, options, `Pals`);
-	const sourceOnlyPals = updateBreedingEntries(
-		breedingFile.SourceOnlyPals || [],
-		currentByName,
-		options,
-		`SourceOnlyPals`,
-	);
-
-	return {
-		changes: [...pals.changes, ...sourceOnlyPals.changes],
-		missingFromPaldb: [...pals.missingFromPaldb, ...sourceOnlyPals.missingFromPaldb],
-		skippedBlankFields: [...pals.skippedBlankFields, ...sourceOnlyPals.skippedBlankFields],
 	};
 }
 
@@ -323,8 +319,9 @@ function printReport(report, options) {
 	console.log(`Sources:`);
 	console.log(`- ${PALDB_PALS_URL}`);
 	console.log(`- ${PALDB_IV_URL}`);
-	console.log(`Local palData rows: ${report.summary.localPalData}`);
-	console.log(`Local breeding rows: ${report.summary.localBreeding}`);
+	console.log(`Local visible palData rows: ${report.summary.localPalData}`);
+	console.log(`Local hidden placeholder rows: ${report.summary.localHiddenPlaceholders}`);
+	console.log(`Local Pal breeding metadata rows: ${report.summary.localBreedingMetadata}`);
 	console.log(`Current merged PalDB rows: ${report.summary.currentRows}`);
 	console.log(`Files ${options.write ? `updated` : `not written`}.`);
 
@@ -348,13 +345,14 @@ function printReport(report, options) {
 async function main() {
 	const options = parseArgs(process.argv.slice(2));
 	const palFile = readJson(PAL_DATA_PATH);
-	const breedingFile = readJson(PAL_BREEDING_PATH);
 	const { currentRows } = await fetchPaldbData();
 	const currentByName = mapByName(currentRows);
-	const localPalsByName = mapByName(palFile.Pals);
+	const localVisiblePals = visiblePals(palFile);
+	const hiddenPlaceholderRows = palFile.Pals.filter(pal => pal.hidden && pal.placeholder);
+	const localPalsByName = mapByName(localVisiblePals);
 	const added = currentRows.filter(row => !localPalsByName.has(normalizeKey(row.name)));
 	const palData = updatePalData(palFile, currentByName, options);
-	const breeding = updateBreedingData(breedingFile, currentByName, options);
+	const breeding = updatePalBreedingMetadata(palFile, currentByName, options);
 	const report = {
 		added,
 		breeding,
@@ -365,14 +363,15 @@ async function main() {
 		],
 		summary: {
 			currentRows: currentRows.length,
-			localBreeding: breedingFile.Pals.length,
-			localPalData: palFile.Pals.length,
+			localBreedingMetadata: palFile.Pals.filter(pal => pal.breeding).length,
+			localHiddenPlaceholders: hiddenPlaceholderRows.length,
+			localPalData: localVisiblePals.length,
+			localPalDataRows: palFile.Pals.length,
 		},
 	};
 
 	if (options.write) {
 		writeJson(PAL_DATA_PATH, palFile);
-		writeJson(PAL_BREEDING_PATH, breedingFile);
 	}
 
 	printReport(report, options);

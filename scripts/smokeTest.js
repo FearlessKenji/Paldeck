@@ -262,6 +262,73 @@ async function validatePaldeckFarmableSearch() {
 	);
 }
 
+async function validateBreedAutocompleteUsesPalData() {
+	const breed = requireFresh(`commands`, `globalCommands`, `utility`, `breed.js`);
+	let autocompleteChoices = [];
+
+	await breed.autocomplete({
+		options: {
+			getFocused: () => ({ name: `parent1`, value: `xeno` }),
+		},
+		respond: choices => {
+			autocompleteChoices = choices;
+		},
+	});
+
+	assert(autocompleteChoices.some(choice => choice.value === `Xenovader`), `Breed parent autocomplete did not include Xenovader from palData.`);
+	assert(autocompleteChoices.some(choice => choice.name === `Xenovader`), `Breed parent autocomplete should display plain Pal names.`);
+	assert(
+		autocompleteChoices.every(choice => !/\bTechnology\s+\d+\b/i.test(choice.name)),
+		`Breed parent autocomplete should not expose Technology unlock text.`,
+	);
+}
+
+async function validateHiddenPalPlaceholdersStayHidden() {
+	const breed = requireFresh(`commands`, `globalCommands`, `utility`, `breed.js`);
+	const paldeck = requireFresh(`commands`, `globalCommands`, `utility`, `paldeck.js`);
+	const palFile = requireFresh(`data`, `palData.json`);
+	const breedingFile = requireFresh(`data`, `palBreeding.json`);
+	const { createBreedingCalculator } = requireFresh(`utils`, `palBreeding.js`);
+	const hiddenPlaceholders = palFile.Pals.filter(pal => pal.hidden && pal.placeholder);
+	let paldeckChoices = [];
+	let breedChoices = [];
+
+	assert(hiddenPlaceholders.length === 7, `palData.json should include seven hidden internal placeholders.`);
+	assert(
+		hiddenPlaceholders.every(pal => !pal.breeding.canBeParent && !pal.breeding.canBeChild),
+		`Hidden placeholders should not be selectable breeding parents or children.`,
+	);
+	assert(
+		!Object.hasOwn(breedingFile, `UnmappedGameUniqueCombinationRows`),
+		`palBreeding.json should not include an empty unmapped fixed-combination row bucket.`,
+	);
+	assert(!Array.isArray(breedingFile.SameSpeciesCombinations), `palBreeding.json should omit source-only same-species rows.`);
+
+	await paldeck.autocomplete({
+		options: {
+			getFocused: () => ({ name: `name`, value: `PinkKangaroo` }),
+		},
+		respond: choices => {
+			paldeckChoices = choices;
+		},
+	});
+
+	await breed.autocomplete({
+		options: {
+			getFocused: () => ({ name: `parent1`, value: `PinkKangaroo` }),
+		},
+		respond: choices => {
+			breedChoices = choices;
+		},
+	});
+
+	const calculator = createBreedingCalculator(palFile, breedingFile);
+
+	assert(!paldeckChoices.some(choice => choice.value === `PinkKangaroo`), `Hidden placeholders should not appear in /paldeck autocomplete.`);
+	assert(!breedChoices.some(choice => choice.value === `PinkKangaroo`), `Hidden placeholders should not appear in /breed autocomplete.`);
+	assert(calculator.calculateChild(`PinkKangaroo`, `PinkKangaroo`) === null, `Hidden placeholders should not be accepted as direct breeding inputs.`);
+}
+
 function validateEventsLoad() {
 	const eventFiles = listFiles(resolveProject(`events`), filePath => filePath.endsWith(`.js`));
 	const eventNames = new Set();
@@ -328,9 +395,17 @@ function validatePalData() {
 	const { findPalColorProblems } = requireFresh(`utils`, `palColors.js`);
 	const colors = palFile.Colors?.[0] || {};
 	const colorProblems = findPalColorProblems(palFile.Pals, colors);
+	const palsWithBreeding = palFile.Pals.filter(pal => pal.breeding);
+	const isSameSpeciesCombination = row => row.parentA === row.parentB && row.parentA === row.child;
 
 	assert(Array.isArray(palFile.Pals) && palFile.Pals.length > 0, `palData.json has no Pals.`);
-	assert(Array.isArray(breedingFile.Pals) && breedingFile.Pals.length > 0, `palBreeding.json has no Pals.`);
+	assert(palsWithBreeding.length === palFile.Pals.length, `palData.json has Pals without breeding metadata.`);
+	assert(!Array.isArray(breedingFile.PairResults), `palBreeding.json should not include the exhaustive PairResults cache.`);
+	assert(!Array.isArray(breedingFile.SameSpeciesCombinations), `palBreeding.json should omit source-only same-species rows.`);
+	assert(!Object.hasOwn(breedingFile, `SourceOverrides`), `palBreeding.json should omit empty SourceOverrides.`);
+	assert(Array.isArray(breedingFile.UniqueCombinations) && breedingFile.UniqueCombinations.length > 0, `palBreeding.json has no UniqueCombinations.`);
+	assert(breedingFile.UniqueCombinations.every(row => !isSameSpeciesCombination(row)), `UniqueCombinations should not include same-species rows.`);
+	assert(breedingFile.UniqueCombinations.length < 1000, `palBreeding.json UniqueCombinations looks like an expanded pair-result cache.`);
 	assert(colorProblems.length === 0, `Found ${colorProblems.length} pal color issue(s).`);
 }
 
@@ -405,6 +480,8 @@ async function main() {
 	await test(`required project files exist`, validateRequiredProjectFiles);
 	await test(`commands load and serialize for Discord deployment`, validateCommandsLoad);
 	await test(`Paldeck farmable search autocomplete stays prefix-free`, validatePaldeckFarmableSearch);
+	await test(`Breed autocomplete uses palData breeding metadata`, validateBreedAutocompleteUsesPalData);
+	await test(`hidden Pal placeholders stay out of user-facing search`, validateHiddenPalPlaceholdersStayHidden);
 	await test(`events load with valid handlers`, validateEventsLoad);
 	await test(`announcement helpers parse and format patch notes`, validateAnnouncementHelpers);
 	await test(`database models include update announcement fields`, validateDatabaseModels);

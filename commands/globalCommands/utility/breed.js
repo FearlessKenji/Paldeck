@@ -14,7 +14,7 @@ const { getPalColor } = require(`../../../utils/palColors.js`);
 
 const PAGE_SIZE = 10;
 const LIST_TTL_MS = 15 * 60 * 1000;
-const calculator = createBreedingCalculator(breedingFile);
+const calculator = createBreedingCalculator(palFile, breedingFile);
 const PAL_COLORS = palFile.Colors?.[0] || {};
 const PAL_DATA_BY_NAME = new Map(palFile.Pals.map(pal => [normalizeBreedingName(pal.name), pal]));
 const listCache = new Map();
@@ -49,34 +49,62 @@ function formatMethod(result) {
 	return `${formatBreedingMethod(result.method)}${targetRank}`;
 }
 
-function formatPairLine(result) {
-	const method = result.method === `special` ? ` - ${formatBreedingMethod(result.method)}` : ``;
+function formatGender(value) {
+	return value || `any`;
+}
 
-	return `${formatPalLabel(result.parentA)} + ${formatPalLabel(result.parentB)}${method}`;
+function formatGenderedChildLine(entry) {
+	return `${formatPalLabel(entry.parentA)} (${formatGender(entry.parentAGender)}) + ${formatPalLabel(entry.parentB)} (${formatGender(entry.parentBGender)}) -> ${formatPalLabel(entry.child)}`;
+}
+
+function formatChildField(result) {
+	if (result.method === `gendered-pair-result`) {
+		return result.children.map(formatGenderedChildLine).join(`\n`);
+	}
+
+	return formatPalLabel(result.child);
+}
+
+function formatGenderedRequirement(result) {
+	const entry = result.children?.[0];
+
+	if (result.method !== `gendered-pair-result` || !entry) {
+		return ``;
+	}
+
+	return ` - ${formatPalLabel(entry.parentA)} ${formatGender(entry.parentAGender)}, ${formatPalLabel(entry.parentB)} ${formatGender(entry.parentBGender)}`;
+}
+
+function formatPairLine(result) {
+	const method = [`unique-combination`, `source-override`, `gendered-pair-result`].includes(result.method) ? ` - ${formatBreedingMethod(result.method)}` : ``;
+	const genders = formatGenderedRequirement(result);
+
+	return `${formatPalLabel(result.parentA)} + ${formatPalLabel(result.parentB)}${genders}${method}`;
 }
 
 function formatPartnerLine(entry) {
-	const method = entry.result.method === `special` ? ` - ${formatBreedingMethod(entry.result.method)}` : ``;
+	const method = [`unique-combination`, `source-override`, `gendered-pair-result`].includes(entry.result.method) ? ` - ${formatBreedingMethod(entry.result.method)}` : ``;
+	const genders = formatGenderedRequirement(entry.result);
 
-	return `${formatPalLabel(entry.partner)}${method}`;
+	return `${formatPalLabel(entry.partner)}${genders}${method}`;
 }
 
 function getAutocompleteChoices(optionName) {
 	const pals = optionName === `child` ? calculator.childPals : calculator.parentPals;
 
 	return pals.map(pal => ({
-		name: formatPalLabel(pal).slice(0, 100),
+		name: pal.name.slice(0, 100),
 		value: pal.name,
 	}));
 }
 
 function buildResultEmbed(result) {
 	const fields = [
-		{ name: `Child`, value: formatPalLabel(result.child), inline: false },
+		{ name: result.method === `gendered-pair-result` ? `Children` : `Child`, value: formatChildField(result), inline: false },
 		{ name: `Method`, value: formatMethod(result), inline: false },
 	];
 
-	if (result.method !== `pair-result`) {
+	if (result.method === `standard`) {
 		fields.push(
 			{ name: `Parent Ranks`, value: `${formatRank(result.parentA)} + ${formatRank(result.parentB)}`, inline: true },
 			{ name: `Child Rank`, value: formatRank(result.child), inline: true },

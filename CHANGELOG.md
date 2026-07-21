@@ -4,6 +4,30 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+## v1.6.0 - 2026-07-21
+
+### Changed
+
+- Added missing Ancient Civilization Core drops for raid and summoning Pal entries.
+- Moved `/breed` autocomplete and breeding formula data to the shared Paldeck Pal data so breeding commands and search commands use the same Pal source.
+- Replaced the exhaustive breeding `PairResults` cache with formula-based results and compact local game-file `DT_PalCombiUnique` rows.
+- Omitted redundant same-species `DT_PalCombiUnique` rows so `UniqueCombinations` only contains rows that change normal breeding behavior.
+- Removed the informational `FormulaMetadata` block from `palBreeding.json`.
+- Removed empty `UnmappedGameUniqueCombinationRows` and `SourceOverrides` arrays from `palBreeding.json`.
+- Added hidden `palData` placeholders for internal-only breeding IDs from the local game files so fixed-combination source rows stay mapped without exposing those IDs in search.
+- Updated standard breeding child flags and Astralym's rank metadata so `/breed` no longer needs Astralym source overrides.
+- Updated the project version to `1.6.0`.
+
+### Fixed
+
+- Removed trailing `Technology N` unlock labels from Pal partner skill descriptions and added validation to keep unlock metadata in the separate Tech field.
+- Fixed several typo, wording, and import artifacts in Pal descriptions and partner skill text.
+- Trimmed unreleased patch notes to user-facing changes only.
+- Updated Selyne's spawn text to retain World Tree day/night timing while noting its Sakurajima meteorite-event availability.
+- Updated fixed-location Alpha Pal spawn text so alpha-only entries no longer appear as normal day/night spawns.
+- Added gender-specific Katress/Wixen breeding outcomes for Katress Ignis and Wixen Noct.
+- Updated `/breed` autocomplete labels to show plain Pal names instead of number-prefixed labels.
+
 ## v1.5.0 - 2026-07-18
 
 ### Added

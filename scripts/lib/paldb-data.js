@@ -303,6 +303,10 @@ function mapByName(rows) {
 	return new Map(rows.map(row => [normalizeKey(row.name), row]));
 }
 
+function visiblePals(palFile) {
+	return (palFile.Pals || []).filter(row => !row.hidden);
+}
+
 function hasChangedField(changes, field, localValue, currentValue, normalizer = value => String(value || ``), options = {}) {
 	if (options.ignoreBlankCurrent && !String(currentValue || ``).trim()) {
 		return;
@@ -319,15 +323,16 @@ function hasChangedField(changes, field, localValue, currentValue, normalizer = 
 	});
 }
 
-function compareData(currentRows, localPalFile, localBreedingFile, options = {}) {
-	const localPalsByName = mapByName(localPalFile.Pals);
+function compareData(currentRows, localPalFile, _localBreedingFile, options = {}) {
+	const localPals = visiblePals(localPalFile);
+	const localPalsByName = mapByName(localPals);
 	const currentByName = mapByName(currentRows);
 	const added = currentRows.filter(row => !localPalsByName.has(normalizeKey(row.name)));
-	const removed = localPalFile.Pals.filter(row => !currentByName.has(normalizeKey(row.name)));
+	const removed = localPals.filter(row => !currentByName.has(normalizeKey(row.name)));
 	const changedPals = [];
 	const changedBreeding = [];
 
-	for (const localPal of localPalFile.Pals) {
+	for (const localPal of localPals) {
 		const current = currentByName.get(normalizeKey(localPal.name));
 
 		if (!current) {
@@ -348,8 +353,8 @@ function compareData(currentRows, localPalFile, localBreedingFile, options = {})
 		}
 	}
 
-	for (const localBreeding of localBreedingFile.Pals) {
-		const current = currentByName.get(normalizeKey(localBreeding.name));
+	for (const localPal of localPals) {
+		const current = currentByName.get(normalizeKey(localPal.name));
 
 		if (!current) {
 			continue;
@@ -357,13 +362,12 @@ function compareData(currentRows, localPalFile, localBreedingFile, options = {})
 
 		const changes = [];
 
-		hasChangedField(changes, `number`, localBreeding.number, current.number, normalizeNumber, options);
-		hasChangedField(changes, `breedingId`, localBreeding.breedingId, current.breedingId, normalizeKey, options);
+		hasChangedField(changes, `breeding.id`, localPal.breeding?.id, current.breedingId, normalizeKey, options);
 
 		if (changes.length) {
 			changedBreeding.push({
 				changes,
-				name: localBreeding.name,
+				name: localPal.name,
 			});
 		}
 	}
@@ -390,4 +394,5 @@ module.exports = {
 	normalizeNumber,
 	normalizeSuitability,
 	splitList,
+	visiblePals,
 };

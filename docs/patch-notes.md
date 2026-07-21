@@ -6,6 +6,18 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+## v1.6.0 - 2026-07-21
+
+### Paldeck Data
+
+- Added missing Ancient Civilization Core drops for raid and summoning Pals.
+- Removed stray `Technology N` text from Partner Skill descriptions when the same unlock already appears in the Tech field.
+- Cleaned up typo and wording artifacts in several Pal descriptions and Partner Skill descriptions.
+- Selyne now shows both World Tree day/night timing and Sakurajima meteorite-event availability.
+- Alpha-only Pals such as Renjishi now show `Alpha only` instead of normal day/night spawn timing.
+- `/breed` autocomplete now shows plain Pal names instead of number-prefixed labels.
+- `/breed` now handles gender-specific Katress/Wixen outcomes for Katress Ignis and Wixen Noct.
+
 ## v1.5.0 - 2026-07-18
 
 ### Paldeck Data

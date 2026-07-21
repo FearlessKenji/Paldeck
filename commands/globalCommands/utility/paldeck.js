@@ -14,7 +14,7 @@ const { SearchSessions } = require(`../../../database/dbObjects.js`);
 const palFile = require(`../../../data/palData.json`);
 const { getPalColor } = require(`../../../utils/palColors.js`);
 
-const PALS = palFile.Pals;
+const PALS = palFile.Pals.filter(pal => !pal.hidden);
 const PAL_COLORS = palFile.Colors?.[0] || {};
 const PROJECT_ROOT = path.resolve(__dirname, `..`, `..`, `..`);
 const RESULTS_PER_PAGE = 25;

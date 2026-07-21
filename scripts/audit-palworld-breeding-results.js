@@ -1,4 +1,5 @@
 const breedingFile = require(`../data/palBreeding.json`);
+const palFile = require(`../data/palData.json`);
 const { URL } = require(`node:url`);
 const { createBreedingCalculator } = require(`../utils/palBreeding.js`);
 const {
@@ -94,6 +95,12 @@ function buildParentPairs(parentPals) {
 	return pairs;
 }
 
+function resultChildNames(result) {
+	return (result.children || [{ child: result.child }])
+		.map(entry => entry.child?.name || ``)
+		.filter(Boolean);
+}
+
 function samplePairs(pairs, options) {
 	if (options.full || pairs.length <= options.sample) {
 		return pairs;
@@ -131,7 +138,25 @@ async function fetchPaldbChild(parentA, parentB) {
 
 	const itemNames = parseItemNames(await response.text());
 
-	return itemNames[2] || ``;
+	return {
+		childName: itemNames[2] || ``,
+		itemNames,
+	};
+}
+
+function pairResponseMatchesParents(itemNames, parentA, parentB) {
+	if (itemNames.length < 3) {
+		return false;
+	}
+
+	const expected = [parentA.name, parentB.name]
+		.map(name => normalizeKey(name))
+		.sort((first, second) => first.localeCompare(second));
+	const actual = itemNames.slice(0, 2)
+		.map(name => normalizeKey(name))
+		.sort((first, second) => first.localeCompare(second));
+
+	return actual[0] === expected[0] && actual[1] === expected[1];
 }
 
 function printRows(title, rows, limit, formatter) {
@@ -148,7 +173,7 @@ function printRows(title, rows, limit, formatter) {
 
 async function main() {
 	const options = parseArgs(process.argv.slice(2));
-	const calculator = createBreedingCalculator(breedingFile);
+	const calculator = createBreedingCalculator(palFile, breedingFile);
 	const { currentRows } = await fetchPaldbData();
 	const currentByName = mapByName(currentRows);
 	const parentPals = calculator.parentPals.map(pal => ({
@@ -179,12 +204,23 @@ async function main() {
 			continue;
 		}
 
-		const localChild = calculator.calculateChild(parentA.name, parentB.name)?.child?.name || ``;
-		const paldbChild = await fetchPaldbChild(parentA, parentB);
+		const localChildren = resultChildNames(calculator.calculateChild(parentA.name, parentB.name));
+		const paldbResult = await fetchPaldbChild(parentA, parentB);
 
-		if (normalizeKey(localChild) !== normalizeKey(paldbChild)) {
+		if (!pairResponseMatchesParents(paldbResult.itemNames, parentA, parentB)) {
+			skipped.push({
+				parentA: parentA.name,
+				parentB: parentB.name,
+				reason: `PalDB pair endpoint returned parent echo ${paldbResult.itemNames.slice(0, 2).join(` + `) || `(blank)`}`,
+			});
+			continue;
+		}
+
+		const paldbChild = paldbResult.childName;
+
+		if (!localChildren.some(child => normalizeKey(child) === normalizeKey(paldbChild))) {
 			mismatches.push({
-				localChild,
+				localChild: localChildren.join(`, `),
 				paldbChild,
 				parentA: parentA.name,
 				parentB: parentB.name,

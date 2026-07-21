@@ -5,6 +5,7 @@ const {
 	PALDB_PALS_URL,
 	compareData,
 	fetchPaldbData,
+	visiblePals,
 } = require(`./lib/paldb-data.js`);
 
 function parseArgs(argv) {
@@ -68,8 +69,11 @@ function printRows(title, rows, limit, formatter) {
 
 function printHumanReport(report, limit) {
 	console.log(`Palworld data audit against PalDB`);
-	console.log(`Local palData rows: ${report.summary.localPalData}`);
-	console.log(`Local breeding rows: ${report.summary.localBreeding}`);
+	console.log(`Local visible palData rows: ${report.summary.localPalData}`);
+	console.log(`Local hidden placeholder rows: ${report.summary.localHiddenPlaceholders}`);
+	console.log(`Local Pal breeding metadata rows: ${report.summary.localBreedingMetadata}`);
+	console.log(`Local breeding unique combinations: ${report.summary.localBreedingUniqueCombinations}`);
+	console.log(`Local breeding source overrides: ${report.summary.localBreedingSourceOverrides}`);
 	console.log(`PalDB card rows: ${report.summary.paldbCardRows}`);
 	console.log(`PalDB JSON rows: ${report.summary.paldbJsonRows}`);
 	console.log(`Current merged rows: ${report.summary.currentRows}`);
@@ -93,6 +97,8 @@ function printHumanReport(report, limit) {
 async function main() {
 	const options = parseArgs(process.argv.slice(2));
 	const { currentRows, ivRows, paldbCardRows } = await fetchPaldbData();
+	const localVisiblePals = visiblePals(localPalFile);
+	const hiddenPlaceholderRows = localPalFile.Pals.filter(pal => pal.hidden && pal.placeholder);
 	const diff = compareData(currentRows, localPalFile, localBreedingFile, {
 		ignoreBlankCurrent: options.ignoreBlankCurrent,
 	});
@@ -104,8 +110,12 @@ async function main() {
 		},
 		summary: {
 			currentRows: currentRows.length,
-			localBreeding: localBreedingFile.Pals.length,
-			localPalData: localPalFile.Pals.length,
+			localBreedingMetadata: localPalFile.Pals.filter(pal => pal.breeding).length,
+			localBreedingSourceOverrides: (localBreedingFile.SourceOverrides || []).length,
+			localBreedingUniqueCombinations: localBreedingFile.UniqueCombinations.length,
+			localHiddenPlaceholders: hiddenPlaceholderRows.length,
+			localPalData: localVisiblePals.length,
+			localPalDataRows: localPalFile.Pals.length,
 			paldbCardRows: paldbCardRows.length,
 			paldbJsonRows: ivRows.length,
 		},
