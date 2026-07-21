@@ -283,6 +283,20 @@ async function validateBreedAutocompleteUsesPalData() {
 	);
 }
 
+function validateHtmlTextHelpers() {
+	const { decodeHtml, stripTags } = requireFresh(`scripts`, `lib`, `html-text.js`);
+	const encodedTagText = stripTags(`&lt;script&gt;alert(1)&lt;/script&gt;Relaxaurus`);
+	const doubleEncodedTagText = stripTags(`&amp;lt;script&amp;gt;Relaxaurus&amp;lt;/script&amp;gt;`);
+	const nestedTagText = stripTags(`<scr<script>ipt>alert(1)</script>`);
+
+	assert(decodeHtml(`A&amp;B &quot;x&quot; &#039;y&#039; &lt;z&gt;`) === `A&B "x" 'y' <z>`, `HTML entity decoding changed unexpectedly.`);
+	assert(decodeHtml(`&amp;lt;script&amp;gt;`) === `&lt;script&gt;`, `HTML entity decoding should not double-unescape encoded tags.`);
+	assert(stripTags(`<span>Relaxaurus</span>`) === `Relaxaurus`, `HTML text extraction should preserve normal tag contents.`);
+	assert(!/[<>]/.test(encodedTagText), `Encoded HTML tags should not survive text extraction as angle brackets.`);
+	assert(!/[<>]/.test(doubleEncodedTagText), `Double-encoded HTML tags should not become angle brackets during text extraction.`);
+	assert(!/[<>]/.test(nestedTagText), `Nested or malformed HTML tags should not leave angle brackets behind.`);
+}
+
 async function validateHiddenPalPlaceholdersStayHidden() {
 	const breed = requireFresh(`commands`, `globalCommands`, `utility`, `breed.js`);
 	const paldeck = requireFresh(`commands`, `globalCommands`, `utility`, `paldeck.js`);
@@ -481,6 +495,7 @@ async function main() {
 	await test(`commands load and serialize for Discord deployment`, validateCommandsLoad);
 	await test(`Paldeck farmable search autocomplete stays prefix-free`, validatePaldeckFarmableSearch);
 	await test(`Breed autocomplete uses palData breeding metadata`, validateBreedAutocompleteUsesPalData);
+	await test(`HTML text helpers decode before stripping tags`, validateHtmlTextHelpers);
 	await test(`hidden Pal placeholders stay out of user-facing search`, validateHiddenPalPlaceholdersStayHidden);
 	await test(`events load with valid handlers`, validateEventsLoad);
 	await test(`announcement helpers parse and format patch notes`, validateAnnouncementHelpers);

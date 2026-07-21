@@ -8,6 +8,7 @@ const {
 	mapByName,
 	normalizeKey,
 } = require(`./lib/paldb-data.js`);
+const { stripTags } = require(`./lib/html-text.js`);
 const { createBreedingCalculator, normalizeBreedingName } = require(`../utils/palBreeding.js`);
 
 const ROOT_DIR = path.resolve(__dirname, `..`);
@@ -68,19 +69,6 @@ function stringifyJson(data) {
 
 function writeJson(filePath, data) {
 	fs.writeFileSync(filePath, `${stringifyJson(data)}\n`);
-}
-
-function decodeHtml(value) {
-	return String(value || ``)
-		.replace(/&amp;/g, `&`)
-		.replace(/&quot;/g, `"`)
-		.replace(/&#039;/g, `'`)
-		.replace(/&lt;/g, `<`)
-		.replace(/&gt;/g, `>`);
-}
-
-function stripTags(value) {
-	return decodeHtml(String(value || ``).replace(/<[^>]+>/g, ``)).trim();
 }
 
 function parseItemNames(html) {
