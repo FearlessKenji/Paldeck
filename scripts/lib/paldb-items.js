@@ -1,4 +1,5 @@
 const { URL } = require(`node:url`);
+const { decodeHtml, stripTags: stripHtmlTags } = require(`./html-text.js`);
 
 const PALDB_ITEM_CATEGORY_SOURCES = [
 	{ category: `Weapon`, slug: `Weapon` },
@@ -17,21 +18,12 @@ const PALDB_ITEM_CATEGORY_SOURCES = [
 
 const PALDB_BASE_URL = `https://paldb.cc/en/`;
 
-function decodeHtml(value) {
-	return String(value || ``)
-		.replace(/&amp;/g, `&`)
-		.replace(/&quot;/g, `"`)
-		.replace(/&#039;/g, `'`)
-		.replace(/&lt;/g, `<`)
-		.replace(/&gt;/g, `>`);
-}
-
 function normalizeWhitespace(value) {
 	return String(value || ``).replace(/\s+/g, ` `).trim();
 }
 
 function stripTags(value) {
-	return normalizeWhitespace(decodeHtml(String(value || ``).replace(/<[^>]+>/g, ` `)));
+	return normalizeWhitespace(stripHtmlTags(value, ` `));
 }
 
 function slugify(value) {

@@ -2,6 +2,7 @@ const PALDB_PALS_URL = `https://paldb.cc/en/Pals`;
 const PALDB_IV_URL = `https://paldb.cc/json/iv_en.json`;
 const PALDB_BREED_PAIR_URL = `https://paldb.cc/en/api/pal_breed_2`;
 const PALDB_BREED_CHILD_URL = `https://paldb.cc/en/api/pal_breed_3`;
+const { decodeHtml, stripTags } = require(`./html-text.js`);
 
 const ELEMENT_NAMES = [
 	`Neutral`,
@@ -31,19 +32,6 @@ const WORK_FILTERS = [
 ];
 
 const WORK_ORDER = WORK_FILTERS.map(entry => entry.name);
-
-function decodeHtml(value) {
-	return String(value || ``)
-		.replace(/&amp;/g, `&`)
-		.replace(/&quot;/g, `"`)
-		.replace(/&#039;/g, `'`)
-		.replace(/&lt;/g, `<`)
-		.replace(/&gt;/g, `>`);
-}
-
-function stripTags(value) {
-	return decodeHtml(String(value || ``).replace(/<[^>]+>/g, ``)).trim();
-}
 
 function escapeRegExp(value) {
 	return String(value).replace(/[.*+?^${}()|[\]\\]/g, `\\$&`);

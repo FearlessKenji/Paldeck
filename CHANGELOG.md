@@ -17,6 +17,7 @@ Notable changes to Paldeck are documented here.
 - Added hidden `palData` placeholders for internal-only breeding IDs from the local game files so fixed-combination source rows stay mapped without exposing those IDs in search.
 - Updated standard breeding child flags and Astralym's rank metadata so `/breed` no longer needs Astralym source overrides.
 - Updated vulnerable transitive dependencies so `npm audit --audit-level=moderate` passes.
+- Hardened PalDB HTML text extraction helpers so decoded tags cannot survive scraper normalization.
 - Updated the project version to `1.6.0`.
 
 ### Fixed

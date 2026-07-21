@@ -8,6 +8,7 @@ const {
 	mapByName,
 	normalizeKey,
 } = require(`./lib/paldb-data.js`);
+const { stripTags } = require(`./lib/html-text.js`);
 
 function parseArgs(argv) {
 	const options = {
@@ -56,19 +57,6 @@ function parseArgs(argv) {
 	}
 
 	return options;
-}
-
-function decodeHtml(value) {
-	return String(value || ``)
-		.replace(/&amp;/g, `&`)
-		.replace(/&quot;/g, `"`)
-		.replace(/&#039;/g, `'`)
-		.replace(/&lt;/g, `<`)
-		.replace(/&gt;/g, `>`);
-}
-
-function stripTags(value) {
-	return decodeHtml(String(value || ``).replace(/<[^>]+>/g, ``)).trim();
 }
 
 function parseItemNames(html) {
