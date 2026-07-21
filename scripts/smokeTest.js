@@ -283,6 +283,62 @@ async function validateBreedAutocompleteUsesPalData() {
 	);
 }
 
+function serializeDiscordPayload(payload) {
+	return JSON.stringify(payload, (key, value) => {
+		if (value && typeof value.toJSON === `function`) {
+			return value.toJSON();
+		}
+
+		return value;
+	});
+}
+
+async function runBreedCommand(breed, subcommand, values) {
+	let replyPayload = null;
+
+	await breed.execute({
+		options: {
+			getString: name => values[name],
+			getSubcommand: () => subcommand,
+		},
+		reply: payload => {
+			replyPayload = payload;
+		},
+		user: {
+			id: `smoke-test-user`,
+		},
+	});
+
+	return replyPayload;
+}
+
+async function validateBreedResultsUsePlainNames() {
+	const breed = requireFresh(`commands`, `globalCommands`, `utility`, `breed.js`);
+	const numberPrefixedPalPattern = /#\d{1,3}[A-Z]?\s+[A-Za-z]/;
+	const resultPayload = await runBreedCommand(breed, `result`, {
+		parent1: `Lamball`,
+		parent2: `Lamball`,
+	});
+	const parentsPayload = await runBreedCommand(breed, `parents`, {
+		child: `Lamball`,
+	});
+	const partnerPayload = await runBreedCommand(breed, `partner`, {
+		child: `Lamball`,
+		parent: `Lamball`,
+	});
+	const serializedOutput = [
+		serializeDiscordPayload(resultPayload),
+		serializeDiscordPayload(parentsPayload),
+		serializeDiscordPayload(partnerPayload),
+	].join(`\n`);
+
+	assert(resultPayload?.embeds?.length, `/breed result did not produce an embed.`);
+	assert(parentsPayload?.embeds?.length, `/breed parents did not produce an embed.`);
+	assert(partnerPayload?.embeds?.length, `/breed partner did not produce an embed.`);
+	assert(serializedOutput.includes(`Lamball`), `/breed command smoke output should include the test Pal name.`);
+	assert(!numberPrefixedPalPattern.test(serializedOutput), `/breed results should show plain Pal names without number prefixes.`);
+}
+
 function validateHtmlTextHelpers() {
 	const { decodeHtml, stripTags } = requireFresh(`scripts`, `lib`, `html-text.js`);
 	const encodedTagText = stripTags(`&lt;script&gt;alert(1)&lt;/script&gt;Relaxaurus`);
@@ -495,6 +551,7 @@ async function main() {
 	await test(`commands load and serialize for Discord deployment`, validateCommandsLoad);
 	await test(`Paldeck farmable search autocomplete stays prefix-free`, validatePaldeckFarmableSearch);
 	await test(`Breed autocomplete uses palData breeding metadata`, validateBreedAutocompleteUsesPalData);
+	await test(`Breed results use plain Pal names`, validateBreedResultsUsePlainNames);
 	await test(`HTML text helpers decode before stripping tags`, validateHtmlTextHelpers);
 	await test(`hidden Pal placeholders stay out of user-facing search`, validateHiddenPalPlaceholdersStayHidden);
 	await test(`events load with valid handlers`, validateEventsLoad);
