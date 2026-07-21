@@ -26,6 +26,7 @@ The bot uses SQLite through Sequelize for local operational data such as joined 
 | `/paldeck name` | Look up a pal by name. |
 | `/paldeck number` | Look up a pal by paldeck number. |
 | `/paldeck search` | Search pals by element, suitability, rarity, drops, and/or farmed materials. |
+| `/breed` | Calculate breeding children, parent pairs, and partner options. |
 | `/help` | Show Paldeck command usage help. |
 | `/suggest` | Send a feature suggestion to the configured suggestions channel. Do not submit sensitive data. |
 | `/vote` | Return the Top.gg voting link for Paldeck. |
@@ -144,7 +145,7 @@ Palworld updates can change Paldeck numbers, work suitabilities, elements, inter
 $ npm run audit:palworld-data
 ```
 
-The audit is read-only. It reports added Pals, missing Pals, changed `palData.json` fields, and changed breeding numbers or IDs.
+The audit is read-only. It reports added Pals, missing Pals, changed `palData.json` fields, and changed `palData.json` breeding IDs.
 
 To apply safe updates for existing local Pals, run the updater in dry-run mode first:
 
@@ -158,7 +159,7 @@ If the report looks correct, write the updates:
 $ npm run update:palworld-data:write
 ```
 
-The updater refreshes existing Pal numbers, elements, work suitabilities, missing `Colors` palette entries, and breeding IDs from PalDB. It also removes redundant per-Pal `color` overrides so embed colors come from `palData.json`'s `Colors` palette. It intentionally does not auto-add full `palData.json` profile entries for new Pals or rewrite breeding ranks/special combinations; review those separately because they require richer source data than the Pal list and IV JSON expose.
+The updater refreshes existing Pal numbers, elements, work suitabilities, missing `Colors` palette entries, and `breeding.id` values from PalDB. It also removes redundant per-Pal `color` overrides so embed colors come from `palData.json`'s `Colors` palette. It intentionally does not auto-add full `palData.json` profile entries for new Pals or rewrite PalCalc-owned breeding ranks and priorities; review those separately because they require richer source data than the Pal list and IV JSON expose.
 
 To add newly discovered Pals to `palData.json` with safe placeholders, dry-run first:
 
@@ -182,19 +183,19 @@ $ npm run audit:palworld-breeding-results
 
 That command samples parent pairs by default. Use `node scripts/audit-palworld-breeding-results.js --sample 250` for a larger sample, or `npm run audit:palworld-breeding-results:full` for every local parent pair.
 
-To rebuild the local breeding pair-result cache from PalDB's child endpoint, dry-run first:
+To audit whether PalDB exposes any breeding outcomes that still need source overrides, dry-run first:
 
 ```console
 $ npm run update:palworld-breeding-results
 ```
 
-Then write the generated cache:
+The current formula model expects this override set to stay empty. Only write generated overrides after reviewing why a live source disagrees with the local game-file model:
 
 ```console
 $ npm run update:palworld-breeding-results:write
 ```
 
-When `PairResults` exists in `data/palBreeding.json`, `/breed` prefers those known results over the older breeding-rank fallback.
+Breeding autocomplete, ranks, and standard-child flags come from `data/palData.json`. `data/palBreeding.json` keeps source notes and compact non-same-species `DT_PalCombiUnique` fixed-combination rows decoded from the local game files. Optional `SourceOverrides` rows are only written when verified corrections cannot be represented by rank fallback.
 
 Convenience commands are also available:
 

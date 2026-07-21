@@ -8,9 +8,11 @@ const {
 	mapByName,
 	normalizeKey,
 } = require(`./lib/paldb-data.js`);
+const { createBreedingCalculator, normalizeBreedingName } = require(`../utils/palBreeding.js`);
 
 const ROOT_DIR = path.resolve(__dirname, `..`);
 const PAL_BREEDING_PATH = path.join(ROOT_DIR, `data`, `palBreeding.json`);
+const PAL_DATA_PATH = path.join(ROOT_DIR, `data`, `palData.json`);
 
 function parseArgs(argv) {
 	const options = {
@@ -154,11 +156,31 @@ async function fetchChildForParentPair(parentA, parentB) {
 		throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
 	}
 
-	return parseItemNames(await response.text())[2] || ``;
+	const itemNames = parseItemNames(await response.text());
+
+	return {
+		childName: itemNames[2] || ``,
+		itemNames,
+	};
 }
 
-function sortPairResults(pairResults, currentIndexByName) {
-	return pairResults.sort((first, second) => {
+function pairResponseMatchesParents(itemNames, parentA, parentB) {
+	if (itemNames.length < 3) {
+		return false;
+	}
+
+	const expected = [parentA.name, parentB.name]
+		.map(name => normalizeKey(name))
+		.sort((first, second) => first.localeCompare(second));
+	const actual = itemNames.slice(0, 2)
+		.map(name => normalizeKey(name))
+		.sort((first, second) => first.localeCompare(second));
+
+	return actual[0] === expected[0] && actual[1] === expected[1];
+}
+
+function sortPairRows(pairRows, currentIndexByName) {
+	return pairRows.sort((first, second) => {
 		for (const index of [0, 1, 2]) {
 			const firstIndex = currentIndexByName.get(normalizeKey(first[index])) ?? Number.MAX_SAFE_INTEGER;
 			const secondIndex = currentIndexByName.get(normalizeKey(second[index])) ?? Number.MAX_SAFE_INTEGER;
@@ -172,26 +194,45 @@ function sortPairResults(pairResults, currentIndexByName) {
 	});
 }
 
-function createPalRow(current) {
-	return {
-		name: current.name,
-		number: current.number,
-		breedingId: current.breedingId,
-		breedingRank: null,
-		canBeParent: false,
-		canBeChild: false,
-		canBeStandardChild: false,
-	};
+function resultChildNames(result) {
+	return (result.children || [{ child: result.child }])
+		.map(entry => entry.child?.name || ``)
+		.filter(Boolean);
 }
 
-function mergeBreedingPals(breedingFile, currentRows, pairResults) {
-	const existingByName = mapByName(breedingFile.Pals);
+function buildSourceOverrides(pairRows, palFile, breedingFile, currentIndexByName) {
+	const calculator = createBreedingCalculator(palFile, {
+		...breedingFile,
+		SourceOverrides: [],
+	});
+	const sourceOverrides = [];
+
+	for (const pairRow of pairRows) {
+		const localChildren = resultChildNames(calculator.calculateChild(pairRow[0], pairRow[1]));
+
+		if (localChildren.some(child => normalizeBreedingName(child) === normalizeBreedingName(pairRow[2]))) {
+			continue;
+		}
+
+		sourceOverrides.push(pairRow);
+	}
+
+	return sortPairRows(sourceOverrides, currentIndexByName);
+}
+
+function mergePalBreedingMetadata(palFile, currentRows, pairRows) {
+	const existingByName = mapByName(palFile.Pals);
 	const parentNames = new Set();
 	const childNames = new Set();
-	const added = [];
-	const pals = breedingFile.Pals.map(pal => ({ ...pal }));
+	const missingFromPalData = [];
+	const pals = palFile.Pals.map(pal => ({
+		...pal,
+		breeding: {
+			...(pal.breeding || {}),
+		},
+	}));
 
-	for (const [parentA, parentB, child] of pairResults) {
+	for (const [parentA, parentB, child] of pairRows) {
 		parentNames.add(normalizeKey(parentA));
 		parentNames.add(normalizeKey(parentB));
 		childNames.add(normalizeKey(child));
@@ -202,32 +243,31 @@ function mergeBreedingPals(breedingFile, currentRows, pairResults) {
 			continue;
 		}
 
-		const row = createPalRow(current);
-
-		added.push(row);
-		pals.push(row);
-		existingByName.set(normalizeKey(row.name), row);
+		missingFromPalData.push(current);
 	}
 
 	for (const pal of pals) {
 		const current = currentRows.find(row => normalizeKey(row.name) === normalizeKey(pal.name));
 
 		if (current) {
-			pal.number = current.number;
-			pal.breedingId = current.breedingId;
+			pal.breeding.id = current.breedingId;
 		}
 
-		pal.canBeParent = parentNames.has(normalizeKey(pal.name));
-		pal.canBeChild = childNames.has(normalizeKey(pal.name));
+		pal.breeding.canBeParent = parentNames.has(normalizeKey(pal.name));
+		pal.breeding.canBeChild = childNames.has(normalizeKey(pal.name));
+
+		if (!Object.hasOwn(pal.breeding, `canBeStandardChild`)) {
+			pal.breeding.canBeStandardChild = false;
+		}
 	}
 
 	return {
-		added,
+		missingFromPalData,
 		pals,
 	};
 }
 
-async function resolveConflicts(conflicts, currentByName, pairResultsByKey) {
+async function resolveConflicts(conflicts, currentByName, pairRowsByKey) {
 	const uniqueConflictsByPair = new Map();
 	const resolved = [];
 	const unresolved = [];
@@ -248,7 +288,17 @@ async function resolveConflicts(conflicts, currentByName, pairResultsByKey) {
 			continue;
 		}
 
-		const childName = await fetchChildForParentPair(parentA, parentB);
+		const pairResult = await fetchChildForParentPair(parentA, parentB);
+
+		if (!pairResponseMatchesParents(pairResult.itemNames, parentA, parentB)) {
+			unresolved.push({
+				...conflict,
+				reason: `Pair endpoint returned parent echo ${pairResult.itemNames.slice(0, 2).join(` + `) || `(blank)`}`,
+			});
+			continue;
+		}
+
+		const childName = pairResult.childName;
 		const child = currentByName.get(normalizeKey(childName));
 
 		if (!child) {
@@ -261,7 +311,7 @@ async function resolveConflicts(conflicts, currentByName, pairResultsByKey) {
 
 		const resolvedResult = [parentA.name, parentB.name, child.name];
 
-		pairResultsByKey.set(pairKey(parentA.name, parentB.name), resolvedResult);
+		pairRowsByKey.set(pairKey(parentA.name, parentB.name), resolvedResult);
 		resolved.push({
 			...conflict,
 			resolved: resolvedResult,
@@ -289,6 +339,7 @@ function printRows(title, rows, limit, formatter) {
 async function main() {
 	const options = parseArgs(process.argv.slice(2));
 	const breedingFile = readJson(PAL_BREEDING_PATH);
+	const palFile = readJson(PAL_DATA_PATH);
 	const { currentRows } = await fetchPaldbData();
 	const currentByName = mapByName(currentRows);
 	const currentIndexByName = new Map(currentRows.map((row, index) => [normalizeKey(row.name), index]));
@@ -298,7 +349,7 @@ async function main() {
 		options.concurrency,
 		child => fetchParentPairsForChild(child),
 	);
-	const pairResultsByKey = new Map();
+	const pairRowsByKey = new Map();
 	const conflicts = [];
 	const parseProblems = [];
 	const unknownRows = [];
@@ -322,7 +373,7 @@ async function main() {
 			}
 
 			const key = pairKey(parentA.name, parentB.name);
-			const existing = pairResultsByKey.get(key);
+			const existing = pairRowsByKey.get(key);
 
 			if (existing && normalizeKey(existing[2]) !== normalizeKey(child.name)) {
 				conflicts.push({
@@ -332,43 +383,68 @@ async function main() {
 				continue;
 			}
 
-			pairResultsByKey.set(key, [parentA.name, parentB.name, child.name]);
+			pairRowsByKey.set(key, [parentA.name, parentB.name, child.name]);
 		}
 	}
 
-	const resolvedConflicts = await resolveConflicts(conflicts, currentByName, pairResultsByKey);
-	const pairResults = sortPairResults([...pairResultsByKey.values()], currentIndexByName);
-	const merged = mergeBreedingPals(breedingFile, currentRows, pairResults);
+	const resolvedConflicts = await resolveConflicts(conflicts, currentByName, pairRowsByKey);
+	const pairRows = sortPairRows([...pairRowsByKey.values()], currentIndexByName);
+	const sourceOverrides = buildSourceOverrides(pairRows, palFile, breedingFile, currentIndexByName);
+	const expectedPairCount = (children.length * (children.length + 1)) / 2;
+	const pairCountProblems = [];
+
+	if (pairRows.length !== expectedPairCount) {
+		pairCountProblems.push({
+			actual: pairRows.length,
+			expected: expectedPairCount,
+		});
+	}
+
+	const merged = mergePalBreedingMetadata(palFile, currentRows, pairRows);
+	const nextPalFile = {
+		...palFile,
+		Pals: merged.pals,
+	};
 	const nextBreedingFile = {
 		...breedingFile,
-		Pals: merged.pals,
-		PairResults: pairResults,
-		PairResultsMetadata: {
-			pairs: pairResults.length,
-			retrievedAt: new Date().toISOString().slice(0, 10),
-			source: PALDB_BREED_CHILD_URL,
-		},
 	};
 
+	if (sourceOverrides.length) {
+		nextBreedingFile.SourceOverrides = sourceOverrides;
+	} else {
+		delete nextBreedingFile.SourceOverrides;
+	}
+
+	delete nextBreedingFile.FormulaMetadata;
+	delete nextBreedingFile.PairResults;
+	delete nextBreedingFile.PairResultsMetadata;
+	delete nextBreedingFile.Pals;
+	delete nextBreedingFile.SourceOverrideMetadata;
+	delete nextBreedingFile.SourceOnlyPals;
+	delete nextBreedingFile.SourceValidationMetadata;
+
 	if (options.write) {
-		if (resolvedConflicts.unresolved.length || parseProblems.length || unknownRows.length) {
-			throw new Error(`Refusing to write PairResults with conflicts, parse problems, or unknown Pal rows.`);
+		if (resolvedConflicts.unresolved.length || parseProblems.length || unknownRows.length || pairCountProblems.length) {
+			throw new Error(`Refusing to write source overrides with conflicts, parse problems, unknown Pal rows, or an incomplete pair grid.`);
 		}
 
+		writeJson(PAL_DATA_PATH, nextPalFile);
 		writeJson(PAL_BREEDING_PATH, nextBreedingFile);
 	}
 
-	console.log(`Palworld breeding pair-result update against PalDB (${options.write ? `write` : `dry-run`})`);
+	console.log(`Palworld breeding source-override update against PalDB (${options.write ? `write` : `dry-run`})`);
 	console.log(`Current PalDB rows: ${currentRows.length}`);
 	console.log(`Child endpoints fetched: ${children.length}`);
-	console.log(`Pair results: ${pairResults.length}`);
-	console.log(`New breeding rows: ${merged.added.length}`);
+	console.log(`Fetched pair rows: ${pairRows.length}`);
+	console.log(`Expected pair rows: ${expectedPairCount}`);
+	console.log(`Source overrides: ${sourceOverrides.length}`);
+	console.log(`PalDB rows missing from palData: ${merged.missingFromPalData.length}`);
 	console.log(`Files ${options.write ? `updated` : `not written`}.`);
 
-	printRows(`Added breeding rows`, merged.added, options.limit, row => `#${row.number} ${row.name}`);
+	printRows(`PalDB rows missing from palData`, merged.missingFromPalData, options.limit, row => `#${row.number} ${row.name}`);
 	printRows(
-		`Pair result sample`,
-		pairResults,
+		`Source override sample`,
+		sourceOverrides,
 		options.limit,
 		row => `${row[0]} + ${row[1]} -> ${row[2]}`,
 	);
@@ -395,6 +471,12 @@ async function main() {
 		unknownRows,
 		options.limit,
 		row => `${row.parentA} + ${row.parentB} -> ${row.child}`,
+	);
+	printRows(
+		`Pair count problems`,
+		pairCountProblems,
+		options.limit,
+		row => `expected ${row.expected}, fetched ${row.actual}`,
 	);
 }
 

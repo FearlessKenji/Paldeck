@@ -13,7 +13,17 @@
 			"farmable": "Yes - Wool",
 			"thumbnail": "data/pals/pal-001-lamball.png",
 			"habitat": "data/maps/001-lamball.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "sheepball",
+				"rank": 3050,
+				"priority": 305000,
+				"index": 36,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Cattiva",
@@ -28,7 +38,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-002-cattiva.png",
 			"habitat": "data/maps/002-cattiva.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "pinkcat",
+				"rank": 2760,
+				"priority": 276000,
+				"index": 57,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Chikipi",
@@ -43,7 +63,17 @@
 			"farmable": "Yes - Egg",
 			"thumbnail": "data/pals/pal-003-chikipi.png",
 			"habitat": "data/maps/003-chikipi.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "chickenpal",
+				"rank": 3080,
+				"priority": 308000,
+				"index": 74,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Lifmunk",
@@ -52,14 +82,24 @@
 			"element": "Grass",
 			"drops": "Wheat Seeds, Low Grade Medical Supplies",
 			"food": "1/10",
-			"partner": "Lifmunk Recoil - When activated, leaps into the player's head and uses a submachine gun to follows up player attacks.",
+			"partner": "Lifmunk Recoil - When activated, leaps into the player's head and uses a submachine gun to follow up player attacks.",
 			"tech": "Lifmunk's Submachine Gun, Lvl 11",
 			"suitability": "Planting 1, Handiwork 1, Gathering 1, Lumbering 1, Medicine Production 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-004-lifmunk.png",
 			"habitat": "data/maps/004-lifmunk.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "carbunclo",
+				"rank": 3020,
+				"priority": 302000,
+				"index": 13,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Fuack",
@@ -74,7 +114,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-006-fuack.png",
 			"habitat": "data/maps/005-fuack.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "blueplatypus",
+				"rank": 2980,
+				"priority": 298000,
+				"index": 70,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Fuack Ignis",
@@ -89,7 +139,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-006b-fuack-ignis.png",
 			"habitat": "data/maps/005b-fuack-ignis.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "blueplatypus_fire",
+				"rank": 2300,
+				"priority": 575,
+				"index": 71,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Vixy",
@@ -104,7 +164,17 @@
 			"farmable": "Yes - Pal Sphere, Mega Sphere, Giga Sphere, Hyper Sphere, Arrow, Gold Coin, Bone",
 			"thumbnail": "data/pals/pal-014-vixy.png",
 			"habitat": "data/maps/006-vixy.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "cutefox",
+				"rank": 3060,
+				"priority": 306000,
+				"index": 93,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Celaray",
@@ -119,7 +189,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-025-celaray.png",
 			"habitat": "data/maps/007-celaray.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "flyingmanta",
+				"rank": 2740,
+				"priority": 274000,
+				"index": 154,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Celaray Lux",
@@ -134,7 +214,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-025b-celaray-lux.png",
 			"habitat": "data/maps/007b-celaray-lux.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "flyingmanta_thunder",
+				"rank": 2380,
+				"priority": 574,
+				"index": 155,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Cremis",
@@ -149,7 +239,17 @@
 			"farmable": "Yes - Wool",
 			"thumbnail": "data/pals/pal-018-cremis.png",
 			"habitat": "data/maps/008-cremis.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "woolfox",
+				"rank": 2890,
+				"priority": 289000,
+				"index": 164,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Croajiro",
@@ -164,7 +264,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-114-croajiro.png",
 			"habitat": "data/maps/009-croajiro.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "kendofrog",
+				"rank": 2600,
+				"priority": 260000,
+				"index": 172,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Croajiro Noct",
@@ -179,7 +289,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-114b-croajiro-noct.png",
 			"habitat": "data/maps/009b-croajiro-noct.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "kendofrog_dark",
+				"rank": 1860,
+				"priority": 186000,
+				"index": 173,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Herbil",
@@ -194,7 +314,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-141-herbil.png",
 			"habitat": "data/maps/010-herbil.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "leafmomonga",
+				"rank": 2630,
+				"priority": 263000,
+				"index": 241,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Teafant",
@@ -209,7 +339,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-016-teafant.png",
 			"habitat": "data/maps/011-teafant.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "ganesha",
+				"rank": 3070,
+				"priority": 307000,
+				"index": 20,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Gumoss",
@@ -224,7 +364,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-013-gumoss.png",
 			"habitat": "data/maps/012-gumoss.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "plantslime",
+				"rank": 2950,
+				"priority": 295000,
+				"index": 130,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Pupperai",
@@ -239,7 +389,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-013-pupperai.png",
 			"habitat": "data/maps/013-pupperai.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "samuraidog",
+				"rank": 2930,
+				"priority": 293000,
+				"index": 268,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Clovee",
@@ -254,7 +414,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-014-clovee.png",
 			"habitat": "data/maps/014-clovee.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "cloverfairy",
+				"rank": 2970,
+				"priority": 297000,
+				"index": 252,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Jolthog",
@@ -269,7 +439,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-012-jolthog.png",
 			"habitat": "data/maps/015-jolthog.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "hedgehog",
+				"rank": 3030,
+				"priority": 303000,
+				"index": 24,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Jolthog Cryst",
@@ -284,7 +464,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-012b-jolthog-cryst.png",
 			"habitat": "data/maps/015b-jolthog-cryst.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "hedgehog_ice",
+				"rank": 2850,
+				"priority": 285000,
+				"index": 25,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Depresso",
@@ -299,7 +489,17 @@
 			"farmable": "Yes - Venom Gland",
 			"thumbnail": "data/pals/pal-017-depresso.png",
 			"habitat": "data/maps/016-depresso.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "negativekoala",
+				"rank": 3000,
+				"priority": 300000,
+				"index": 58,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Pengullet",
@@ -308,14 +508,24 @@
 			"element": "Water, Ice",
 			"drops": "Ice Organ, Aquatic Pal Fluids",
 			"food": "1/10",
-			"partner": "Pengullet Launcher - When activated, the player equips a Rocket Launcher to fire Pengullet as ammunition. Pengullet explodes on impact and is incapacitated. Technology 17",
+			"partner": "Pengullet Launcher - When activated, the player equips a Rocket Launcher to fire Pengullet as ammunition. Pengullet explodes on impact and is incapacitated.",
 			"tech": "Pengullet Rocket Launcher, Lvl 17",
 			"suitability": "Watering 1, Handiwork 1, Cooling 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-010-pengullet.png",
 			"habitat": "data/maps/017-pengullet.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "penguin",
+				"rank": 2960,
+				"priority": 296000,
+				"index": 31,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Pengullet Lux",
@@ -331,7 +541,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-010b-pengullet-lux.png",
 			"habitat": "data/maps/017b-pengullet-lux.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "penguin_electric",
+				"rank": 2490,
+				"priority": 572,
+				"index": 32,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Penking",
@@ -346,7 +566,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-011-penking.png",
 			"habitat": "data/maps/018-penking.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "captainpenguin",
+				"rank": 2070,
+				"priority": 207000,
+				"index": 143,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Penking Lux",
@@ -361,7 +591,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-011b-penking-lux.png",
 			"habitat": "data/maps/018b-penking-lux.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "captainpenguin_black",
+				"rank": 1850,
+				"priority": 573,
+				"index": 144,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Hoocrates",
@@ -376,7 +616,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-015-hoocrates.png",
 			"habitat": "data/maps/019-hoocrates.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "wizardowl",
+				"rank": 2940,
+				"priority": 294000,
+				"index": 97,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Melpaca",
@@ -392,7 +642,17 @@
 			"farmable": "Yes - Wool",
 			"thumbnail": "data/pals/pal-036-melpaca.png",
 			"habitat": "data/maps/020-melpaca.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "alpaca",
+				"rank": 2720,
+				"priority": 272000,
+				"index": 51,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Kingpaca",
@@ -407,11 +667,21 @@
 			"partner": "King of Muscles - Can be ridden. While in team, Kingpaca helps carry supplies, increasing the player's max carrying capacity.",
 			"tech": "Kingpaca Saddle, Lvl 23",
 			"suitability": "Gathering 2",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-089-kingpaca.png",
 			"habitat": "data/maps/021-kingpaca.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "kingalpaca",
+				"rank": 2220,
+				"priority": 222000,
+				"index": 128,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Kingpaca Cryst",
@@ -420,14 +690,24 @@
 			"element": "Ice",
 			"drops": "Wool, Ice Organ",
 			"food": "4/10",
-			"partner": "Coldhearted King - Can be ridden. This Pal's Defense and Movement Speed increase by (5~14)% for each Melpaca in party. Technology 46",
+			"partner": "Coldhearted King - Can be ridden. This Pal's Defense and Movement Speed increase by (5~14)% for each Melpaca in party.",
 			"tech": "Kingpaca Cryst Saddle, Lvl 46",
 			"suitability": "Gathering 2, Cooling 4",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-089b-kingpaca-cryst.png",
 			"habitat": "data/maps/021b-kingpaca-cryst.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "kingalpaca_ice",
+				"rank": 1530,
+				"priority": 153000,
+				"index": 129,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Daedream",
@@ -442,7 +722,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-019-daedream.png",
 			"habitat": "data/maps/022-daedream.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "dreamdemon",
+				"rank": 2910,
+				"priority": 291000,
+				"index": 123,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Tanzee",
@@ -458,7 +748,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-008-tanzee.png",
 			"habitat": "data/maps/023-tanzee.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "monkey",
+				"rank": 2900,
+				"priority": 290000,
+				"index": 124,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Tanzee Ignis",
@@ -467,14 +767,24 @@
 			"element": "Fire",
 			"drops": "Mushroom, Flame Organ",
 			"food": "1/10",
-			"partner": "Chipper Chimp Gunfire - When activated, Tanzee Ignis will mercilessly fire a Fire assault rifle at nearby enemies for a limited time. Technology 13",
+			"partner": "Chipper Chimp Gunfire - When activated, Tanzee Ignis will mercilessly fire a Fire assault rifle at nearby enemies for a limited time.",
 			"tech": "Tanzee Ignis's Assault Rifle, Lvl 13",
 			"suitability": "Kindling 1, Handiwork 1, Lumbering 1, Transporting 1",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-023b-tanzee-ignis.png",
 			"habitat": "data/maps/023b-tanzee-ignis.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "monkey_fire",
+				"rank": 2830,
+				"priority": 283000,
+				"index": 125,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Nox",
@@ -489,7 +799,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-021-nox.png",
 			"habitat": "data/maps/024-nox.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "nightfox",
+				"rank": 2920,
+				"priority": 292000,
+				"index": 142,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Flambelle",
@@ -504,7 +824,17 @@
 			"farmable": "Yes - Flame Organ",
 			"thumbnail": "data/pals/pal-070-flambelle.png",
 			"habitat": "data/maps/025-flambelle.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "lavagirl",
+				"rank": 2700,
+				"priority": 270000,
+				"index": 167,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Rooby",
@@ -519,7 +849,17 @@
 			"farmable": "Yes - Flame Organ",
 			"thumbnail": "data/pals/pal-009-rooby.png",
 			"habitat": "data/maps/026-rooby.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "flamebambi",
+				"rank": 2870,
+				"priority": 287000,
+				"index": 168,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Mau",
@@ -534,7 +874,17 @@
 			"farmable": "Yes - Gold Coin",
 			"thumbnail": "data/pals/pal-024-mau.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "bastet",
+				"rank": 3040,
+				"priority": 304000,
+				"index": 10,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Mau Cryst",
@@ -549,7 +899,17 @@
 			"farmable": "Yes - Ice Organ",
 			"thumbnail": "data/pals/pal-024b-mau-cryst.png",
 			"habitat": "data/maps/027b-mau-cryst.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "bastet_ice",
+				"rank": 2750,
+				"priority": 275000,
+				"index": 11,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Rushoar",
@@ -565,7 +925,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-020-rushoar.png",
 			"habitat": "data/maps/028-rushoar.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "boar",
+				"rank": 2880,
+				"priority": 288000,
+				"index": 12,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Foxparks",
@@ -581,7 +951,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-005-foxparks.png",
 			"habitat": "data/maps/029-foxparks.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "kitsunebi",
+				"rank": 2990,
+				"priority": 299000,
+				"index": 28,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Foxparks Cryst",
@@ -597,7 +977,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-005b-foxparks-cryst.png",
 			"habitat": "data/maps/029b-foxparks-cryst.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "kitsunebi_ice",
+				"rank": 2500,
+				"priority": 250000,
+				"index": 219,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Killamari",
@@ -612,7 +1002,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-023-killamari.png",
 			"habitat": "data/maps/030-killamari.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "negativeoctopus",
+				"rank": 2770,
+				"priority": 277000,
+				"index": 100,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Killamari Primo",
@@ -627,7 +1027,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-023b-killamari-primo.png",
 			"habitat": "data/maps/030b-killamari-primo.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "negativeoctopus_neutral",
+				"rank": 2540,
+				"priority": 571,
+				"index": 101,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Fuddler",
@@ -642,7 +1052,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-022-fuddler.png",
 			"habitat": "data/maps/031-fuddler.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "cutemole",
+				"rank": 2790,
+				"priority": 279000,
+				"index": 118,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Eikthyrdeer",
@@ -661,7 +1081,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-037-eikthyrdeer.png",
 			"habitat": "data/maps/032-eikthyrdeer.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "deer",
+				"rank": 2710,
+				"priority": 271000,
+				"index": 15,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Eikthyrdeer Terra",
@@ -680,7 +1110,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-037b-eikthyrdeer-terra.png",
 			"habitat": "data/maps/032b-eikthyrdeer-terra.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "deer_ground",
+				"rank": 2580,
+				"priority": 258000,
+				"index": 16,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Direhowl",
@@ -696,7 +1136,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-026-direhowl.png",
 			"habitat": "data/maps/033-direhowl.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "garm",
+				"rank": 2680,
+				"priority": 268000,
+				"index": 21,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Caprity",
@@ -711,7 +1161,17 @@
 			"farmable": "Yes - Red Berries",
 			"thumbnail": "data/pals/pal-035-caprity.png",
 			"habitat": "data/maps/034-caprity.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "berrygoat",
+				"rank": 2610,
+				"priority": 261000,
+				"index": 88,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Caprity Noct",
@@ -726,7 +1186,17 @@
 			"farmable": "Yes - Venom Gland",
 			"thumbnail": "data/pals/pal-035b-caprity-noct.png",
 			"habitat": "data/maps/034b-caprity-noct.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "berrygoat_dark",
+				"rank": 1940,
+				"priority": 194000,
+				"index": 220,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Swee",
@@ -741,7 +1211,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-053-swee.png",
 			"habitat": "data/maps/035-swee.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "mopbaby",
+				"rank": 2840,
+				"priority": 284000,
+				"index": 132,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Sweepa",
@@ -757,7 +1237,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-054-sweepa.png",
 			"habitat": "data/maps/036-sweepa.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "mopking",
+				"rank": 2150,
+				"priority": 215000,
+				"index": 133,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Turtacle",
@@ -772,7 +1262,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-148-turtacle.png",
 			"habitat": "data/maps/037-turtacle.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "tentacleturtle",
+				"rank": 2410,
+				"priority": 241000,
+				"index": 5,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Turtacle Terra",
@@ -787,7 +1287,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-148b-turtacle-terra.png",
 			"habitat": "data/maps/037b-turtacle-terra.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "tentacleturtle_ground",
+				"rank": 1330,
+				"priority": 577,
+				"index": 6,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Hangyu",
@@ -802,7 +1312,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-032-hangyu.png",
 			"habitat": "data/maps/038-hangyu.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "windchimes",
+				"rank": 2780,
+				"priority": 278000,
+				"index": 40,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Hangyu Cryst",
@@ -817,7 +1337,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-032b-hangyu-cryst.png",
 			"habitat": "data/maps/038b-hangyu-cryst.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "windchimes_ice",
+				"rank": 2510,
+				"priority": 251000,
+				"index": 41,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Woolipop",
@@ -832,7 +1362,17 @@
 			"farmable": "Yes - Cotton Candy",
 			"thumbnail": "data/pals/pal-034-woolipop.png",
 			"habitat": "data/maps/039-woolipop.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "sweetssheep",
+				"rank": 2820,
+				"priority": 282000,
+				"index": 48,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Woolipop Terra",
@@ -847,7 +1387,17 @@
 			"farmable": "Yes - Caramel Cotton Candy",
 			"thumbnail": "data/pals/pal-039b-woolipop-terra.png",
 			"habitat": "data/maps/039b-woolipop-terra.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "sweetssheep_ground",
+				"rank": 2030,
+				"priority": 203000,
+				"index": 49,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Mozzarina",
@@ -862,7 +1412,17 @@
 			"farmable": "Yes - Milk",
 			"thumbnail": "data/pals/pal-029-mozzarina.png",
 			"habitat": "data/maps/040-mozzarina.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "cowpal",
+				"rank": 2800,
+				"priority": 280000,
+				"index": 102,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Azurobe",
@@ -881,7 +1441,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-082-azurobe.png",
 			"habitat": "data/maps/041-azurobe.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "bluedragon",
+				"rank": 1830,
+				"priority": 183000,
+				"index": 55,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Azurobe Cryst",
@@ -900,7 +1470,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-082b-azurobe-cryst.png",
 			"habitat": "data/maps/041b-azurobe-cryst.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "bluedragon_ice",
+				"rank": 1220,
+				"priority": 578,
+				"index": 56,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Sparkit",
@@ -915,7 +1495,17 @@
 			"farmable": "Yes - Electric Organ",
 			"thumbnail": "data/pals/pal-007-sparkit.png",
 			"habitat": "data/maps/042-sparkit.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "eleccat",
+				"rank": 3010,
+				"priority": 301000,
+				"index": 77,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Kelpsea",
@@ -930,7 +1520,17 @@
 			"farmable": "Yes - Aquatic Pal Fluids",
 			"thumbnail": "data/pals/pal-081-kelpsea.png",
 			"habitat": "data/maps/043-kelpsea.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "kelpie",
+				"rank": 2810,
+				"priority": 281000,
+				"index": 98,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Kelpsea Ignis",
@@ -945,7 +1545,17 @@
 			"farmable": "Yes - Flame Organ",
 			"thumbnail": "data/pals/pal-081b-kelpsea-ignis.png",
 			"habitat": "data/maps/043b-kelpsea-ignis.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "kelpie_fire",
+				"rank": 2470,
+				"priority": 247000,
+				"index": 99,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": true
+			}
 		},
 		{
 			"name": "Ribbuny",
@@ -960,7 +1570,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-039-ribbuny.png",
 			"habitat": "data/maps/044-ribbuny.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "pinkrabbit",
+				"rank": 2860,
+				"priority": 286000,
+				"index": 136,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Ribbuny Botan",
@@ -975,7 +1595,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-039b-ribbuny-botan.png",
 			"habitat": "data/maps/044b-ribbuny-botan.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "pinkrabbit_grass",
+				"rank": 2460,
+				"priority": 246000,
+				"index": 221,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Jelliette",
@@ -990,7 +1620,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-150-jelliette.png",
 			"habitat": "data/maps/045-jelliette.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "jellyfishfairy",
+				"rank": 2650,
+				"priority": 265000,
+				"index": 215,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Jellroy",
@@ -1005,7 +1645,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-149-jellroy.png",
 			"habitat": "data/maps/046-jellroy.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "jellyfishghost",
+				"rank": 2590,
+				"priority": 259000,
+				"index": 265,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Amione",
@@ -1020,7 +1670,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-047-amione.png",
 			"habitat": "data/maps/047-amione.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "clionetwins",
+				"rank": 2520,
+				"priority": 252000,
+				"index": 294,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Gloopie",
@@ -1035,7 +1695,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-151-gloopie.png",
 			"habitat": "data/maps/048-gloopie.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "octopusgirl",
+				"rank": 2530,
+				"priority": 253000,
+				"index": 211,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Gloopie Primo",
@@ -1050,7 +1720,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-048b-gloopie-primo.png",
 			"habitat": "data/maps/048b-gloopie-primo.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "octopusgirl_neutral",
+				"rank": 1630,
+				"priority": 163000,
+				"index": 212,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Galeclaw",
@@ -1065,7 +1745,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-047-galeclaw.png",
 			"habitat": "data/maps/049-galeclaw.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "eagle",
+				"rank": 2570,
+				"priority": 257000,
+				"index": 18,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Wispaw",
@@ -1083,7 +1773,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-050-wispaw.png",
 			"habitat": "data/maps/050-wispaw.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "ghostblackcat",
+				"rank": 2250,
+				"priority": 225000,
+				"index": 254,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Nitewing",
@@ -1099,7 +1799,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-038-nitewing.png",
 			"habitat": "data/maps/051-nitewing.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "hawkbird",
+				"rank": 2560,
+				"priority": 256000,
+				"index": 106,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Tombat",
@@ -1114,7 +1824,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-068-tombat.png",
 			"habitat": "data/maps/052-tombat.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "catbat",
+				"rank": 2340,
+				"priority": 234000,
+				"index": 112,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Tocotoco",
@@ -1130,7 +1850,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-027-tocotoco.png",
 			"habitat": "data/maps/053-tocotoco.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "colorfulbird",
+				"rank": 2730,
+				"priority": 273000,
+				"index": 14,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Univolt",
@@ -1149,7 +1879,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-056-univolt.png",
 			"habitat": "data/maps/054-univolt.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "kirin",
+				"rank": 2270,
+				"priority": 227000,
+				"index": 26,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Univolt Cryst",
@@ -1161,14 +1901,24 @@
 				"70": "World Tree Holy Water, Ice Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "3/10",
-			"partner": "Frigid Deity - Can be ridden. While mounted, changes the player's attack type to Ice and increases Attack by (5~20)%. Technology 64",
+			"partner": "Frigid Deity - Can be ridden. While mounted, changes the player's attack type to Ice and increases Attack by (5~20)%.",
 			"tech": "Univolt Cryst Saddle, Lvl 64",
 			"suitability": "Lumbering 3, Cooling 6",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-054b-univolt-cryst.png",
 			"habitat": "data/maps/054b-univolt-cryst.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "kirin_ice",
+				"rank": 540,
+				"priority": 54000,
+				"index": 27,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Gobfin",
@@ -1183,7 +1933,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-031-gobfin.png",
 			"habitat": "data/maps/055-gobfin.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "sharkkid",
+				"rank": 2550,
+				"priority": 255000,
+				"index": 34,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Gobfin Ignis",
@@ -1198,7 +1958,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-031b-gobfin-ignis.png",
 			"habitat": "data/maps/055b-gobfin-ignis.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "sharkkid_fire",
+				"rank": 2430,
+				"priority": 243000,
+				"index": 35,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Loupmoon",
@@ -1213,7 +1983,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-046-loupmoon.png",
 			"habitat": "data/maps/056-loupmoon.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "werewolf",
+				"rank": 2110,
+				"priority": 211000,
+				"index": 39,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Loupmoon Cryst",
@@ -1228,7 +2008,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-046b-loupmoon-cryst.png",
 			"habitat": "data/maps/056b-loupmoon-cryst.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "werewolf_ice",
+				"rank": 1290,
+				"priority": 129000,
+				"index": 222,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Cawgnito",
@@ -1243,7 +2033,17 @@
 			"farmable": "Yes - Bone",
 			"thumbnail": "data/pals/pal-044-cawgnito.png",
 			"habitat": "data/maps/057-cawgnito.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "darkcrow",
+				"rank": 2370,
+				"priority": 237000,
+				"index": 54,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Arsox",
@@ -1259,7 +2059,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-042-arsox.png",
 			"habitat": "data/maps/058-arsox.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "flamebuffalo",
+				"rank": 2320,
+				"priority": 232000,
+				"index": 115,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Muffly",
@@ -1274,7 +2084,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-059-muffly.png",
 			"habitat": "data/maps/059-muffly.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "fluffybird",
+				"rank": 2480,
+				"priority": 248000,
+				"index": 292,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Bristla",
@@ -1289,7 +2109,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-030-bristla.png",
 			"habitat": "data/maps/060-bristla.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "littlebriarrose",
+				"rank": 2690,
+				"priority": 269000,
+				"index": 29,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Cinnamoth",
@@ -1304,7 +2134,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-041-cinnamoth.png",
 			"habitat": "data/maps/061-cinnamoth.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "cutebutterfly",
+				"rank": 2620,
+				"priority": 262000,
+				"index": 160,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Puffolt",
@@ -1319,7 +2159,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-062-puffolt.png",
 			"habitat": "data/maps/062-puffolt.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "elecpomeranian",
+				"rank": 2360,
+				"priority": 236000,
+				"index": 253,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Elphidran",
@@ -1338,7 +2188,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-080-elphidran.png",
 			"habitat": "data/maps/063-elphidran.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "fairydragon",
+				"rank": 2280,
+				"priority": 228000,
+				"index": 46,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Elphidran Aqua",
@@ -1357,7 +2217,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-080b-elphidran-aqua.png",
 			"habitat": "data/maps/063b-elphidran-aqua.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "fairydragon_water",
+				"rank": 1640,
+				"priority": 164000,
+				"index": 47,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Vanwyrm",
@@ -1373,7 +2243,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-071-vanwyrm.png",
 			"habitat": "data/maps/064-vanwyrm.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "birddragon",
+				"rank": 1650,
+				"priority": 165000,
+				"index": 72,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Vanwyrm Cryst",
@@ -1389,11 +2269,21 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-071b-vanwyrm-cryst.png",
 			"habitat": "data/maps/064b-vanwyrm-cryst.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "birddragon_ice",
+				"rank": 1430,
+				"priority": 143000,
+				"index": 73,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Felbat",
-			"description": "a - Attacking from the shadows, this Pal traps its prey within its cloak-like wings. It's probably best not to know what happens within them, or why the inside of its wings are stained red.",
+			"description": "Attacking from the shadows, this Pal traps its prey within its cloak-like wings. It's probably best not to know what happens within them, or why the inside of its wings are stained red.",
 			"number": "065",
 			"element": "Dark",
 			"drops": "Cloth, Small Pal Soul",
@@ -1404,7 +2294,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-094-felbat.png",
 			"habitat": "data/maps/065-felbat.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "catvampire",
+				"rank": 1570,
+				"priority": 157000,
+				"index": 82,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Vaelet",
@@ -1419,7 +2319,17 @@
 			"farmable": "Yes - Tomato Seeds, Wheat Seeds, Potato Seeds, Carrot Seeds, Onion Seeds, Lettuce Seeds",
 			"thumbnail": "data/pals/pal-078-vaelet.png",
 			"habitat": "data/maps/066-vaelet.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "violetfairy",
+				"rank": 1480,
+				"priority": 148000,
+				"index": 105,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Beegarde",
@@ -1434,7 +2344,17 @@
 			"farmable": "Yes - Honey",
 			"thumbnail": "data/pals/pal-050-beegarde.png",
 			"habitat": "data/maps/067-beegarde.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "soldierbee",
+				"rank": 2350,
+				"priority": 235000,
+				"index": 111,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Elizabee",
@@ -1449,7 +2369,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-051-elizabee.png",
 			"habitat": "data/maps/068-elizabee.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "queenbee",
+				"rank": 1790,
+				"priority": 179000,
+				"index": 110,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Lovander",
@@ -1464,7 +2394,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-069-lovander.png",
 			"habitat": "data/maps/069-lovander.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "pinklizard",
+				"rank": 2090,
+				"priority": 209000,
+				"index": 96,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Grintale",
@@ -1473,14 +2413,24 @@
 			"element": "Neutral",
 			"drops": "High Quality Pal Oil",
 			"food": "4/10",
-			"partner": "Glaring Cat's Eye - Can be ridden. While in party, picking up a Pal Egg has a (50~75)% chance of receiving one extra. (Does not stack) Technology 19",
+			"partner": "Glaring Cat's Eye - Can be ridden. While in party, picking up a Pal Egg has a (50~75)% chance of receiving one extra. (Does not stack)",
 			"tech": "Grintale Saddle, Lvl 19",
 			"suitability": "Gathering 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-052-grintale.png",
 			"habitat": "data/maps/070-grintale.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "naughtycat",
+				"rank": 2120,
+				"priority": 212000,
+				"index": 159,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Tarantriss",
@@ -1489,14 +2439,24 @@
 			"element": "Dark",
 			"drops": "Fiber, Venom Gland",
 			"food": "4/10",
-			"partner": "Tarantriss' Web - Can be ridden. Can double jump while mounted. Additionally, can shoot spider web to grapple and move at high speed. Technology 20",
+			"partner": "Tarantriss' Web - Can be ridden. Can double jump while mounted. Additionally, can shoot spider web to grapple and move at high speed.",
 			"tech": "Tarantriss Saddle, Lvl 20",
 			"suitability": "Handiwork 3, Gathering 3, Medicine Production 2, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-135-tarantriss.png",
 			"habitat": "data/maps/071-tarantriss.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "purplespider",
+				"rank": 1730,
+				"priority": 173000,
+				"index": 207,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Polapup",
@@ -1512,7 +2472,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-147-polapup.png",
 			"habitat": "data/maps/072-polapup.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "iceseal",
+				"rank": 1660,
+				"priority": 166000,
+				"index": 250,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Polapup Terra",
@@ -1524,14 +2494,24 @@
 				"70": "World Tree Holy Water, Ground Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "4/10",
-			"partner": "Snowy Mountain Slider - Can be ridden. Movement Speed is increased by (80~160)% while mounted on snow. Can also slide quickly down slopes. While it starts out slow, the top speed it can hit while sliding is no joke. Technology 55",
+			"partner": "Snowy Mountain Slider - Can be ridden. Movement Speed is increased by (80~160)% while mounted on snow. Can also slide quickly down slopes. While it starts out slow, the top speed it can hit while sliding is no joke.",
 			"tech": "Polapup Terra Saddle, Lvl 55",
 			"suitability": "Mining 4, Cooling 4",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-072b-polapup-terra.png",
 			"habitat": "data/maps/072b-polapup-terra.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "iceseal_ground",
+				"rank": 1100,
+				"priority": 110000,
+				"index": 251,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Leezpunk",
@@ -1546,7 +2526,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-045-leezpunk.png",
 			"habitat": "data/maps/073-leezpunk.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "lizardman",
+				"rank": 2670,
+				"priority": 267000,
+				"index": 68,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Leezpunk Ignis",
@@ -1561,7 +2551,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-045b-leezpunk-ignis.png",
 			"habitat": "data/maps/073b-leezpunk-ignis.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "lizardman_fire",
+				"rank": 2640,
+				"priority": 264000,
+				"index": 69,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Gorirat",
@@ -1579,7 +2579,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-049-gorirat.png",
 			"habitat": "data/maps/074-gorirat.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "gorilla",
+				"rank": 2140,
+				"priority": 214000,
+				"index": 22,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Gorirat Terra",
@@ -1597,7 +2607,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-049b-gorirat-terra.png",
 			"habitat": "data/maps/074b-gorirat-terra.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "gorilla_ground",
+				"rank": 1880,
+				"priority": 188000,
+				"index": 23,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Surfent",
@@ -1613,7 +2633,17 @@
 			"farmable": "Yes - Leather",
 			"thumbnail": "data/pals/pal-065-surfent.png",
 			"habitat": "data/maps/075-surfent.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "serpent",
+				"rank": 2440,
+				"priority": 244000,
+				"index": 52,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Surfent Terra",
@@ -1629,7 +2659,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-065b-surfent-terra.png",
 			"habitat": "data/maps/075b-surfent-terra.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "serpent_ground",
+				"rank": 1840,
+				"priority": 184000,
+				"index": 53,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Robinquill",
@@ -1644,7 +2684,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-048-robinquill.png",
 			"habitat": "data/maps/076-robinquill.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "robinhood",
+				"rank": 2260,
+				"priority": 226000,
+				"index": 63,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Robinquill Terra",
@@ -1659,7 +2709,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-048b-robinquill-terra.png",
 			"habitat": "data/maps/076b-robinquill-terra.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "robinhood_ground",
+				"rank": 2050,
+				"priority": 205000,
+				"index": 64,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Flopie",
@@ -1674,7 +2734,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-028-flopie.png",
 			"habitat": "data/maps/077-flopie.png",
-			"rarity": 1
+			"rarity": 1,
+			"breeding": {
+				"id": "flowerrabbit",
+				"rank": 2660,
+				"priority": 266000,
+				"index": 107,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Wixen",
@@ -1689,7 +2759,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-076-wixen.png",
 			"habitat": "data/maps/078-wixen.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "foxmage",
+				"rank": 2080,
+				"priority": 208000,
+				"index": 94,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Wixen Noct",
@@ -1704,7 +2784,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-076b-wixen-noct.png",
 			"habitat": "data/maps/078b-wixen-noct.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "foxmage_dark",
+				"rank": 1490,
+				"priority": 149000,
+				"index": 95,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Katress",
@@ -1719,7 +2809,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-075-katress.png",
 			"habitat": "data/maps/079-katress.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "catmage",
+				"rank": 2040,
+				"priority": 204000,
+				"index": 134,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Katress Ignis",
@@ -1734,7 +2834,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-075b-katress-ignis.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "catmage_fire",
+				"rank": 1800,
+				"priority": 180000,
+				"index": 135,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Helzephyr",
@@ -1753,7 +2863,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-097-helzephyr.png",
 			"habitat": "data/maps/080-helzephyr.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "hadesbird",
+				"rank": 1130,
+				"priority": 113000,
+				"index": 149,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Helzephyr Lux",
@@ -1772,7 +2892,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-097b-helzephyr-lux.png",
 			"habitat": "data/maps/080b-helzephyr-lux.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "hadesbird_electric",
+				"rank": 960,
+				"priority": 96000,
+				"index": 150,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Elgrove",
@@ -1791,7 +2921,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-081-elgrove.png",
 			"habitat": "data/maps/081-elgrove.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "grassminotaur",
+				"rank": 2020,
+				"priority": 202000,
+				"index": 301,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Elgrove Cryst",
@@ -1809,7 +2949,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-081b-elgrove-cryst.png",
 			"habitat": "data/maps/081b-elgrove-cryst.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "grassminotaur_ice",
+				"rank": 440,
+				"priority": 44000,
+				"index": 302,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Lunaris",
@@ -1824,11 +2974,21 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-063-lunaris.png",
 			"habitat": "data/maps/082-lunaris.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "mutant",
+				"rank": 2010,
+				"priority": 201000,
+				"index": 30,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Fenglope",
-			"description": "a - In ages past, its beautiful visage was a common sight in paintings. As time passed, its beautiful pelt and antlers were often seen in works of art.",
+			"description": "In ages past, its beautiful visage was a common sight in paintings. As time passed, its beautiful pelt and antlers were often seen in works of art.",
 			"number": "083",
 			"element": "Neutral",
 			"drops": "Leather, Horn",
@@ -1843,7 +3003,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-093-fenglope.png",
 			"habitat": "data/maps/083-fenglope.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "fengyundeeper",
+				"rank": 1960,
+				"priority": 196000,
+				"index": 59,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Fenglope Lux",
@@ -1862,7 +3032,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-093b-fenglope-lux.png",
 			"habitat": "data/maps/083b-fenglope-lux.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "fengyundeeper_electric",
+				"rank": 900,
+				"priority": 90000,
+				"index": 226,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Dinossom",
@@ -1871,14 +3051,24 @@
 			"element": "Grass, Dragon",
 			"drops": "Tomato Seeds, Lettuce Seeds",
 			"food": "4/10",
-			"partner": "Fragrant Dragon - Can be ridden. Enchances Grass attacks while mounted.",
+			"partner": "Fragrant Dragon - Can be ridden. Enhances Grass attacks while mounted.",
 			"tech": "Dinossom Saddle, Lvl 24",
 			"suitability": "Planting 3, Lumbering 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-064-dinossom.png",
 			"habitat": "data/maps/084-dinossom.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "flowerdinosaur",
+				"rank": 2100,
+				"priority": 210000,
+				"index": 75,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Dinossom Lux",
@@ -1894,7 +3084,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-064b-dinossom-lux.png",
 			"habitat": "data/maps/084b-dinossom-lux.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "flowerdinosaur_electric",
+				"rank": 1890,
+				"priority": 189000,
+				"index": 76,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Bushi",
@@ -1909,7 +3109,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-072-bushi.png",
 			"habitat": "data/maps/085-bushi.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "ronin",
+				"rank": 1560,
+				"priority": 156000,
+				"index": 152,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Bushi Noct",
@@ -1924,7 +3134,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-072b-bushi-noct.png",
 			"habitat": "data/maps/085b-bushi-noct.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "ronin_dark",
+				"rank": 840,
+				"priority": 84000,
+				"index": 153,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Munchill",
@@ -1939,7 +3159,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-146-munchill.png",
 			"habitat": "data/maps/086-munchill.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "icecrocodile",
+				"rank": 2130,
+				"priority": 213000,
+				"index": 243,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Mammorest",
@@ -1958,7 +3188,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-090-mammorest.png",
 			"habitat": "data/maps/087-mammorest.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "grassmammoth",
+				"rank": 1340,
+				"priority": 134000,
+				"index": 80,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Mammorest Cryst",
@@ -1977,7 +3217,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-090b-mammorest-cryst.png",
 			"habitat": "data/maps/087b-mammorest-cryst.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "grassmammoth_ice",
+				"rank": 1070,
+				"priority": 107000,
+				"index": 81,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Finsider",
@@ -1992,7 +3242,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-152-finsider.png",
 			"habitat": "data/maps/088-finsider.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "stuffedshark",
+				"rank": 2450,
+				"priority": 245000,
+				"index": 247,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Finsider Ignis",
@@ -2007,7 +3267,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-152b-finsider-ignis.png",
 			"habitat": "data/maps/088b-finsider-ignis.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "stuffedshark_fire",
+				"rank": 2240,
+				"priority": 581,
+				"index": 248,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Petallia",
@@ -2022,7 +3292,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-087-petallia.png",
 			"habitat": "data/maps/089-petallia.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "flowerdoll",
+				"rank": 1720,
+				"priority": 172000,
+				"index": 157,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Petallia Ignis",
@@ -2040,7 +3320,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-089b-petallia-ignis.png",
 			"habitat": "data/maps/089b-petallia-ignis.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "flowerdoll_fire",
+				"rank": 820,
+				"priority": 82000,
+				"index": 158,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Leafan",
@@ -2055,7 +3345,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-090-leafan.png",
 			"habitat": "data/maps/090-leafan.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "pandagirl",
+				"rank": 1410,
+				"priority": 141000,
+				"index": 300,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Incineram",
@@ -2070,7 +3370,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-040-incineram.png",
 			"habitat": "data/maps/091-incineram.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "baphomet",
+				"rank": 1470,
+				"priority": 147000,
+				"index": 8,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Incineram Noct",
@@ -2085,7 +3395,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-040b-incineram-noct.png",
 			"habitat": "data/maps/091b-incineram-noct.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "baphomet_dark",
+				"rank": 1310,
+				"priority": 131000,
+				"index": 9,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Dazzi",
@@ -2100,7 +3420,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-062-dazzi.png",
 			"habitat": "data/maps/092-dazzi.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "raijindaughter",
+				"rank": 2400,
+				"priority": 240000,
+				"index": 33,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Dazzi Noct",
@@ -2115,7 +3445,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-062b-dazzi-noct.png",
 			"habitat": "data/maps/092b-dazzi-noct.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "raijindaughter_water",
+				"rank": 1910,
+				"priority": 191000,
+				"index": 224,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Pyrin",
@@ -2134,7 +3474,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-058-pyrin.png",
 			"habitat": "data/maps/093-pyrin.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "firekirin",
+				"rank": 1980,
+				"priority": 198000,
+				"index": 44,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Pyrin Noct",
@@ -2153,7 +3503,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-058b-pyrin-noct.png",
 			"habitat": "data/maps/093b-pyrin-noct.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "firekirin_dark",
+				"rank": 1870,
+				"priority": 187000,
+				"index": 45,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Relaxaurus",
@@ -2172,7 +3532,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-085-relaxaurus.png",
 			"habitat": "data/maps/094-relaxaurus.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "lazydragon",
+				"rank": 1090,
+				"priority": 109000,
+				"index": 65,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Relaxaurus Lux",
@@ -2191,7 +3561,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-085b-relaxaurus-lux.png",
 			"habitat": "data/maps/094b-relaxaurus-lux.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "lazydragon_electric",
+				"rank": 770,
+				"priority": 77000,
+				"index": 66,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Foxcicle",
@@ -2206,7 +3586,17 @@
 			"farmable": "Yes - Ice Organ",
 			"thumbnail": "data/pals/pal-057-foxcicle.png",
 			"habitat": "data/maps/095-foxcicle.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "icefox",
+				"rank": 1970,
+				"priority": 197000,
+				"index": 121,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Beakon",
@@ -2225,7 +3615,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-073-beakon.png",
 			"habitat": "data/maps/096-beakon.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "thunderbird",
+				"rank": 1690,
+				"priority": 169000,
+				"index": 137,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Beakon Cryst",
@@ -2237,14 +3637,24 @@
 				"70": "World Tree Holy Water, Water Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "5/10",
-			"partner": "Coldsnap - Can be ridden as a flying mount. While mounted, changes the player's attack type to Ice and increases Attack by (5~20)%. This Pal's Movement Speed increases by (5~25)% for each other Ice Pal in your party. (Excluding Beakon Cryst ) Technology 71",
+			"partner": "Coldsnap - Can be ridden as a flying mount. While mounted, changes the player's attack type to Ice and increases Attack by (5~20)%. This Pal's Movement Speed increases by (5~25)% for each other Ice Pal in your party. (Excluding Beakon Cryst )",
 			"tech": "Beakon Cryst Saddle, Lvl 71",
 			"suitability": "Gathering 2, Cooling 5, Transporting 5",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-096b-beakon-cryst.png",
 			"habitat": "data/maps/096b-beakon-cryst.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "thunderbird_ice",
+				"rank": 580,
+				"priority": 58000,
+				"index": 138,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Ghangler",
@@ -2253,14 +3663,24 @@
 			"element": "Water, Dark",
 			"drops": "Bone, Venom Gland",
 			"food": "7/10",
-			"partner": "Master of Darkness - Can be ridden to travel on water. This Pal's Movement Speed increases by (5~25)% for each other Dark or Water Pal in your party. (Excluding Ghangler ) Technology 31",
+			"partner": "Master of Darkness - Can be ridden to travel on water. This Pal's Movement Speed increases by (5~25)% for each other Dark or Water Pal in your party. (Excluding Ghangler )",
 			"tech": "Ghangler Saddle, Lvl 31",
 			"suitability": "Watering 5, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-153-ghangler.png",
 			"habitat": "data/maps/097-ghangler.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "ghostanglerfish",
+				"rank": 880,
+				"priority": 88000,
+				"index": 236,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Ghangler Ignis",
@@ -2269,14 +3689,24 @@
 			"element": "Water, Fire",
 			"drops": "Bone, Flame Organ",
 			"food": "7/10",
-			"partner": "Abyssal Celebrity Chef - Can be ridden to travel on water. This Pal's Movement Speed increases by (5~25)% for each other Fire or Water Pal in your party. (Excluding Ghangler Ignis ) Technology 42",
+			"partner": "Abyssal Celebrity Chef - Can be ridden to travel on water. This Pal's Movement Speed increases by (5~25)% for each other Fire or Water Pal in your party. (Excluding Ghangler Ignis )",
 			"tech": "Ghangler Ignis Saddle, Lvl 42",
 			"suitability": "Kindling 5, Watering 5, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-153b-ghangler-ignis.png",
 			"habitat": "data/maps/097b-ghangler-ignis.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "ghostanglerfish_fire",
+				"rank": 720,
+				"priority": 72000,
+				"index": 237,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Rayhound",
@@ -2285,14 +3715,24 @@
 			"element": "Electric",
 			"drops": "Electric Organ",
 			"food": "4/10",
-			"partner": "Lightning Shepherd - Can be ridden. Can perform a double jump while mounted. This Pal's Movement Speed increases by (5~25)% for each other Electric Pal in your party. (Excluding Rayhound ) Technology 30",
+			"partner": "Lightning Shepherd - Can be ridden. Can perform a double jump while mounted. This Pal's Movement Speed increases by (5~25)% for each other Electric Pal in your party. (Excluding Rayhound )",
 			"tech": "Rayhound Saddle, Lvl 30",
 			"suitability": "Generating Electricity 4",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-060-rayhound.png",
 			"habitat": "data/maps/098-rayhound.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "thunderdog",
+				"rank": 1920,
+				"priority": 192000,
+				"index": 116,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Rayhound Cryst",
@@ -2304,14 +3744,24 @@
 				"70": "World Tree Holy Water, Water Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "4/10",
-			"partner": "Snow Shepherd - Can be ridden. Can perform a double jump while mounted. While in party, increases Defense of Ice Pals by (15~30)%. (Does not stack) Technology 32",
+			"partner": "Snow Shepherd - Can be ridden. Can perform a double jump while mounted. While in party, increases Defense of Ice Pals by (15~30)%. (Does not stack)",
 			"tech": "Rayhound Cryst Saddle, Lvl 32",
 			"suitability": "Cooling 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-098b-rayhound-cryst.png",
 			"habitat": "data/maps/098b-rayhound-cryst.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "thunderdog_ice",
+				"rank": 1600,
+				"priority": 160000,
+				"index": 117,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Menasting",
@@ -2326,7 +3776,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-099-menasting.png",
 			"habitat": "data/maps/099-menasting.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "darkscorpion",
+				"rank": 1120,
+				"priority": 112000,
+				"index": 161,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Menasting Terra",
@@ -2341,7 +3801,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-099b-menasting-terra.png",
 			"habitat": "data/maps/099b-menasting-terra.png",
-			"rarity": 10
+			"rarity": 10,
+			"breeding": {
+				"id": "darkscorpion_ground",
+				"rank": 640,
+				"priority": 64000,
+				"index": 162,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Needoll",
@@ -2356,7 +3826,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-100-needoll.png",
 			"habitat": "data/maps/100-needoll.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "cactusdoll",
+				"rank": 2420,
+				"priority": 242000,
+				"index": 244,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Needoll Noct",
@@ -2371,7 +3851,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-100b-needoll-noct.png",
 			"habitat": "data/maps/100b-needoll-noct.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "cactusdoll_dark",
+				"rank": 1580,
+				"priority": 158000,
+				"index": 245,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Reindrix",
@@ -2390,7 +3880,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-059-reindrix.png",
 			"habitat": "data/maps/101-reindrix.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "icedeer",
+				"rank": 1930,
+				"priority": 193000,
+				"index": 89,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Mossanda",
@@ -2409,7 +3909,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-033-mossanda.png",
 			"habitat": "data/maps/102-mossanda.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "grasspanda",
+				"rank": 2060,
+				"priority": 206000,
+				"index": 113,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Mossanda Lux",
@@ -2429,7 +3939,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-033b-mossanda-lux.png",
 			"habitat": "data/maps/102b-mossanda-lux.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "grasspanda_electric",
+				"rank": 1440,
+				"priority": 144000,
+				"index": 114,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Chillet",
@@ -2448,7 +3968,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-055-chillet.png",
 			"habitat": "data/maps/103-chillet.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "weaseldragon",
+				"rank": 2330,
+				"priority": 233000,
+				"index": 145,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Chillet Ignis",
@@ -2460,14 +3990,24 @@
 				"80": "Fire Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "3/10",
-			"partner": "Sparkling Weasel - Can be ridden. While mounted, changes the player's attack type to Fire and increases Attack by (5~20)%. Technology 40",
+			"partner": "Sparkling Weasel - Can be ridden. While mounted, changes the player's attack type to Fire and increases Attack by (5~20)%.",
 			"tech": "Chillet Ignis Saddle, Lvl 40",
 			"suitability": "Kindling 4, Gathering 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-055b-chillet-ignis.png",
 			"habitat": "data/maps/103b-chillet-ignis.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "weaseldragon_fire",
+				"rank": 1950,
+				"priority": 195000,
+				"index": 146,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Ragnahawk",
@@ -2486,7 +4026,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-074-ragnahawk.png",
 			"habitat": "data/maps/104-ragnahawk.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "redarmorbird",
+				"rank": 1050,
+				"priority": 105000,
+				"index": 151,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Moldron",
@@ -2498,14 +4048,24 @@
 				"80": "Fire Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "8/10",
-			"partner": "Magma Overload - Can be ridden as a mount. This Pal's Attack increases by (4~8)% for each other Fire or Ground Pal in your party. Technology 36",
+			"partner": "Magma Overload - Can be ridden as a mount. This Pal's Attack increases by (4~8)% for each other Fire or Ground Pal in your party.",
 			"tech": "Moldron Saddle, Lvl 36",
 			"suitability": "Kindling 5, Mining 5",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-105-moldron.png",
 			"habitat": "data/maps/105-moldron.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "volcanodragon",
+				"rank": 750,
+				"priority": 75000,
+				"index": 189,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Moldron Cryst",
@@ -2514,14 +4074,24 @@
 			"element": "Ice, Ground",
 			"drops": "Ice Organ, Leather",
 			"food": "8/10",
-			"partner": "Ice Overload - Can be ridden. While in party, improves player's and Pals' Ice damage to enemy weak points by (25~40)%. (Does not stack) Technology 70",
+			"partner": "Ice Overload - Can be ridden. While in party, improves player's and Pals' Ice damage to enemy weak points by (25~40)%. (Does not stack)",
 			"tech": "Moldron Cryst Saddle, Lvl 70",
 			"suitability": "Mining 5, Cooling 5",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-105b-moldron-cryst.png",
 			"habitat": "data/maps/105b-moldron-cryst.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "volcanodragon_ice",
+				"rank": 380,
+				"priority": 38000,
+				"index": 190,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Palumba",
@@ -2537,7 +4107,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-144-palumba.png",
 			"habitat": "data/maps/106-palumba.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "tropicalostrich",
+				"rank": 1240,
+				"priority": 124000,
+				"index": 258,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Digtoise",
@@ -2552,7 +4132,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-067-digtoise.png",
 			"habitat": "data/maps/107-digtoise.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "drillgame",
+				"rank": 1550,
+				"priority": 155000,
+				"index": 17,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Broncherry",
@@ -2564,14 +4154,24 @@
 				"80": "Grass Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "6/10",
-			"partner": "Love's First Blossom - Can be ridden. While in party, Pal Eggs you pick up have a (35~45)% chance of becoming an Alpha Pal Egg. (Does not stack) Technology 33",
+			"partner": "Love's First Blossom - Can be ridden. While in party, Pal Eggs you pick up have a (35~45)% chance of becoming an Alpha Pal Egg. (Does not stack)",
 			"tech": "Broncherry Saddle, Lvl 33",
 			"suitability": "Planting 5",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-086-broncherry.png",
 			"habitat": "data/maps/108-broncherry.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "sakurasaurus",
+				"rank": 1380,
+				"priority": 138000,
+				"index": 83,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Broncherry Aqua",
@@ -2583,14 +4183,24 @@
 				"80": "Grass Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "6/10",
-			"partner": "Purity's Full Bloom - Can be ridden. While in party, Pal Eggs you pick up have a (45~55)% chance of becoming an Alpha Pal Egg. (Does not stack) Technology 44",
+			"partner": "Purity's Full Bloom - Can be ridden. While in party, Pal Eggs you pick up have a (45~55)% chance of becoming an Alpha Pal Egg. (Does not stack)",
 			"tech": "Broncherry Aqua Saddle, Lvl 44",
 			"suitability": "Watering 5",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-086b-broncherry-aqua.png",
 			"habitat": "data/maps/108b-broncherry-aqua.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "sakurasaurus_water",
+				"rank": 1080,
+				"priority": 108000,
+				"index": 84,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Dumud",
@@ -2605,7 +4215,17 @@
 			"farmable": "Yes - High Quality Pal Oil",
 			"thumbnail": "data/pals/pal-043-dumud.png",
 			"habitat": "data/maps/109-dumud.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "lazycatfish",
+				"rank": 2290,
+				"priority": 229000,
+				"index": 165,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Dumud Gild",
@@ -2620,7 +4240,17 @@
 			"farmable": "Yes - High Quality Pal Oil, Gold Coin",
 			"thumbnail": "data/pals/pal-043b-dumud-gild.png",
 			"habitat": "data/maps/109b-dumud-gild.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "lazycatfish_gold",
+				"rank": 1620,
+				"priority": 576,
+				"index": 166,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Braloha",
@@ -2639,7 +4269,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-145-braloha.png",
 			"habitat": "data/maps/110-braloha.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "plesiosaur",
+				"rank": 1030,
+				"priority": 103000,
+				"index": 257,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Kitsun",
@@ -2648,14 +4288,24 @@
 			"element": "Fire",
 			"drops": "Flame Organ, Leather",
 			"food": "5/10",
-			"partner": "Wolf of the Sun - Can be ridden. While in party, player and party Pals take (15~30)% less Ice damage and are immune to Freeze. (Does not stack) Technology 57",
+			"partner": "Wolf of the Sun - Can be ridden. While in party, player and party Pals take (15~30)% less Ice damage and are immune to Freeze. (Does not stack)",
 			"tech": "Kitsun Saddle, Lvl 57",
 			"suitability": "Kindling 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-061-kitsun.png",
 			"habitat": "data/maps/111-kitsun.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "amaterasuwolf",
+				"rank": 1670,
+				"priority": 167000,
+				"index": 67,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Kitsun Noct",
@@ -2671,7 +4321,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-061b-kitsun-noct.png",
 			"habitat": "data/maps/111b-kitsun-noct.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "amaterasuwolf_dark",
+				"rank": 800,
+				"priority": 80000,
+				"index": 223,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Blazehowl",
@@ -2690,7 +4350,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-084-blazehowl.png",
 			"habitat": "data/maps/112-blazehowl.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "manticore",
+				"rank": 1360,
+				"priority": 136000,
+				"index": 126,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Blazehowl Noct",
@@ -2709,7 +4379,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-084b-blazehowl-noct.png",
 			"habitat": "data/maps/112b-blazehowl-noct.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "manticore_dark",
+				"rank": 1270,
+				"priority": 127000,
+				"index": 127,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Warsect",
@@ -2727,7 +4407,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-092-warsect.png",
 			"habitat": "data/maps/113-warsect.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "herculesbeetle",
+				"rank": 1280,
+				"priority": 128000,
+				"index": 139,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Warsect Terra",
@@ -2742,7 +4432,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-092b-warsect-terra.png",
 			"habitat": "data/maps/113b-warsect-terra.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "herculesbeetle_ground",
+				"rank": 630,
+				"priority": 63000,
+				"index": 140,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Frostplume",
@@ -2757,7 +4457,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-143-frostplume.png",
 			"habitat": "data/maps/114-frostplume.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "snowpeafowl",
+				"rank": 860,
+				"priority": 86000,
+				"index": 261,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Majex",
@@ -2775,7 +4485,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-115-majex.png",
 			"habitat": "data/maps/115-majex.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "darkflamefox",
+				"rank": 1010,
+				"priority": 101000,
+				"index": 295,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Sibelyx",
@@ -2790,7 +4510,17 @@
 			"farmable": "Yes - High Quality Cloth",
 			"thumbnail": "data/pals/pal-079-sibelyx.png",
 			"habitat": "data/maps/116-sibelyx.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "whitemoth",
+				"rank": 1810,
+				"priority": 181000,
+				"index": 91,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Sibelyx Primo",
@@ -2808,7 +4538,17 @@
 			"farmable": "Yes - High Quality Cloth",
 			"thumbnail": "data/pals/pal-116b-sibelyx-primo.png",
 			"habitat": "data/maps/116b-sibelyx-primo.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "whitemoth_neutral",
+				"rank": 650,
+				"priority": 65000,
+				"index": 92,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Maraith",
@@ -2824,7 +4564,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-066-maraith.png",
 			"habitat": "data/maps/117-maraith.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "ghostbeast",
+				"rank": 1710,
+				"priority": 171000,
+				"index": 62,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Shroomer",
@@ -2836,14 +4586,24 @@
 				"70": "World Tree Holy Water, Grass Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "5/10",
-			"partner": "Rampant Spores - Can be ridden. Sometimes drops Mushroom or Cavern Mushroom when assigned to Ranch. Technology 39",
+			"partner": "Rampant Spores - Can be ridden. Sometimes drops Mushroom or Cavern Mushroom when assigned to Ranch.",
 			"tech": "Shroomer Saddle, Lvl 39",
 			"suitability": "Planting 3, Handiwork 2, Gathering 3, Lumbering 2, Farming 3",
 			"spawnTime": "Day/Night",
 			"farmable": "Yes - Mushroom, Cavern Mushroom",
 			"thumbnail": "data/pals/pal-116-shroomer.png",
 			"habitat": "data/maps/118-shroomer.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "mushroomdragon",
+				"rank": 1520,
+				"priority": 152000,
+				"index": 175,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Shroomer Noct",
@@ -2852,14 +4612,24 @@
 			"element": "Grass, Dark",
 			"drops": "Venom Gland, Mysterious Mushroom",
 			"food": "5/10",
-			"partner": "Roiling Spores - Can be ridden. While at a base, its mysterious spores slow the rate at which the SAN value of allies at the base decreases by (10~15)%. Technology 39",
+			"partner": "Roiling Spores - Can be ridden. While at a base, its mysterious spores slow the rate at which the SAN value of allies at the base decreases by (10~15)%.",
 			"tech": "Shroomer Noct Saddle, Lvl 39",
 			"suitability": "Planting 3, Handiwork 3, Gathering 3, Lumbering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-116b-shroomer-noct.png",
 			"habitat": "data/maps/118b-shroomer-noct.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "mushroomdragon_dark",
+				"rank": 1450,
+				"priority": 145000,
+				"index": 176,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": true
+			}
 		},
 		{
 			"name": "Icelyn",
@@ -2874,7 +4644,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-142-icelyn.png",
 			"habitat": "data/maps/119-icelyn.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "icewitch",
+				"rank": 1260,
+				"priority": 126000,
+				"index": 238,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Gildra",
@@ -2889,7 +4669,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-120-gildra.png",
 			"habitat": "data/maps/120-gildra.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "mummypal",
+				"rank": 1170,
+				"priority": 117000,
+				"index": 283,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Jormuntide",
@@ -2904,11 +4694,21 @@
 			"partner": "Stormbringer Sea Dragon - Can be ridden to travel on water. While mounted, prevents stamina depletion while moving over water.",
 			"tech": "Jormuntide Saddle, Lvl 40",
 			"suitability": "Watering 7",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-101-jormuntide.png",
 			"habitat": "data/maps/121-jormuntide.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "umihebi",
+				"rank": 590,
+				"priority": 59000,
+				"index": 37,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Jormuntide Ignis",
@@ -2927,7 +4727,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-101b-jormuntide-ignis.png",
 			"habitat": "data/maps/121b-jormuntide-ignis.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "umihebi_fire",
+				"rank": 170,
+				"priority": 17000,
+				"index": 38,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Suzaku",
@@ -2946,7 +4756,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-102-suzaku.png",
 			"habitat": "data/maps/122-suzaku.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "suzaku",
+				"rank": 1200,
+				"priority": 120000,
+				"index": 42,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Suzaku Aqua",
@@ -2965,7 +4785,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-102b-suzaku-aqua.png",
 			"habitat": "data/maps/122b-suzaku-aqua.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "suzaku_water",
+				"rank": 740,
+				"priority": 74000,
+				"index": 43,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Dazemu",
@@ -2974,14 +4804,24 @@
 			"element": "Ground",
 			"drops": "Bone",
 			"food": "3/10",
-			"partner": "Sand Sprint - Can be ridden. Movement Speed is increased by (50~100)% while mounted on sand. Technology 28",
+			"partner": "Sand Sprint - Can be ridden. Movement Speed is increased by (50~100)% while mounted on sand.",
 			"tech": "Dazemu Saddle, Lvl 28",
 			"suitability": "Gathering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-123-dazemu.png",
 			"habitat": "data/maps/123-dazemu.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "featherostrich",
+				"rank": 2210,
+				"priority": 221000,
+				"index": 185,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Quivern",
@@ -2993,14 +4833,24 @@
 				"80": "Dragon Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "6/10",
-			"partner": "Sky Dragon Affection - Can be ridden as a flying mount. While in party, increases Attack of Dragon Pals by (15~30)%. (Does not stack) Technology 38",
+			"partner": "Sky Dragon Affection - Can be ridden as a flying mount. While in party, increases Attack of Dragon Pals by (15~30)%. (Does not stack)",
 			"tech": "Quivern Saddle, Lvl 38",
 			"suitability": "Handiwork 2, Gathering 3, Mining 4, Transporting 5",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-095-quivern.png",
 			"habitat": "data/maps/124-quivern.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "skydragon",
+				"rank": 1210,
+				"priority": 121000,
+				"index": 147,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Quivern Botan",
@@ -3012,14 +4862,24 @@
 				"80": "Dragon Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "6/10",
-			"partner": "Grass Dragon Affection - Can be ridden as a flying mount. While mounted, changes the player's attack type to Grass and increases Attack by (5~20)%. Technology 45",
+			"partner": "Grass Dragon Affection - Can be ridden as a flying mount. While mounted, changes the player's attack type to Grass and increases Attack by (5~20)%.",
 			"tech": "Quivern Botan Saddle, Lvl 45",
 			"suitability": "Planting 5, Handiwork 2, Gathering 4, Mining 3, Transporting 4",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-095b-quivern-botan.png",
 			"habitat": "data/maps/124b-quivern-botan.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "skydragon_grass",
+				"rank": 1300,
+				"priority": 130000,
+				"index": 148,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Lullu",
@@ -3034,7 +4894,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-115-lullu.png",
 			"habitat": "data/maps/125-lullu.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "leafprincess",
+				"rank": 1990,
+				"priority": 199000,
+				"index": 174,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Kikit",
@@ -3049,7 +4919,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-117-kikit.png",
 			"habitat": "data/maps/126-kikit.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "smallarmadillo",
+				"rank": 2310,
+				"priority": 231000,
+				"index": 177,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Yakumo",
@@ -3065,7 +4945,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-121-yakumo.png",
 			"habitat": "data/maps/127-yakumo.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "guardiandog",
+				"rank": 2230,
+				"priority": 223000,
+				"index": 183,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Skutlass",
@@ -3080,7 +4970,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-128-skutlass.png",
 			"habitat": "data/maps/128-skutlass.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "swordcutlassfish",
+				"rank": 1420,
+				"priority": 142000,
+				"index": 270,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Skutlass Ignis",
@@ -3098,7 +4998,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-128b-skutlass-ignis.png",
 			"habitat": "data/maps/128b-skutlass-ignis.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "swordcutlassfish_fire",
+				"rank": 1590,
+				"priority": 159000,
+				"index": 271,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Reptyro",
@@ -3114,7 +5024,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-088-reptyro.png",
 			"habitat": "data/maps/129-reptyro.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "volcanicmonster",
+				"rank": 1060,
+				"priority": 106000,
+				"index": 60,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Reptyro Cryst",
@@ -3130,7 +5050,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-088b-reptyro-cryst.png",
 			"habitat": "data/maps/129b-reptyro-cryst.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "volcanicmonster_ice",
+				"rank": 600,
+				"priority": 60000,
+				"index": 61,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Starryon",
@@ -3142,14 +5072,24 @@
 				"80": "Dark Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "6/10",
-			"partner": "Night Dancer - Can be ridden. Increases mobement speed while mounted at night.",
+			"partner": "Night Dancer - Can be ridden. Increases movement speed while mounted at night.",
 			"tech": "Starryon Saddle, Lvl 57",
 			"suitability": "Gathering 5",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-129-starryon.png",
 			"habitat": "data/maps/130-starryon.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "nightbluehorse",
+				"rank": 1150,
+				"priority": 115000,
+				"index": 194,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Starryon Primo",
@@ -3161,14 +5101,24 @@
 				"70": "World Tree Holy Water, Neutral Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "6/10",
-			"partner": "Light Dancer - Can be ridden. Boosts Jump Power while mounted. This Pal's Movement Speed increases by (5~25)% for each other Neutral Pal in your party. (Excluding Starryon Primo ) Technology 77",
+			"partner": "Light Dancer - Can be ridden. Boosts Jump Power while mounted. This Pal's Movement Speed increases by (5~25)% for each other Neutral Pal in your party. (Excluding Starryon Primo )",
 			"tech": "Starryon Primo Saddle, Lvl 77",
 			"suitability": "Gathering 7",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-130b-starryon-primo.png",
 			"habitat": "data/maps/130b-starryon-primo.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "nightbluehorse_neutral",
+				"rank": 430,
+				"priority": 43000,
+				"index": 195,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Pierdon",
@@ -3183,7 +5133,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-131-pierdon.png",
 			"habitat": "data/maps/131-pierdon.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "rockbeast",
+				"rank": 1110,
+				"priority": 111000,
+				"index": 209,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Pierdon Cryst",
@@ -3201,7 +5161,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-131b-pierdon-cryst.png",
 			"habitat": "data/maps/131b-pierdon-cryst.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "rockbeast_ice",
+				"rank": 460,
+				"priority": 46000,
+				"index": 210,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Cryolinx",
@@ -3216,7 +5186,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-083-cryolinx.png",
 			"habitat": "data/maps/132-cryolinx.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "whitetiger",
+				"rank": 1040,
+				"priority": 104000,
+				"index": 50,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Cryolinx Terra",
@@ -3231,7 +5211,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-083b-cryolinx-terra.png",
 			"habitat": "data/maps/132b-cryolinx-terra.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "whitetiger_ground",
+				"rank": 470,
+				"priority": 47000,
+				"index": 225,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Snugloo",
@@ -3249,7 +5239,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-133-snugloo.png",
 			"habitat": "data/maps/133-snugloo.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "smallyeti",
+				"rank": 2390,
+				"priority": 239000,
+				"index": 242,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Wumpo",
@@ -3268,7 +5268,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-091-wumpo.png",
 			"habitat": "data/maps/134-wumpo.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "yeti",
+				"rank": 830,
+				"priority": 83000,
+				"index": 103,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Wumpo Botan",
@@ -3280,14 +5290,24 @@
 				"80": "Grass Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "7/10",
-			"partner": "Guardian of the South - Can be ridden. While in party, player and party Pals take (15~30)% less Ground damage and are immune to Muddy status. (Does not stack) Technology 51",
+			"partner": "Guardian of the South - Can be ridden. While in party, player and party Pals take (15~30)% less Ground damage and are immune to Muddy status. (Does not stack)",
 			"tech": "Wumpo Botan Saddle, Lvl 51",
 			"suitability": "Planting 3, Handiwork 3, Lumbering 5, Transporting 6",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-091b-wumpo-botan.png",
 			"habitat": "data/maps/134b-wumpo-botan.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "yeti_grass",
+				"rank": 610,
+				"priority": 61000,
+				"index": 104,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": true
+			}
 		},
 		{
 			"name": "Sootseer",
@@ -3302,7 +5322,17 @@
 			"farmable": "Yes - Bone",
 			"thumbnail": "data/pals/pal-118-sootseer.png",
 			"habitat": "data/maps/135-sootseer.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "candleghost",
+				"rank": 980,
+				"priority": 98000,
+				"index": 178,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Carnibora",
@@ -3320,7 +5350,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-136-carnibora.png",
 			"habitat": "data/maps/136-carnibora.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "venusflytrap",
+				"rank": 1700,
+				"priority": 170000,
+				"index": 291,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Blazamut",
@@ -3332,21 +5372,31 @@
 				"80": "Fire Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "9/10",
-			"partner": "Magma Kaiser - Can be ridden. Enchances Fire attacks while mounted.",
+			"partner": "Magma Kaiser - Can be ridden. Enhances Fire attacks while mounted.",
 			"tech": "Blazamut Saddle, Lvl 46",
 			"suitability": "Kindling 6, Mining 7",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-096-blazamut.png",
 			"habitat": "data/maps/137-blazamut.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "kingbahamut",
+				"rank": 410,
+				"priority": 41000,
+				"index": 86,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Blazamut Ryu",
 			"description": "Incarnation of the Eternal Flame - Long ago, it emerged from the depths of the earth. With relentless, raging flames showing no mercy, it burned the entire island until nothing remained. It was known as the Eternal Flame.",
 			"number": "137B",
 			"element": "Fire, Dragon",
-			"drops": "Coal, Medium Pal Soul",
+			"drops": "Coal, Medium Pal Soul, Ancient Civilization Core",
 			"worldTreeDrops": {
 				"80": "Dragon Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
@@ -3358,7 +5408,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-096b-blazamut-ryu.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 10
+			"rarity": 10,
+			"breeding": {
+				"id": "kingbahamut_dragon",
+				"rank": 100,
+				"priority": 10000,
+				"index": 87,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Dualith",
@@ -3371,14 +5431,24 @@
 				"80": "Ground Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "8/10",
-			"partner": "Forest Laser - Can be ridden. When activated, Dualith fires a powerful Grass laser from its right hand. Technology 48",
+			"partner": "Forest Laser - Can be ridden. When activated, Dualith fires a powerful Grass laser from its right hand.",
 			"tech": "Dualith Saddle, Lvl 48",
 			"suitability": "Planting 3, Gathering 3, Lumbering 5, Mining 6, Transporting 6",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-138-dualith.png",
 			"habitat": "data/maps/138-dualith.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "grassgolem",
+				"rank": 510,
+				"priority": 51000,
+				"index": 259,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Dualith Noct",
@@ -3390,14 +5460,24 @@
 				"70": "World Tree Holy Water, Dark Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "8/10",
-			"partner": "Corruption Laser - Can be ridden. When activated, Dualith Noct fires a powerful Dark laser from its right hand. Technology 69",
+			"partner": "Corruption Laser - Can be ridden. When activated, Dualith Noct fires a powerful Dark laser from its right hand.",
 			"tech": "Dualith Noct Saddle, Lvl 69",
 			"suitability": "Planting 3, Gathering 3, Lumbering 5, Mining 6, Transporting 6",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-138b-dualith-noct.png",
 			"habitat": "data/maps/138b-dualith-noct.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "grassgolem_dark",
+				"rank": 250,
+				"priority": 25000,
+				"index": 260,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Anubis",
@@ -3415,7 +5495,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-100-anubis.png",
 			"habitat": "data/maps/139-anubis.png",
-			"rarity": 10
+			"rarity": 10,
+			"breeding": {
+				"id": "anubis",
+				"rank": 480,
+				"priority": 48000,
+				"index": 7,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Sekhmet",
@@ -3433,7 +5523,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-140-sekhmet.png",
 			"habitat": "data/maps/140-sekhmet.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "sekhmet",
+				"rank": 870,
+				"priority": 87000,
+				"index": 204,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Prixter",
@@ -3448,7 +5548,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-119-prixter.png",
 			"habitat": "data/maps/141-prixter.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "scorpionman",
+				"rank": 1510,
+				"priority": 151000,
+				"index": 179,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Prixter Lux",
@@ -3463,7 +5573,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-141b-prixter-lux.png",
 			"habitat": "data/maps/141b-prixter-lux.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "scorpionman_electric",
+				"rank": 850,
+				"priority": 85000,
+				"index": 180,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Tetroise",
@@ -3475,14 +5595,24 @@
 				"80": "Ground Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "8/10",
-			"partner": "Masonry Archelon - Can be ridden While at a base, increases the Mining Work Suitability Level for all other Base Pals by +1. (Does not stack) Technology 48",
+			"partner": "Masonry Archelon - Can be ridden. While at a base, increases the Mining Work Suitability Level for all other Base Pals by +1. (Does not stack)",
 			"tech": "Tetroise Saddle, Lvl 48",
 			"suitability": "Mining 4",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-142-tetroise.png",
 			"habitat": "data/maps/142-tetroise.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "cubeturtle",
+				"rank": 790,
+				"priority": 79000,
+				"index": 262,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Tetroise Primo",
@@ -3494,14 +5624,24 @@
 				"70": "World Tree Holy Water, Neutral Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "8/10",
-			"partner": "Stone-Chaser Archelon - Can be ridden. While in party, increases the durability of all weapons and armor by (80~100)%. (Does not stack) Technology 75",
+			"partner": "Stone-Chaser Archelon - Can be ridden. While in party, increases the durability of all weapons and armor by (80~100)%. (Does not stack)",
 			"tech": "Tetroise Primo Saddle, Lvl 75",
 			"suitability": "Mining 6",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-142b-tetroise-primo.png",
 			"habitat": "data/maps/142b-tetroise-primo.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "cubeturtle_neutral",
+				"rank": 200,
+				"priority": 20000,
+				"index": 263,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Nyafia",
@@ -3517,7 +5657,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-139-nyafia.png",
 			"habitat": "data/maps/143-nyafia.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "badcatgirl",
+				"rank": 1250,
+				"priority": 125000,
+				"index": 1,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Mimog",
@@ -3532,7 +5682,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-124-mimog.png",
 			"habitat": "data/maps/144-mimog.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "mimicdog",
+				"rank": 1740,
+				"priority": 174000,
+				"index": 186,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Xenovader",
@@ -3541,13 +5701,23 @@
 			"element": "Dark",
 			"drops": "Meteorite Fragment",
 			"food": "4/10",
-			"partner": "Meteorite Enthusiast - While in team, increase damage dealt to ores, and it's easier to obtain Meteorite Fragment.",
+			"partner": "Meteorite Enthusiast - While in party, increases damage dealt to ores, and it's easier to obtain Meteorite Fragment.",
 			"suitability": "Lumbering 3, Transporting 2",
 			"spawnTime": "Meteorite event",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-125-xenovader.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "darkalien",
+				"rank": 1820,
+				"priority": 182000,
+				"index": 187,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Xenogard",
@@ -3563,7 +5733,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-126-xenogard.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "whitealiendragon",
+				"rank": 990,
+				"priority": 99000,
+				"index": 188,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Prunelia",
@@ -3578,7 +5758,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-138-prunelia.png",
 			"habitat": "data/maps/147-prunelia.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "blueberryfairy",
+				"rank": 1390,
+				"priority": 139000,
+				"index": 2,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Nitemary",
@@ -3593,7 +5783,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-128-nitemary.png",
 			"habitat": "data/maps/148-nitemary.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "ghostrabbit",
+				"rank": 1230,
+				"priority": 123000,
+				"index": 192,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Nitemary Botan",
@@ -3611,7 +5811,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-148b-nitemary-botan.png",
 			"habitat": "data/maps/148b-nitemary-botan.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "ghostrabbit_grass",
+				"rank": 1320,
+				"priority": 132000,
+				"index": 193,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Smokie",
@@ -3620,14 +5830,24 @@
 			"element": "Dark",
 			"drops": "Chromite",
 			"food": "3/10",
-			"partner": "Dig, Smokie! Dig! - When activated, uses its sharp sense of smell to detect nearby Chromite. While fighting together, Chromite acquisition increases by +(100~200)%. Technology 58",
+			"partner": "Dig, Smokie! Dig! - When activated, uses its sharp sense of smell to detect nearby Chromite. While fighting together, Chromite acquisition increases by +(100~200)%.",
 			"tech": "Smokie's Harness, Lvl 58",
 			"suitability": "Gathering 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-131-smokie.png",
 			"habitat": "data/maps/149-smokie.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "blackpuppy",
+				"rank": 1760,
+				"priority": 176000,
+				"index": 197,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Smokie Cryst",
@@ -3645,7 +5865,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-149b-smokie-cryst.png",
 			"habitat": "data/maps/149b-smokie-cryst.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "blackpuppy_ice",
+				"rank": 1610,
+				"priority": 161000,
+				"index": 198,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Omascul",
@@ -3660,7 +5890,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-133-omascul.png",
 			"habitat": "data/maps/150-omascul.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "mysterymask",
+				"rank": 1140,
+				"priority": 114000,
+				"index": 202,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Whalaska",
@@ -3679,7 +5919,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-154-whalaska.png",
 			"habitat": "data/maps/151-whalaska.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "icenarwhal",
+				"rank": 710,
+				"priority": 71000,
+				"index": 213,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Whalaska Ignis",
@@ -3692,14 +5942,24 @@
 				"80": "Ice Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "8/10",
-			"partner": "Cozy Whale Cruiser - Can be ridden. While fighting together, fishining minigames begin with the capture gauge more filled than usual. Additionally, the capture gauge increases more rapidly while the bars are overlapping.",
+			"partner": "Cozy Whale Cruiser - Can be ridden. While fighting together, fishing minigames begin with the capture gauge more filled than usual. Additionally, the capture gauge increases more rapidly while the bars are overlapping.",
 			"tech": "Whalaska Ignis Saddle, Lvl 71",
 			"suitability": "Kindling 5, Cooling 6",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-154b-whalaska-ignis.png",
 			"habitat": "data/maps/151b-whalaska-ignis.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "icenarwhal_fire",
+				"rank": 370,
+				"priority": 37000,
+				"index": 214,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Verdash",
@@ -3714,7 +5974,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-077-verdash.png",
 			"habitat": "data/maps/152-verdash.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "grassrabbitman",
+				"rank": 1160,
+				"priority": 116000,
+				"index": 120,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Splatterina",
@@ -3726,17 +5996,27 @@
 				"80": "Dark Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "7/10",
-			"partner": "Blade of Uncontrolled Passion - While in posession, the amount of items obtained from using the Meat Cleaver increases.",
+			"partner": "Blade of Uncontrolled Passion - While in possession, the amount of items obtained from using the Meat Cleaver increases.",
 			"suitability": "Handiwork 6, Lumbering 3, Medicine Production 5, Transporting 2",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-134-splatterina.png",
 			"habitat": "data/maps/153-splatterina.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "grimgirl",
+				"rank": 780,
+				"priority": 78000,
+				"index": 206,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Gildane",
-			"description": "Gueardian Beast of Twilight - During the golden age of alchemy on the island, its ever-glowing golden fur was highly prized as a catalyst for transmuting gold. In time, a remarkable revelation was made: the same golden hue could be achieved simply by processing its mane.",
+			"description": "Guardian Beast of Twilight - During the golden age of alchemy on the island, its ever-glowing golden fur was highly prized as a catalyst for transmuting gold. In time, a remarkable revelation was made: the same golden hue could be achieved simply by processing its mane.",
 			"number": "154",
 			"element": "Ground",
 			"drops": "Leather",
@@ -3748,7 +6028,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-140-gildane.png",
 			"habitat": "data/maps/154-gildane.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "goldenhorse",
+				"rank": 730,
+				"priority": 73000,
+				"index": 4,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Dogen",
@@ -3763,7 +6053,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-122-dogen.png",
 			"habitat": "data/maps/155-dogen.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "sifudog",
+				"rank": 1460,
+				"priority": 146000,
+				"index": 184,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Bulldosu",
@@ -3772,14 +6072,24 @@
 			"element": "Ground",
 			"drops": "Bone, Fiber",
 			"food": "6/10",
-			"partner": "Yokozuna's Presence - Can be ridden. While in party, player and party Pals take (15~30)% less Electric damage and are immune to Electrify. (Does not stack) Technology 53",
+			"partner": "Yokozuna's Presence - Can be ridden. While in party, player and party Pals take (15~30)% less Electric damage and are immune to Electrify. (Does not stack)",
 			"tech": "Bulldosu Saddle, Lvl 53",
 			"suitability": "Mining 4, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-156-bulldosu.png",
 			"habitat": "data/maps/156-bulldosu.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "sumodog",
+				"rank": 1190,
+				"priority": 119000,
+				"index": 290,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Celesdir",
@@ -3798,7 +6108,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-132-celesdir.png",
 			"habitat": "data/maps/157-celesdir.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "whitedeer",
+				"rank": 570,
+				"priority": 57000,
+				"index": 199,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Celesdir Noct",
@@ -3810,14 +6130,24 @@
 				"70": "World Tree Holy Water, Dark Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "8/10",
-			"partner": "Blessing of Chaos - Can be ridden. While in party, the Pal fighting alongside you gradually loses Health in exchange for (40~80)% Attack increase. (Does not stack) Technology 78",
+			"partner": "Blessing of Chaos - Can be ridden. While in party, the Pal fighting alongside you gradually loses Health in exchange for (40~80)% Attack increase. (Does not stack)",
 			"tech": "Celesdir Noct Saddle, Lvl 78",
 			"suitability": "Gathering 4, Lumbering 8",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-157b-celesdir-noct.png",
 			"habitat": "data/maps/157b-celesdir-noct.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "whitedeer_dark",
+				"rank": 270,
+				"priority": 27000,
+				"index": 200,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Astegon",
@@ -3829,14 +6159,24 @@
 				"80": "Dragon Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "7/10",
-			"partner": "Black Ankylosaur - Can be ridden a flying mount. Increases damage dealt to ore while mounted.",
+			"partner": "Black Ankylosaur - Can be ridden as a flying mount. Increases damage dealt to ore while mounted.",
 			"tech": "Astegon Saddle, Lvl 39",
 			"suitability": "Handiwork 3, Mining 7",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-098-astegon.png",
 			"habitat": "data/maps/158-astegon.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "blackmetaldragon",
+				"rank": 490,
+				"priority": 49000,
+				"index": 119,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Knocklem",
@@ -3849,13 +6189,23 @@
 				"80": "Ground Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "9/10",
-			"partner": "Steel Guardian Mode - When activated, A steel resolve increases Knocklem;s attack and defense.",
+			"partner": "Steel Guardian Mode - When activated, a steel resolve increases Knocklem's attack and defense.",
 			"suitability": "Gathering 4, Mining 7, Transporting 7",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-120-knocklem.png",
 			"habitat": "data/maps/159-knocklem.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "winggolem",
+				"rank": 260,
+				"priority": 26000,
+				"index": 181,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Knocklem Ignis",
@@ -3873,7 +6223,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-159b-knocklem-ignis.png",
 			"habitat": "data/maps/159b-knocklem-ignis.png",
-			"rarity": 10
+			"rarity": 10,
+			"breeding": {
+				"id": "winggolem_fire",
+				"rank": 210,
+				"priority": 21000,
+				"index": 182,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Silvegis",
@@ -3888,11 +6248,21 @@
 			"partner": "Aegis Shield - Can be ridden. Increases the duration of the shield when using Aegis Charge while mounted.",
 			"tech": "Silvegis Saddle, Lvl 60",
 			"suitability": "Lumbering 6",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-130-silvegis.png",
 			"habitat": "data/maps/160-silvegis.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "whiteshielddragon",
+				"rank": 560,
+				"priority": 56000,
+				"index": 196,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Azurmane",
@@ -3911,7 +6281,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-136-azurmane.png",
 			"habitat": "data/maps/161-azurmane.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "bluethunderhorse",
+				"rank": 420,
+				"priority": 42000,
+				"index": 208,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Valentail",
@@ -3926,7 +6306,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-162-valentail.png",
 			"habitat": "data/maps/162-valentail.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "longcat",
+				"rank": 1900,
+				"priority": 190000,
+				"index": 264,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Snock",
@@ -3941,7 +6331,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-163-snock.png",
 			"habitat": "data/maps/163-snock.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "elecsnail",
+				"rank": 1780,
+				"priority": 178000,
+				"index": 287,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Snock Lux",
@@ -3959,7 +6359,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-163b-snock-lux.png",
 			"habitat": "data/maps/163b-snock-lux.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "elecsnail_ground",
+				"rank": 1500,
+				"priority": 150000,
+				"index": 288,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Souffline",
@@ -3974,7 +6384,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-164-souffline.png",
 			"habitat": "data/maps/164-souffline.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "dandeliongirl",
+				"rank": 2000,
+				"priority": 200000,
+				"index": 293,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Lapiron",
@@ -3989,7 +6409,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-165-lapiron.png",
 			"habitat": "data/maps/165-lapiron.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "brownrabbit",
+				"rank": 1680,
+				"priority": 168000,
+				"index": 3,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Hoodle",
@@ -4004,7 +6434,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-166-hoodle.png",
 			"habitat": "data/maps/166-hoodle.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "hoodghost",
+				"rank": 1770,
+				"priority": 177000,
+				"index": 203,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Slowatt",
@@ -4019,7 +6459,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-167-slowatt.png",
 			"habitat": "data/maps/167-slowatt.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "eleclizard",
+				"rank": 1750,
+				"priority": 175000,
+				"index": 205,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Bakemi",
@@ -4034,7 +6484,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-168-bakemi.png",
 			"habitat": "data/maps/168-bakemi.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "onighostgirl",
+				"rank": 1540,
+				"priority": 154000,
+				"index": 256,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Solmora",
@@ -4043,14 +6503,24 @@
 			"element": "Water",
 			"drops": "High Quality Pal Oil, Aquatic Pal Fluids",
 			"food": "6/10",
-			"partner": "Charming Fish - Can be ridden to travel on water. While in party, makes it easier to fish up talented Pals. (Does not stack) Technology 65",
+			"partner": "Charming Fish - Can be ridden to travel on water. While in party, makes it easier to fish up talented Pals. (Does not stack)",
 			"tech": "Solmora Saddle, Lvl 65",
 			"suitability": "Watering 4",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-169-solmora.png",
 			"habitat": "data/maps/169-solmora.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "kingsunfish",
+				"rank": 1370,
+				"priority": 137000,
+				"index": 284,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Solmora Lux",
@@ -4062,14 +6532,24 @@
 				"70": "World Tree Holy Water, Electric Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "6/10",
-			"partner": "Shocking Fish - Can be ridden to travel on water. While mounted, changes the player's attack type to Electric and increases Attack by (5~20)%. While in party, makes it easier to fish up talented Pals. (Does not stack) Technology 66",
+			"partner": "Shocking Fish - Can be ridden to travel on water. While mounted, changes the player's attack type to Electric and increases Attack by (5~20)%. While in party, makes it easier to fish up talented Pals. (Does not stack)",
 			"tech": "Solmora Lux Saddle, Lvl 66",
 			"suitability": "Watering 4, Generating Electricity 6",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-169b-solmora-lux.png",
 			"habitat": "data/maps/169b-solmora-lux.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "kingsunfish_thunder",
+				"rank": 1000,
+				"priority": 100000,
+				"index": 285,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Lapure",
@@ -4084,7 +6564,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-170-lapure.png",
 			"habitat": "data/maps/170-lapure.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "sleeverabbit",
+				"rank": 810,
+				"priority": 81000,
+				"index": 297,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Eidrolon",
@@ -4096,18 +6586,28 @@
 				"80": "Dragon Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "9/10",
-			"partner": "Liberated Pterosaur - Can be ridden as a flying mount. This Pal's Attack and Movement Speed increase by (2~6)% for each other Dragon or Dark Pal in your party. Technology 68",
+			"partner": "Liberated Pterosaur - Can be ridden as a flying mount. This Pal's Attack and Movement Speed increase by (2~6)% for each other Dragon or Dark Pal in your party.",
 			"tech": "Eidrolon Saddle, Lvl 68",
 			"suitability": "Transporting 6",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-171-eidrolon.png",
 			"habitat": "data/maps/171-eidrolon.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "ghostdragon",
+				"rank": 300,
+				"priority": 30000,
+				"index": 304,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Eidrolon Ignis",
-			"description": "Wings of Distrust - A new Pal that was only recently discovered. It trusts nothing and no one, and its tempermental nature leads to it constantly venting its rage at the nearest target.",
+			"description": "Wings of Distrust - A new Pal that was only recently discovered. It trusts nothing and no one, and its temperamental nature leads to it constantly venting its rage at the nearest target.",
 			"number": "171B",
 			"element": "Fire, Dragon",
 			"drops": "Leather, High Quality Pal Oil, Flame Organ",
@@ -4115,14 +6615,24 @@
 				"70": "World Tree Holy Water, Dragon Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "9/10",
-			"partner": "Resentful Pterosaur - Can be ridden as a flying mount. This Pal's Attack and Movement Speed increase by (2~6)% or each other Dragon or Fire Pal in your party. (Excluding Eidrolon Ignis ) Technology 76",
+			"partner": "Resentful Pterosaur - Can be ridden as a flying mount. This Pal's Attack and Movement Speed increase by (2~6)% or each other Dragon or Fire Pal in your party. (Excluding Eidrolon Ignis )",
 			"tech": "Eidrolon Ignis Saddle, Lvl 76",
 			"suitability": "Kindling 6, Transporting 6",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-171b-eidrolon-ignis.png",
 			"habitat": "data/maps/171b-eidrolon-ignis.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "ghostdragon_fire",
+				"rank": 140,
+				"priority": 14000,
+				"index": 305,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Dynamoff",
@@ -4131,14 +6641,24 @@
 			"element": "Electric",
 			"drops": "Electric Organ",
 			"food": "6/10",
-			"partner": "Electro-Massage Incubation - Can be ridden as a flying mount. While at a base, shortens the time it takes to incubate eggs by (20~40)%. (Does not stack) Technology 66",
+			"partner": "Electro-Massage Incubation - Can be ridden as a flying mount. While at a base, shortens the time it takes to incubate eggs by (20~40)%. (Does not stack)",
 			"tech": "Dynamoff Saddle, Lvl 66",
 			"suitability": "Generating Electricity 6, Gathering 3, Transporting 3",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-172-dynamoff.png",
 			"habitat": "data/maps/172-dynamoff.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "thunderfluffybird",
+				"rank": 1400,
+				"priority": 140000,
+				"index": 266,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Tropicaw",
@@ -4153,7 +6673,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-173-tropicaw.png",
 			"habitat": "data/maps/173-tropicaw.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "redflowerbird",
+				"rank": 1350,
+				"priority": 135000,
+				"index": 296,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Flaracle",
@@ -4171,7 +6701,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-174-flaracle.png",
 			"habitat": "data/maps/174-flaracle.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "foxexorcist",
+				"rank": 390,
+				"priority": 39000,
+				"index": 249,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Ophydia",
@@ -4183,14 +6723,24 @@
 				"80": "Grass Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "9/10",
-			"partner": "Glorious Mist - Can be ridden. While in party, the player's attacks inflict Soak (2~6). (Does not stack) Technology 72",
+			"partner": "Glorious Mist - Can be ridden. While in party, the player's attacks inflict Soak (2~6). (Does not stack)",
 			"tech": "Ophydia Saddle, Lvl 72",
 			"suitability": "Watering 5, Planting 7",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-175-ophydia.png",
 			"habitat": "data/maps/175-ophydia.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "lotusdragon",
+				"rank": 230,
+				"priority": 23000,
+				"index": 298,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Dupin",
@@ -4208,7 +6758,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-176-dupin.png",
 			"habitat": "data/maps/176-dupin.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "clownrabbit",
+				"rank": 520,
+				"priority": 52000,
+				"index": 239,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Roujay",
@@ -4220,14 +6780,24 @@
 				"70": "World Tree Holy Water, Electric Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "8/10",
-			"partner": "Dark-Nester - Can be ridden as a flying mount. While in party, increases player's and Pals' damage to enemies afflicted with Blind by (50~65)%. (Does not stack) Technology 72",
+			"partner": "Dark-Nester - Can be ridden as a flying mount. While in party, increases player's and Pals' damage to enemies afflicted with Blind by (50~65)%. (Does not stack)",
 			"tech": "Roujay Saddle, Lvl 72",
 			"suitability": "Gathering 5, Transporting 5",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-177-roujay.png",
 			"habitat": "data/maps/177-roujay.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "thiefbird",
+				"rank": 530,
+				"priority": 53000,
+				"index": 255,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Venusa",
@@ -4245,7 +6815,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-178-venusa.png",
 			"habitat": "data/maps/178-venusa.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "snakegirl",
+				"rank": 970,
+				"priority": 97000,
+				"index": 235,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Mycora",
@@ -4263,7 +6843,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-179-mycora.png",
 			"habitat": "data/maps/179-mycora.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "mushroomlady",
+				"rank": 760,
+				"priority": 76000,
+				"index": 246,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Loomen",
@@ -4281,7 +6871,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-180-loomen.png",
 			"habitat": "data/maps/180-loomen.png",
-			"rarity": 5
+			"rarity": 5,
+			"breeding": {
+				"id": "lanternbutler",
+				"rank": 890,
+				"priority": 89000,
+				"index": 289,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Wistella",
@@ -4299,7 +6899,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-181-wistella.png",
 			"habitat": "data/maps/181-wistella.png",
-			"rarity": 2
+			"rarity": 2,
+			"breeding": {
+				"id": "moonchild",
+				"rank": 1180,
+				"priority": 118000,
+				"index": 267,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Solenne",
@@ -4317,7 +6927,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-182-solenne.png",
 			"habitat": "data/maps/182-solenne.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "monochromequeen",
+				"rank": 280,
+				"priority": 28000,
+				"index": 286,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Renjishi",
@@ -4332,11 +6952,21 @@
 			"food": "8/10",
 			"partner": "Stage Combat - While in party, the player's attacks inflict Burn (2~6). (Does not stack)",
 			"suitability": "Kindling 8, Handiwork 6, Gathering 5, Transporting 5",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-183-renjishi.png",
 			"habitat": "data/maps/183-renjishi.png",
-			"rarity": 7
+			"rarity": 7,
+			"breeding": {
+				"id": "kabukiman",
+				"rank": 290,
+				"priority": 29000,
+				"index": 307,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Aegidron",
@@ -4349,14 +6979,24 @@
 				"80": "Dragon Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "9/10",
-			"partner": "Indestructible Fortress - Can be ridden. While in party, player and party Pals take (60~80)% less damage from explosive attacks, and are immune to Stun. (Does not stack) Technology 79",
+			"partner": "Indestructible Fortress - Can be ridden. While in party, player and party Pals take (60~80)% less damage from explosive attacks, and are immune to Stun. (Does not stack)",
 			"tech": "Aegidron Saddle, Lvl 79",
 			"suitability": "Mining 8",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-184-aegidron.png",
 			"habitat": "data/maps/184-aegidron.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "domearmordragon",
+				"rank": 30,
+				"priority": 3000,
+				"index": 308,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": true,
+				"variant": false
+			}
 		},
 		{
 			"name": "Grizzbolt",
@@ -4376,7 +7016,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-103-grizzbolt.png",
 			"habitat": "data/maps/185-grizzbolt.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "elecpanda",
+				"rank": 1020,
+				"priority": 102000,
+				"index": 19,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Lyleen",
@@ -4395,7 +7045,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-104-lyleen.png",
 			"habitat": "data/maps/186-lyleen.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "lilyqueen",
+				"rank": 240,
+				"priority": 24000,
+				"index": 108,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Lyleen Noct",
@@ -4414,7 +7074,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-104b-lyleen-noct.png",
 			"habitat": "data/maps/186b-lyleen-noct.png",
-			"rarity": 10
+			"rarity": 10,
+			"breeding": {
+				"id": "lilyqueen_dark",
+				"rank": 220,
+				"priority": 22000,
+				"index": 109,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Orserk",
@@ -4433,7 +7103,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-106-orserk.png",
 			"habitat": "data/maps/187-orserk.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "thunderdragonman",
+				"rank": 120,
+				"priority": 12000,
+				"index": 163,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Faleris",
@@ -4453,7 +7133,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-105-faleris.png",
 			"habitat": "data/maps/188-faleris.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "horus",
+				"rank": 500,
+				"priority": 50000,
+				"index": 85,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Faleris Aqua",
@@ -4473,7 +7163,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-105b-faleris-aqua.png",
 			"habitat": "data/maps/188b-faleris-aqua.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "horus_water",
+				"rank": 450,
+				"priority": 45000,
+				"index": 227,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Shadowbeak",
@@ -4492,7 +7192,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-107-shadowbeak.png",
 			"habitat": "data/maps/189-shadowbeak.png",
-			"rarity": 10
+			"rarity": 10,
+			"breeding": {
+				"id": "blackgriffon",
+				"rank": 550,
+				"priority": 55000,
+				"index": 90,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Selyne",
@@ -4508,11 +7218,21 @@
 			"partner": "Celestial Darkness - Can be ridden as a flying mount. Enhances Fire and Dark attacks while mounted.",
 			"tech": "Selyne Saddle, Lvl 53",
 			"suitability": "Handiwork 7, Medicine Production 6, Transporting 3",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Day/Night; Meteorite event (Sakurajima)",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-113-selyne.png",
 			"habitat": "data/maps/190-selyne.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "moonqueen",
+				"rank": 360,
+				"priority": 36000,
+				"index": 171,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Bastigor",
@@ -4532,7 +7252,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-137-bastigor.png",
 			"habitat": "data/maps/191-bastigor.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "snowtigerbeastman",
+				"rank": 50,
+				"priority": 5000,
+				"index": 228,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Shaolong",
@@ -4544,14 +7274,24 @@
 				"70": "World Tree Holy Water, Electric Radiant Gem, Decayed Ancient Relic, Dormant Ancient Relic, Gorgeous Ancient Relic, Glowing Ancient Relic, Glistening Ancient Relic"
 			},
 			"food": "9/10",
-			"partner": "Azure Sovereign - Can be ridden as a flying mount. This Pal's Attack increases by (4~8)% for each other Dragon Pal in your party. Technology 77",
+			"partner": "Azure Sovereign - Can be ridden as a flying mount. This Pal's Attack increases by (4~8)% for each other Dragon Pal in your party.",
 			"tech": "Shaolong Saddle, Lvl 77",
 			"suitability": "Watering 8, Gathering 5",
 			"spawnTime": "Day/Night",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-192-shaolong.png",
 			"habitat": "data/maps/192-shaolong.png",
-			"rarity": 9
+			"rarity": 9,
+			"breeding": {
+				"id": "blueskydragon",
+				"rank": 40,
+				"priority": 4000,
+				"index": 299,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Silvance",
@@ -4569,7 +7309,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-193-silvance.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "mothman",
+				"rank": 80,
+				"priority": 8000,
+				"index": 303,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Dandilord",
@@ -4587,14 +7337,24 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-194-dandilord.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "flowerprince",
+				"rank": 60,
+				"priority": 6000,
+				"index": 306,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Bellanoir",
 			"description": "Eclipsed Siren - Without existing, she quietly gazed upon the world. One day, she was seized with a longing to be seen. With unbridled lust for vengeance against reality, thus was born the Eclipsed Siren.",
 			"number": "195",
 			"element": "Dark",
-			"drops": "Dark Fragment",
+			"drops": "Dark Fragment, Ancient Civilization Core",
 			"food": "7/10",
 			"partner": "Nightmare Iris - When activated, attacks targeted enemy with a powerful Nightmare Ray.",
 			"suitability": "Handiwork 5, Medicine Production 5, Transporting 4",
@@ -4602,14 +7362,24 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-112-bellanoir.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 20
+			"rarity": 20,
+			"breeding": {
+				"id": "nightlady",
+				"rank": 620,
+				"priority": 62000,
+				"index": 169,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Bellanoir Libero",
 			"description": "Twilight Siren - With her desires set loose, she was soon overwhelmed. She longed for a self to gaze upon herself. And the sisters who gazed, resenting reality, were driven into the abyss and, at last, closed their eyes.",
 			"number": "195B",
 			"element": "Dark",
-			"drops": "Dark Fragment, High Quality Recovery Meds",
+			"drops": "Dark Fragment, High Quality Recovery Meds, Ancient Civilization Core",
 			"food": "7/10",
 			"partner": "Nightmare Stare - When activated, attacks targeted enemy with a powerful Nightmare Bloom.",
 			"suitability": "Handiwork 6, Medicine Production 7, Transporting 4",
@@ -4617,30 +7387,50 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-112b-bellanoir-libero.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 20
+			"rarity": 20,
+			"breeding": {
+				"id": "nightlady_dark",
+				"rank": 130,
+				"priority": 13000,
+				"index": 170,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Xenolord",
 			"description": "Invader from Space - -Destination reached. Priority: Locate entity 'Supersonic Dragon' -Note: Conquest deadline exceeded by years. -Update: No conquest traces found. Naturalization confirmed. Commence elimination protocol. -Staff Memo: Refrain from forgetting or consuming critical data!",
 			"number": "196",
 			"element": "Dark, Dragon",
-			"drops": "Meteorite Fragment",
+			"drops": "Meteorite Fragment, Ancient Civilization Core",
 			"food": "8/10",
-			"partner": "Meteor Wings - Can be ridden as a flying mount. Greatly increases damage pmovement speed while flying.",
+			"partner": "Meteor Wings - Can be ridden as a flying mount. Greatly increases damage movement speed while flying.",
 			"tech": "Xenolord Saddle, Lvl 66",
 			"suitability": "Gathering 2",
 			"spawnTime": "Summoning altar",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-127-xenolord.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 8
+			"rarity": 8,
+			"breeding": {
+				"id": "darkmechadragon",
+				"rank": 400,
+				"priority": 40000,
+				"index": 191,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Hartalis",
 			"description": "King of Salvation - The silence is unsettling, yet strangely soothing. No one else remains. All have been delivered. O King of Salvation, carry me too into eternal stillness. -The ancient text cuts off here.",
 			"number": "197",
 			"element": "Neutral",
-			"drops": "Horn, Leather, Large Pal Soul",
+			"drops": "Horn, Leather, Large Pal Soul, Ancient Civilization Core",
 			"food": "9/10",
 			"partner": "Sacred Barrier - Can be ridden. While mounted, generates a barrier that blocks all attacks. Can triple jump while mounted.",
 			"tech": "Hartalis Saddle, Lvl 70",
@@ -4649,7 +7439,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-156-hartalis.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 10
+			"rarity": 10,
+			"breeding": {
+				"id": "legenddeer",
+				"rank": 90,
+				"priority": 9000,
+				"index": 240,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Paladius",
@@ -4661,11 +7461,21 @@
 			"partner": "Holy Knight of the Firmament - Can be ridden. Can triple jump while mounted.",
 			"tech": "Paladius Saddle, Lvl 61",
 			"suitability": "Lumbering 6, Mining 6",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-108-paladius.png",
 			"habitat": "data/maps/198-paladius.png",
-			"rarity": 20
+			"rarity": 20,
+			"breeding": {
+				"id": "saintcentaur",
+				"rank": 180,
+				"priority": 18000,
+				"index": 141,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Necromus",
@@ -4681,7 +7491,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-109-necromus.png",
 			"habitat": "data/maps/198-paladius.png",
-			"rarity": 20
+			"rarity": 20,
+			"breeding": {
+				"id": "blackcentaur",
+				"rank": 190,
+				"priority": 19000,
+				"index": 156,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Frostallion",
@@ -4690,14 +7510,24 @@
 			"element": "Ice",
 			"drops": "Ice Organ, Diamond",
 			"food": "9/10",
-			"partner": "Icy Steed - Can be ridden as a flying mount. While mounted, changes the player's attack type to Ice, inflict Freeze (2~6), increases Attack by (10~40)%. Technology 62",
+			"partner": "Icy Steed - Can be ridden as a flying mount. While mounted, changes the player's attack type to Ice, inflict Freeze (2~6), increases Attack by (10~40)%.",
 			"tech": "Frostallion Saddle, Lvl 62",
 			"suitability": "Cooling 7",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-110-frostallion.png",
 			"habitat": "data/maps/200-frostallion.png",
-			"rarity": 20
+			"rarity": 20,
+			"breeding": {
+				"id": "icehorse",
+				"rank": 150,
+				"priority": 15000,
+				"index": 78,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Frostallion Noct",
@@ -4709,11 +7539,21 @@
 			"partner": "Black Steed - Can be ridden as a flying mount. Changes the player's attack type to Dark and enhances Dark attacks while mounted.",
 			"tech": "Frostallion Noct Saddle, Lvl 62",
 			"suitability": "Gathering 7",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-110b-frostallion-noct.png",
 			"habitat": "data/maps/200b-frostallion-noct.png",
-			"rarity": 20
+			"rarity": 20,
+			"breeding": {
+				"id": "icehorse_dark",
+				"rank": 110,
+				"priority": 11000,
+				"index": 79,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": true
+			}
 		},
 		{
 			"name": "Neptilius",
@@ -4725,11 +7565,21 @@
 			"partner": "Sentinel of the Great Sea - While in team, it follows up your attacks with spear strikes. Can be ridden to travel quickly across water. While mounted, it can leap high into the air over water.",
 			"tech": "Neptilius Saddle, Lvl 64",
 			"suitability": "Watering 7",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-155-neptilius.png",
 			"habitat": "data/maps/201-neptilius.png",
-			"rarity": 20
+			"rarity": 20,
+			"breeding": {
+				"id": "poseidonorca",
+				"rank": 160,
+				"priority": 16000,
+				"index": 269,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Jetragon",
@@ -4741,11 +7591,21 @@
 			"partner": "Aerial Missile - Can be ridden as a flying mount. Can rapidly fire a missile launcher while mounted.",
 			"tech": "Jetragon's Missile Launcher, Lvl 79",
 			"suitability": "Gathering 8",
-			"spawnTime": "Day/Night",
+			"spawnTime": "Alpha only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-111-jetragon.png",
 			"habitat": "data/maps/202-jetragon.png",
-			"rarity": 20
+			"rarity": 20,
+			"breeding": {
+				"id": "jetdragon",
+				"rank": 70,
+				"priority": 7000,
+				"index": 122,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Panthalus",
@@ -4760,7 +7620,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-203-panthalus.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 10
+			"rarity": 10,
+			"breeding": {
+				"id": "kingwhale",
+				"rank": 20,
+				"priority": 2000,
+				"index": 201,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Astralym",
@@ -4775,7 +7645,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-204-astralym.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 10
+			"rarity": 10,
+			"breeding": {
+				"id": "worldtreedragon",
+				"rank": 10,
+				"priority": 1000,
+				"index": 309,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Blue Slime",
@@ -4790,7 +7670,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-blue-slime.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "yakushimamonster001_blue",
+				"rank": 3100,
+				"priority": 310000,
+				"index": 273,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Cave Bat",
@@ -4805,7 +7695,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-cave-bat.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "yakushimamonster003",
+				"rank": 3100,
+				"priority": 310000,
+				"index": 279,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Demon Eye",
@@ -4820,7 +7720,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-demon-eye.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "yakushimaboss001_small",
+				"rank": 3100,
+				"priority": 310000,
+				"index": 282,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Enchanted Sword",
@@ -4835,7 +7745,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-enchanted-sword.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "yakushimamonster002",
+				"rank": 3100,
+				"priority": 310000,
+				"index": 278,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Eye of Cthulhu",
@@ -4850,7 +7770,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-eye-of-cthulhu.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 6
+			"rarity": 6,
+			"breeding": {
+				"id": "yakushimaboss001",
+				"rank": 3100,
+				"priority": 310000,
+				"index": 281,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Green Slime",
@@ -4865,7 +7795,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-green-slime.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "yakushimamonster001",
+				"rank": 3100,
+				"priority": 310000,
+				"index": 272,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Illuminant Bat",
@@ -4880,7 +7820,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-illuminant-bat.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "yakushimamonster003_purple",
+				"rank": 3100,
+				"priority": 310000,
+				"index": 280,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Illuminant Slime",
@@ -4895,7 +7845,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-illuminant-slime.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "yakushimamonster001_pink",
+				"rank": 3100,
+				"priority": 310000,
+				"index": 276,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Purple Slime",
@@ -4910,7 +7870,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-purple-slime.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "yakushimamonster001_purple",
+				"rank": 3100,
+				"priority": 310000,
+				"index": 275,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Rainbow Slime",
@@ -4925,7 +7895,17 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-rainbow-slime.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 4
+			"rarity": 4,
+			"breeding": {
+				"id": "yakushimamonster001_rainbow",
+				"rank": 3100,
+				"priority": 310000,
+				"index": 277,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		},
 		{
 			"name": "Red Slime",
@@ -4940,7 +7920,206 @@
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-red-slime.png",
 			"habitat": "data/maps/unknown-habitat.png",
-			"rarity": 3
+			"rarity": 3,
+			"breeding": {
+				"id": "yakushimamonster001_red",
+				"rank": 3100,
+				"priority": 310000,
+				"index": 274,
+				"canBeParent": true,
+				"canBeChild": true,
+				"canBeStandardChild": false,
+				"variant": false
+			}
+		},
+		{
+			"name": "PinkKangaroo",
+			"description": "Internal game-file placeholder - PinkKangaroo appears in the Palworld breeding tables but is not a visible Paldeck entry.",
+			"number": "",
+			"element": "None",
+			"drops": "Unknown",
+			"food": "Unknown/10",
+			"partner": "Internal placeholder.",
+			"suitability": "None",
+			"spawnTime": "Internal game-file placeholder",
+			"farmable": "No",
+			"thumbnail": "data/pals/pal-unknown.png",
+			"habitat": "data/maps/unknown-habitat.png",
+			"rarity": 0,
+			"hidden": true,
+			"placeholder": true,
+			"breeding": {
+				"id": "pinkkangaroo",
+				"rank": null,
+				"priority": null,
+				"index": null,
+				"canBeParent": false,
+				"canBeChild": false,
+				"canBeStandardChild": false,
+				"variant": false
+			}
+		},
+		{
+			"name": "BeardedDragon",
+			"description": "Internal game-file placeholder - BeardedDragon appears in the Palworld breeding tables but is not a visible Paldeck entry.",
+			"number": "",
+			"element": "None",
+			"drops": "Unknown",
+			"food": "Unknown/10",
+			"partner": "Internal placeholder.",
+			"suitability": "None",
+			"spawnTime": "Internal game-file placeholder",
+			"farmable": "No",
+			"thumbnail": "data/pals/pal-unknown.png",
+			"habitat": "data/maps/unknown-habitat.png",
+			"rarity": 0,
+			"hidden": true,
+			"placeholder": true,
+			"breeding": {
+				"id": "beardeddragon",
+				"rank": null,
+				"priority": null,
+				"index": null,
+				"canBeParent": false,
+				"canBeChild": false,
+				"canBeStandardChild": false,
+				"variant": false
+			}
+		},
+		{
+			"name": "BlackFurDragon",
+			"description": "Internal game-file placeholder - BlackFurDragon appears in the Palworld breeding tables but is not a visible Paldeck entry.",
+			"number": "",
+			"element": "None",
+			"drops": "Unknown",
+			"food": "Unknown/10",
+			"partner": "Internal placeholder.",
+			"suitability": "None",
+			"spawnTime": "Internal game-file placeholder",
+			"farmable": "No",
+			"thumbnail": "data/pals/pal-unknown.png",
+			"habitat": "data/maps/unknown-habitat.png",
+			"rarity": 0,
+			"hidden": true,
+			"placeholder": true,
+			"breeding": {
+				"id": "blackfurdragon",
+				"rank": null,
+				"priority": null,
+				"index": null,
+				"canBeParent": false,
+				"canBeChild": false,
+				"canBeStandardChild": false,
+				"variant": false
+			}
+		},
+		{
+			"name": "WaterLizard",
+			"description": "Internal game-file placeholder - WaterLizard appears in the Palworld breeding tables but is not a visible Paldeck entry.",
+			"number": "",
+			"element": "None",
+			"drops": "Unknown",
+			"food": "Unknown/10",
+			"partner": "Internal placeholder.",
+			"suitability": "None",
+			"spawnTime": "Internal game-file placeholder",
+			"farmable": "No",
+			"thumbnail": "data/pals/pal-unknown.png",
+			"habitat": "data/maps/unknown-habitat.png",
+			"rarity": 0,
+			"hidden": true,
+			"placeholder": true,
+			"breeding": {
+				"id": "waterlizard",
+				"rank": null,
+				"priority": null,
+				"index": null,
+				"canBeParent": false,
+				"canBeChild": false,
+				"canBeStandardChild": false,
+				"variant": false
+			}
+		},
+		{
+			"name": "ElecLion",
+			"description": "Internal game-file placeholder - ElecLion appears in the Palworld breeding tables but is not a visible Paldeck entry.",
+			"number": "",
+			"element": "None",
+			"drops": "Unknown",
+			"food": "Unknown/10",
+			"partner": "Internal placeholder.",
+			"suitability": "None",
+			"spawnTime": "Internal game-file placeholder",
+			"farmable": "No",
+			"thumbnail": "data/pals/pal-unknown.png",
+			"habitat": "data/maps/unknown-habitat.png",
+			"rarity": 0,
+			"hidden": true,
+			"placeholder": true,
+			"breeding": {
+				"id": "eleclion",
+				"rank": null,
+				"priority": null,
+				"index": null,
+				"canBeParent": false,
+				"canBeChild": false,
+				"canBeStandardChild": false,
+				"variant": false
+			}
+		},
+		{
+			"name": "GrassDragon",
+			"description": "Internal game-file placeholder - GrassDragon appears in the Palworld breeding tables but is not a visible Paldeck entry.",
+			"number": "",
+			"element": "None",
+			"drops": "Unknown",
+			"food": "Unknown/10",
+			"partner": "Internal placeholder.",
+			"suitability": "None",
+			"spawnTime": "Internal game-file placeholder",
+			"farmable": "No",
+			"thumbnail": "data/pals/pal-unknown.png",
+			"habitat": "data/maps/unknown-habitat.png",
+			"rarity": 0,
+			"hidden": true,
+			"placeholder": true,
+			"breeding": {
+				"id": "grassdragon",
+				"rank": null,
+				"priority": null,
+				"index": null,
+				"canBeParent": false,
+				"canBeChild": false,
+				"canBeStandardChild": false,
+				"variant": false
+			}
+		},
+		{
+			"name": "DarkMutant",
+			"description": "Internal game-file placeholder - DarkMutant appears in the Palworld breeding tables but is not a visible Paldeck entry.",
+			"number": "",
+			"element": "None",
+			"drops": "Unknown",
+			"food": "Unknown/10",
+			"partner": "Internal placeholder.",
+			"suitability": "None",
+			"spawnTime": "Internal game-file placeholder",
+			"farmable": "No",
+			"thumbnail": "data/pals/pal-unknown.png",
+			"habitat": "data/maps/unknown-habitat.png",
+			"rarity": 0,
+			"hidden": true,
+			"placeholder": true,
+			"breeding": {
+				"id": "darkmutant",
+				"rank": null,
+				"priority": null,
+				"index": null,
+				"canBeParent": false,
+				"canBeChild": false,
+				"canBeStandardChild": false,
+				"variant": false
+			}
 		}
 	],
 	"Rarity": [
