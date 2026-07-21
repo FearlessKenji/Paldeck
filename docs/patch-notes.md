@@ -6,6 +6,10 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+### Paldeck Data
+
+- `/breed` results now show plain Pal names without Paldeck number prefixes.
+
 ## v1.6.0 - 2026-07-21
 
 ### Paldeck Data

@@ -20,9 +20,7 @@ const PAL_DATA_BY_NAME = new Map(palFile.Pals.map(pal => [normalizeBreedingName(
 const listCache = new Map();
 
 function formatPalLabel(pal) {
-	const number = pal.number ? `#${pal.number} ` : ``;
-
-	return `${number}${pal.name}`;
+	return pal.name;
 }
 
 function getLocalPalData(pal) {

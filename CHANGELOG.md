@@ -4,6 +4,10 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+### Fixed
+
+- Updated `/breed` result embeds, parent-pair lists, and partner lists to show plain Pal names without Paldeck number prefixes.
+
 ## v1.6.0 - 2026-07-21
 
 ### Changed
