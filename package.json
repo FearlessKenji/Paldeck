@@ -1,12 +1,13 @@
 {
   "name": "paldeck",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": true,
   "license": "GPL-3.0-only",
   "scripts": {
     "start": "node index.js",
     "deploy:global": "node deploy-global-commands.js",
     "deploy:guild": "node deploy-guild-commands.js",
+    "deploy:test": "node deploy-test-commands.js",
     "commands:clear": "node delete-all-commands.js",
     "db:init": "node database/dbInit.js",
     "db:reset": "node database/dbInit.js --force",
@@ -24,6 +25,8 @@
     "update:palworld-breeding-results:write": "node scripts/update-palworld-breeding-results.js --write",
     "update:palworld-items": "node scripts/update-palworld-items.js",
     "update:palworld-items:write": "node scripts/update-palworld-items.js --write",
+    "update:palworld-item-details": "node scripts/update-palworld-items.js --details-only",
+    "update:palworld-item-details:write": "node scripts/update-palworld-items.js --details-only --write",
     "validate:pal-data": "node scripts/validate-pal-data.js",
     "validate:item-data": "node scripts/validate-item-data.js",
     "lint": "node scripts/lint.js",
@@ -36,10 +39,11 @@
     "dotenv": "^17.4.2",
     "sequelize": "^6.37.3",
     "sqlite3": "^6.0.1",
-    "tar": "^7.5.16"
+    "tar": "^7.5.22"
   },
   "devDependencies": {
-    "eslint": "^8.57.0"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0"
   },
   "overrides": {
     "undici": "6.27.0",

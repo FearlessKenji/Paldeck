@@ -4,6 +4,7 @@ function decodeHtml(value) {
 		.replace(/&#039;/g, `'`)
 		.replace(/&lt;/g, `<`)
 		.replace(/&gt;/g, `>`)
+		.replace(/&ndash;|&#8211;/g, `–`)
 		// Decode ampersands last so `&amp;lt;` stays text instead of becoming a tag.
 		.replace(/&amp;/g, `&`);
 }

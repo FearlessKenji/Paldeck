@@ -42,6 +42,25 @@ module.exports = {
 					await interaction.reply({ content: `There was an error while handling this button!`, flags: MessageFlags.Ephemeral });
 				}
 			}
+		} else if (interaction.isStringSelectMenu()) {
+			const [commandName] = interaction.customId.split(`:`);
+			const command = interaction.client.commands.get(commandName);
+
+			if (!command?.handleSelectMenu) {
+				error(`No select-menu handler matching ${interaction.customId} was found.`);
+				return;
+			}
+
+			try {
+				await command.handleSelectMenu(interaction);
+			} catch (err) {
+				error(`There was an error while handling a select menu.`, err);
+				if (interaction.replied || interaction.deferred) {
+					await interaction.followUp({ content: `There was an error while handling this menu!`, flags: MessageFlags.Ephemeral });
+				} else {
+					await interaction.reply({ content: `There was an error while handling this menu!`, flags: MessageFlags.Ephemeral });
+				}
+			}
 		} else if (interaction.isAutocomplete()) {
 			const command = interaction.client.commands.get(interaction.commandName);
 

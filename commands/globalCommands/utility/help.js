@@ -1,4 +1,6 @@
-const { SlashCommandBuilder, MessageFlags } = require(`discord.js`);
+const { EmbedBuilder, SlashCommandBuilder, MessageFlags } = require(`discord.js`);
+
+const HELP_COLOR = 0xFFD700;
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -6,21 +8,46 @@ module.exports = {
 		.setDescription(`Returns command usage parameters.`),
 
 	async execute(interaction) {
-		await interaction.reply({ content: `## Using the Paldeck:\n
-		- Name\n - Enter the name of the pal to be searched for.\n - One name only.
-		- Number\n - Enter the paldeck number you wish to look up.\n - One number only.
-### Combine the following criteria to narrow search:\n
-		- Drops\n - Enter the item that drops from the pals you wish to look up.
-		- Farmable\n - Enter the material produced by pals assigned to the Ranch.
-		- Element\n - Enter the element you wish to look for.
-		- Suitability\n - Enter the work suitability you wish to look for.\n - You can add numbers to specify tiers (Medicine 4, Mining 2).
-		- Rarity\n - Enter the rarity you wish to search for.
-### Breeding:
+		const embed = new EmbedBuilder()
+			.setTitle(`Paldeck Help`)
+			.setColor(HELP_COLOR)
+			.setDescription(`Look up Pals and items, search the Paldeck, or calculate breeding results.`)
+			.addFields(
+				{
+					name: `Pal Lookups`,
+					value: [
+						`\`/paldeck name\` — Look up one Pal by name.`,
+						`\`/paldeck number\` — Look up a Paldeck number.`,
+						`\`/paldeck search\` — Combine Drops, Farmable, Element, Rarity, and comma-separated Suitability filters. Tiers such as \`Medicine 4\` and \`Mining 2\` are supported.`,
+						`Use **Look Up Drops** to browse a Pal's items and **Back to Pal** to return.`,
+					].join(`\n`),
+				},
+				{
+					name: `Item Lookups`,
+					value: [
+						`\`/item name:<name> rarity:<rarity>\` — Post a public item card. Rarity is optional and falls back to the basic item when unavailable.`,
+						`**View Dropping Pals** opens Paldeck results when drop sources are available.`,
+						`Controls belong to the person who started the lookup; resulting item cards remain public.`,
+					].join(`\n`),
+				},
+				{
+					name: `Breeding`,
+					value: [
+						`\`/breed result\` — Calculate the child from two parents.`,
+						`\`/breed parents\` — List parent pairs for a child.`,
+						`\`/breed partner\` — Find partners for a parent and desired child.`,
+					].join(`\n`),
+				},
+				{
+					name: `Support and Feedback`,
+					value: [
+						`\`/suggest\` — Send feedback or suggest a feature.`,
+						`[Join the Discord](https://discord.gg/FBBnC3jCFa)`,
+						`[Support the dev on Ko-fi](https://ko-fi.com/fearlesskenji)`,
+					].join(`\n`),
+				},
+			);
 
-		- /breed result\n - Enter two parents to calculate their child.
-		- /breed parents\n - Enter a child to list parent pairs.
-		- /breed partner\n - Enter one parent and a desired child to list matching partners.
-### Support/Feedback:\n
-		- [Join the Discord](https://discord.gg/FBBnC3jCFa)`, flags: MessageFlags.Ephemeral });
+		await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
 	},
 };

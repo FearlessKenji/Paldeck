@@ -3,7 +3,7 @@ const fs = require(`node:fs`);
 const path = require(`node:path`);
 const crypto = require(`node:crypto`);
 const { URL } = require(`node:url`);
-const { fetchPaldbItemData, slugify } = require(`./lib/paldb-items.js`);
+const { fetchPaldbItemData, fetchPaldbItemDetails, slugify } = require(`./lib/paldb-items.js`);
 
 const ROOT_DIR = path.resolve(__dirname, `..`);
 const ITEM_DATA_PATH = path.join(ROOT_DIR, `data`, `itemData.json`);
@@ -14,6 +14,7 @@ const ICON_DOWNLOAD_CONCURRENCY = 16;
 
 function parseArgs(argv) {
 	const options = {
+		detailsOnly: false,
 		json: false,
 		limit: 25,
 		write: false,
@@ -24,6 +25,11 @@ function parseArgs(argv) {
 
 		if (arg === `--write`) {
 			options.write = true;
+			continue;
+		}
+
+		if (arg === `--details-only`) {
+			options.detailsOnly = true;
 			continue;
 		}
 
@@ -58,6 +64,28 @@ function readJsonIfExists(filePath) {
 	}
 
 	return JSON.parse(fs.readFileSync(filePath, `utf8`));
+}
+
+function migrateItemSourceFields(itemData) {
+	itemData.Sources = (itemData.Sources || []).map(({ url: _url, ...source }) => source);
+	itemData.Items = (itemData.Items || []).map(item => {
+		let detailPath = item.detailPath || ``;
+
+		if (!detailPath && item.url) {
+			try {
+				detailPath = new URL(item.url).pathname.replace(/^\/en\//, ``);
+			} catch (_error) {
+				detailPath = ``;
+			}
+		}
+
+		const itemWithoutUrl = { ...item };
+		delete itemWithoutUrl.url;
+
+		return { ...itemWithoutUrl, detailPath };
+	});
+
+	return itemData;
 }
 
 function stringifyJson(data) {
@@ -208,8 +236,11 @@ function normalizeComparableItem(item) {
 		rarity: item.rarity || ``,
 		rarityRank: item.rarityRank ?? 0,
 		description: item.description || ``,
+		stats: item.stats || {},
+		droppedBy: item.droppedBy || [],
+		recipes: item.recipes || [],
 		iconUrl: item.iconUrl || ``,
-		url: item.url || ``,
+		detailPath: item.detailPath || ``,
 		source: item.source || ``,
 	};
 }
@@ -286,8 +317,17 @@ function printReport(report, options) {
 async function main() {
 	const options = parseArgs(process.argv.slice(2));
 	const localData = readJsonIfExists(ITEM_DATA_PATH);
-	const currentData = await fetchPaldbItemData();
-	const iconPlan = localizeItemIcons(currentData);
+	// Detail-only mode enriches the trusted catalog when upstream category pages omit internal item codes.
+	const currentData = migrateItemSourceFields(options.detailsOnly ?
+		JSON.parse(JSON.stringify(localData)) :
+		await fetchPaldbItemData());
+	currentData.Items = await fetchPaldbItemDetails(currentData.Items);
+	const iconPlan = options.detailsOnly ?
+		{
+			downloads: [],
+			uniqueIcons: new Set(currentData.Items.map(item => item.iconUrl)).size,
+		} :
+		localizeItemIcons(currentData);
 	const diff = compareItems(localData, currentData);
 	const iconDownloads = options.write ?
 		await downloadIcons(iconPlan.downloads) :

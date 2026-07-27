@@ -39,7 +39,7 @@ module.exports = [
 			'no-return-await': `error`,
 			'no-undef': `error`,
 			'no-unneeded-ternary': `error`,
-			'no-unused-vars': [`error`, { argsIgnorePattern: `^_` }],
+			'no-unused-vars': [`error`, { argsIgnorePattern: `^_`, caughtErrorsIgnorePattern: `^_` }],
 			'no-useless-catch': `error`,
 			'no-useless-return': `error`,
 			'no-var': `error`,

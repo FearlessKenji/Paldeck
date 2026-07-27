@@ -26,6 +26,7 @@ The bot uses SQLite through Sequelize for local operational data such as joined 
 | `/paldeck name` | Look up a pal by name. |
 | `/paldeck number` | Look up a pal by paldeck number. |
 | `/paldeck search` | Search pals by element, suitability, rarity, drops, and/or farmed materials. |
+| `/item name:<name> rarity:<rarity>` | Look up an item with an optional preferred rarity and view Pals known to drop it. |
 | `/breed` | Calculate breeding children, parent pairs, and partner options. |
 | `/help` | Show Paldeck command usage help. |
 | `/suggest` | Send a feature suggestion to the configured suggestions channel. Do not submit sensitive data. |
@@ -107,6 +108,13 @@ Register guild commands with:
 ```console
 $ npm run deploy:guild
 ```
+
+Temporarily register selected global commands in the configured guild for immediate testing:
+```console
+$ npm run deploy:test -- item
+```
+
+The test deployment retains all normal guild commands and adds only the named global commands as guild-scoped copies. It does not change global registration. Run `npm run deploy:guild` afterward to remove the temporary copies.
 
 The global commands will be available in all servers where Paldeck is installed. The guild commands will only be available in the server whose ID matches `guildId` in `config/config.json`.
 

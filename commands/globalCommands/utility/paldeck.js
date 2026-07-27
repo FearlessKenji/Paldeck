@@ -6,12 +6,14 @@ const {
 	EmbedBuilder,
 	MessageFlags,
 	SlashCommandBuilder,
+	StringSelectMenuBuilder,
 } = require(`discord.js`);
 const crypto = require(`node:crypto`);
 const path = require(`node:path`);
 const { Op } = require(`sequelize`);
 const { SearchSessions } = require(`../../../database/dbObjects.js`);
 const palFile = require(`../../../data/palData.json`);
+const itemFile = require(`../../../data/itemData.json`);
 const { getPalColor } = require(`../../../utils/palColors.js`);
 
 const PALS = palFile.Pals.filter(pal => !pal.hidden);
@@ -20,6 +22,16 @@ const PROJECT_ROOT = path.resolve(__dirname, `..`, `..`, `..`);
 const RESULTS_PER_PAGE = 25;
 const SEARCH_TTL_MS = 15 * 60 * 1000;
 const searchCache = new Map();
+const ITEMS_BY_ID = new Map(itemFile.Items.map(item => [item.id, item]));
+const ITEMS_BY_NAME = new Map(itemFile.Items.map(item => [normalizeText(item.name), item]));
+const ITEM_RARITY_COLORS = {
+	Common: 0x9ca3af,
+	Uncommon: 0x22c55e,
+	Rare: 0x3b82f6,
+	Epic: 0xa855f7,
+	Legendary: 0xf59e0b,
+};
+const UNAUTHORIZED_CONTROL_MESSAGE = `I'm not your button, pal!`;
 
 const ELEMENT_CHOICES = [
 	{ name: `Neutral`, value: `Neutral` },
@@ -122,6 +134,253 @@ function autocompleteDropValues(pal) {
 	];
 }
 
+function distinctPalDrops(pal) {
+	return uniqueSorted([...splitValues(pal.drops), ...worldTreeDropValues(pal)]);
+}
+
+function findItemByDropName(dropName) {
+	return ITEMS_BY_NAME.get(normalizeText(dropName));
+}
+
+function palByNumber(number) {
+	return PALS.find(pal => normalizeNumber(pal.number) === normalizeNumber(number));
+}
+
+function dropContext(item, pal) {
+	return (item.droppedBy || []).find(drop => normalizeText(drop.pal) === normalizeText(pal.name));
+}
+
+function formatNumber(value) {
+	const number = Number(value);
+
+	return Number.isFinite(number) ? number.toLocaleString(`en-US`) : String(value);
+}
+
+const AMMO_BY_WEAPON_CLASS = {
+	Bow_Fire: `Fire Arrow`,
+	Bow_Poison: `Poison Arrow`,
+	BowGun_Fire: `Fire Arrow`,
+	BowGun_Poison: `Poison Arrow`,
+	ChargeLaserRifle: `Charge Rifle Ammo`,
+	CompoundBow: `Reinforced Arrow`,
+	ElectricArcAssaultRifle: `Plasma Rifle Ammo`,
+	EnergyRocketLauncher: `Plasma Cartridge`,
+	EnergyShotgun: `Energy Shotgun Ammo`,
+	Flamethrower: `Flamethrower Fuel`,
+	GatlingGun: `Gatling Gun Ammo`,
+	GrenadeLauncher: `Grenade Ammo`,
+	GuidedMissileLauncher: `Missile Ammo`,
+	LaserGatlingGun: `Laser Gatling Cartridge`,
+	LaserRifle: `Energy Cartridge`,
+	Launcher_Meteor: `Meteorite Ammo`,
+	MakeshiftAssaultRifle: `Coarse Ammo`,
+	MakeshiftHandgun: `Coarse Ammo`,
+	MakeshiftShotgun: `Coarse Ammo`,
+	MakeshiftSubmachineGun: `Coarse Ammo`,
+	MultiGuidedMissileLauncher: `Missile Ammo`,
+	Musket: `Coarse Ammo`,
+	NormalLauncher: `Rocket Ammo`,
+	NormalPistol: `Handgun Ammo`,
+	NormalRifle: `Assault Rifle Ammo`,
+	NormalSniperRifle: `Rifle Ammo`,
+	OldRevolver: `Magnum Ammo`,
+	PalDopingShot: `Boost Gun Ammo`,
+	PalDopingShot_2: `Boost Gun Ammo`,
+	SemiAutoRifle: `Rifle Ammo`,
+	SFBow: `Advanced Arrow`,
+	SingleShotRifle: `Rifle Ammo`,
+	SkyAssaultRifle: `Heavy Assault Rifle Ammo`,
+	SkyBow: `Mechanical Bow Ammo`,
+	SkyGrenadeLauncher: `Tactical Grenade Launcher Ammo`,
+	SkyShotgun: `Prototype Shotgun Ammo`,
+	SkySubmachineGun: `Combat SMG Ammo`,
+	SubmachineGun: `Machine Gun Ammo`,
+	WidePenetrateShotgun: `Beam Scatter Ammo`,
+};
+
+const AMMO_BY_WEAPON_TYPE = {
+	WeaponBow: `Arrow`,
+	WeaponCrossbow: `Arrow`,
+	WeaponHandgun: `Handgun Ammo`,
+	WeaponShotgun: `Shotgun Shell`,
+};
+
+function itemAmmoType(item) {
+	const properties = item.properties || {};
+
+	return AMMO_BY_WEAPON_CLASS[properties.itemActorClass] || AMMO_BY_WEAPON_TYPE[properties.typeB];
+}
+
+function itemEffect(item) {
+	const properties = item.properties || {};
+
+	if (properties.typeB === `Accessory`) {
+		// PalDB appends the localized passive name to accessory descriptions when one exists.
+		const description = String(item.description || ``);
+		const passiveStart = description.indexOf(`. `);
+		const value = properties.passiveSkillName && passiveStart >= 0 ? description.slice(passiveStart + 2) : description;
+		return { label: `Accessory Effect:`, value };
+	}
+
+	if (properties.typeB === `Drug`) {
+		return { label: `Medicine Effect:`, value: item.description };
+	}
+
+	return null;
+}
+
+function buildItemEmbed(item, pal, thumbnailUrl = item.iconUrl) {
+	const stats = item.stats || {};
+	const ammoType = itemAmmoType(item);
+	let effect = itemEffect(item);
+
+	if (normalizeText(effect?.value) === normalizeText(item.description)) {
+		effect = null;
+	}
+
+	let description = item.description;
+
+	if (effect?.label === `Accessory Effect:` && item.description.endsWith(effect.value)) {
+		description = item.description.slice(0, -effect.value.length).trim();
+	}
+	const fields = [
+		{ name: `Category:`, value: item.category, inline: true },
+	];
+
+	if (stats.weight !== undefined) {
+		fields.push({ name: `Weight:`, value: formatNumber(stats.weight), inline: true });
+	}
+
+	if (stats.maxStackCount !== undefined) {
+		fields.push({ name: `Maximum Stack:`, value: formatNumber(stats.maxStackCount), inline: true });
+	}
+
+	if (stats.buyPrice !== undefined) {
+		fields.push({ name: `Buy Price:`, value: formatNumber(stats.buyPrice), inline: true });
+	}
+
+	if (stats.sellPrice !== undefined) {
+		fields.push({ name: `Sell Price:`, value: formatNumber(stats.sellPrice), inline: true });
+	}
+
+	if (stats.buyPrice !== undefined || stats.sellPrice !== undefined) {
+		// The contextual third cell keeps both price columns stable across every item category.
+		fields.push(ammoType ?
+			{ name: `Ammo Type:`, value: ammoType, inline: true } :
+			{ name: `\u200b`, value: `\u200b`, inline: true });
+	}
+
+	const applicableStats = [
+		[`Attack`, stats.attack],
+		[`Defense`, stats.defense],
+		[`Health`, stats.health],
+		[`Shield`, stats.shield],
+		[`Nutrition`, stats.nutrition],
+		[`SAN`, stats.san],
+		[`Capture Power`, stats.capturePower],
+		[`Speed`, stats.speed],
+		[`Stamina Drain`, stats.staminaDrain],
+		[`Durability`, stats.durability],
+		[`Magazine Size`, item.properties?.magazineSize],
+		[`Skill Power`, stats.waza],
+	].filter(([, value]) => value !== undefined);
+
+	if (effect?.value) {
+		fields.push({ name: effect.label, value: effect.value.slice(0, 1024) });
+	} else if (applicableStats.length) {
+		fields.push({
+			name: `Stats:`,
+			value: applicableStats.map(([label, value]) => `${label}: **${formatNumber(value)}**`).join(` • `),
+		});
+	}
+
+	const recipe = item.recipes?.[0];
+
+	if (recipe?.ingredients?.length) {
+		const ingredients = recipe.ingredients.map(ingredient => `${ingredient.name} ×${ingredient.quantity}`).join(`\n`);
+		const requirement = recipe.requirement ? `\n${recipe.requirement}` : ``;
+
+		fields.push({ name: `Crafting Materials:`, value: `${ingredients}${requirement}`.slice(0, 1024) });
+	}
+
+	if (pal) {
+		const drop = dropContext(item, pal);
+		const details = drop ?
+			[`Drop Chance: **${drop.probability}**`, `Quantity: **${drop.quantity}**`].join(`\n`) :
+			`Drop details are not available.`;
+
+		fields.push({ name: `Dropped by ${pal.name}:`, value: details });
+	}
+
+	const embed = new EmbedBuilder()
+		.setAuthor({ name: `Rarity: ${item.rarity}` })
+		.setDescription(description || `No description available.`)
+		.setColor(ITEM_RARITY_COLORS[item.rarity] || ITEM_RARITY_COLORS.Common)
+		.setTitle(item.name)
+		.addFields(fields);
+
+	if (thumbnailUrl) {
+		embed.setThumbnail(thumbnailUrl);
+	}
+
+	return embed;
+}
+
+function buildBackToPalButton(palNumber, ownerId) {
+	return new ButtonBuilder()
+		.setCustomId(`paldeck:back:${encodeURIComponent(palNumber)}:${ownerId}`)
+		.setLabel(`Back to Pal`)
+		.setStyle(ButtonStyle.Secondary);
+}
+
+function buildItemResponse(item, pal, ownerId) {
+	const thumbnail = resolveLocalImage(item.iconUrl);
+	const actionButtons = new ActionRowBuilder();
+
+	if ((item.droppedBy || []).length && ownerId) {
+		actionButtons.addComponents(
+			new ButtonBuilder()
+				.setCustomId(`item:drops:${item.id}:${ownerId}:${pal ? encodeURIComponent(pal.number) : ``}`)
+				.setLabel(`View Dropping Pals`)
+				.setStyle(ButtonStyle.Secondary),
+		);
+	}
+
+	if (pal && ownerId) {
+		actionButtons.addComponents(buildBackToPalButton(pal.number, ownerId));
+	}
+
+	const components = actionButtons.components.length ? [actionButtons] : [];
+
+	return {
+		components,
+		embeds: [buildItemEmbed(item, pal, thumbnail.url)],
+		files: thumbnail.files,
+	};
+}
+
+function buildDropSelect(pal, userId) {
+	const options = distinctPalDrops(pal)
+		.map(dropName => ({ dropName, item: findItemByDropName(dropName) }))
+		.filter(entry => entry.item)
+		.slice(0, 25)
+		.map(({ dropName, item }) => ({
+			label: dropName,
+			value: item.id,
+		}));
+
+	if (!options.length) {
+		return null;
+	}
+
+	return new ActionRowBuilder().addComponents(
+		new StringSelectMenuBuilder()
+			.setCustomId(`paldeck:drop:${encodeURIComponent(pal.number)}:${userId}`)
+			.setPlaceholder(`Choose one of ${pal.name}'s drops`)
+			.addOptions(options),
+	);
+}
+
 function farmableValues(pal) {
 	const farmable = String(pal.farmable || ``).trim();
 
@@ -141,6 +400,35 @@ const AUTOCOMPLETE_CHOICES = {
 
 function normalizeText(value) {
 	return String(value || ``).trim().toLowerCase();
+}
+
+function autocompleteChoices(optionName, input) {
+	const choices = AUTOCOMPLETE_CHOICES[optionName] || [];
+
+	if (optionName !== `suitability`) {
+		return choices
+			.filter(choice => normalizeText(choice).includes(normalizeText(input)))
+			.slice(0, 25)
+			.map(choice => ({ name: choice, value: choice }));
+	}
+
+	// Preserve completed suitability filters while autocomplete replaces only the active segment.
+	const segments = String(input || ``).split(`,`);
+	const activeInput = segments.pop().trim();
+	const completed = segments.map(segment => segment.trim()).filter(Boolean);
+	const completedNames = new Set(completed.map(entry => parseSuitability(entry).name));
+
+	return choices
+		.filter(choice =>
+			normalizeText(choice).includes(normalizeText(activeInput)) &&
+			!completedNames.has(parseSuitability(choice).name),
+		)
+		.map(choice => {
+			const value = [...completed, choice].join(`, `);
+			return { name: choice, value };
+		})
+		.filter(choice => choice.value.length <= 100)
+		.slice(0, 25);
 }
 
 function normalizeNumber(value) {
@@ -267,7 +555,7 @@ function buildPalEmbed(pal, thumbnailUrl = pal.thumbnail, habitatUrl = pal.habit
 	}
 
 	const embed = new EmbedBuilder()
-		.setAuthor({ name: `Rarity: ${rarity}`, url: `https://palworld.gg/breeding-calculator` })
+		.setAuthor({ name: `Rarity: ${rarity}` })
 		.setDescription(pal.description)
 		.setColor(getPalColor(pal, PAL_COLORS))
 		.setTitle(pal.name)
@@ -286,13 +574,30 @@ function buildPalEmbed(pal, thumbnailUrl = pal.thumbnail, habitatUrl = pal.habit
 	return embed;
 }
 
-function buildPalResponse(pal) {
+function buildPalResponse(pal, userId) {
 	const thumbnail = resolveLocalImage(pal.thumbnail);
 	const habitat = resolveLocalImage(pal.habitat);
+	const actionButtons = new ActionRowBuilder().addComponents(
+		new ButtonBuilder()
+			.setCustomId(`breed:parents:${encodeURIComponent(pal.name)}`)
+			.setLabel(`Breeding Parents`)
+			.setStyle(ButtonStyle.Primary),
+	);
+	const knownDrops = distinctPalDrops(pal).filter(dropName => findItemByDropName(dropName));
+
+	if (knownDrops.length) {
+		actionButtons.addComponents(
+			new ButtonBuilder()
+				.setCustomId(`paldeck:drops:${encodeURIComponent(pal.number)}:${userId}`)
+				.setLabel(`Look Up Drops`)
+				.setStyle(ButtonStyle.Secondary),
+		);
+	}
 
 	return {
 		embeds: [buildPalEmbed(pal, thumbnail.url, habitat.url)],
 		files: [...thumbnail.files, ...habitat.files],
+		components: [actionButtons],
 	};
 }
 
@@ -335,6 +640,38 @@ function findSearchResults(criteria) {
 	}));
 }
 
+function droppingPalResults(item) {
+	const names = new Set((item.droppedBy || []).map(drop => normalizeText(drop.pal)));
+
+	return PALS
+		.filter(pal => names.has(normalizeText(pal.name)))
+		.map(pal => ({
+			element: pal.element,
+			name: pal.name,
+			number: pal.number,
+			rarity: getRarity(pal),
+		}));
+}
+
+async function replyWithDroppingPals(interaction, item, originPalNumber = null, ownerId = null) {
+	const criteria = { element: ``, suitability: ``, rarity: ``, drops: item.name, farmable: `` };
+	const results = droppingPalResults(item);
+
+	if (!results.length) {
+		await interaction.reply({ content: `No matching Pals were found.`, flags: MessageFlags.Ephemeral });
+		return;
+	}
+
+	const page = 0;
+	const totalPages = getTotalPages(results);
+	const searchId = await storeSearch(interaction.user.id, criteria, results, originPalNumber, ownerId);
+
+	await interaction.reply({
+		embeds: [buildSearchEmbed(criteria, results, page)],
+		components: buildSearchComponents(searchId, page, totalPages, originPalNumber, ownerId),
+	});
+}
+
 function getTotalPages(results) {
 	return Math.max(1, Math.ceil(results.length / RESULTS_PER_PAGE));
 }
@@ -370,13 +707,11 @@ function buildNumberMatchesEmbed(number, results) {
 		);
 }
 
-function buildSearchComponents(searchId, page, totalPages) {
-	if (totalPages <= 1) {
-		return [];
-	}
+function buildSearchComponents(searchId, page, totalPages, originPalNumber = null, ownerId = null) {
+	const rows = [];
 
-	return [
-		new ActionRowBuilder().addComponents(
+	if (totalPages > 1) {
+		rows.push(new ActionRowBuilder().addComponents(
 			new ButtonBuilder()
 				.setCustomId(`paldeck:page:${searchId}:${page - 1}`)
 				.setLabel(`<`)
@@ -387,14 +722,20 @@ function buildSearchComponents(searchId, page, totalPages) {
 				.setLabel(`>`)
 				.setStyle(ButtonStyle.Secondary)
 				.setDisabled(page >= totalPages - 1),
-		),
-	];
+		));
+	}
+
+	if (originPalNumber && ownerId) {
+		rows.push(new ActionRowBuilder().addComponents(buildBackToPalButton(originPalNumber, ownerId)));
+	}
+
+	return rows;
 }
 
-async function storeSearch(userId, criteria, results) {
+async function storeSearch(userId, criteria, results, originPalNumber = null, ownerId = null) {
 	const searchId = crypto.randomUUID();
 	const expiresAt = Date.now() + SEARCH_TTL_MS;
-	const state = { userId, criteria, results, expiresAt };
+	const state = { userId, criteria, results, expiresAt, originPalNumber, ownerId };
 	const timeout = setTimeout(() => searchCache.delete(searchId), SEARCH_TTL_MS);
 
 	if (typeof timeout.unref === `function`) {
@@ -487,7 +828,7 @@ module.exports = {
 				.addStringOption(option =>
 					option
 						.setName(`suitability`)
-						.setDescription(`List pals based on suitabilities.`)
+						.setDescription(`Match all suitabilities in a comma-separated list.`)
 						.setAutocomplete(true))
 				.addStringOption(option =>
 					option
@@ -506,14 +847,7 @@ module.exports = {
 						.setAutocomplete(true))),
 	async autocomplete(interaction) {
 		const focusedOption = interaction.options.getFocused(true);
-		const choices = AUTOCOMPLETE_CHOICES[focusedOption.name] || [];
-		const filtered = choices
-			.filter(choice => normalizeText(choice).includes(normalizeText(focusedOption.value)))
-			.slice(0, 25);
-
-		await interaction.respond(
-			filtered.map(choice => ({ name: choice, value: choice })),
-		);
+		await interaction.respond(autocompleteChoices(focusedOption.name, focusedOption.value));
 	},
 
 	async execute(interaction) {
@@ -528,7 +862,7 @@ module.exports = {
 				return;
 			}
 
-			await interaction.reply(buildPalResponse(pal));
+			await interaction.reply(buildPalResponse(pal, interaction.user.id));
 			return;
 		}
 
@@ -546,7 +880,7 @@ module.exports = {
 				return;
 			}
 
-			await interaction.reply(buildPalResponse(matches[0]));
+			await interaction.reply(buildPalResponse(matches[0], interaction.user.id));
 			return;
 		}
 
@@ -583,6 +917,43 @@ module.exports = {
 	async handleButton(interaction) {
 		const [, action, searchId, rawPage] = interaction.customId.split(`:`);
 
+		if (action === `back`) {
+			if (rawPage !== interaction.user.id) {
+				await interaction.reply({ content: UNAUTHORIZED_CONTROL_MESSAGE, flags: MessageFlags.Ephemeral });
+				return;
+			}
+
+			const pal = palByNumber(decodeURIComponent(searchId));
+
+			if (!pal) {
+				await interaction.reply({ content: `That Pal is no longer available.`, flags: MessageFlags.Ephemeral });
+				return;
+			}
+
+			await interaction.update(buildPalResponse(pal, rawPage));
+			return;
+		}
+
+		if (action === `drops`) {
+			if (rawPage !== interaction.user.id) {
+				await interaction.reply({ content: UNAUTHORIZED_CONTROL_MESSAGE, flags: MessageFlags.Ephemeral });
+				return;
+			}
+
+			const pal = palByNumber(decodeURIComponent(searchId));
+			const select = pal && buildDropSelect(pal, rawPage);
+
+			if (!select) {
+				await interaction.reply({ content: `No item details are available for this Pal's drops.`, flags: MessageFlags.Ephemeral });
+				return;
+			}
+
+			// Keep navigation on the public Pal message so its owner can search repeatedly or return cleanly.
+			const backRow = new ActionRowBuilder().addComponents(buildBackToPalButton(pal.number, rawPage));
+			await interaction.update({ components: [interaction.message.components[0], select, backRow] });
+			return;
+		}
+
 		if (action !== `page`) {
 			await interaction.reply({ content: `Unknown Paldeck action.`, flags: MessageFlags.Ephemeral });
 			return;
@@ -596,7 +967,7 @@ module.exports = {
 		}
 
 		if (state.userId !== interaction.user.id) {
-			await interaction.reply({ content: `Only the original searcher can page through these results.`, flags: MessageFlags.Ephemeral });
+			await interaction.reply({ content: UNAUTHORIZED_CONTROL_MESSAGE, flags: MessageFlags.Ephemeral });
 			return;
 		}
 
@@ -605,7 +976,40 @@ module.exports = {
 
 		await interaction.update({
 			embeds: [buildSearchEmbed(state.criteria, state.results, page)],
-			components: buildSearchComponents(searchId, page, totalPages),
+			components: buildSearchComponents(
+				searchId,
+				page,
+				totalPages,
+				state.originPalNumber,
+				state.ownerId,
+			),
 		});
 	},
+
+	async handleSelectMenu(interaction) {
+		const [, action, rawPalNumber, ownerId] = interaction.customId.split(`:`);
+
+		if (action !== `drop`) {
+			await interaction.reply({ content: `Unknown Paldeck menu.`, flags: MessageFlags.Ephemeral });
+			return;
+		}
+
+		if (ownerId !== interaction.user.id) {
+			await interaction.reply({ content: UNAUTHORIZED_CONTROL_MESSAGE, flags: MessageFlags.Ephemeral });
+			return;
+		}
+
+		const pal = palByNumber(decodeURIComponent(rawPalNumber));
+		const item = ITEMS_BY_ID.get(interaction.values[0]);
+
+		if (!pal || !item || !distinctPalDrops(pal).some(drop => normalizeText(drop) === normalizeText(item.name))) {
+			await interaction.reply({ content: `That drop is no longer available for this Pal.`, flags: MessageFlags.Ephemeral });
+			return;
+		}
+
+		await interaction.reply(buildItemResponse(item, pal, ownerId));
+	},
+
+	buildItemResponse,
+	replyWithDroppingPals,
 };
