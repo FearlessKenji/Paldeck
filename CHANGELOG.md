@@ -4,9 +4,47 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+## v1.7.0 - 2026-07-27
+
+- Initialized and cleaned up smoke-test search storage so search-backed interaction tests pass in fresh CI checkouts.
+
+- Removed the unused `/vote` command and its Top.gg voting link.
+- Updated `tar`, ESLint, and the ESLint JavaScript configuration package to patched releases so the dependency audit passes.
+- Added the Ko-fi page and `/suggest` command to the `/help` embed's support section.
+- Replaced the plain-text `/help` response with a structured gold embed.
+- Added owner-bound `Back to Pal` navigation throughout item panels originating from `/paldeck name`, and expanded `/help` with Pal, item, drop-navigation, search, and breeding guidance.
+- Suppressed item Effect fields when their content duplicates the item description.
+- Kept user-facing patch notes focused on visible bot behavior, removed development and storage details, and described unreleased `/item` functionality as a new feature rather than an already-live change.
+- Added category-aware item details: ranged weapons now show their Ammo Type and magazine size, while medicines and accessories show a dedicated Effect field instead of generic stats.
+- Added structured PalDB item properties to `itemData.json` for weapon classes, magazine sizes, passive effects, and item-type-aware embed rendering.
+- Item autocomplete now also honors the game's `bLegalInGame` flag when excluding unfinished items.
+- Updated the project version to `1.7.0`.
+
+### Added
+
+- Added applicable combat/equipment stats and direct crafting-material requirements to item embeds.
+- Added a focused `deploy:test -- <command...>` workflow that registers selected global commands as temporary guild commands alongside the normal guild command set.
+- Added `/item` autocomplete lookups with public item cards and owner-bound `View Dropping Pals` results that reuse Paldeck search pagination.
+- Added an owner-bound `Look Up Drops` button and searchable drop menu to individual Pal results; selected items are posted publicly as local-icon embeds.
+- Enriched `itemData.json` with structured item stats and per-Pal drop quantities and probabilities from item detail pages.
+- Added detail-only item update commands so the established item catalog can be enriched independently of upstream category-page changes.
+
+### Changed
+
+- Excluded `[WIP]` item records from `/item` autocomplete and direct lookup until their upstream descriptions are finalized.
+- Aligned item embed fields in a stable three-column grid, with Category, Weight, and Maximum Stack above Buy and Sell Price.
+- Simplified `/item` autocomplete to plain, unique item names and added an optional rarity choice that falls back to the basic item when unavailable.
+- Removed stored PalDB URLs from item and source records; updater-only item locations now use non-link relative `detailPath` values.
+- Normalized item drop sources to canonical Pal names with separate encounter `variant` and `level` metadata, omitting decorative Alpha titles.
+- Added reusable string-select interaction routing and validation alongside existing command button handlers.
+- Item detail lookups omit PalDB links and internal game codes while showing rarity, category, available stats, and Pal-specific drop information.
+
 ### Fixed
 
+- Restored practical comma-separated `/paldeck search` suitability filtering by preserving completed filters during autocomplete and documenting that all listed suitabilities must match.
+- Added a breeding-parent button to individual `/paldeck` results and removed the unrelated breeding-calculator link from Rarity.
 - Updated `/breed` result embeds, parent-pair lists, and partner lists to show plain Pal names without Paldeck number prefixes.
+- Removed breeding method and rank details from visible `/breed` result output.
 
 ## v1.6.0 - 2026-07-21
 

@@ -2,6 +2,7 @@
 
 const childProcess = require(`node:child_process`);
 const fs = require(`node:fs`);
+const os = require(`node:os`);
 const path = require(`node:path`);
 
 const projectRoot = path.resolve(__dirname, `..`);
@@ -14,6 +15,7 @@ const results = {
 };
 
 let createdSmokeConfig = false;
+let smokeDatabasePath = null;
 let sequelizeToClose = null;
 
 function resolveProject(...parts) {
@@ -75,6 +77,26 @@ function cleanupSmokeRuntimeConfig() {
 	}
 }
 
+async function initializeSmokeSearchStorage() {
+	smokeDatabasePath = path.join(os.tmpdir(), `paldeck-smoke-${process.pid}.sqlite`);
+	process.env.PALDECK_DATABASE_PATH = smokeDatabasePath;
+	const { SearchSessions, sequelize } = requireFresh(`database`, `dbObjects.js`);
+
+	sequelizeToClose = sequelize;
+	// Search-backed interaction tests need their persistence table even in a fresh CI checkout.
+	await SearchSessions.sync();
+}
+
+function cleanupSmokeDatabase() {
+	if (!smokeDatabasePath) {
+		return;
+	}
+
+	for (const suffix of [``, `-shm`, `-wal`]) {
+		fs.rmSync(`${smokeDatabasePath}${suffix}`, { force: true });
+	}
+}
+
 function listFiles(directory, predicate = () => true) {
 	if (!fs.existsSync(directory)) {
 		return [];
@@ -130,6 +152,7 @@ function validatePackageMetadata() {
 	assert(rootPackage?.version === pkg.version, `package-lock root package version does not match package.json.`);
 	assert(pkg.scripts?.lint === `node scripts/lint.js`, `package.json is missing the lint script.`);
 	assert(pkg.scripts?.smoke === `node scripts/smokeTest.js`, `package.json is missing the smoke script.`);
+	assert(pkg.scripts?.[`deploy:test`] === `node deploy-test-commands.js`, `package.json is missing the test deployment script.`);
 
 	for (const packageName of Object.keys(pkg.dependencies || {})) {
 		assertLockPackage(lock, packageName);
@@ -149,6 +172,7 @@ function validateRequiredProjectFiles() {
 		`docs/patch-notes.md`,
 		`commands/globalCommands/admin/announce.js`,
 		`commands/globalCommands/utility/updates.js`,
+		`deploy-test-commands.js`,
 		`utils/announcements.js`,
 		`utils/configValues.js`,
 	];
@@ -222,7 +246,7 @@ function validateCommandsLoad() {
 		assert(!namesByScope.has(scopeKey), `Duplicate ${scope} command name: ${json.name}.`);
 		assert(command.execute.constructor.name === `AsyncFunction`, `${relative(filePath)} execute() should be async.`);
 
-		for (const optionalHandler of [`autocomplete`, `handleButton`]) {
+		for (const optionalHandler of [`autocomplete`, `handleButton`, `handleSelectMenu`]) {
 			if (command[optionalHandler] !== undefined) {
 				assert(typeof command[optionalHandler] === `function`, `${relative(filePath)} ${optionalHandler} should be a function when exported.`);
 				assert(command[optionalHandler].constructor.name === `AsyncFunction`, `${relative(filePath)} ${optionalHandler} should be async.`);
@@ -259,6 +283,41 @@ async function validatePaldeckFarmableSearch() {
 	assert(
 		autocompleteChoices.every(choice => !choice.name.startsWith(`Yes - `) && !choice.value.startsWith(`Yes - `)),
 		`Farmable autocomplete should not include the Yes - prefix.`,
+	);
+}
+
+async function validatePaldeckSuitabilityListAutocomplete() {
+	const paldeck = requireFresh(`commands`, `globalCommands`, `utility`, `paldeck.js`);
+	const searchCommand = paldeck.data.toJSON().options.find(option => option.name === `search`);
+	const suitabilityOption = searchCommand?.options?.find(option => option.name === `suitability`);
+	let autocompleteChoices = [];
+
+	assert(suitabilityOption, `/paldeck search is missing the suitability option.`);
+	assert(
+		suitabilityOption.description.toLowerCase().includes(`comma-separated`),
+		`/paldeck search should explain that suitability accepts a comma-separated list.`,
+	);
+
+	await paldeck.autocomplete({
+		options: {
+			getFocused: () => ({ name: `suitability`, value: `Mining 2, hand` }),
+		},
+		respond: choices => {
+			autocompleteChoices = choices;
+		},
+	});
+
+	assert(
+		autocompleteChoices.some(choice => choice.name === `Handiwork 1` && choice.value === `Mining 2, Handiwork 1`),
+		`Suitability autocomplete should preserve completed filters and replace the active segment.`,
+	);
+	assert(
+		autocompleteChoices.every(choice => choice.value.startsWith(`Mining 2, `)),
+		`Suitability autocomplete dropped a completed filter.`,
+	);
+	assert(
+		autocompleteChoices.every(choice => !choice.name.startsWith(`Mining`)),
+		`Suitability autocomplete should not suggest a suitability that is already selected.`,
 	);
 }
 
@@ -315,28 +374,275 @@ async function runBreedCommand(breed, subcommand, values) {
 async function validateBreedResultsUsePlainNames() {
 	const breed = requireFresh(`commands`, `globalCommands`, `utility`, `breed.js`);
 	const numberPrefixedPalPattern = /#\d{1,3}[A-Z]?\s+[A-Za-z]/;
+	const formulaDetailLabels = [
+		`Child Rank`,
+		`Gender-specific known result`,
+		`Method`,
+		`Parent Ranks`,
+		`Same species`,
+		`Source override`,
+		`Standard rank`,
+		`Target rank`,
+		`Unique combination`,
+	];
 	const resultPayload = await runBreedCommand(breed, `result`, {
 		parent1: `Lamball`,
 		parent2: `Lamball`,
 	});
+	const uniqueResultPayload = await runBreedCommand(breed, `result`, {
+		parent1: `Relaxaurus`,
+		parent2: `Sparkit`,
+	});
 	const parentsPayload = await runBreedCommand(breed, `parents`, {
 		child: `Lamball`,
+	});
+	const uniqueParentsPayload = await runBreedCommand(breed, `parents`, {
+		child: `Relaxaurus Lux`,
 	});
 	const partnerPayload = await runBreedCommand(breed, `partner`, {
 		child: `Lamball`,
 		parent: `Lamball`,
 	});
+	const uniquePartnerPayload = await runBreedCommand(breed, `partner`, {
+		child: `Relaxaurus Lux`,
+		parent: `Relaxaurus`,
+	});
 	const serializedOutput = [
 		serializeDiscordPayload(resultPayload),
+		serializeDiscordPayload(uniqueResultPayload),
 		serializeDiscordPayload(parentsPayload),
+		serializeDiscordPayload(uniqueParentsPayload),
 		serializeDiscordPayload(partnerPayload),
+		serializeDiscordPayload(uniquePartnerPayload),
 	].join(`\n`);
 
 	assert(resultPayload?.embeds?.length, `/breed result did not produce an embed.`);
+	assert(uniqueResultPayload?.embeds?.length, `/breed result did not produce a unique-combination embed.`);
 	assert(parentsPayload?.embeds?.length, `/breed parents did not produce an embed.`);
+	assert(uniqueParentsPayload?.embeds?.length, `/breed parents did not produce a unique-combination embed.`);
 	assert(partnerPayload?.embeds?.length, `/breed partner did not produce an embed.`);
+	assert(uniquePartnerPayload?.embeds?.length, `/breed partner did not produce a unique-combination embed.`);
 	assert(serializedOutput.includes(`Lamball`), `/breed command smoke output should include the test Pal name.`);
 	assert(!numberPrefixedPalPattern.test(serializedOutput), `/breed results should show plain Pal names without number prefixes.`);
+	for (const label of formulaDetailLabels) {
+		assert(!serializedOutput.includes(label), `/breed results should not show formula detail label: ${label}.`);
+	}
+}
+
+async function validatePaldeckBreedingButton() {
+	const paldeck = requireFresh(`commands`, `globalCommands`, `utility`, `paldeck.js`);
+	const breed = requireFresh(`commands`, `globalCommands`, `utility`, `breed.js`);
+	let paldeckPayload = null;
+	let breedingPayload = null;
+
+	await paldeck.execute({
+		options: {
+			getString: () => `Lamball`,
+			getSubcommand: () => `name`,
+		},
+		reply: payload => {
+			paldeckPayload = payload;
+		},
+		user: {
+			id: `smoke-test-user`,
+		},
+	});
+
+	const serializedPaldeck = serializeDiscordPayload(paldeckPayload);
+	const buttonCustomId = paldeckPayload?.components?.[0]?.components?.[0]?.data?.custom_id;
+
+	assert(buttonCustomId === `breed:parents:Lamball`, `/paldeck should include a breeding-parent button for the displayed Pal.`);
+	assert(serializedPaldeck.includes(`Breeding Parents`), `/paldeck breeding-parent button should have a clear label.`);
+	assert(!serializedPaldeck.includes(`palworld.gg/breeding-calculator`), `/paldeck rarity should not link to an external breeding calculator.`);
+	assert(serializedPaldeck.includes(`palworld.fandom.com/wiki/Lamball`), `/paldeck Pal name should retain its Fandom wiki link.`);
+
+	await breed.handleButton({
+		customId: buttonCustomId,
+		reply: payload => {
+			breedingPayload = payload;
+		},
+		user: {
+			id: `smoke-test-user`,
+		},
+	});
+
+	const serializedBreeding = serializeDiscordPayload(breedingPayload);
+
+	assert(breedingPayload?.embeds?.length, `/paldeck breeding-parent button did not produce an embed.`);
+	assert(serializedBreeding.includes(`Parent pairs that produce Lamball.`), `/paldeck breeding-parent button returned the wrong child results.`);
+}
+
+async function validatePaldeckDropLookup() {
+	const paldeck = requireFresh(`commands`, `globalCommands`, `utility`, `paldeck.js`);
+	const itemCommand = requireFresh(`commands`, `globalCommands`, `utility`, `item.js`);
+	let paldeckPayload = null;
+	let menuPayload = null;
+	let itemPayload = null;
+	let unauthorizedPayload = null;
+	let restoredPalPayload = null;
+	let droppingPalsPayload = null;
+
+	await paldeck.execute({
+		options: {
+			getString: () => `Lamball`,
+			getSubcommand: () => `name`,
+		},
+		reply: payload => {
+			paldeckPayload = payload;
+		},
+		user: { id: `drop-owner` },
+	});
+
+	const dropButton = paldeckPayload.components[0].components.find(component => component.data.label === `Look Up Drops`);
+
+	assert(dropButton, `Lamball's Pal lookup should include a Look Up Drops button.`);
+	await paldeck.handleButton({
+		customId: dropButton.data.custom_id,
+		message: { components: paldeckPayload.components },
+		update: payload => {
+			menuPayload = payload;
+		},
+		user: { id: `drop-owner` },
+	});
+
+	const menu = menuPayload?.components?.[1]?.components?.[0];
+	const menuData = menu?.toJSON?.() || menu?.data;
+	const menuBackButton = menuPayload?.components?.[2]?.components?.[0];
+
+	assert(menuData?.options?.some(option => option.label === `Wool`), `Lamball's drop menu should include Wool.`);
+	assert(menuBackButton?.data?.label === `Back to Pal`, `The Pal drop menu should include Back to Pal navigation.`);
+	await paldeck.handleSelectMenu({
+		customId: menuData.custom_id,
+		reply: payload => {
+			itemPayload = payload;
+		},
+		user: { id: `drop-owner` },
+		values: [`wool`],
+	});
+
+	const serializedItem = serializeDiscordPayload(itemPayload);
+
+	assert(itemPayload?.embeds?.length, `Selecting Wool should send an item embed.`);
+	assert(!itemPayload.flags, `Successful drop item lookups should be public.`);
+	assert(serializedItem.includes(`Drop Chance: **100%**`), `Wool should show its Lamball drop chance.`);
+	assert(serializedItem.includes(`Quantity: **1–3**`), `Wool should show its Lamball drop quantity.`);
+	assert(!serializedItem.includes(`Items/Wool`) && !serializedItem.includes(`paldb.cc`), `Item embeds should hide internal codes and PalDB links.`);
+	const itemBackButton = itemPayload.components[0].components.find(component => component.data.label === `Back to Pal`);
+	const droppingPalsButton = itemPayload.components[0].components.find(component => component.data.label === `View Dropping Pals`);
+
+	assert(itemBackButton, `Items opened from a Pal should retain Back to Pal navigation.`);
+	await itemCommand.handleButton({
+		customId: droppingPalsButton.data.custom_id,
+		reply: payload => {
+			droppingPalsPayload = payload;
+		},
+		user: { id: `drop-owner` },
+	});
+	assert(
+		serializeDiscordPayload(droppingPalsPayload).includes(`Back to Pal`),
+		`Dropping-Pal results should retain Back to Pal when reached from a Pal lookup.`,
+	);
+	await paldeck.handleButton({
+		customId: itemBackButton.data.custom_id,
+		update: payload => {
+			restoredPalPayload = payload;
+		},
+		user: { id: `drop-owner` },
+	});
+	assert(serializeDiscordPayload(restoredPalPayload).includes(`Lamball`), `Back to Pal should restore the originating Pal card.`);
+
+	await paldeck.handleSelectMenu({
+		customId: menuData.custom_id,
+		reply: payload => {
+			unauthorizedPayload = payload;
+		},
+		user: { id: `someone-else` },
+		values: [`wool`],
+	});
+
+	assert(unauthorizedPayload?.content === `I'm not your button, pal!`, `Unauthorized drop controls should use the requested response.`);
+}
+
+async function validateItemLookupAndDroppingPals() {
+	const itemCommand = requireFresh(`commands`, `globalCommands`, `utility`, `item.js`);
+	const paldeck = requireFresh(`commands`, `globalCommands`, `utility`, `paldeck.js`);
+	const itemData = requireFresh(`data`, `itemData.json`);
+	let choices = [];
+	let itemPayload = null;
+	let resultsPayload = null;
+	let unauthorizedPayload = null;
+
+	await itemCommand.autocomplete({
+		options: { getFocused: () => `wool` },
+		respond: payload => {
+			choices = payload;
+		},
+	});
+	assert(choices.some(choice => choice.name === `Wool` && choice.value === `Wool`), `/item autocomplete should show only the plain Wool name.`);
+	assert(choices.every(choice => !choice.name.includes(` — `)), `/item autocomplete should not show rarity or category labels.`);
+
+	await itemCommand.autocomplete({
+		options: { getFocused: () => `ballistic` },
+		respond: payload => {
+			choices = payload;
+		},
+	});
+	assert(!choices.some(choice => choice.name === `Ballistic Shield`), `/item autocomplete should hide WIP items.`);
+
+	await itemCommand.execute({
+		options: { getString: name => name === `name` ? `Wool` : `Legendary` },
+		reply: payload => {
+			itemPayload = payload;
+		},
+		user: { id: `item-owner` },
+	});
+
+	const serializedItem = serializeDiscordPayload(itemPayload);
+	const dropButton = itemPayload?.components?.[0]?.components?.[0];
+
+	assert(serializedItem.includes(`Wool`), `/item should send the selected item embed.`);
+	assert(serializedItem.includes(`Rarity: Common`), `/item should fall back to basic Wool when the requested rarity does not exist.`);
+	assert(!serializedItem.includes(`Dropped By`), `/item should not list dropping Pals in the item embed.`);
+	assert(dropButton?.data?.label === `View Dropping Pals`, `Droppable items should include a View Dropping Pals button.`);
+	assert(!serializedItem.includes(`Back to Pal`), `Direct /item lookups should not include Back to Pal navigation.`);
+
+	await itemCommand.handleButton({
+		customId: dropButton.data.custom_id,
+		reply: payload => {
+			resultsPayload = payload;
+		},
+		user: { id: `item-owner` },
+	});
+
+	const serializedResults = serializeDiscordPayload(resultsPayload);
+
+	assert(resultsPayload?.embeds?.length, `View Dropping Pals should send a Paldeck search embed.`);
+	assert(serializedResults.includes(`Lamball`), `Wool's dropping-Pal results should include Lamball.`);
+	assert(/Drops:\s+Wool/.test(serializedResults), `Dropping-Pal results should identify the selected item filter.`);
+
+	await itemCommand.handleButton({
+		customId: dropButton.data.custom_id,
+		reply: payload => {
+			unauthorizedPayload = payload;
+		},
+		user: { id: `someone-else` },
+	});
+	assert(unauthorizedPayload?.content === `I'm not your button, pal!`, `Unauthorized item controls should use the requested response.`);
+
+	const assaultRifle = itemData.Items.find(item => item.name === `Assault Rifle` && item.rarity === `Common`);
+	const attackPendant = itemData.Items.find(item => item.name === `Attack Pendant`);
+	const memoryWipingMedicine = itemData.Items.find(item => item.name === `Memory Wiping Medicine`);
+	const serializedRifle = serializeDiscordPayload(paldeck.buildItemResponse(assaultRifle, null, `item-owner`));
+	const accessoryResponse = paldeck.buildItemResponse(attackPendant, null, `item-owner`);
+	const serializedAccessory = serializeDiscordPayload(accessoryResponse);
+	const serializedMedicine = serializeDiscordPayload(paldeck.buildItemResponse(memoryWipingMedicine, null, `item-owner`));
+	const accessoryEffect = accessoryResponse.embeds[0].toJSON().fields.find(field => field.name === `Accessory Effect:`);
+
+	assert(serializedRifle.includes(`Ammo Type:`) && serializedRifle.includes(`Assault Rifle Ammo`), `Applicable weapons should show their ammo type.`);
+	assert(serializedRifle.includes(`Magazine Size`) && serializedRifle.includes(`20`), `Applicable weapons should show magazine size in Stats.`);
+	assert(accessoryEffect?.value === `Attack Up Lv. 3`, `Accessories should show their localized effect in the dedicated field.`);
+	assert(!serializedAccessory.includes(`Stats:`), `Accessory Effect should replace the generic Stats field.`);
+	assert(!serializedMedicine.includes(`Medicine Effect:`), `Medicine Effect should be omitted when it duplicates the description.`);
 }
 
 function validateHtmlTextHelpers() {
@@ -451,7 +757,7 @@ function validateAnnouncementHelpers() {
 }
 
 function validateDatabaseModels() {
-	const dbObjects = requireFresh(`database`, `dbObjects.js`);
+	const dbObjects = require(resolveProject(`database`, `dbObjects.js`));
 	const joinedServerColumns = dbObjects.JoinedServers.rawAttributes;
 
 	sequelizeToClose = dbObjects.sequelize;
@@ -545,13 +851,18 @@ function validateGitHygiene() {
 
 async function main() {
 	ensureSmokeRuntimeConfig();
+	await initializeSmokeSearchStorage();
 
 	await test(`package metadata and lockfile are consistent`, validatePackageMetadata);
 	await test(`required project files exist`, validateRequiredProjectFiles);
 	await test(`commands load and serialize for Discord deployment`, validateCommandsLoad);
 	await test(`Paldeck farmable search autocomplete stays prefix-free`, validatePaldeckFarmableSearch);
+	await test(`Paldeck suitability autocomplete supports comma-separated all-of filters`, validatePaldeckSuitabilityListAutocomplete);
 	await test(`Breed autocomplete uses palData breeding metadata`, validateBreedAutocompleteUsesPalData);
 	await test(`Breed results use plain Pal names`, validateBreedResultsUsePlainNames);
+	await test(`Paldeck breeding button opens parent results`, validatePaldeckBreedingButton);
+	await test(`Paldeck drop controls send public owned item lookups`, validatePaldeckDropLookup);
+	await test(`/item lookup opens Paldeck dropping-Pal results`, validateItemLookupAndDroppingPals);
 	await test(`HTML text helpers decode before stripping tags`, validateHtmlTextHelpers);
 	await test(`hidden Pal placeholders stay out of user-facing search`, validateHiddenPalPlaceholdersStayHidden);
 	await test(`events load with valid handlers`, validateEventsLoad);
@@ -577,6 +888,7 @@ async function main() {
 }
 
 process.on(`exit`, cleanupSmokeRuntimeConfig);
+process.on(`exit`, cleanupSmokeDatabase);
 
 main().catch(error => {
 	console.error(`[fail] smoke test crashed`);

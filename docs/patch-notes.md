@@ -6,9 +6,28 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+## v1.7.0 - 2026-07-27
+
 ### Paldeck Data
 
+- The `/help` support section includes the community Discord, Ko-fi page, and `/suggest` command.
+- Item panels opened from `/paldeck name` include a persistent **Back to Pal** button, and `/help` explains the Pal and item lookup controls.
+- Item cards avoid repeating an effect when it is identical to the item description.
+- Added `/item` for public item lookups. Items with known Pal drop sources include an owner-only **View Dropping Pals** button that opens familiar paginated Paldeck results.
+- `/item` autocomplete shows only item names. Its optional rarity choice selects a matching variant when available and otherwise shows the basic item.
+- Item stats use a stable three-column embed layout, keeping Maximum Stack and both price fields aligned.
+- Item lookups show Ammo Type for applicable weapons, useful performance stats, and dedicated Medicine Effect or Accessory Effect sections where appropriate.
+- Applicable items show combat or equipment stats and the materials needed to craft them.
+- Work-in-progress items such as Ballistic Shield stay hidden from `/item` until their data is finalized.
+- Individual Pal results include an owner-only **Look Up Drops** control. Choosing a drop posts a public item embed with its local icon, rarity, stats, drop chance, and quantity.
+- Other users who try to use someone else's drop controls receive a private ownership message, while successful item lookups remain visible to the channel.
+- Item cards keep the same local presentation style as Pal cards and do not display PalDB links or internal item codes.
+- Item drop sources use regular Pal names while preserving meaningful Alpha, Rampaging, World Tree, and level distinctions.
+- `/paldeck search` suitability now accepts a comma-separated list and returns only Pals with every listed suitability; autocomplete preserves earlier selections as more are added.
+- Individual `/paldeck` results now include a button to find breeding parents for the displayed Pal.
 - `/breed` results now show plain Pal names without Paldeck number prefixes.
+- `/breed` results no longer show internal breeding method or rank details.
+- Removed the `/vote` command.
 
 ## v1.6.0 - 2026-07-21
 

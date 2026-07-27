@@ -9,7 +9,7 @@ const {
 const crypto = require(`node:crypto`);
 const breedingFile = require(`../../../data/palBreeding.json`);
 const palFile = require(`../../../data/palData.json`);
-const { createBreedingCalculator, formatBreedingMethod, normalizeBreedingName } = require(`../../../utils/palBreeding.js`);
+const { createBreedingCalculator, normalizeBreedingName } = require(`../../../utils/palBreeding.js`);
 const { getPalColor } = require(`../../../utils/palColors.js`);
 
 const PAGE_SIZE = 10;
@@ -35,16 +35,6 @@ function getResultColor(pal) {
 	}
 
 	return PAL_COLORS.Neutral || [255, 255, 255];
-}
-
-function formatRank(pal) {
-	return Number.isFinite(pal.breedingRank) ? `${pal.breedingRank}` : `Unknown`;
-}
-
-function formatMethod(result) {
-	const targetRank = result.targetRank === null ? `` : ` | Target rank: ${result.targetRank}`;
-
-	return `${formatBreedingMethod(result.method)}${targetRank}`;
 }
 
 function formatGender(value) {
@@ -74,17 +64,15 @@ function formatGenderedRequirement(result) {
 }
 
 function formatPairLine(result) {
-	const method = [`unique-combination`, `source-override`, `gendered-pair-result`].includes(result.method) ? ` - ${formatBreedingMethod(result.method)}` : ``;
 	const genders = formatGenderedRequirement(result);
 
-	return `${formatPalLabel(result.parentA)} + ${formatPalLabel(result.parentB)}${genders}${method}`;
+	return `${formatPalLabel(result.parentA)} + ${formatPalLabel(result.parentB)}${genders}`;
 }
 
 function formatPartnerLine(entry) {
-	const method = [`unique-combination`, `source-override`, `gendered-pair-result`].includes(entry.result.method) ? ` - ${formatBreedingMethod(entry.result.method)}` : ``;
 	const genders = formatGenderedRequirement(entry.result);
 
-	return `${formatPalLabel(entry.partner)}${genders}${method}`;
+	return `${formatPalLabel(entry.partner)}${genders}`;
 }
 
 function getAutocompleteChoices(optionName) {
@@ -99,15 +87,7 @@ function getAutocompleteChoices(optionName) {
 function buildResultEmbed(result) {
 	const fields = [
 		{ name: result.method === `gendered-pair-result` ? `Children` : `Child`, value: formatChildField(result), inline: false },
-		{ name: `Method`, value: formatMethod(result), inline: false },
 	];
-
-	if (result.method === `standard`) {
-		fields.push(
-			{ name: `Parent Ranks`, value: `${formatRank(result.parentA)} + ${formatRank(result.parentB)}`, inline: true },
-			{ name: `Child Rank`, value: formatRank(result.child), inline: true },
-		);
-	}
 
 	return new EmbedBuilder()
 		.setColor(getResultColor(result.child))
@@ -187,6 +167,23 @@ async function replyWithList(interaction, state) {
 	await interaction.reply({
 		embeds: [buildListEmbed(state, page)],
 		components: buildListComponents(listId, page, totalPages),
+	});
+}
+
+async function replyWithParentPairs(interaction, childName) {
+	const result = calculator.findParentPairs(childName);
+
+	if (!result) {
+		await interaction.reply({ content: `I couldn't find that child Pal in the breeding data.`, flags: MessageFlags.Ephemeral });
+		return;
+	}
+
+	await replyWithList(interaction, {
+		color: getResultColor(result.child),
+		description: `Parent pairs that produce ${formatPalLabel(result.child)}.`,
+		emptyText: `No parent pairs found.`,
+		lines: result.pairs.map(formatPairLine),
+		title: `Breeding Parents`,
 	});
 }
 
@@ -281,21 +278,7 @@ module.exports = {
 		}
 
 		if (subcommand === `parents`) {
-			const childName = interaction.options.getString(`child`);
-			const result = calculator.findParentPairs(childName);
-
-			if (!result) {
-				await interaction.reply({ content: `I couldn't find that child Pal in the breeding data.`, flags: MessageFlags.Ephemeral });
-				return;
-			}
-
-			await replyWithList(interaction, {
-				color: getResultColor(result.child),
-				description: `Parent pairs that produce ${formatPalLabel(result.child)}.`,
-				emptyText: `No parent pairs found.`,
-				lines: result.pairs.map(formatPairLine),
-				title: `Breeding Parents`,
-			});
+			await replyWithParentPairs(interaction, interaction.options.getString(`child`));
 			return;
 		}
 
@@ -322,6 +305,11 @@ module.exports = {
 
 	async handleButton(interaction) {
 		const [, action, listId, rawPage] = interaction.customId.split(`:`);
+
+		if (action === `parents`) {
+			await replyWithParentPairs(interaction, decodeURIComponent(listId));
+			return;
+		}
 
 		if (action !== `page`) {
 			await interaction.reply({ content: `Unknown breed action.`, flags: MessageFlags.Ephemeral });

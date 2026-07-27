@@ -1,5 +1,6 @@
 const { URL } = require(`node:url`);
 const { decodeHtml, stripTags: stripHtmlTags } = require(`./html-text.js`);
+const palFile = require(`../../data/palData.json`);
 
 const PALDB_ITEM_CATEGORY_SOURCES = [
 	{ category: `Weapon`, slug: `Weapon` },
@@ -17,6 +18,11 @@ const PALDB_ITEM_CATEGORY_SOURCES = [
 ];
 
 const PALDB_BASE_URL = `https://paldb.cc/en/`;
+const ITEM_DETAIL_CONCURRENCY = 12;
+const CANONICAL_PAL_NAMES = palFile.Pals
+	.filter(pal => !pal.hidden)
+	.map(pal => pal.name)
+	.sort((first, second) => second.length - first.length);
 
 function normalizeWhitespace(value) {
 	return String(value || ``).replace(/\s+/g, ` `).trim();
@@ -49,8 +55,8 @@ function itemIdFromCode(code, fallbackName) {
 	return slugify(codePart) || slugify(fallbackName);
 }
 
-function itemUrlFromHref(href) {
-	return new URL(decodeHtml(href), PALDB_BASE_URL).toString();
+function itemDetailPathFromHref(href) {
+	return new URL(decodeHtml(href), PALDB_BASE_URL).pathname.replace(/^\/en\//, ``);
 }
 
 function parseItemCard(card, source) {
@@ -78,7 +84,7 @@ function parseItemCard(card, source) {
 		rarityRank: Number.parseInt(rarityMatch?.[1] || `0`, 10),
 		description: stripTags(descriptionMatch?.[1] || ``),
 		iconUrl: decodeHtml(iconMatch?.[1] || ``),
-		url: itemUrlFromHref(nameMatch[2]),
+		detailPath: itemDetailPathFromHref(nameMatch[2]),
 		source: source.slug,
 	};
 }
@@ -89,6 +95,226 @@ function parseItemCards(html, source) {
 		.slice(1)
 		.map(card => parseItemCard(card, source))
 		.filter(Boolean);
+}
+
+function escapeRegExp(value) {
+	return String(value).replace(/[.*+?^${}()|[\]\\]/g, `\\$&`);
+}
+
+function detailSection(html, title) {
+	const heading = new RegExp(`<h5 class="card-title text-info">\\s*${escapeRegExp(title)}\\s*</h5>`, `i`);
+	const match = heading.exec(html);
+
+	if (!match) {
+		return ``;
+	}
+
+	const remainder = html.slice(match.index + match[0].length);
+	const nextCard = remainder.search(/<div class="card mt-3">/i);
+
+	return nextCard >= 0 ? remainder.slice(0, nextCard) : remainder;
+}
+
+function numberIfNumeric(value) {
+	const normalized = String(value || ``).replace(/,/g, ``).trim();
+
+	return /^-?\d+(?:\.\d+)?$/.test(normalized) ? Number(normalized) : value;
+}
+
+function statKey(label) {
+	const normalized = slugify(label);
+
+	return normalized.replace(/-([a-z0-9])/g, (_match, character) => character.toUpperCase());
+}
+
+function parseItemStats(html, itemCode = ``) {
+	let section = detailSection(html, `Stats`);
+	const rawCode = itemCode.replace(/^Items\//, ``);
+	const codeMarker = rawCode ? new RegExp(`<div>Code</div>\\s*<div>${escapeRegExp(rawCode)}</div>`, `i`).exec(html) : null;
+
+	if (codeMarker) {
+		const beforeCode = html.slice(0, codeMarker.index);
+		const statsHeading = [...beforeCode.matchAll(/<h5 class="card-title text-info"[^>]*>\s*Stats\s*<\/h5>/gi)].at(-1);
+
+		if (statsHeading) {
+			section = html.slice(statsHeading.index + statsHeading[0].length, codeMarker.index + codeMarker[0].length);
+		}
+	}
+	const stats = {};
+	const rowPattern = /<div class="d-flex justify-content-between p-2 align-items-center border-bottom">\s*<div>([\s\S]*?)<\/div>\s*<div>([\s\S]*?)<\/div>\s*<\/div>/gi;
+
+	for (const match of section.matchAll(rowPattern)) {
+		const label = stripTags(match[1]);
+		const visibleSpanValue = match[2].match(/>([^<>]+)<\/span>\s*$/)?.[1];
+		const value = stripTags(visibleSpanValue || match[2]);
+		const key = statKey(label);
+
+		if (key && value && ![`rarity`, `type`, `code`].includes(key)) {
+			stats[key] = numberIfNumeric(value);
+		}
+
+		if (label === `Gold Coin`) {
+			const tooltip = match[2].match(/data-bs-title="([^"]+)"/i)?.[1] || ``;
+			const buyPrice = tooltip.match(/Buy:\s*([\d,]+)/i)?.[1];
+			const sellPrice = tooltip.match(/Sell:\s*([\d,]+)/i)?.[1];
+
+			if (buyPrice) {
+				stats.buyPrice = numberIfNumeric(buyPrice);
+			}
+
+			if (sellPrice) {
+				stats.sellPrice = numberIfNumeric(sellPrice);
+			}
+		}
+	}
+
+	return stats;
+}
+
+function parseDetailRows(section) {
+	const values = {};
+	const rowPattern = /<div class="d-flex justify-content-between p-2 align-items-center border-bottom">\s*<div>([\s\S]*?)<\/div>\s*<div>([\s\S]*?)<\/div>\s*<\/div>/gi;
+
+	for (const match of section.matchAll(rowPattern)) {
+		const key = statKey(stripTags(match[1]));
+		const visibleSpanValue = match[2].match(/>([^<>]+)<\/span>\s*$/)?.[1];
+		const value = stripTags(visibleSpanValue || match[2]);
+
+		if (key && value) {
+			values[key] = numberIfNumeric(value);
+		}
+	}
+
+	return values;
+}
+
+function parseItemProperties(html) {
+	return parseDetailRows(detailSection(html, `Others`));
+}
+
+function parseDroppedBy(html) {
+	const section = detailSection(html, `Dropped By`);
+	const drops = [];
+	const seen = new Set();
+	const rowPattern = /<tr><td>([\s\S]*?)<td>\s*<small class="itemQuantity">([\s\S]*?)<\/small>\s*<td>([^<]*)<\/tr>/gi;
+
+	for (const match of section.matchAll(rowPattern)) {
+		const sourceLabel = stripTags(match[1]);
+		const quantity = stripTags(match[2]);
+		const probability = stripTags(match[3]);
+		const levelMatch = sourceLabel.match(/\s+Lv\.(\d+)$/i);
+		const level = levelMatch ? Number(levelMatch[1]) : undefined;
+		const labelWithoutLevel = sourceLabel.replace(/\s+Lv\.\d+$/i, ``);
+		const rampaging = /^Rampaging\s+/i.test(labelWithoutLevel);
+		const labelWithoutVariant = labelWithoutLevel.replace(/^Rampaging\s+/i, ``);
+		const canonicalPal = CANONICAL_PAL_NAMES.find(name =>
+			labelWithoutVariant === name || labelWithoutVariant.endsWith(` ${name}`),
+		);
+		const pal = canonicalPal || labelWithoutVariant;
+		const titled = canonicalPal && labelWithoutVariant !== canonicalPal;
+		const variant = rampaging ? `Rampaging` : titled ? `Alpha` : level ? `World Tree` : undefined;
+		const key = `${pal}\0${variant || ``}\0${level || ``}\0${quantity}\0${probability}`;
+
+		if (!sourceLabel || !pal || !quantity || !probability || seen.has(key)) {
+			continue;
+		}
+
+		seen.add(key);
+		drops.push({
+			pal,
+			...(variant ? { variant } : {}),
+			...(level !== undefined ? { level } : {}),
+			quantity,
+			probability,
+		});
+	}
+
+	return drops;
+}
+
+function parseCraftingRecipes(html, itemCode) {
+	const recipes = [];
+
+	for (const row of html.split(/<tr><td>/i).slice(1)) {
+		const product = /<td>\s*<a class="itemname"[^>]*data-hover="\?s=([^"]+)"[\s\S]*?<\/a>/i.exec(row);
+
+		if (!product) {
+			continue;
+		}
+
+		const productCode = decodeUriComponentSafe(decodeHtml(product[1]));
+
+		if (productCode !== itemCode) {
+			continue;
+		}
+
+		const materials = row.slice(0, product.index);
+		const afterProduct = row.slice(product.index + product[0].length);
+		const ingredients = [];
+		const ingredientPattern = /<a class="itemname"[^>]*>([\s\S]*?)<\/a>\s*<small class="itemQuantity">([\s\S]*?)<\/small>/gi;
+
+		for (const ingredient of materials.matchAll(ingredientPattern)) {
+			ingredients.push({
+				name: stripTags(ingredient[1]),
+				quantity: stripTags(ingredient[2]),
+			});
+		}
+
+		if (ingredients.length) {
+			const requirement = /<td>([\s\S]*?)(?=<\/table>|$)/i.exec(afterProduct)?.[1] || ``;
+			recipes.push({ ingredients, requirement: stripTags(requirement) });
+		}
+	}
+
+	return recipes;
+}
+
+function parseItemDetails(html, itemCode = ``) {
+	return {
+		recipes: parseCraftingRecipes(html, itemCode),
+		droppedBy: parseDroppedBy(html),
+		stats: parseItemStats(html, itemCode),
+		properties: parseItemProperties(html),
+	};
+}
+
+async function mapWithConcurrency(items, concurrency, mapper) {
+	const results = new Array(items.length);
+	let nextIndex = 0;
+
+	async function worker() {
+		while (nextIndex < items.length) {
+			const index = nextIndex;
+			nextIndex += 1;
+			results[index] = await mapper(items[index], index);
+		}
+	}
+
+	await Promise.all(Array.from({ length: Math.min(concurrency, items.length) }, worker));
+
+	return results;
+}
+
+async function fetchPaldbItemDetails(items) {
+	return mapWithConcurrency(items, ITEM_DETAIL_CONCURRENCY, async item => {
+		try {
+			const url = new URL(item.detailPath, PALDB_BASE_URL);
+			url.searchParams.set(`s`, item.code);
+			const html = await fetchText(url);
+
+			return { ...item, ...parseItemDetails(html, item.code) };
+		} catch (error) {
+			// Keep a usable catalog entry when PalDB has a malformed or temporarily unavailable detail page.
+			console.warn(`Skipping item details for ${item.name}: ${error.message}`);
+			return {
+				...item,
+				droppedBy: item.droppedBy || [],
+				recipes: item.recipes || [],
+				stats: item.stats || {},
+				properties: item.properties || {},
+			};
+		}
+	});
 }
 
 async function fetchText(url) {
@@ -143,7 +369,6 @@ async function fetchPaldbItemData() {
 		sources.push({
 			category: source.category,
 			slug: source.slug,
-			url,
 			count: sourceItems.length,
 		});
 		items.push(...sourceItems);
@@ -161,7 +386,9 @@ async function fetchPaldbItemData() {
 module.exports = {
 	PALDB_ITEM_CATEGORY_SOURCES,
 	fetchPaldbItemData,
+	fetchPaldbItemDetails,
 	itemIdFromCode,
 	parseItemCards,
+	parseItemDetails,
 	slugify,
 };
