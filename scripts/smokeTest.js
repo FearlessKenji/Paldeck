@@ -2,6 +2,7 @@
 
 const childProcess = require(`node:child_process`);
 const fs = require(`node:fs`);
+const os = require(`node:os`);
 const path = require(`node:path`);
 
 const projectRoot = path.resolve(__dirname, `..`);
@@ -14,6 +15,7 @@ const results = {
 };
 
 let createdSmokeConfig = false;
+let smokeDatabasePath = null;
 let sequelizeToClose = null;
 
 function resolveProject(...parts) {
@@ -72,6 +74,26 @@ function cleanupSmokeRuntimeConfig() {
 
 	if (fs.existsSync(configPath)) {
 		fs.rmSync(configPath, { force: true });
+	}
+}
+
+async function initializeSmokeSearchStorage() {
+	smokeDatabasePath = path.join(os.tmpdir(), `paldeck-smoke-${process.pid}.sqlite`);
+	process.env.PALDECK_DATABASE_PATH = smokeDatabasePath;
+	const { SearchSessions, sequelize } = requireFresh(`database`, `dbObjects.js`);
+
+	sequelizeToClose = sequelize;
+	// Search-backed interaction tests need their persistence table even in a fresh CI checkout.
+	await SearchSessions.sync();
+}
+
+function cleanupSmokeDatabase() {
+	if (!smokeDatabasePath) {
+		return;
+	}
+
+	for (const suffix of [``, `-shm`, `-wal`]) {
+		fs.rmSync(`${smokeDatabasePath}${suffix}`, { force: true });
 	}
 }
 
@@ -735,7 +757,7 @@ function validateAnnouncementHelpers() {
 }
 
 function validateDatabaseModels() {
-	const dbObjects = requireFresh(`database`, `dbObjects.js`);
+	const dbObjects = require(resolveProject(`database`, `dbObjects.js`));
 	const joinedServerColumns = dbObjects.JoinedServers.rawAttributes;
 
 	sequelizeToClose = dbObjects.sequelize;
@@ -829,6 +851,7 @@ function validateGitHygiene() {
 
 async function main() {
 	ensureSmokeRuntimeConfig();
+	await initializeSmokeSearchStorage();
 
 	await test(`package metadata and lockfile are consistent`, validatePackageMetadata);
 	await test(`required project files exist`, validateRequiredProjectFiles);
@@ -865,6 +888,7 @@ async function main() {
 }
 
 process.on(`exit`, cleanupSmokeRuntimeConfig);
+process.on(`exit`, cleanupSmokeDatabase);
 
 main().catch(error => {
 	console.error(`[fail] smoke test crashed`);

@@ -5,7 +5,8 @@ const sequelize = new Sequelize(`database`, `username`, `password`, {
 	host: `localhost`,
 	dialect: `sqlite`,
 	logging: false,
-	storage: path.join(__dirname, `database.sqlite`),
+	// Tests can isolate SQLite state without touching the configured production database.
+	storage: process.env.PALDECK_DATABASE_PATH || path.join(__dirname, `database.sqlite`),
 });
 
 const BannedServers = require(`./models/BannedServers.js`)(sequelize, Sequelize.DataTypes);

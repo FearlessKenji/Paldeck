@@ -6,6 +6,8 @@ Notable changes to Paldeck are documented here.
 
 ## v1.7.0 - 2026-07-27
 
+- Initialized and cleaned up smoke-test search storage so search-backed interaction tests pass in fresh CI checkouts.
+
 - Removed the unused `/vote` command and its Top.gg voting link.
 - Updated `tar`, ESLint, and the ESLint JavaScript configuration package to patched releases so the dependency audit passes.
 - Added the Ko-fi page and `/suggest` command to the `/help` embed's support section.
