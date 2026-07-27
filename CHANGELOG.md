@@ -6,6 +6,8 @@ Notable changes to Paldeck are documented here.
 
 ## v1.7.0 - 2026-07-27
 
+- Added permission-specific `/updates channel` warnings and once-per-configuration owner DMs when patch notes cannot reach a configured channel, backed by persisted warning state and a schema migration.
+- Changed `/help` to describe `/item` as looking up one item by name.
 - Removed `Part X/Y` suffixes from split patch-note announcements and standardized their Discord release heading.
 - Initialized and cleaned up smoke-test search storage so search-backed interaction tests pass in fresh CI checkouts.
 

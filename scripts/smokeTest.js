@@ -80,11 +80,11 @@ function cleanupSmokeRuntimeConfig() {
 async function initializeSmokeSearchStorage() {
 	smokeDatabasePath = path.join(os.tmpdir(), `paldeck-smoke-${process.pid}.sqlite`);
 	process.env.PALDECK_DATABASE_PATH = smokeDatabasePath;
-	const { SearchSessions, sequelize } = requireFresh(`database`, `dbObjects.js`);
+	const { JoinedServers, SearchSessions, sequelize } = requireFresh(`database`, `dbObjects.js`);
 
 	sequelizeToClose = sequelize;
-	// Search-backed interaction tests need their persistence table even in a fresh CI checkout.
-	await SearchSessions.sync();
+	// Interaction tests need isolated persistence tables even in a fresh CI checkout.
+	await Promise.all([JoinedServers.sync(), SearchSessions.sync()]);
 }
 
 function cleanupSmokeDatabase() {
@@ -727,8 +727,9 @@ function validateEventsLoad() {
 	}
 }
 
-function validateAnnouncementHelpers() {
+async function validateAnnouncementHelpers() {
 	const announcements = requireFresh(`utils`, `announcements.js`);
+	const { PermissionFlagsBits } = require(`discord.js`);
 	const sample = `## Unreleased
 
 - Draft note.
@@ -761,6 +762,50 @@ function validateAnnouncementHelpers() {
 		realLatest?.id === expectedLatestPatchNoteId,
 		`docs/patch-notes.md should contain a latest ${expectedLatestPatchNoteId} release section.`,
 	);
+
+	const guildMember = {};
+	const accessGuild = { members: { me: guildMember } };
+	const channelWithViewOnly = {
+		isTextBased: () => true,
+		permissionsFor: () => ({ has: permission => permission === PermissionFlagsBits.ViewChannel }),
+		send: () => null,
+	};
+	const access = await announcements.checkAnnouncementChannelAccess(accessGuild, channelWithViewOnly);
+
+	assert(access.message === `Paldeck cannot send messages in the configured updates channel.`, `Announcement setup should identify a missing Send Messages permission.`);
+
+	const { JoinedServers } = require(resolveProject(`database`, `dbObjects.js`));
+	const guildId = `999999999999999999`;
+	let ownerDms = 0;
+	const owner = {
+		id: `888888888888888888`,
+		send: async () => {
+			ownerDms += 1;
+		},
+		user: { username: `SmokeOwner` },
+	};
+	const guild = {
+		channels: { fetch: async () => channelWithViewOnly },
+		fetchOwner: async () => owner,
+		id: guildId,
+		members: { me: guildMember },
+		name: `Smoke Guild`,
+	};
+	const client = { guilds: { cache: new Map([[guildId, guild]]) } };
+
+	await JoinedServers.create({
+		guild_id: guildId,
+		guild_name: guild.name,
+		owner_id: owner.id,
+		owner_username: owner.user.username,
+		paldeck_announcement_channel_id: `777777777777777777`,
+	});
+	const firstFailure = await announcements.sendLatestPatchNotesToGuild(client, guildId, { force: true });
+	await announcements.sendLatestPatchNotesToGuild(client, guildId, { force: true });
+
+	assert(firstFailure.message.includes(`server owner was notified`), `Failed announcement delivery should report a successful owner notification.`);
+	assert(ownerDms === 1, `The same unresolved announcement-channel failure should notify the owner only once.`);
+	await JoinedServers.destroy({ where: { guild_id: guildId } });
 }
 
 function validateDatabaseModels() {
@@ -770,6 +815,7 @@ function validateDatabaseModels() {
 	sequelizeToClose = dbObjects.sequelize;
 	assert(joinedServerColumns.paldeck_announcement_channel_id, `JoinedServers is missing paldeck_announcement_channel_id.`);
 	assert(joinedServerColumns.paldeck_announcement_last_id, `JoinedServers is missing paldeck_announcement_last_id.`);
+	assert(joinedServerColumns.paldeck_announcement_warning_key, `JoinedServers is missing paldeck_announcement_warning_key.`);
 }
 
 function validatePalData() {

@@ -195,12 +195,14 @@ async function updateAnnouncementSettings(guild, values) {
 async function saveAnnouncementChannel(guild, channelId) {
 	return updateAnnouncementSettings(guild, {
 		paldeck_announcement_channel_id: normalizeAnnouncementId(channelId),
+		paldeck_announcement_warning_key: null,
 	});
 }
 
 async function clearAnnouncementChannel(guild) {
 	return updateAnnouncementSettings(guild, {
 		paldeck_announcement_channel_id: null,
+		paldeck_announcement_warning_key: null,
 	});
 }
 
@@ -208,25 +210,71 @@ async function fetchGuild(client, guildId) {
 	return client.guilds.cache.get(guildId) || client.guilds.fetch(guildId).catch(() => null);
 }
 
-async function fetchAnnouncementChannel(guild, channelId) {
-	if (!channelId) {
-		return { ok: false, message: `No Paldeck Updates channel is configured.` };
-	}
-
-	const channel = await guild.channels.fetch(channelId).catch(() => null);
-
+async function checkAnnouncementChannelAccess(guild, channel) {
 	if (!channel?.send || !channel.isTextBased?.()) {
-		return { ok: false, message: `The configured Paldeck Updates channel is unavailable.` };
+		return { code: `unavailable`, ok: false, message: `The configured Paldeck Updates channel is unavailable.` };
 	}
 
 	const me = guild.members.me || await guild.members.fetchMe().catch(() => null);
 	const permissions = me ? channel.permissionsFor(me) : null;
+	const cannotView = !permissions?.has(PermissionFlagsBits.ViewChannel);
+	const cannotSend = !permissions?.has(PermissionFlagsBits.SendMessages);
 
-	if (!permissions?.has(PermissionFlagsBits.ViewChannel) || !permissions?.has(PermissionFlagsBits.SendMessages)) {
-		return { ok: false, message: `Paldeck cannot view or send messages in the configured updates channel.` };
+	if (cannotView || cannotSend) {
+		const ability = cannotView && cannotSend ?
+			`view or send messages in` :
+			cannotView ? `view` : `send messages in`;
+		const code = [cannotView ? `view` : ``, cannotSend ? `send` : ``].filter(Boolean).join(`-`);
+
+		return { code, ok: false, message: `Paldeck cannot ${ability} the configured updates channel.` };
 	}
 
 	return { channel, ok: true };
+}
+
+async function fetchAnnouncementChannel(guild, channelId) {
+	if (!channelId) {
+		return { code: `missing`, ok: false, message: `No Paldeck Updates channel is configured.` };
+	}
+
+	const channel = await guild.channels.fetch(channelId).catch(() => null);
+	return checkAnnouncementChannelAccess(guild, channel);
+}
+
+async function notifyGuildOwnerOfAnnouncementFailure(guild, channelId, channelResult) {
+	const server = await JoinedServers.findByPk(guild.id);
+	const warningKey = `${channelId || `none`}:${channelResult.code || `unknown`}`;
+
+	if (!server || server.paldeck_announcement_warning_key === warningKey) {
+		return false;
+	}
+
+	const ownerMember = await guild.fetchOwner().catch(() => null);
+	const owner = ownerMember || await guild.client?.users.fetch(server.owner_id).catch(() => null);
+
+	if (!owner?.send) {
+		return false;
+	}
+
+	const content = [
+		`## Paldeck updates need attention`,
+		`Paldeck could not post an update in **${guild.name || server.guild_name}** (${guild.id}).`,
+		channelResult.message,
+		`Run \`/updates channel\` in that server to select an accessible channel, or grant Paldeck the missing channel permissions.`,
+	].join(`\n\n`);
+
+	try {
+		await owner.send({ content });
+		await server.update({
+			owner_id: owner.id || server.owner_id,
+			owner_username: owner.user?.username || owner.username || server.owner_username,
+			paldeck_announcement_warning_key: warningKey,
+		});
+		return true;
+	} catch (err) {
+		warn(`Could not notify the owner of guild ${guild.id} about its Paldeck Updates channel: ${err.message}`);
+		return false;
+	}
 }
 
 async function markPatchNotesSent(guildId, noteId) {
@@ -238,6 +286,7 @@ async function markPatchNotesSent(guildId, noteId) {
 
 	await server.update({
 		paldeck_announcement_last_id: noteId,
+		paldeck_announcement_warning_key: null,
 	});
 }
 
@@ -263,7 +312,21 @@ async function sendLatestPatchNotesToGuild(client, guildId, { force = false } = 
 	const channelResult = await fetchAnnouncementChannel(guild, settings.paldeckAnnouncementChannelId);
 
 	if (!channelResult.ok) {
-		return { guildId: normalizedGuildId, ok: false, patchNoteId: note.id, sent: 0, skipped: true, message: channelResult.message };
+		const ownerNotified = await notifyGuildOwnerOfAnnouncementFailure(
+			guild,
+			settings.paldeckAnnouncementChannelId,
+			channelResult,
+		);
+		const notification = ownerNotified ? ` The server owner was notified.` : ``;
+
+		return {
+			guildId: normalizedGuildId,
+			ok: false,
+			patchNoteId: note.id,
+			sent: 0,
+			skipped: true,
+			message: `${channelResult.message}${notification}`,
+		};
 	}
 
 	const messages = formatPatchNotesMessages(note);
@@ -318,6 +381,7 @@ async function broadcastLatestPatchNotes(client, { force = false } = {}) {
 
 module.exports = {
 	broadcastLatestPatchNotes,
+	checkAnnouncementChannelAccess,
 	clearAnnouncementChannel,
 	formatPatchNotesMessages,
 	getAnnouncementSettings,

@@ -5,6 +5,7 @@ const {
 	SlashCommandBuilder,
 } = require(`discord.js`);
 const {
+	checkAnnouncementChannelAccess,
 	clearAnnouncementChannel,
 	saveAnnouncementChannel,
 	sendLatestPatchNotesToGuild,
@@ -56,8 +57,14 @@ module.exports = {
 			if (subcommand === `channel`) {
 				const channel = interaction.options.getChannel(`channel`, true);
 				const settings = await saveAnnouncementChannel(guild, channel.id);
+				const access = await checkAnnouncementChannelAccess(guild, channel);
+				let warning = ``;
 
-				await interaction.editReply(`Paldeck Updates will be posted in <#${settings.paldeckAnnouncementChannelId}>.`);
+				if (!access.ok) {
+					warning = `\n\n⚠️ ${access.message} Please grant the missing permission before sending updates.`;
+				}
+
+				await interaction.editReply(`Paldeck Updates will be posted in <#${settings.paldeckAnnouncementChannelId}>.${warning}`);
 				return;
 			}
 
