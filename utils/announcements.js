@@ -85,18 +85,16 @@ function splitLongLine(line, limit) {
 	while (remaining.length > limit) {
 		let splitAt = remaining.lastIndexOf(`. `, limit);
 
-		if (splitAt >= Math.floor(limit * 0.5)) {
-			splitAt += 1;
-		} else {
+		if (splitAt < Math.floor(limit * 0.5)) {
 			splitAt = remaining.lastIndexOf(` `, limit);
 		}
 
 		if (splitAt < 1) {
-			splitAt = limit;
+			splitAt = limit - 1;
 		}
 
-		chunks.push(remaining.slice(0, splitAt).trim());
-		remaining = remaining.slice(splitAt).trim();
+		chunks.push(remaining.slice(0, splitAt + 1).trim());
+		remaining = remaining.slice(splitAt + 1).trim();
 	}
 
 	if (remaining) {
@@ -144,14 +142,9 @@ function formatPatchNotesMessages(note) {
 		return [];
 	}
 
-	const text = `# Paldeck ${note.heading}\n\n${note.body}`;
-	const chunks = splitAnnouncementText(text);
-
-	if (chunks.length <= 1) {
-		return chunks;
-	}
-
-	return chunks.map((chunk, index) => `${chunk}\n\n_Part ${index + 1}/${chunks.length}_`);
+	const body = normalizeNewlines(note.body);
+	const text = `## Paldeck ${note.heading}${body ? `\n\n${body}` : ``}`;
+	return splitAnnouncementText(text);
 }
 
 async function getAnnouncementSettings(guildId) {

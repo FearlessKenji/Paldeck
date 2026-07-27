@@ -743,7 +743,14 @@ function validateAnnouncementHelpers() {
 	assert(latest?.id === `v9.8.7`, `Patch-note parser should skip Unreleased sections.`);
 	assert(!latest.body.includes(`Draft note`), `Patch-note parser included Unreleased content.`);
 	assert(messages.length === 1, `Patch-note formatter should produce one message for the sample.`);
-	assert(messages[0].startsWith(`# Paldeck v9.8.7`), `Patch-note formatter should prefix messages with Paldeck.`);
+	assert(messages[0].startsWith(`## Paldeck v9.8.7`), `Patch-note formatter should use one product release heading.`);
+	const splitMessages = announcements.formatPatchNotesMessages({
+		heading: `v9.9.9 - 2026-07-27`,
+		body: `### Long Notes\n\n- ${`Long patch note. `.repeat(180)}`,
+	});
+
+	assert(splitMessages.length > 1, `Long patch-note announcements should split into multiple messages.`);
+	assert(!splitMessages.some(message => /_Part \d+\/\d+_/u.test(message)), `Split patch-note announcements should not add Part X/Y labels.`);
 	assert(announcements.normalizeAnnouncementId({ id: 123456789n }) === `123456789`, `Announcement ID normalization did not handle bigint IDs.`);
 	assert(announcements.splitAnnouncementText(`a`.repeat(3900)).every(chunk => chunk.length <= 1900), `Announcement splitter exceeded Discord-safe chunk size.`);
 

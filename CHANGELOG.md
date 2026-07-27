@@ -6,6 +6,7 @@ Notable changes to Paldeck are documented here.
 
 ## v1.7.0 - 2026-07-27
 
+- Removed `Part X/Y` suffixes from split patch-note announcements and standardized their Discord release heading.
 - Initialized and cleaned up smoke-test search storage so search-backed interaction tests pass in fresh CI checkouts.
 
 - Removed the unused `/vote` command and its Top.gg voting link.

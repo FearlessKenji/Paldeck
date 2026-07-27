@@ -8,6 +8,8 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## v1.7.0 - 2026-07-27
 
+- Long patch-note announcements continue naturally across messages without pagination labels.
+
 ### Paldeck Data
 
 - The `/help` support section includes the community Discord, Ko-fi page, and `/suggest` command.
