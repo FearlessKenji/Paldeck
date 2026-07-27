@@ -30,7 +30,6 @@ The bot uses SQLite through Sequelize for local operational data such as joined 
 | `/breed` | Calculate breeding children, parent pairs, and partner options. |
 | `/help` | Show Paldeck command usage help. |
 | `/suggest` | Send a feature suggestion to the configured suggestions channel. Do not submit sensitive data. |
-| `/vote` | Return the Top.gg voting link for Paldeck. |
 
 ### Guild Commands
 | Command | Description |
@@ -39,6 +38,9 @@ The bot uses SQLite through Sequelize for local operational data such as joined 
 | `/ban server` | Owner-only command to restrict a Discord server and related owner records. |
 | `/unban user` | Owner-only command to remove a user restriction. |
 | `/unban server` | Owner-only command to remove a server restriction. |
+| `/dm-forward channel` | Owner-only command to configure the private channel that receives direct messages sent to Paldeck. |
+| `/dm-forward clear` | Owner-only command to disable direct-message forwarding. |
+| `/dm-forward status` | Owner-only command to show the configured direct-message inbox. |
 
 Global command updates can take time to appear in Discord. Guild commands are deployed only to the server matched by `guildId` in `config/config.json`, and usually appear much faster for testing.
 

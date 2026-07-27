@@ -8,6 +8,7 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## v1.7.0 - 2026-07-27
 
+- Direct messages sent to Paldeck can be routed to a privately configured support inbox with sender and owned-server context.
 - Configuring an updates channel warns immediately when Paldeck cannot view it or send messages there. If a later update cannot be delivered, the server owner receives one direct warning until the channel configuration changes or succeeds.
 - `/help` describes `/item` as looking up one item by name.
 - Long patch-note announcements continue naturally across messages without pagination labels.

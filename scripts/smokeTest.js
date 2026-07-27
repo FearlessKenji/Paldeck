@@ -80,11 +80,11 @@ function cleanupSmokeRuntimeConfig() {
 async function initializeSmokeSearchStorage() {
 	smokeDatabasePath = path.join(os.tmpdir(), `paldeck-smoke-${process.pid}.sqlite`);
 	process.env.PALDECK_DATABASE_PATH = smokeDatabasePath;
-	const { JoinedServers, SearchSessions, sequelize } = requireFresh(`database`, `dbObjects.js`);
+	const { BotSettings, JoinedServers, SearchSessions, sequelize } = requireFresh(`database`, `dbObjects.js`);
 
 	sequelizeToClose = sequelize;
 	// Interaction tests need isolated persistence tables even in a fresh CI checkout.
-	await Promise.all([JoinedServers.sync(), SearchSessions.sync()]);
+	await Promise.all([BotSettings.sync(), JoinedServers.sync(), SearchSessions.sync()]);
 }
 
 function cleanupSmokeDatabase() {
@@ -808,6 +808,57 @@ async function validateAnnouncementHelpers() {
 	await JoinedServers.destroy({ where: { guild_id: guildId } });
 }
 
+async function validateDmForwarding() {
+	const forwarding = requireFresh(`utils`, `dmForwarding.js`);
+	const { JoinedServers } = require(resolveProject(`database`, `dbObjects.js`));
+	const userId = `666666666666666666`;
+	const destinationId = `555555555555555555`;
+	let forwardedPayload = null;
+
+	await JoinedServers.create({
+		guild_id: `444444444444444444`,
+		guild_name: `Owned Smoke Guild`,
+		owner_id: userId,
+		owner_username: `DmSmokeUser`,
+	});
+	await forwarding.saveDmForwardChannelId(destinationId);
+
+	const forwarded = await forwarding.forwardDirectMessage({
+		attachments: new Map(),
+		author: { globalName: `DM Smoke User`, id: userId, username: `DmSmokeUser` },
+		client: {
+			channels: {
+				fetch: async channelId => {
+					if (channelId !== destinationId) {
+						return null;
+					}
+
+					return {
+						isTextBased: () => true,
+						send: async payload => {
+							forwardedPayload = payload;
+						},
+					};
+				},
+			},
+		},
+		content: `Exact DM content <@123456789012345678>`,
+		createdAt: new Date(),
+		id: `333333333333333333`,
+		stickers: new Map(),
+	});
+	const serialized = serializeDiscordPayload(forwardedPayload);
+
+	assert(forwarded, `Configured direct messages should be forwarded.`);
+	assert(forwardedPayload.content === `Exact DM content <@123456789012345678>`, `Direct-message text should be forwarded verbatim.`);
+	assert(forwardedPayload.allowedMentions.parse.length === 0, `Forwarded direct messages should not trigger mentions.`);
+	assert(serialized.includes(`DM Smoke User`) && serialized.includes(userId), `Forwarded direct messages should identify the sender.`);
+	assert(serialized.includes(`Owned Smoke Guild`) && serialized.includes(`444444444444444444`), `Forwarded direct messages should list stored servers owned by the sender.`);
+
+	await forwarding.clearDmForwardChannelId();
+	await JoinedServers.destroy({ where: { owner_id: userId } });
+}
+
 function validateDatabaseModels() {
 	const dbObjects = require(resolveProject(`database`, `dbObjects.js`));
 	const joinedServerColumns = dbObjects.JoinedServers.rawAttributes;
@@ -816,6 +867,7 @@ function validateDatabaseModels() {
 	assert(joinedServerColumns.paldeck_announcement_channel_id, `JoinedServers is missing paldeck_announcement_channel_id.`);
 	assert(joinedServerColumns.paldeck_announcement_last_id, `JoinedServers is missing paldeck_announcement_last_id.`);
 	assert(joinedServerColumns.paldeck_announcement_warning_key, `JoinedServers is missing paldeck_announcement_warning_key.`);
+	assert(dbObjects.BotSettings.rawAttributes.key && dbObjects.BotSettings.rawAttributes.value, `BotSettings is missing key/value storage.`);
 }
 
 function validatePalData() {
@@ -920,6 +972,7 @@ async function main() {
 	await test(`hidden Pal placeholders stay out of user-facing search`, validateHiddenPalPlaceholdersStayHidden);
 	await test(`events load with valid handlers`, validateEventsLoad);
 	await test(`announcement helpers parse and format patch notes`, validateAnnouncementHelpers);
+	await test(`direct messages forward verbatim with sender and owned-server context`, validateDmForwarding);
 	await test(`database models include update announcement fields`, validateDatabaseModels);
 	await test(`Paldeck data files remain valid`, validatePalData);
 	await test(`CI workflow includes lint, smoke, and audit jobs`, validateCiWorkflow);
