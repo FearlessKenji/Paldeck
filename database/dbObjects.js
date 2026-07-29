@@ -16,8 +16,9 @@ const Suggestions = require(`./models/Suggestions.js`)(sequelize, Sequelize.Data
 const Channels = require(`./models/Channels.js`)(sequelize, Sequelize.DataTypes);
 const SearchSessions = require(`./models/SearchSessions.js`)(sequelize, Sequelize.DataTypes);
 const SchemaMigrations = require(`./models/SchemaMigrations.js`)(sequelize, Sequelize.DataTypes);
+const BotSettings = require(`./models/BotSettings.js`)(sequelize, Sequelize.DataTypes);
 
 BannedServers.belongsTo(BannedUsers, { foreignKey: `owner_id`, targetKey: `user_id` });
 BannedUsers.hasMany(BannedServers, { foreignKey: `owner_id`, sourceKey: `user_id` });
 
-module.exports = { sequelize, Channels, JoinedServers, BannedServers, BannedUsers, Suggestions, SearchSessions, SchemaMigrations };
+module.exports = { sequelize, BotSettings, Channels, JoinedServers, BannedServers, BannedUsers, Suggestions, SearchSessions, SchemaMigrations };

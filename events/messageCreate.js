@@ -2,6 +2,7 @@ const { EmbedBuilder, Events } = require(`discord.js`);
 const config = require(`../config/configCheck.js`);
 const { Channels, Suggestions } = require(`../database/dbObjects.js`);
 const { warn } = require(`../utils/writeLog.js`);
+const { forwardDirectMessage } = require(`../utils/dmForwarding.js`);
 
 const MAX_EMBED_DESCRIPTION = 3500;
 const MAX_FIELD_VALUE = 1024;
@@ -132,7 +133,16 @@ async function forwardToUserDm(message, suggestion, responseText) {
 module.exports = {
 	name: Events.MessageCreate,
 	async execute(message) {
-		if (message.author.bot || !message.guildId || !message.reference?.messageId) {
+		if (message.author.bot) {
+			return;
+		}
+
+		if (!message.guildId) {
+			await forwardDirectMessage(message);
+			return;
+		}
+
+		if (!message.reference?.messageId) {
 			return;
 		}
 

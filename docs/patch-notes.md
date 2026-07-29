@@ -6,6 +6,14 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+## v1.7.1 - 2026-07-29
+
+- Pal cards now organize loot under Normal, Alpha, World Tree, Story Boss, Rampaging, or level-specific Summoning Altar headings and show quantities with drop chances. Alpha sections include the complete loot table, Ancient Relic tiers remain separate when chances differ, and five Raid Pal lookups show complete base and Ultra Summoning Altar rewards with guaranteed eggs.
+- Selecting another suitability after a comma in `/paldeck search` now keeps the previously selected suitabilities in the command field.
+- Direct messages sent to Paldeck can be routed to a privately configured support inbox with sender and owned-server context.
+- Configuring an updates channel warns immediately when Paldeck cannot view it or send messages there. If a later update cannot be delivered, the server owner receives one direct warning until the channel configuration changes or succeeds.
+- Long patch-note announcements continue naturally across messages without pagination labels.
+
 ## v1.7.0 - 2026-07-27
 
 ### Paldeck Data

@@ -1,4 +1,4 @@
-const { Client, Collection, GatewayIntentBits, ActivityType, Events } = require(`discord.js`);
+const { Client, Collection, GatewayIntentBits, ActivityType, Events, Partials } = require(`discord.js`);
 const { initCrashHandlers, startLogCleanup, stopLogCleanup, warn, info, error } = require(`./utils/writeLog.js`);
 const { CronJob } = require(`cron`);
 const path = require(`node:path`);
@@ -11,7 +11,10 @@ startLogCleanup({ runImmediately: true });
 require(`./config/configCheck.js`);
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
+const client = new Client({
+	intents: [GatewayIntentBits.DirectMessages, GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+	partials: [Partials.Channel],
+});
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, `commands`);

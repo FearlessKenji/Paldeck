@@ -80,11 +80,11 @@ function cleanupSmokeRuntimeConfig() {
 async function initializeSmokeSearchStorage() {
 	smokeDatabasePath = path.join(os.tmpdir(), `paldeck-smoke-${process.pid}.sqlite`);
 	process.env.PALDECK_DATABASE_PATH = smokeDatabasePath;
-	const { SearchSessions, sequelize } = requireFresh(`database`, `dbObjects.js`);
+	const { BotSettings, JoinedServers, SearchSessions, sequelize } = requireFresh(`database`, `dbObjects.js`);
 
 	sequelizeToClose = sequelize;
-	// Search-backed interaction tests need their persistence table even in a fresh CI checkout.
-	await SearchSessions.sync();
+	// Interaction tests need isolated persistence tables even in a fresh CI checkout.
+	await Promise.all([BotSettings.sync(), JoinedServers.sync(), SearchSessions.sync()]);
 }
 
 function cleanupSmokeDatabase() {
@@ -308,15 +308,21 @@ async function validatePaldeckSuitabilityListAutocomplete() {
 	});
 
 	assert(
-		autocompleteChoices.some(choice => choice.name === `Handiwork 1` && choice.value === `Mining 2, Handiwork 1`),
-		`Suitability autocomplete should preserve completed filters and replace the active segment.`,
+		autocompleteChoices.some(choice =>
+			choice.name === `Mining 2, Handiwork 1` &&
+			choice.value === `Mining 2, Handiwork 1`,
+		),
+		`Suitability autocomplete should preserve completed filters in both the displayed and submitted choice.`,
 	);
 	assert(
-		autocompleteChoices.every(choice => choice.value.startsWith(`Mining 2, `)),
-		`Suitability autocomplete dropped a completed filter.`,
+		autocompleteChoices.every(choice =>
+			choice.name.startsWith(`Mining 2, `) &&
+			choice.value.startsWith(`Mining 2, `),
+		),
+		`Suitability autocomplete dropped a completed filter from a choice label or value.`,
 	);
 	assert(
-		autocompleteChoices.every(choice => !choice.name.startsWith(`Mining`)),
+		autocompleteChoices.every(choice => !choice.value.slice(`Mining 2, `.length).startsWith(`Mining`)),
 		`Suitability autocomplete should not suggest a suitability that is already selected.`,
 	);
 }
@@ -455,6 +461,7 @@ async function validatePaldeckBreedingButton() {
 	assert(serializedPaldeck.includes(`Breeding Parents`), `/paldeck breeding-parent button should have a clear label.`);
 	assert(!serializedPaldeck.includes(`palworld.gg/breeding-calculator`), `/paldeck rarity should not link to an external breeding calculator.`);
 	assert(serializedPaldeck.includes(`palworld.fandom.com/wiki/Lamball`), `/paldeck Pal name should retain its Fandom wiki link.`);
+	assert(serializedPaldeck.includes(`Wool ×1–3: 100%`), `/paldeck should show structured drop quantities and probabilities with colons.`);
 
 	await breed.handleButton({
 		customId: buttonCustomId,
@@ -470,6 +477,94 @@ async function validatePaldeckBreedingButton() {
 
 	assert(breedingPayload?.embeds?.length, `/paldeck breeding-parent button did not produce an embed.`);
 	assert(serializedBreeding.includes(`Parent pairs that produce Lamball.`), `/paldeck breeding-parent button returned the wrong child results.`);
+}
+
+async function validateGroupedPalDrops() {
+	const paldeck = requireFresh(`commands`, `globalCommands`, `utility`, `paldeck.js`);
+	const render = async name => {
+		let payload;
+		await paldeck.execute({
+			options: { getString: () => name, getSubcommand: () => `name` },
+			reply: value => { payload = value; },
+			user: { id: `grouped-drop-owner` },
+		});
+		return serializeDiscordPayload(payload);
+	};
+	const dandilord = await render(`Dandilord`);
+	const bellanoir = await render(`Bellanoir`);
+	const bellanoirLibero = await render(`Bellanoir Libero`);
+	const blazamutRyu = await render(`Blazamut Ryu`);
+	const xenolord = await render(`Xenolord`);
+	const hartalis = await render(`Hartalis`);
+	const lamball = await render(`Lamball`);
+
+	assert(lamball.includes(`Pal Drops — Alpha`), `Lamball should identify its Alpha drop table.`);
+	assert(
+		lamball.match(/Wool ×1–3: 100%/g)?.length === 2 &&
+		lamball.match(/Lamball Mutton ×1: 100%/g)?.length === 2,
+		`Lamball's Alpha table should repeat its inherited normal drops.`,
+	);
+	assert(lamball.includes(`Ancient Civilization Parts ×1–2: 100%`) && lamball.includes(`Precious Pelt ×1–2: 100%`), `Lamball's Alpha table should include its Alpha-only drops.`);
+	assert(dandilord.includes(`Pal Drops — Normal`) && dandilord.includes(`Pal Drops — World Tree: Lvl 70`), `Dandilord should separate normal and World Tree Pal drops.`);
+	assert(dandilord.includes(`Ancient Civilization Core ×1: 100%`), `Dandilord should show its butcherable Ancient Civilization Core drop.`);
+	assert(
+		dandilord.includes(`Pal Drops — Story Boss: Lvl 78`) &&
+		dandilord.includes(`Dandilord's Petal ×1: 100%`),
+		`Dandilord should combine its boss rows and show its progression drop once.`,
+	);
+	assert(dandilord.match(/Dandilord's Petal/g)?.length === 1, `Dandilord's Petal should not be duplicated outside the Boss group.`);
+	assert(
+		dandilord.includes(`Decayed Ancient Relic ×1–10: 10%`) &&
+		dandilord.includes(`Dormant Ancient Relic ×1–5: 5%`),
+		`Detailed Pal cards should keep Ancient Relic tiers separate when their drop rates differ.`,
+	);
+	assert(!dandilord.includes(`• Ancient Relics`), `Detailed Pal cards should not flatten percentage-bearing Ancient Relic rows.`);
+	assert(bellanoir.includes(`Pal Drops — Normal`) && bellanoir.includes(`Dark Fragment ×2–3: 100%`), `Bellanoir should retain its normal captured-Pal drops.`);
+	assert(bellanoir.includes(`Pal Drops — Alpha`), `Bellanoir should keep its Alpha drops separate from Summoning Altar rewards.`);
+	assert(bellanoir.includes(`Pal Drops — Summoning Altar: Lvl 35`), `Bellanoir should separate Summoning Altar rewards.`);
+	assert(bellanoir.includes(`Huge Dark Egg (Bellanoir) ×1: 100%`), `Bellanoir's Raid Boss rewards should include its guaranteed egg.`);
+	assert(bellanoir.includes(`Ancient Civilization Core ×1–3: 100%`), `Bellanoir should use its complete current Summoning Altar table.`);
+	assert(
+		bellanoirLibero.includes(`Pal Drops — Summoning Altar: Lvl 45`) &&
+		bellanoirLibero.includes(`Pal Drops — Summoning Altar: Lvl 80 (Ultra)`),
+		`Bellanoir Libero should show both its base and Ultra Summoning Altar tables.`,
+	);
+	assert(bellanoirLibero.includes(`Witch's Crown ×1: 100%`), `Bellanoir Libero's Ultra table should include Witch's Crown.`);
+	for (const [name, card, egg, ultraReward] of [
+		[`Blazamut Ryu`, blazamutRyu, `Huge Dragon Egg (Blazamut Ryu)`, `Horns of Supremacy`],
+		[`Xenolord`, xenolord, `Huge Dark Egg (Xenolord)`, `Xenolord's head`],
+		[`Hartalis`, hartalis, `Huge Common Egg (Hartalis)`, `Crown of Salvation`],
+	]) {
+		assert(
+			card.includes(`Pal Drops — Summoning Altar`) && card.includes(`Pal Drops — Summoning Altar: Lvl 80 (Ultra)`),
+			`${name} should show both its base and Ultra Summoning Altar tables.`,
+		);
+		assert(card.includes(`${egg} ×1: 100%`), `${name}'s Summoning Altar tables should include its guaranteed egg.`);
+		assert(card.includes(`${ultraReward} ×1: 100%`), `${name}'s Ultra table should include ${ultraReward}.`);
+	}
+}
+
+function validateEncounterDropData() {
+	const encounterFile = requireFresh(`data`, `palEncounterData.json`);
+	const palFile = requireFresh(`data`, `palData.json`);
+	const visibleNames = new Set(palFile.Pals.filter(pal => !pal.hidden).map(pal => pal.name));
+	const keys = new Set();
+	const affectedPals = new Set();
+
+	for (const encounter of encounterFile.Encounters) {
+		const key = `${encounter.pal}\0${encounter.source}\0${encounter.level}\0${encounter.variant || ``}`;
+		assert(visibleNames.has(encounter.pal), `Encounter drops reference unknown Pal ${encounter.pal}.`);
+		assert(!keys.has(key), `Encounter drops contain duplicate source ${key}.`);
+		assert(encounter.source === `Summoning Altar`, `${encounter.pal} has an unsupported encounter source.`);
+		assert(Number.isInteger(encounter.level) && encounter.level > 0, `${encounter.pal} encounter is missing a valid level.`);
+		assert(encounter.drops.length > 0, `${encounter.pal} encounter has no drops.`);
+		assert(encounter.drops.every(drop => drop.item && drop.quantity && drop.probability), `${encounter.pal} encounter has an incomplete drop row.`);
+		assert(encounter.drops.some(drop => / Egg \(/.test(drop.item) && drop.probability === `100%`), `${encounter.pal} encounter is missing its guaranteed egg.`);
+		keys.add(key);
+		affectedPals.add(encounter.pal);
+	}
+
+	assert(affectedPals.size === 5, `Expected five Pal lookups with Summoning Altar reward tables.`);
 }
 
 async function validatePaldeckDropLookup() {
@@ -727,8 +822,9 @@ function validateEventsLoad() {
 	}
 }
 
-function validateAnnouncementHelpers() {
+async function validateAnnouncementHelpers() {
 	const announcements = requireFresh(`utils`, `announcements.js`);
+	const { PermissionFlagsBits } = require(`discord.js`);
 	const sample = `## Unreleased
 
 - Draft note.
@@ -743,7 +839,14 @@ function validateAnnouncementHelpers() {
 	assert(latest?.id === `v9.8.7`, `Patch-note parser should skip Unreleased sections.`);
 	assert(!latest.body.includes(`Draft note`), `Patch-note parser included Unreleased content.`);
 	assert(messages.length === 1, `Patch-note formatter should produce one message for the sample.`);
-	assert(messages[0].startsWith(`# Paldeck v9.8.7`), `Patch-note formatter should prefix messages with Paldeck.`);
+	assert(messages[0].startsWith(`## Paldeck v9.8.7`), `Patch-note formatter should use one product release heading.`);
+	const splitMessages = announcements.formatPatchNotesMessages({
+		heading: `v9.9.9 - 2026-07-27`,
+		body: `### Long Notes\n\n- ${`Long patch note. `.repeat(180)}`,
+	});
+
+	assert(splitMessages.length > 1, `Long patch-note announcements should split into multiple messages.`);
+	assert(!splitMessages.some(message => /_Part \d+\/\d+_/u.test(message)), `Split patch-note announcements should not add Part X/Y labels.`);
 	assert(announcements.normalizeAnnouncementId({ id: 123456789n }) === `123456789`, `Announcement ID normalization did not handle bigint IDs.`);
 	assert(announcements.splitAnnouncementText(`a`.repeat(3900)).every(chunk => chunk.length <= 1900), `Announcement splitter exceeded Discord-safe chunk size.`);
 
@@ -754,6 +857,101 @@ function validateAnnouncementHelpers() {
 		realLatest?.id === expectedLatestPatchNoteId,
 		`docs/patch-notes.md should contain a latest ${expectedLatestPatchNoteId} release section.`,
 	);
+
+	const guildMember = {};
+	const accessGuild = { members: { me: guildMember } };
+	const channelWithViewOnly = {
+		isTextBased: () => true,
+		permissionsFor: () => ({ has: permission => permission === PermissionFlagsBits.ViewChannel }),
+		send: () => null,
+	};
+	const access = await announcements.checkAnnouncementChannelAccess(accessGuild, channelWithViewOnly);
+
+	assert(access.message === `Paldeck cannot send messages in the configured updates channel.`, `Announcement setup should identify a missing Send Messages permission.`);
+
+	const { JoinedServers } = require(resolveProject(`database`, `dbObjects.js`));
+	const guildId = `999999999999999999`;
+	let ownerDms = 0;
+	const owner = {
+		id: `888888888888888888`,
+		send: async () => {
+			ownerDms += 1;
+		},
+		user: { username: `SmokeOwner` },
+	};
+	const guild = {
+		channels: { fetch: async () => channelWithViewOnly },
+		fetchOwner: async () => owner,
+		id: guildId,
+		members: { me: guildMember },
+		name: `Smoke Guild`,
+	};
+	const client = { guilds: { cache: new Map([[guildId, guild]]) } };
+
+	await JoinedServers.create({
+		guild_id: guildId,
+		guild_name: guild.name,
+		owner_id: owner.id,
+		owner_username: owner.user.username,
+		paldeck_announcement_channel_id: `777777777777777777`,
+	});
+	const firstFailure = await announcements.sendLatestPatchNotesToGuild(client, guildId, { force: true });
+	await announcements.sendLatestPatchNotesToGuild(client, guildId, { force: true });
+
+	assert(firstFailure.message.includes(`server owner was notified`), `Failed announcement delivery should report a successful owner notification.`);
+	assert(ownerDms === 1, `The same unresolved announcement-channel failure should notify the owner only once.`);
+	await JoinedServers.destroy({ where: { guild_id: guildId } });
+}
+
+async function validateDmForwarding() {
+	const forwarding = requireFresh(`utils`, `dmForwarding.js`);
+	const { JoinedServers } = require(resolveProject(`database`, `dbObjects.js`));
+	const userId = `666666666666666666`;
+	const destinationId = `555555555555555555`;
+	let forwardedPayload = null;
+
+	await JoinedServers.create({
+		guild_id: `444444444444444444`,
+		guild_name: `Owned Smoke Guild`,
+		owner_id: userId,
+		owner_username: `DmSmokeUser`,
+	});
+	await forwarding.saveDmForwardChannelId(destinationId);
+
+	const forwarded = await forwarding.forwardDirectMessage({
+		attachments: new Map(),
+		author: { globalName: `DM Smoke User`, id: userId, username: `DmSmokeUser` },
+		client: {
+			channels: {
+				fetch: async channelId => {
+					if (channelId !== destinationId) {
+						return null;
+					}
+
+					return {
+						isTextBased: () => true,
+						send: async payload => {
+							forwardedPayload = payload;
+						},
+					};
+				},
+			},
+		},
+		content: `Exact DM content <@123456789012345678>`,
+		createdAt: new Date(),
+		id: `333333333333333333`,
+		stickers: new Map(),
+	});
+	const serialized = serializeDiscordPayload(forwardedPayload);
+
+	assert(forwarded, `Configured direct messages should be forwarded.`);
+	assert(forwardedPayload.content === `Exact DM content <@123456789012345678>`, `Direct-message text should be forwarded verbatim.`);
+	assert(forwardedPayload.allowedMentions.parse.length === 0, `Forwarded direct messages should not trigger mentions.`);
+	assert(serialized.includes(`DM Smoke User`) && serialized.includes(userId), `Forwarded direct messages should identify the sender.`);
+	assert(serialized.includes(`Owned Smoke Guild`) && serialized.includes(`444444444444444444`), `Forwarded direct messages should list stored servers owned by the sender.`);
+
+	await forwarding.clearDmForwardChannelId();
+	await JoinedServers.destroy({ where: { owner_id: userId } });
 }
 
 function validateDatabaseModels() {
@@ -763,6 +961,8 @@ function validateDatabaseModels() {
 	sequelizeToClose = dbObjects.sequelize;
 	assert(joinedServerColumns.paldeck_announcement_channel_id, `JoinedServers is missing paldeck_announcement_channel_id.`);
 	assert(joinedServerColumns.paldeck_announcement_last_id, `JoinedServers is missing paldeck_announcement_last_id.`);
+	assert(joinedServerColumns.paldeck_announcement_warning_key, `JoinedServers is missing paldeck_announcement_warning_key.`);
+	assert(dbObjects.BotSettings.rawAttributes.key && dbObjects.BotSettings.rawAttributes.value, `BotSettings is missing key/value storage.`);
 }
 
 function validatePalData() {
@@ -862,11 +1062,14 @@ async function main() {
 	await test(`Breed results use plain Pal names`, validateBreedResultsUsePlainNames);
 	await test(`Paldeck breeding button opens parent results`, validatePaldeckBreedingButton);
 	await test(`Paldeck drop controls send public owned item lookups`, validatePaldeckDropLookup);
+	await test(`Paldeck cards group Pal and Raid Boss drops`, validateGroupedPalDrops);
+	await test(`Summoning Altar drop data covers every affected Pal lookup`, validateEncounterDropData);
 	await test(`/item lookup opens Paldeck dropping-Pal results`, validateItemLookupAndDroppingPals);
 	await test(`HTML text helpers decode before stripping tags`, validateHtmlTextHelpers);
 	await test(`hidden Pal placeholders stay out of user-facing search`, validateHiddenPalPlaceholdersStayHidden);
 	await test(`events load with valid handlers`, validateEventsLoad);
 	await test(`announcement helpers parse and format patch notes`, validateAnnouncementHelpers);
+	await test(`direct messages forward verbatim with sender and owned-server context`, validateDmForwarding);
 	await test(`database models include update announcement fields`, validateDatabaseModels);
 	await test(`Paldeck data files remain valid`, validatePalData);
 	await test(`CI workflow includes lint, smoke, and audit jobs`, validateCiWorkflow);

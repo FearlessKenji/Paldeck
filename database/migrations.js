@@ -297,6 +297,24 @@ async function migratePaldeckUpdateAnnouncements() {
 	}
 }
 
+async function migratePaldeckAnnouncementWarnings() {
+	if (!await tableExists(`JoinedServers`)) {
+		return;
+	}
+
+	const columns = await getTableColumns(`JoinedServers`);
+	const added = await addColumnIfMissing(
+		`JoinedServers`,
+		columns,
+		`paldeck_announcement_warning_key`,
+		`VARCHAR(255)`,
+	);
+
+	if (added) {
+		info(`Added Paldeck announcement warning state to JoinedServers`);
+	}
+}
+
 const migrations = [
 	{
 		description: `Repair suggestion storage for longer text and required fields.`,
@@ -322,6 +340,11 @@ const migrations = [
 		description: `Store Paldeck update announcement settings for joined servers.`,
 		id: `20260713_paldeck_update_announcements`,
 		run: migratePaldeckUpdateAnnouncements,
+	},
+	{
+		description: `Track owner warnings for inaccessible Paldeck update channels.`,
+		id: `20260727_paldeck_announcement_warnings`,
+		run: migratePaldeckAnnouncementWarnings,
 	},
 ];
 

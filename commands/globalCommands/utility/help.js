@@ -25,7 +25,7 @@ module.exports = {
 				{
 					name: `Item Lookups`,
 					value: [
-						`\`/item name:<name> rarity:<rarity>\` — Post a public item card. Rarity is optional and falls back to the basic item when unavailable.`,
+						`\`/item name:<name> rarity:<rarity>\` — Look up one item by name. Rarity is optional and falls back to the basic item when unavailable.`,
 						`**View Dropping Pals** opens Paldeck results when drop sources are available.`,
 						`Controls belong to the person who started the lookup; resulting item cards remain public.`,
 					].join(`\n`),

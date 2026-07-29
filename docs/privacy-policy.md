@@ -1,6 +1,6 @@
 # Privacy Policy for Paldeck
 
-Last updated: June 12, 2026
+Last updated: July 27, 2026
 
 Paldeck is a Discord bot operated by FearlessKenji in North Carolina, United States. This Privacy Policy explains what information Paldeck collects, how it is used, and how you can request deletion or ask questions.
 
@@ -8,7 +8,7 @@ By adding Paldeck to a Discord server or using Paldeck commands, you understand 
 
 ## What Paldeck Does
 
-Paldeck provides Discord slash commands for searching and displaying Palworld pal information, including lookups by pal name, number, element, work suitability, rarity, and drops. Paldeck also provides help text, a voting link, a suggestion command, and bot-owner controls used to restrict abusive users or servers.
+Paldeck provides Discord slash commands for searching and displaying Palworld pal and item information, along with breeding, help, suggestion, update, and bot-owner administration features.
 
 Paldeck uses Discord APIs to receive command interactions, autocomplete interactions, guild events, and other Discord events needed for enabled features.
 
@@ -58,7 +58,9 @@ Paldeck may store ordinary pal search criteria and generated search results temp
 
 ### Message Content
 
-Paldeck does not intentionally collect general Discord message content or full server message history. Paldeck processes the text you submit directly to Paldeck through command options, such as suggestion text submitted through `/suggest` or lookup criteria submitted through `/paldeck`.
+Paldeck does not intentionally collect general server message content or full server message history. Paldeck processes text submitted directly through command options, such as suggestion text or lookup criteria.
+
+Direct messages sent to Paldeck may be forwarded verbatim to a private Discord channel controlled by the bot owner for support and operational review. A forwarded direct message includes the sender's Discord name and user ID, attachments or stickers, and the names and IDs of servers the sender is stored as owning. Do not send private, confidential, or sensitive information to Paldeck by direct message.
 
 Paldeck does not use message content to build user profiles, run advertising, sell data, or train machine learning or AI models.
 
@@ -81,7 +83,6 @@ Paldeck does not intentionally collect:
 - Discord login tokens
 - Government ID numbers
 - Precise location
-- Direct message contents
 - Full message history from servers
 - Cookies or analytics through the bot itself
 - Sensitive personal information unless a user or administrator chooses to put it into bot-managed content
@@ -98,6 +99,7 @@ Paldeck uses collected information to:
 - Track operational state needed to maintain bot features
 - Maintain bot reliability and security
 - Review suggestions and feedback
+- Review and respond to direct messages sent to Paldeck
 - Enforce bans, restrictions, and anti-abuse controls
 - Diagnose errors and operational issues
 
@@ -117,6 +119,8 @@ Information may be visible or shared in these limited situations:
 
 Suggestions submitted through `/suggest` may appear in a Discord channel controlled by the bot owner.
 
+Direct messages sent to Paldeck may appear in a private Discord channel controlled by the bot owner, together with the sender and owned-server context described above.
+
 Paldeck does not send ordinary pal lookup searches to Top.gg or Palworld wiki pages as part of processing the command. Paldeck may include links in command responses that you can choose to open.
 
 ## Data Retention
@@ -126,6 +130,7 @@ Paldeck keeps information only as long as reasonably needed for the purposes des
 - Joined server records are generally kept while Paldeck remains in the server and may be removed when Paldeck leaves or is removed.
 - Ban records may be kept until the restriction is removed.
 - Suggestions may be kept as long as needed to review feedback or maintain a record of requested features.
+- Forwarded direct messages remain subject to Discord's message-retention behavior and may be kept as long as needed for support, maintenance, security, or abuse prevention.
 - Temporary pal search-session records are intended to expire after about 15 minutes.
 - Operational logs may be kept as long as needed for security, debugging, abuse prevention, maintenance, or legal compliance.
 
