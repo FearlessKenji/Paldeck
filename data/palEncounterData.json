@@ -1,0 +1,142 @@
+{
+	"Encounters": [
+		{
+			"pal": "Bellanoir",
+			"source": "Summoning Altar",
+			"level": 35,
+			"drops": [
+				{ "item": "Ancient Civilization Core", "quantity": "1–3", "probability": "100%" },
+				{ "item": "Dark Skill Fruit: Apocalypse", "quantity": "1", "probability": "100%" },
+				{ "item": "Training Manual (XL)", "quantity": "3–5", "probability": "100%" },
+				{ "item": "Applied Ranching Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Applied Transporting Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Applied Medicine Production Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Huge Dark Egg (Bellanoir)", "quantity": "1", "probability": "100%" }
+			]
+		},
+		{
+			"pal": "Bellanoir Libero",
+			"source": "Summoning Altar",
+			"level": 45,
+			"drops": [
+				{ "item": "Ancient Civilization Core", "quantity": "2–4", "probability": "100%" },
+				{ "item": "Bellanoir Libero (Ultra) Slab", "quantity": "1", "probability": "100%" },
+				{ "item": "Training Manual (XL)", "quantity": "4–6", "probability": "100%" },
+				{ "item": "Dark Skill Fruit: Dark Whisp", "quantity": "1", "probability": "100%" },
+				{ "item": "Applied Ranching Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Applied Transporting Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Applied Medicine Production Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Huge Dark Egg (Bellanoir Libero)", "quantity": "1", "probability": "100%" }
+			]
+		},
+		{
+			"pal": "Bellanoir Libero",
+			"source": "Summoning Altar",
+			"level": 80,
+			"variant": "Ultra",
+			"drops": [
+				{ "item": "Ancient Civilization Core", "quantity": "10", "probability": "100%" },
+				{ "item": "Witch's Crown", "quantity": "1", "probability": "100%" },
+				{ "item": "Training Crystal", "quantity": "10", "probability": "100%" },
+				{ "item": "Bellanoir Libero (Ultra) Slab", "quantity": "1", "probability": "100%" },
+				{ "item": "Applied Ranching Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Applied Transporting Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Applied Medicine Production Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Huge Dark Egg (Bellanoir Libero)", "quantity": "1", "probability": "100%" }
+			]
+		},
+		{
+			"pal": "Blazamut Ryu",
+			"source": "Summoning Altar",
+			"level": 55,
+			"drops": [
+				{ "item": "Ancient Civilization Core", "quantity": "2–4", "probability": "100%" },
+				{ "item": "Blazamut Ryu (Ultra) Slab", "quantity": "1", "probability": "100%" },
+				{ "item": "Training Manual (XL)", "quantity": "5–7", "probability": "100%" },
+				{ "item": "Dragon Skill Fruit: Beam Slicer", "quantity": "1", "probability": "100%" },
+				{ "item": "Applied Mining Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Applied Lumbering Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Applied Gathering Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Huge Dragon Egg (Blazamut Ryu)", "quantity": "1", "probability": "100%" }
+			]
+		},
+		{
+			"pal": "Blazamut Ryu",
+			"source": "Summoning Altar",
+			"level": 80,
+			"variant": "Ultra",
+			"drops": [
+				{ "item": "Ancient Civilization Core", "quantity": "10", "probability": "100%" },
+				{ "item": "Horns of Supremacy", "quantity": "1", "probability": "100%" },
+				{ "item": "Training Crystal", "quantity": "10", "probability": "100%" },
+				{ "item": "Blazamut Ryu (Ultra) Slab", "quantity": "1", "probability": "100%" },
+				{ "item": "Applied Mining Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Applied Lumbering Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Applied Gathering Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Huge Dragon Egg (Blazamut Ryu)", "quantity": "1", "probability": "100%" }
+			]
+		},
+		{
+			"pal": "Xenolord",
+			"source": "Summoning Altar",
+			"level": 65,
+			"drops": [
+				{ "item": "Ancient Civilization Core", "quantity": "3–6", "probability": "100%" },
+				{ "item": "Xenolord (Ultra) Slab", "quantity": "1", "probability": "100%" },
+				{ "item": "Training Crystal", "quantity": "4–5", "probability": "100%" },
+				{ "item": "Dragon Skill Fruit: Dragon Meteor", "quantity": "1", "probability": "100%" },
+				{ "item": "Applied Handiwork Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Applied Generating Electricity Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Applied Cooling Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Huge Dark Egg (Xenolord)", "quantity": "1", "probability": "100%" }
+			]
+		},
+		{
+			"pal": "Xenolord",
+			"source": "Summoning Altar",
+			"level": 80,
+			"variant": "Ultra",
+			"drops": [
+				{ "item": "Ancient Civilization Core", "quantity": "10", "probability": "100%" },
+				{ "item": "Xenolord (Ultra) Slab", "quantity": "1", "probability": "100%" },
+				{ "item": "Training Crystal", "quantity": "10", "probability": "100%" },
+				{ "item": "Xenolord's head", "quantity": "1", "probability": "100%" },
+				{ "item": "Applied Handiwork Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Applied Generating Electricity Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Applied Cooling Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Huge Dark Egg (Xenolord)", "quantity": "1", "probability": "100%" }
+			]
+		},
+		{
+			"pal": "Hartalis",
+			"source": "Summoning Altar",
+			"level": 70,
+			"drops": [
+				{ "item": "Ancient Civilization Core", "quantity": "4–7", "probability": "100%" },
+				{ "item": "Hartalis (Ultra) Slab", "quantity": "1", "probability": "100%" },
+				{ "item": "Training Crystal", "quantity": "4–6", "probability": "100%" },
+				{ "item": "Skill Fruit: Holy Burst", "quantity": "1", "probability": "100%" },
+				{ "item": "Applied Kindling Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Applied Watering Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Applied Planting Handbook I", "quantity": "1", "probability": "33.3%" },
+				{ "item": "Huge Common Egg (Hartalis)", "quantity": "1", "probability": "100%" }
+			]
+		},
+		{
+			"pal": "Hartalis",
+			"source": "Summoning Altar",
+			"level": 80,
+			"variant": "Ultra",
+			"drops": [
+				{ "item": "Ancient Civilization Core", "quantity": "10", "probability": "100%" },
+				{ "item": "Hartalis (Ultra) Slab", "quantity": "1", "probability": "100%" },
+				{ "item": "Training Crystal", "quantity": "10", "probability": "100%" },
+				{ "item": "Crown of Salvation", "quantity": "1", "probability": "100%" },
+				{ "item": "Applied Kindling Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Applied Watering Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Applied Planting Handbook I", "quantity": "2", "probability": "33.3%" },
+				{ "item": "Huge Common Egg (Hartalis)", "quantity": "1", "probability": "100%" }
+			]
+		}
+	]
+}

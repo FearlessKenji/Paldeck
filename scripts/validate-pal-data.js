@@ -1,5 +1,6 @@
 const palFile = require(`../data/palData.json`);
 const breedingFile = require(`../data/palBreeding.json`);
+const encounterFile = require(`../data/palEncounterData.json`);
 const { findPalColorProblems } = require(`../utils/palColors.js`);
 
 const TRAILING_PARTNER_TECH_PATTERN = /\s+Technology\s+\d+\s*$/i;
@@ -125,6 +126,54 @@ function findBreedingReferenceProblems(pals, breedingData) {
 	return problems;
 }
 
+function findEncounterDataProblems(pals, encounterData) {
+	const problems = [];
+	const visibleNames = new Set(pals.filter(pal => !pal.hidden).map(pal => normalizeName(pal.name)));
+	const keys = new Set();
+
+	if (!Array.isArray(encounterData.Encounters)) {
+		return [`palEncounterData.Encounters must be an array.`];
+	}
+
+	for (const encounter of encounterData.Encounters) {
+		const key = `${normalizeName(encounter.pal)}\0${encounter.source}\0${encounter.level}\0${encounter.variant || ``}`;
+
+		if (!visibleNames.has(normalizeName(encounter.pal))) {
+			problems.push(`Encounter data references unknown or hidden Pal: ${encounter.pal || `(blank)`}.`);
+		}
+
+		if (keys.has(key)) {
+			problems.push(`Encounter data contains duplicate source: ${key.replaceAll(`\0`, ` / `)}.`);
+		}
+
+		if (encounter.source !== `Summoning Altar`) {
+			problems.push(`${encounter.pal}: unsupported encounter source ${encounter.source || `(blank)`}.`);
+		}
+
+		if (!Number.isInteger(encounter.level) || encounter.level <= 0) {
+			problems.push(`${encounter.pal}: encounter level must be a positive integer.`);
+		}
+
+		if (!Array.isArray(encounter.drops) || !encounter.drops.length) {
+			problems.push(`${encounter.pal}: encounter must contain at least one drop.`);
+		} else {
+			for (const drop of encounter.drops) {
+				if (!String(drop.item || ``).trim() || !String(drop.quantity || ``).trim() || !String(drop.probability || ``).trim()) {
+					problems.push(`${encounter.pal}: encounter contains an incomplete drop row.`);
+				}
+			}
+
+			if (!encounter.drops.some(drop => / Egg \(/.test(drop.item) && drop.probability === `100%`)) {
+				problems.push(`${encounter.pal}: encounter is missing its guaranteed egg.`);
+			}
+		}
+
+		keys.add(key);
+	}
+
+	return problems;
+}
+
 const colors = palFile.Colors?.[0] || {};
 const colorProblems = findPalColorProblems(palFile.Pals, colors);
 const partnerTechProblems = findPartnerTechProblems(palFile.Pals);
@@ -133,6 +182,7 @@ const breedingReferenceProblems = findBreedingReferenceProblems(
 	palFile.Pals,
 	breedingFile,
 );
+const encounterDataProblems = findEncounterDataProblems(palFile.Pals, encounterFile);
 
 if (colorProblems.length) {
 	console.error(`Found ${colorProblems.length} pal color issue(s):`);
@@ -185,6 +235,16 @@ if (breedingReferenceProblems.length) {
 	process.exitCode = 1;
 }
 
-if (!colorProblems.length && !partnerTechProblems.length && !breedingMetadataProblems.length && !breedingReferenceProblems.length) {
+if (encounterDataProblems.length) {
+	console.error(`Found ${encounterDataProblems.length} Pal encounter data issue(s):`);
+
+	for (const problem of encounterDataProblems) {
+		console.error(problem);
+	}
+
+	process.exitCode = 1;
+}
+
+if (!colorProblems.length && !partnerTechProblems.length && !breedingMetadataProblems.length && !breedingReferenceProblems.length && !encounterDataProblems.length) {
 	console.log(`Pal data validation passed.`);
 }

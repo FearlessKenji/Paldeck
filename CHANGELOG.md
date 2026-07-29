@@ -4,6 +4,12 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+## v1.7.1 - 2026-07-29
+
+- Grouped Pal card loot under Normal, Alpha, World Tree, Story Boss, Rampaging, and level-specific Summoning Altar headings, with quantities and colon-separated drop chances; Alpha sections include inherited normal loot, exact Ancient Relic tiers remain visible when probabilities differ, and five Raid Pal lookups now show complete base and Ultra Summoning Altar reward tables with guaranteed eggs.
+- Renamed and formally validated the encounter-specific Pal data source, and expanded rendered-card coverage across all five Raid Pal lookups.
+- Updated the project version to `1.7.1`.
+- Fixed comma-separated `/paldeck search` suitability autocomplete labels so selecting another suitability retains the full combined list in Discord's command field.
 - Added owner-only `/dm-forward` guild commands and direct-message event handling that forwards exact DM text, attachments, sender identity, and stored owned-server context to a configured private channel.
 - Added persistent bot setting storage for the DM forwarding destination and enabled direct-message gateway events with partial DM channels.
 - Updated the privacy policy and command documentation for direct-message forwarding, and removed the obsolete `/vote` entry from the README.

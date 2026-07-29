@@ -91570,32 +91570,48 @@
 		{
 			"id": "boss-defeat-reward-flower-prince",
 			"code": "Items/BossDefeatReward_FlowerPrince",
-			"name": "'s Petal",
-			"nameKey": "s-petal",
+			"name": "Dandilord's Petal",
+			"nameKey": "dandilords-petal",
 			"category": "Key Items",
 			"rarity": "Legendary",
 			"rarityRank": 4,
 			"description": "Proof of defeating Dandilord . One of the keys used to remove the barrier of the sealed chamber located in the deepest part of the World Tree.",
 			"iconUrl": "data/items/t-itemicon-essential-boss-defeat-reward-flower-prince.png",
 			"source": "Key_Items",
-			"droppedBy": [],
+			"droppedBy": [
+				{
+					"pal": "Dandilord",
+					"variant": "Alpha",
+					"level": 78,
+					"quantity": "1",
+					"probability": "100%"
+				}
+			],
 			"stats": {},
-			"detailPath": "%3CcharacterName_id%3D%7CFlowerPrince%7C%2F%3Es_Petal",
+			"detailPath": "Dandilords_Petal",
 			"recipes": [],
 			"properties": {}
 		},
 		{
 			"id": "boss-defeat-reward-mothman",
 			"code": "Items/BossDefeatReward_Mothman",
-			"name": "'s Plume",
-			"nameKey": "s-plume",
+			"name": "Silvance's Plume",
+			"nameKey": "silvances-plume",
 			"category": "Key Items",
 			"rarity": "Legendary",
 			"rarityRank": 4,
 			"description": "Proof of defeating Silvance . One of the keys used to remove the barrier of the sealed chamber located in the deepest part of the World Tree.",
 			"iconUrl": "data/items/t-itemicon-essential-boss-defeat-reward-mothman.png",
 			"source": "Key_Items",
-			"droppedBy": [],
+			"droppedBy": [
+				{
+					"pal": "Silvance",
+					"variant": "Alpha",
+					"level": 78,
+					"quantity": "1",
+					"probability": "100%"
+				}
+			],
 			"stats": {},
 			"detailPath": "%3CcharacterName_id%3D%7CMothman%7C%2F%3Es_Plume",
 			"recipes": [],

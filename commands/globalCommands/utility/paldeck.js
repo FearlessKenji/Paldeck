@@ -14,6 +14,7 @@ const { Op } = require(`sequelize`);
 const { SearchSessions } = require(`../../../database/dbObjects.js`);
 const palFile = require(`../../../data/palData.json`);
 const itemFile = require(`../../../data/itemData.json`);
+const encounterFile = require(`../../../data/palEncounterData.json`);
 const { getPalColor } = require(`../../../utils/palColors.js`);
 
 const PALS = palFile.Pals.filter(pal => !pal.hidden);
@@ -24,6 +25,16 @@ const SEARCH_TTL_MS = 15 * 60 * 1000;
 const searchCache = new Map();
 const ITEMS_BY_ID = new Map(itemFile.Items.map(item => [item.id, item]));
 const ITEMS_BY_NAME = new Map(itemFile.Items.map(item => [normalizeText(item.name), item]));
+const ENCOUNTERS_BY_PAL = new Map();
+
+for (const encounter of encounterFile.Encounters) {
+	const key = normalizeText(encounter.pal);
+	ENCOUNTERS_BY_PAL.set(key, [...(ENCOUNTERS_BY_PAL.get(key) || []), encounter]);
+}
+const WORLD_TREE_BOSS_LEVELS = new Map([
+	[`dandilord`, 78],
+	[`silvance`, 78],
+]);
 const ITEM_RARITY_COLORS = {
 	Common: 0x9ca3af,
 	Uncommon: 0x22c55e,
@@ -83,6 +94,11 @@ function worldTreeDropValues(pal) {
 	return worldTreeDropEntries(pal).flatMap(([, value]) => splitValues(value));
 }
 
+function encounterDropValues(pal) {
+	return (ENCOUNTERS_BY_PAL.get(normalizeText(pal.name)) || [])
+		.flatMap(encounter => encounter.drops.map(drop => drop.item));
+}
+
 function isAncientRelicDrop(value) {
 	return ANCIENT_RELIC_DROPS.has(String(value || ``).trim().toLowerCase());
 }
@@ -108,16 +124,11 @@ function collapseAncientRelicDrops(values) {
 	return collapsed;
 }
 
-function formatWorldTreeDrops(pal) {
-	return worldTreeDropEntries(pal)
-		.map(([level, value]) => `Lv.${level}: ${collapseAncientRelicDrops(splitValues(value)).join(`, `)}`)
-		.join(`\n`);
-}
-
 function searchableDropValues(pal) {
 	const values = [
 		...splitValues(pal.drops),
 		...worldTreeDropValues(pal),
+		...encounterDropValues(pal),
 	];
 
 	if (values.some(isAncientRelicDrop)) {
@@ -131,11 +142,114 @@ function autocompleteDropValues(pal) {
 	return [
 		...splitValues(pal.drops),
 		...collapseAncientRelicDrops(worldTreeDropValues(pal)),
+		...encounterDropValues(pal),
 	];
 }
 
 function distinctPalDrops(pal) {
-	return uniqueSorted([...splitValues(pal.drops), ...worldTreeDropValues(pal)]);
+	const structuredNames = itemFile.Items
+		.filter(item => (item.droppedBy || []).some(drop => normalizeText(drop.pal) === normalizeText(pal.name)))
+		.map(item => item.name);
+	return uniqueSorted([
+		...splitValues(pal.drops),
+		...worldTreeDropValues(pal),
+		...encounterDropValues(pal),
+		...structuredNames,
+	]);
+}
+
+function structuredPalDrops(pal) {
+	const groups = new Map();
+
+	for (const item of itemFile.Items) {
+		for (const drop of item.droppedBy || []) {
+			if (normalizeText(drop.pal) !== normalizeText(pal.name)) {
+				continue;
+			}
+
+			const label = drop.variant || `Normal`;
+			const key = `${label}\0${drop.level || ``}`;
+			const group = groups.get(key) || { label, level: drop.level, drops: [] };
+			group.drops.push({ item: item.name, probability: drop.probability, quantity: drop.quantity });
+			groups.set(key, group);
+		}
+	}
+
+	const worldTreeBossLevel = WORLD_TREE_BOSS_LEVELS.get(normalizeText(pal.name));
+	const encounters = ENCOUNTERS_BY_PAL.get(normalizeText(pal.name)) || [];
+
+	if (!worldTreeBossLevel) {
+		const normalDrops = groups.get(`Normal\0`)?.drops || [];
+
+		for (const group of groups.values()) {
+			if (group.label !== `Alpha`) {
+				continue;
+			}
+
+			// Alpha characters inherit the species' normal table in addition to their Alpha-only rows.
+			const explicitNames = new Set(group.drops.map(drop => normalizeText(drop.item)));
+			group.drops = [...normalDrops.filter(drop => !explicitNames.has(normalizeText(drop.item))), ...group.drops];
+		}
+	}
+
+	if (worldTreeBossLevel) {
+		// The game exposes generic and level-specific rows for these story bosses; present one actual encounter table.
+		const bossGroups = [...groups.entries()].filter(([, group]) => group.label === `Alpha`);
+		const mergedDrops = [];
+		const seen = new Set();
+
+		for (const [key, group] of bossGroups) {
+			groups.delete(key);
+			for (const drop of group.drops) {
+				const dropKey = `${drop.item}\0${drop.quantity}\0${drop.probability}`;
+				if (!seen.has(dropKey)) {
+					seen.add(dropKey);
+					mergedDrops.push(drop);
+				}
+			}
+		}
+
+		if (mergedDrops.length) {
+			groups.set(`Story Boss\0${worldTreeBossLevel}`, { label: `Story Boss`, level: worldTreeBossLevel, drops: mergedDrops });
+		}
+	}
+
+	for (const encounter of encounters) {
+		const key = `${encounter.source}\0${encounter.level}\0${encounter.variant || ``}`;
+		groups.set(key, {
+			drops: encounter.drops,
+			label: encounter.source,
+			level: encounter.level,
+			variant: encounter.variant,
+		});
+	}
+
+	return [...groups.values()]
+		.filter(group => group.drops.length)
+		.sort((first, second) => {
+			const order = { Normal: 0, Alpha: 1, "World Tree": 2, "Story Boss": 3, Rampaging: 4, "Summoning Altar": 5 };
+			return (order[first.label] ?? 99) - (order[second.label] ?? 99) || (first.level || 0) - (second.level || 0);
+		});
+}
+
+function formatPalDrop(drop) {
+	return `• ${drop.item} ×${drop.quantity}: ${drop.probability}`;
+}
+
+function palDropFields(pal) {
+	const groups = structuredPalDrops(pal);
+
+	if (!groups.length) {
+		return [{ name: `Pal Drops:`, value: splitValues(pal.drops).map(item => `• ${item}`).join(`\n`) || `None` }];
+	}
+
+	return groups.map(group => {
+		const context = ` — ${group.label}${group.level ? `: Lvl ${group.level}` : ``}${group.variant ? ` (${group.variant})` : ``}`;
+		return {
+			name: `Pal Drops${context}`,
+			value: group.drops.map(formatPalDrop).join(`\n`).slice(0, 1024),
+		};
+	});
 }
 
 function findItemByDropName(dropName) {
@@ -425,7 +539,8 @@ function autocompleteChoices(optionName, input) {
 		)
 		.map(choice => {
 			const value = [...completed, choice].join(`, `);
-			return { name: choice, value };
+			// Discord displays the choice name after selection, so keep it identical to the stored value.
+			return { name: value, value };
 		})
 		.filter(choice => choice.value.length <= 100)
 		.slice(0, 25);
@@ -537,13 +652,9 @@ function buildPalEmbed(pal, thumbnailUrl = pal.thumbnail, habitatUrl = pal.habit
 		{ name: `Number:`, value: pal.number, inline: true },
 		{ name: `Food:`, value: pal.food, inline: true },
 		{ name: `Elements:`, value: pal.element, inline: true },
-		{ name: `Drops:`, value: pal.drops },
 	];
-	const worldTreeDrops = formatWorldTreeDrops(pal);
 
-	if (worldTreeDrops) {
-		fields.push({ name: `World Tree Drops:`, value: worldTreeDrops });
-	}
+	fields.push(...palDropFields(pal));
 
 	fields.push(
 		{ name: `Work Suitability:`, value: pal.suitability },
