@@ -6,6 +6,16 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+## v1.8.0 - 2026-08-01
+
+- Item cards now use a consistent summary layout, combine acquisition information under **Sources**, show every applicable recipe, and identify the minimum required **Workbench** for crafted items.
+- Item lookups now include maps for verified regional and limited-location sources, including Pal Spheres, slabs and slab fragments, Ominous Eggs, Ancient Ruin schematics, Treasure Maps, Kinship Peaches, resource nodes, Skill Fruit trees, fishing and chest rewards, Effigies, journals, and diaries. Supply Drops and Salvage remain listed under **Sources** without map pins.
+- Items sold by known permanent merchants include a **Merchant Locations** button with the applicable merchants and a map. Dog Coin includes a dedicated **Medal Merchants** button covering all four permanent Medal Merchants.
+- Obtainable slabs and slab fragments show their current acquisition sources, while Ultra slab lookups identify their Summoning Altar rewards.
+- Radar Sphere, Silicon, and other unavailable, unfinished, or superseded definitions are excluded from item lookup.
+- Key Sphere and legendary headwear schematic descriptions display without stray formatting characters.
+- Paldeck commands now appear only in servers where Paldeck is installed, preventing Discord from offering commands in unsupported DM and user-installed contexts.
+
 ## v1.7.1 - 2026-07-29
 
 - Pal cards now organize loot under Normal, Alpha, World Tree, Story Boss, Rampaging, or level-specific Summoning Altar headings and show quantities with drop chances. Alpha sections include the complete loot table, Ancient Relic tiers remain separate when chances differ, and five Raid Pal lookups show complete base and Ultra Summoning Altar rewards with guaranteed eggs.

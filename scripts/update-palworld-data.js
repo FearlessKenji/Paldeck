@@ -288,6 +288,17 @@ function updatePalBreedingMetadata(palFile, currentByName, options) {
 	};
 }
 
+function findImplementedPlaceholderCandidates(placeholders, currentByName) {
+	return placeholders
+		.map(pal => ({ current: currentByName.get(normalizeKey(pal.name)), pal }))
+		.filter(({ current }) => String(current?.element || ``).trim() || String(current?.suitability || ``).trim())
+		.map(({ current, pal }) => ({
+			element: current.element || `Unknown`,
+			name: pal.name,
+			number: current.number || `Unknown`,
+		}));
+}
+
 function formatValue(value) {
 	if (Array.isArray(value)) {
 		return `[${value.join(`, `)}]`;
@@ -336,6 +347,12 @@ function printReport(report, options) {
 		options.limit,
 		row => `${row.name}: ${row.field}`,
 	);
+	printRows(
+		`hidden placeholders now present in the public Paldeck`,
+		report.implementedPlaceholderCandidates,
+		options.limit,
+		row => `#${row.number} ${row.name} (${row.element})`,
+	);
 
 	if (!options.write) {
 		console.log(`\nRun with --write to apply these safe-field updates.`);
@@ -353,9 +370,11 @@ async function main() {
 	const added = currentRows.filter(row => !localPalsByName.has(normalizeKey(row.name)));
 	const palData = updatePalData(palFile, currentByName, options);
 	const breeding = updatePalBreedingMetadata(palFile, currentByName, options);
+	const implementedPlaceholderCandidates = findImplementedPlaceholderCandidates(hiddenPlaceholderRows, currentByName);
 	const report = {
 		added,
 		breeding,
+		implementedPlaceholderCandidates,
 		palData,
 		skippedBlankFields: [
 			...palData.skippedBlankFields,
@@ -375,6 +394,11 @@ async function main() {
 	}
 
 	printReport(report, options);
+
+	if (implementedPlaceholderCandidates.length) {
+		// A public PalDB card is strong evidence that a former internal Pal may now be released.
+		throw new Error(`Hidden Pal implementation candidates require review.`);
+	}
 }
 
 main().catch(error => {

@@ -1,11 +1,13 @@
+// Implements item lookup, autocomplete, and owner-bound navigation for item detail controls.
+// Implements item lookup, autocomplete, and owner-bound navigation for item detail controls.
 const { MessageFlags, SlashCommandBuilder } = require(`discord.js`);
-const itemFile = require(`../../../data/itemData.json`);
+const { resolvedItemData } = require(`../../../utils/itemData.js`);
 const paldeck = require(`./paldeck.js`);
 
-const ITEMS = itemFile.Items;
+const ITEMS = resolvedItemData().Items;
 const ITEMS_BY_ID = new Map(ITEMS.map(item => [item.id, item]));
 const SEARCHABLE_ITEMS = ITEMS.filter(item =>
-	item.properties?.bLegalInGame !== 0 && !/^\s*\[WIP\]/i.test(item.description || ``),
+	item.searchable !== false && item.properties?.bLegalInGame !== 0 && !/^\s*\[WIP\]/i.test(item.description || ``),
 );
 const UNAUTHORIZED_CONTROL_MESSAGE = `I'm not your button, pal!`;
 const RARITY_CHOICES = [`Common`, `Uncommon`, `Rare`, `Epic`, `Legendary`]
@@ -84,7 +86,7 @@ module.exports = {
 	async handleButton(interaction) {
 		const [, action, itemId, ownerId, rawOriginPal] = interaction.customId.split(`:`);
 
-		if (action !== `drops`) {
+		if (![`drops`, `merchants`, `medalmerchants`].includes(action)) {
 			await interaction.reply({ content: `Unknown item action.`, flags: MessageFlags.Ephemeral });
 			return;
 		}
@@ -95,6 +97,26 @@ module.exports = {
 		}
 
 		const item = ITEMS_BY_ID.get(itemId);
+
+		if (action === `merchants`) {
+			if (!item?.merchantLocations?.entries?.length) {
+				await interaction.reply({ content: `No fixed merchant locations are available for this item.`, flags: MessageFlags.Ephemeral });
+				return;
+			}
+
+			await interaction.reply(paldeck.buildMerchantResponse(item));
+			return;
+		}
+
+		if (action === `medalmerchants`) {
+			if (!item?.medalMerchants?.entries?.length) {
+				await interaction.reply({ content: `No fixed Medal Merchant locations are available for this item.`, flags: MessageFlags.Ephemeral });
+				return;
+			}
+
+			await interaction.reply(paldeck.buildMedalMerchantResponse(item));
+			return;
+		}
 
 		if (!item || !(item.droppedBy || []).length) {
 			await interaction.reply({ content: `No dropping Pals are available for this item.`, flags: MessageFlags.Ephemeral });
