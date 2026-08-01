@@ -1,10 +1,11 @@
 {
   "name": "paldeck",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "private": true,
   "license": "GPL-3.0-only",
   "scripts": {
     "start": "node index.js",
+    "start:test": "node start-test.js",
     "deploy:global": "node deploy-global-commands.js",
     "deploy:guild": "node deploy-guild-commands.js",
     "deploy:test": "node deploy-test-commands.js",
@@ -29,6 +30,12 @@
     "update:palworld-item-details:write": "node scripts/update-palworld-items.js --details-only --write",
     "validate:pal-data": "node scripts/validate-pal-data.js",
     "validate:item-data": "node scripts/validate-item-data.js",
+    "maps:items": "node scripts/generate-limited-item-maps.js",
+    "maps:items:write": "node scripts/generate-limited-item-maps.js --write-data",
+    "maps:pals": "node scripts/generate-paldb-maps.js",
+    "maps:slabs": "node scripts/generate-item-source-maps.js",
+    "maps:optimize": "node scripts/optimize-item-maps.js",
+    "compact:item-data": "node scripts/compact-item-data.js",
     "lint": "node scripts/lint.js",
     "smoke": "node scripts/smokeTest.js",
     "pm2:start": "pm2 start config/ecosystem.config.js"
@@ -38,6 +45,7 @@
     "discord.js": "^14.26.4",
     "dotenv": "^17.4.2",
     "sequelize": "^6.37.3",
+    "sharp": "^0.35.3",
     "sqlite3": "^6.0.1",
     "tar": "^7.5.22"
   },

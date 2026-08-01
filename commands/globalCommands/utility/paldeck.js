@@ -1,3 +1,5 @@
+// Implements Pal lookup/search interactions and delegates item-card presentation to the shared renderer.
+// Implements Pal lookup/search interactions and delegates item-card presentation to the shared renderer.
 const {
 	ActionRowBuilder,
 	AttachmentBuilder,
@@ -10,10 +12,11 @@ const {
 } = require(`discord.js`);
 const crypto = require(`node:crypto`);
 const path = require(`node:path`);
+const { createItemCards } = require(`../../../utils/itemCards.js`);
 const { Op } = require(`sequelize`);
 const { SearchSessions } = require(`../../../database/dbObjects.js`);
 const palFile = require(`../../../data/palData.json`);
-const itemFile = require(`../../../data/itemData.json`);
+const { resolvedItemData } = require(`../../../utils/itemData.js`);
 const encounterFile = require(`../../../data/palEncounterData.json`);
 const { getPalColor } = require(`../../../utils/palColors.js`);
 
@@ -23,6 +26,7 @@ const PROJECT_ROOT = path.resolve(__dirname, `..`, `..`, `..`);
 const RESULTS_PER_PAGE = 25;
 const SEARCH_TTL_MS = 15 * 60 * 1000;
 const searchCache = new Map();
+const itemFile = resolvedItemData();
 const ITEMS_BY_ID = new Map(itemFile.Items.map(item => [item.id, item]));
 const ITEMS_BY_NAME = new Map(itemFile.Items.map(item => [normalizeText(item.name), item]));
 const ENCOUNTERS_BY_PAL = new Map();
@@ -35,13 +39,6 @@ const WORLD_TREE_BOSS_LEVELS = new Map([
 	[`dandilord`, 78],
 	[`silvance`, 78],
 ]);
-const ITEM_RARITY_COLORS = {
-	Common: 0x9ca3af,
-	Uncommon: 0x22c55e,
-	Rare: 0x3b82f6,
-	Epic: 0xa855f7,
-	Legendary: 0xf59e0b,
-};
 const UNAUTHORIZED_CONTROL_MESSAGE = `I'm not your button, pal!`;
 
 const ELEMENT_CHOICES = [
@@ -260,217 +257,11 @@ function palByNumber(number) {
 	return PALS.find(pal => normalizeNumber(pal.number) === normalizeNumber(number));
 }
 
-function dropContext(item, pal) {
-	return (item.droppedBy || []).find(drop => normalizeText(drop.pal) === normalizeText(pal.name));
-}
-
-function formatNumber(value) {
-	const number = Number(value);
-
-	return Number.isFinite(number) ? number.toLocaleString(`en-US`) : String(value);
-}
-
-const AMMO_BY_WEAPON_CLASS = {
-	Bow_Fire: `Fire Arrow`,
-	Bow_Poison: `Poison Arrow`,
-	BowGun_Fire: `Fire Arrow`,
-	BowGun_Poison: `Poison Arrow`,
-	ChargeLaserRifle: `Charge Rifle Ammo`,
-	CompoundBow: `Reinforced Arrow`,
-	ElectricArcAssaultRifle: `Plasma Rifle Ammo`,
-	EnergyRocketLauncher: `Plasma Cartridge`,
-	EnergyShotgun: `Energy Shotgun Ammo`,
-	Flamethrower: `Flamethrower Fuel`,
-	GatlingGun: `Gatling Gun Ammo`,
-	GrenadeLauncher: `Grenade Ammo`,
-	GuidedMissileLauncher: `Missile Ammo`,
-	LaserGatlingGun: `Laser Gatling Cartridge`,
-	LaserRifle: `Energy Cartridge`,
-	Launcher_Meteor: `Meteorite Ammo`,
-	MakeshiftAssaultRifle: `Coarse Ammo`,
-	MakeshiftHandgun: `Coarse Ammo`,
-	MakeshiftShotgun: `Coarse Ammo`,
-	MakeshiftSubmachineGun: `Coarse Ammo`,
-	MultiGuidedMissileLauncher: `Missile Ammo`,
-	Musket: `Coarse Ammo`,
-	NormalLauncher: `Rocket Ammo`,
-	NormalPistol: `Handgun Ammo`,
-	NormalRifle: `Assault Rifle Ammo`,
-	NormalSniperRifle: `Rifle Ammo`,
-	OldRevolver: `Magnum Ammo`,
-	PalDopingShot: `Boost Gun Ammo`,
-	PalDopingShot_2: `Boost Gun Ammo`,
-	SemiAutoRifle: `Rifle Ammo`,
-	SFBow: `Advanced Arrow`,
-	SingleShotRifle: `Rifle Ammo`,
-	SkyAssaultRifle: `Heavy Assault Rifle Ammo`,
-	SkyBow: `Mechanical Bow Ammo`,
-	SkyGrenadeLauncher: `Tactical Grenade Launcher Ammo`,
-	SkyShotgun: `Prototype Shotgun Ammo`,
-	SkySubmachineGun: `Combat SMG Ammo`,
-	SubmachineGun: `Machine Gun Ammo`,
-	WidePenetrateShotgun: `Beam Scatter Ammo`,
-};
-
-const AMMO_BY_WEAPON_TYPE = {
-	WeaponBow: `Arrow`,
-	WeaponCrossbow: `Arrow`,
-	WeaponHandgun: `Handgun Ammo`,
-	WeaponShotgun: `Shotgun Shell`,
-};
-
-function itemAmmoType(item) {
-	const properties = item.properties || {};
-
-	return AMMO_BY_WEAPON_CLASS[properties.itemActorClass] || AMMO_BY_WEAPON_TYPE[properties.typeB];
-}
-
-function itemEffect(item) {
-	const properties = item.properties || {};
-
-	if (properties.typeB === `Accessory`) {
-		// PalDB appends the localized passive name to accessory descriptions when one exists.
-		const description = String(item.description || ``);
-		const passiveStart = description.indexOf(`. `);
-		const value = properties.passiveSkillName && passiveStart >= 0 ? description.slice(passiveStart + 2) : description;
-		return { label: `Accessory Effect:`, value };
-	}
-
-	if (properties.typeB === `Drug`) {
-		return { label: `Medicine Effect:`, value: item.description };
-	}
-
-	return null;
-}
-
-function buildItemEmbed(item, pal, thumbnailUrl = item.iconUrl) {
-	const stats = item.stats || {};
-	const ammoType = itemAmmoType(item);
-	let effect = itemEffect(item);
-
-	if (normalizeText(effect?.value) === normalizeText(item.description)) {
-		effect = null;
-	}
-
-	let description = item.description;
-
-	if (effect?.label === `Accessory Effect:` && item.description.endsWith(effect.value)) {
-		description = item.description.slice(0, -effect.value.length).trim();
-	}
-	const fields = [
-		{ name: `Category:`, value: item.category, inline: true },
-	];
-
-	if (stats.weight !== undefined) {
-		fields.push({ name: `Weight:`, value: formatNumber(stats.weight), inline: true });
-	}
-
-	if (stats.maxStackCount !== undefined) {
-		fields.push({ name: `Maximum Stack:`, value: formatNumber(stats.maxStackCount), inline: true });
-	}
-
-	if (stats.buyPrice !== undefined) {
-		fields.push({ name: `Buy Price:`, value: formatNumber(stats.buyPrice), inline: true });
-	}
-
-	if (stats.sellPrice !== undefined) {
-		fields.push({ name: `Sell Price:`, value: formatNumber(stats.sellPrice), inline: true });
-	}
-
-	if (stats.buyPrice !== undefined || stats.sellPrice !== undefined) {
-		// The contextual third cell keeps both price columns stable across every item category.
-		fields.push(ammoType ?
-			{ name: `Ammo Type:`, value: ammoType, inline: true } :
-			{ name: `\u200b`, value: `\u200b`, inline: true });
-	}
-
-	const applicableStats = [
-		[`Attack`, stats.attack],
-		[`Defense`, stats.defense],
-		[`Health`, stats.health],
-		[`Shield`, stats.shield],
-		[`Nutrition`, stats.nutrition],
-		[`SAN`, stats.san],
-		[`Capture Power`, stats.capturePower],
-		[`Speed`, stats.speed],
-		[`Stamina Drain`, stats.staminaDrain],
-		[`Durability`, stats.durability],
-		[`Magazine Size`, item.properties?.magazineSize],
-		[`Skill Power`, stats.waza],
-	].filter(([, value]) => value !== undefined);
-
-	if (effect?.value) {
-		fields.push({ name: effect.label, value: effect.value.slice(0, 1024) });
-	} else if (applicableStats.length) {
-		fields.push({
-			name: `Stats:`,
-			value: applicableStats.map(([label, value]) => `${label}: **${formatNumber(value)}**`).join(` • `),
-		});
-	}
-
-	const recipe = item.recipes?.[0];
-
-	if (recipe?.ingredients?.length) {
-		const ingredients = recipe.ingredients.map(ingredient => `${ingredient.name} ×${ingredient.quantity}`).join(`\n`);
-		const requirement = recipe.requirement ? `\n${recipe.requirement}` : ``;
-
-		fields.push({ name: `Crafting Materials:`, value: `${ingredients}${requirement}`.slice(0, 1024) });
-	}
-
-	if (pal) {
-		const drop = dropContext(item, pal);
-		const details = drop ?
-			[`Drop Chance: **${drop.probability}**`, `Quantity: **${drop.quantity}**`].join(`\n`) :
-			`Drop details are not available.`;
-
-		fields.push({ name: `Dropped by ${pal.name}:`, value: details });
-	}
-
-	const embed = new EmbedBuilder()
-		.setAuthor({ name: `Rarity: ${item.rarity}` })
-		.setDescription(description || `No description available.`)
-		.setColor(ITEM_RARITY_COLORS[item.rarity] || ITEM_RARITY_COLORS.Common)
-		.setTitle(item.name)
-		.addFields(fields);
-
-	if (thumbnailUrl) {
-		embed.setThumbnail(thumbnailUrl);
-	}
-
-	return embed;
-}
-
 function buildBackToPalButton(palNumber, ownerId) {
 	return new ButtonBuilder()
 		.setCustomId(`paldeck:back:${encodeURIComponent(palNumber)}:${ownerId}`)
 		.setLabel(`Back to Pal`)
 		.setStyle(ButtonStyle.Secondary);
-}
-
-function buildItemResponse(item, pal, ownerId) {
-	const thumbnail = resolveLocalImage(item.iconUrl);
-	const actionButtons = new ActionRowBuilder();
-
-	if ((item.droppedBy || []).length && ownerId) {
-		actionButtons.addComponents(
-			new ButtonBuilder()
-				.setCustomId(`item:drops:${item.id}:${ownerId}:${pal ? encodeURIComponent(pal.number) : ``}`)
-				.setLabel(`View Dropping Pals`)
-				.setStyle(ButtonStyle.Secondary),
-		);
-	}
-
-	if (pal && ownerId) {
-		actionButtons.addComponents(buildBackToPalButton(pal.number, ownerId));
-	}
-
-	const components = actionButtons.components.length ? [actionButtons] : [];
-
-	return {
-		components,
-		embeds: [buildItemEmbed(item, pal, thumbnail.url)],
-		files: thumbnail.files,
-	};
 }
 
 function buildDropSelect(pal, userId) {
@@ -602,6 +393,12 @@ function resolveLocalImage(imagePath) {
 		files: [new AttachmentBuilder(filePath, { name })],
 	};
 }
+
+const {
+	buildItemResponse,
+	buildMerchantResponse,
+	buildMedalMerchantResponse,
+} = createItemCards({ normalizeText, resolveLocalImage });
 
 function parseSuitability(entry) {
 	const match = String(entry || ``).trim().match(/^(.*?)(?:\s+(\d+))?$/);
@@ -1122,5 +919,7 @@ module.exports = {
 	},
 
 	buildItemResponse,
+	buildMerchantResponse,
+	buildMedalMerchantResponse,
 	replyWithDroppingPals,
 };

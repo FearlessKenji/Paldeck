@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
+// Exercises command loading, rendered responses, data invariants, integrations, and repository hygiene.
 const childProcess = require(`node:child_process`);
 const fs = require(`node:fs`);
 const os = require(`node:os`);
 const path = require(`node:path`);
+const { UNAVAILABLE_ITEM_IDS, needsAvailabilityReview, shouldHideItem } = require(`../utils/itemVisibility.js`);
 
 const projectRoot = path.resolve(__dirname, `..`);
 process.chdir(projectRoot);
@@ -153,6 +155,7 @@ function validatePackageMetadata() {
 	assert(pkg.scripts?.lint === `node scripts/lint.js`, `package.json is missing the lint script.`);
 	assert(pkg.scripts?.smoke === `node scripts/smokeTest.js`, `package.json is missing the smoke script.`);
 	assert(pkg.scripts?.[`deploy:test`] === `node deploy-test-commands.js`, `package.json is missing the test deployment script.`);
+	assert(pkg.scripts?.[`start:test`] === `node start-test.js`, `package.json is missing the test startup script.`);
 
 	for (const packageName of Object.keys(pkg.dependencies || {})) {
 		assertLockPackage(lock, packageName);
@@ -173,8 +176,10 @@ function validateRequiredProjectFiles() {
 		`commands/globalCommands/admin/announce.js`,
 		`commands/globalCommands/utility/updates.js`,
 		`deploy-test-commands.js`,
+		`start-test.js`,
 		`utils/announcements.js`,
 		`utils/configValues.js`,
+		`utils/testEnvironment.js`,
 	];
 
 	for (const filePath of requiredFiles) {
@@ -226,7 +231,8 @@ function validateCommandJson(command, json) {
 }
 
 function validateCommandsLoad() {
-	const { loadCommandFiles } = requireFresh(`utils`, `commandLoader.js`);
+	const { loadCommandData, loadCommandFiles } = requireFresh(`utils`, `commandLoader.js`);
+	const globalCommandsPath = resolveProject(`commands`, `globalCommands`);
 	const commands = loadCommandFiles(resolveProject(`commands`), {
 		warn: message => {
 			throw new Error(message);
@@ -259,6 +265,11 @@ function validateCommandsLoad() {
 
 	assert(namesByScope.has(`global:updates`), `/updates command was not loaded.`);
 	assert(namesByScope.has(`global:announce`), `/announce command was not loaded.`);
+
+	for (const command of loadCommandData(globalCommandsPath, { serverOnly: true })) {
+		assert(command.integration_types?.length === 1 && command.integration_types[0] === 0, `/${command.name} should allow only server installation.`);
+		assert(command.contexts?.length === 1 && command.contexts[0] === 0, `/${command.name} should allow only server-channel use.`);
+	}
 }
 
 async function validatePaldeckFarmableSearch() {
@@ -449,6 +460,10 @@ async function validatePaldeckBreedingButton() {
 		reply: payload => {
 			paldeckPayload = payload;
 		},
+		deferReply: () => undefined,
+		editReply: payload => {
+			paldeckPayload = payload;
+		},
 		user: {
 			id: `smoke-test-user`,
 		},
@@ -486,6 +501,8 @@ async function validateGroupedPalDrops() {
 		await paldeck.execute({
 			options: { getString: () => name, getSubcommand: () => `name` },
 			reply: value => { payload = value; },
+			deferReply: () => undefined,
+			editReply: value => { payload = value; },
 			user: { id: `grouped-drop-owner` },
 		});
 		return serializeDiscordPayload(payload);
@@ -585,6 +602,10 @@ async function validatePaldeckDropLookup() {
 		reply: payload => {
 			paldeckPayload = payload;
 		},
+		deferReply: () => undefined,
+		editReply: payload => {
+			paldeckPayload = payload;
+		},
 		user: { id: `drop-owner` },
 	});
 
@@ -661,7 +682,8 @@ async function validatePaldeckDropLookup() {
 async function validateItemLookupAndDroppingPals() {
 	const itemCommand = requireFresh(`commands`, `globalCommands`, `utility`, `item.js`);
 	const paldeck = requireFresh(`commands`, `globalCommands`, `utility`, `paldeck.js`);
-	const itemData = requireFresh(`data`, `itemData.json`);
+	const { resolvedItemData } = requireFresh(`utils`, `itemData.js`);
+	const itemData = resolvedItemData();
 	let choices = [];
 	let itemPayload = null;
 	let resultsPayload = null;
@@ -684,9 +706,21 @@ async function validateItemLookupAndDroppingPals() {
 	});
 	assert(!choices.some(choice => choice.name === `Ballistic Shield`), `/item autocomplete should hide WIP items.`);
 
+	await itemCommand.autocomplete({
+		options: { getFocused: () => `ultra slab fragment` },
+		respond: payload => {
+			choices = payload;
+		},
+	});
+	assert(!choices.some(choice => /\(Ultra\) Slab Fragment$/i.test(choice.name)), `/item autocomplete should hide unused Ultra slab fragment definitions.`);
+
 	await itemCommand.execute({
 		options: { getString: name => name === `name` ? `Wool` : `Legendary` },
 		reply: payload => {
+			itemPayload = payload;
+		},
+		deferReply: () => undefined,
+		editReply: payload => {
 			itemPayload = payload;
 		},
 		user: { id: `item-owner` },
@@ -724,24 +758,244 @@ async function validateItemLookupAndDroppingPals() {
 	});
 	assert(unauthorizedPayload?.content === `I'm not your button, pal!`, `Unauthorized item controls should use the requested response.`);
 
+	const merchantItem = itemData.Items.find(item => item.name === `Ground Skill Fruit: Sand Tornado` && item.merchantLocations);
+	const merchantItemResponse = paldeck.buildItemResponse(merchantItem, null, `item-owner`);
+	const merchantButton = merchantItemResponse.components[0].components.find(component => component.data.label === `Merchant Locations`);
+	let merchantPayload = null;
+	assert(merchantButton, `Items sold by fixed merchants should include a Merchant Locations button.`);
+	await itemCommand.handleButton({
+		customId: merchantButton.data.custom_id,
+		reply: payload => {
+			merchantPayload = payload;
+		},
+		user: { id: `item-owner` },
+	});
+	assert(merchantPayload?.flags === undefined, `Merchant-location responses should remain visible in the channel.`);
+	assert(serializeDiscordPayload(merchantPayload).includes(`Duneshelter Merchant`), `Merchant-location responses should name the applicable fixed merchant.`);
+	assert(merchantPayload.files.length === 2, `Merchant-location responses should attach the item thumbnail and merchant map.`);
+
+	const dogCoin = itemData.Items.find(item => item.name === `Dog Coin`);
+	const dogCoinResponseWithButtons = paldeck.buildItemResponse(dogCoin, null, `item-owner`);
+	const medalMerchantButton = dogCoinResponseWithButtons.components[0].components.find(component => component.data.label === `Medal Merchants`);
+	let medalMerchantPayload = null;
+	assert(medalMerchantButton, `Dog Coin should include a Medal Merchants button.`);
+	await itemCommand.handleButton({
+		customId: medalMerchantButton.data.custom_id,
+		reply: payload => { medalMerchantPayload = payload; },
+		user: { id: `item-owner` },
+	});
+	assert(medalMerchantPayload?.flags === undefined, `Medal Merchant locations should remain visible in the channel.`);
+	assert(
+		serializeDiscordPayload(medalMerchantPayload).includes(`Desolate Church`) && medalMerchantPayload.files.length === 2,
+		`Medal Merchant responses should name fixed locations and attach the item thumbnail and map.`,
+	);
+	assert(dogCoin.recipes.length === 0, `Medal Merchant purchases must not appear as Dog Coin crafting recipes.`);
+
 	const assaultRifle = itemData.Items.find(item => item.name === `Assault Rifle` && item.rarity === `Common`);
 	const attackPendant = itemData.Items.find(item => item.name === `Attack Pendant`);
 	const memoryWipingMedicine = itemData.Items.find(item => item.name === `Memory Wiping Medicine`);
+	const bellanoirFragment = itemData.Items.find(item => item.name === `Bellanoir's Slab Fragment`);
 	const serializedRifle = serializeDiscordPayload(paldeck.buildItemResponse(assaultRifle, null, `item-owner`));
 	const accessoryResponse = paldeck.buildItemResponse(attackPendant, null, `item-owner`);
 	const serializedAccessory = serializeDiscordPayload(accessoryResponse);
 	const serializedMedicine = serializeDiscordPayload(paldeck.buildItemResponse(memoryWipingMedicine, null, `item-owner`));
+	const ancientWeapon = itemData.Items.find(item => item.name === `Mechanical Bow` && item.rarity === `Common`);
+	const ancientIngot = itemData.Items.find(item => item.name === `Paloxite Ingot`);
+	const ancientFood = itemData.Items.find(item => item.name === `Special Cake`);
+	const serializedAncientWeapon = serializeDiscordPayload(paldeck.buildItemResponse(ancientWeapon, null, `item-owner`));
+	const serializedAncientIngot = serializeDiscordPayload(paldeck.buildItemResponse(ancientIngot, null, `item-owner`));
+	const serializedAncientFood = serializeDiscordPayload(paldeck.buildItemResponse(ancientFood, null, `item-owner`));
 	const accessoryEffect = accessoryResponse.embeds[0].toJSON().fields.find(field => field.name === `Accessory Effect:`);
+	const fragmentResponse = paldeck.buildItemResponse(bellanoirFragment, null, `item-owner`);
+	const serializedFragment = serializeDiscordPayload(fragmentResponse);
+	const serializedSlab = serializeDiscordPayload(paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Xenolord Slab`), null, `item-owner`));
+	const ominousEggResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Ominous Egg`), null, `item-owner`);
+	const peachResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Kinship Peach`), null, `item-owner`);
+	const treasureMapResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Treasure Map`), null, `item-owner`);
+	const ruinSchematicResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Pelt Armor Schematic 3`), null, `item-owner`);
+	const ancientBoneResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Ancient Bone`), null, `item-owner`);
+	const ancientBarkResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Ancient Bark`), null, `item-owner`);
+	const ancientLavaResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Ancient Lava`), null, `item-owner`);
+	const dogCoinResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Dog Coin`), null, `item-owner`);
+	const singleSalvageResponse = paldeck.buildItemResponse(
+		itemData.Items.find(item => item.name === `Beginner Fishing Rod (Gumoss) Schematic`),
+		null,
+		`item-owner`,
+	);
+	const ancientSphereResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Ancient Sphere`), null, `item-owner`);
+	const solSphereResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Sol Sphere`), null, `item-owner`);
+	const coalResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Coal`), null, `item-owner`);
+	const effigyResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Lifmunk Effigy`), null, `item-owner`);
+	const bountyResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Successful Bounty Token`), null, `item-owner`);
+	const keySphereResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Key Sphere of Envy`), null, `item-owner`);
+	const skillFruitResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Ground Skill Fruit: Sand Tornado`), null, `item-owner`);
+	const relicResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Glistening Ancient Relic`), null, `item-owner`);
+	const serializedOminousEgg = serializeDiscordPayload(ominousEggResponse);
+	const serializedPeach = serializeDiscordPayload(peachResponse);
+	const serializedTreasureMap = serializeDiscordPayload(treasureMapResponse);
+	const serializedRuinSchematic = serializeDiscordPayload(ruinSchematicResponse);
+	const serializedAncientBone = serializeDiscordPayload(ancientBoneResponse);
+	const serializedAncientBark = serializeDiscordPayload(ancientBarkResponse);
+	const serializedAncientLava = serializeDiscordPayload(ancientLavaResponse);
+	const serializedDogCoin = serializeDiscordPayload(dogCoinResponse);
+	const serializedSingleSalvage = serializeDiscordPayload(singleSalvageResponse);
+	const serializedAncientSphere = serializeDiscordPayload(ancientSphereResponse);
+	const serializedSolSphere = serializeDiscordPayload(solSphereResponse);
+	const slabItems = itemData.Items.filter(item => /\bSlab(?: Fragment)?$/i.test(item.name));
+	const obtainableSlabItems = slabItems.filter(item => !/\(Ultra\) Slab Fragment$/i.test(item.name));
+	const unusedUltraFragments = slabItems.filter(item => /\(Ultra\) Slab Fragment$/i.test(item.name));
 
 	assert(serializedRifle.includes(`Ammo Type:`) && serializedRifle.includes(`Assault Rifle Ammo`), `Applicable weapons should show their ammo type.`);
 	assert(serializedRifle.includes(`Magazine Size`) && serializedRifle.includes(`20`), `Applicable weapons should show magazine size in Stats.`);
+	assert(serializedRifle.includes(`Workbench:`) && serializedRifle.includes(`Weapon Assembly Line`), `Crafted items should show only their minimum compatible workbench.`);
+	assert(!serializedRifle.includes(`Rank Max`) && !serializedRifle.includes(`Compatible Workbenches`), `Workbench fields should omit derivation details and alternate stations.`);
 	assert(accessoryEffect?.value === `Attack Up Lv. 3`, `Accessories should show their localized effect in the dedicated field.`);
 	assert(!serializedAccessory.includes(`Stats:`), `Accessory Effect should replace the generic Stats field.`);
 	assert(!serializedMedicine.includes(`Medicine Effect:`), `Medicine Effect should be omitted when it duplicates the description.`);
+	assert(serializedAncientWeapon.includes(`Workbench:`) && serializedAncientWeapon.includes(`Ancient Workbench`), `Rank-ten recipes should use the Ancient Workbench.`);
+	assert(serializedAncientIngot.includes(`Workbench:`) && serializedAncientIngot.includes(`Ancient Furnace`), `Rank-seven ingot recipes should use the Ancient Furnace.`);
+	assert(serializedAncientFood.includes(`Workbench:`) && serializedAncientFood.includes(`Ancient Kitchen`), `Rank-five cooked-food recipes should use the Ancient Kitchen.`);
+	assert(obtainableSlabItems.length === 14 && obtainableSlabItems.every(item => item.acquisition), `All 14 obtainable slabs and fragments should embed acquisition data.`);
+	assert(
+		unusedUltraFragments.length === 4 &&
+		unusedUltraFragments.every(item => item.searchable === false && !item.acquisition),
+		`Unused Ultra fragment definitions should remain hidden and have no acquisition data.`,
+	);
+	assert(serializedFragment.includes(`Sources:`) && serializedFragment.includes(`Treasure Chests`), `Slab fragments should render their treasure-chest sources.`);
+	assert(!serializedFragment.includes(`Source —`), `Item acquisition field names should not repeat Source with an em dash.`);
+	assert(serializedSlab.includes(`Workbench:`) && serializedSlab.includes(`Primitive Workbench`), `Rank-one general recipes should show Primitive Workbench.`);
+	assert(serializedFragment.includes(`Forest Dungeon or Sanctuary ×1: 50%`), `Slab source entries should render quantity and colon-separated probability.`);
+	assert(
+		fragmentResponse.embeds[0].toJSON().image?.url === `attachment://${path.basename(bellanoirFragment.acquisition.map)}`,
+		`Mapped slab items should use the acquisition map as the embed image.`,
+	);
+	assert(fragmentResponse.files.length === 2, `Mapped slab items should attach both the item thumbnail and acquisition map.`);
+	const fixedLocationCases = [
+		[`Ominous Egg`, serializedOminousEgg, `30 World Tree egg spawns`],
+		[`Kinship Peach`, serializedPeach, `22 Palpagos locations`],
+		[`Treasure Map`, serializedTreasureMap, `42 Palpagos locations`],
+		[`Ancient Bone`, serializedAncientBone, `10 Palpagos locations`],
+		[`Ancient Bark`, serializedAncientBark, `10 Palpagos locations`],
+		[`Ancient Lava`, serializedAncientLava, `10 Palpagos locations`],
+	];
+	for (const [name, payload, expected] of fixedLocationCases) {
+		assert(payload.includes(expected), `${name} should show its verified fixed-location count.`);
+	}
+	assert(serializedRuinSchematic.includes(`Sources:`) && serializedRuinSchematic.includes(`Ancient Ruin`), `Ancient Ruin schematics should show their fixed source.`);
+	const sourceSummaryCases = [
+		[`Dog Coin`, serializedDogCoin, [`Sources:`, `Junk`, `Salvage`, `Elemental Chests`], [`Salvage Rank`]],
+		[`Single-source salvage item`, serializedSingleSalvage, [`Sources:`, `Salvage`], [`Salvage Rank`]],
+		[`Ancient Sphere`, serializedAncientSphere, [`Sources:`, `Fishing`, `Junk`], [`World Tree Fishing:`]],
+	];
+	for (const [name, payload, included, excluded] of sourceSummaryCases) {
+		assert(included.every(value => payload.includes(value)) && excluded.every(value => !payload.includes(value)), `${name} should use canonical player-facing source names.`);
+	}
+	assert(
+		serializedSolSphere.includes(`Sources:`) &&
+		serializedSolSphere.includes(`Junk`) &&
+		serializedSolSphere.includes(`Supply Drops`) &&
+		serializedSolSphere.includes(`Treasure Chests`) &&
+		solSphereResponse.files.length === 2,
+		`Sol Sphere should include its Sky Island loot sources and map.`,
+	);
+	assert(serializeDiscordPayload(coalResponse).includes(`553 Palpagos locations`), `Coal should combine normal resource nodes and clusters.`);
+	const serializedEffigy = serializeDiscordPayload(effigyResponse);
+	const serializedBounty = serializeDiscordPayload(bountyResponse);
+	const serializedRelic = serializeDiscordPayload(relicResponse);
+	const mappedStandardSpheres = [
+		`Pal Sphere`, `Mega Sphere`, `Giga Sphere`, `Hyper Sphere`, `Ultra Sphere`, `Legendary Sphere`, `Ultimate Sphere`,
+	].map(name => itemData.Items.find(item => item.name === name));
+	assert(
+		mappedStandardSpheres.every(item => item?.acquisition?.map && item.acquisition.sources?.length),
+		`Every standard regional Sphere should include verified acquisition sources and a map.`,
+	);
+	for (const sphere of mappedStandardSpheres) {
+		const markerTypes = sphere.acquisition.mapSources.markers.map(marker => marker.type);
+		assert(
+			!markerTypes.some(type => type === `Supply` || /^Salvage Rank/u.test(type)),
+			`${sphere.name} should list Supply Drops and Salvage textually without mapping them.`,
+		);
+	}
+	assert(
+		serializedEffigy.includes(`Sources:`) &&
+		serializedEffigy.includes(`140 Palpagos locations`) &&
+		serializedEffigy.includes(`15 World Tree locations`) &&
+		!serializedEffigy.includes(`Effigy Locations`),
+		`Cross-map Effigy cards should describe both map panels without a redundant Effigy Locations label.`,
+	);
+	assert(
+		serializedBounty.includes(`33 fixed targets`) && serializedBounty.includes(`Elder`),
+		`Bounty Tokens should map fixed targets and disclose the unpinned Elder source.`,
+	);
+	assert(serializeDiscordPayload(keySphereResponse).includes(`Tower of the Rayne Syndicate — first clear only`), `Key Spheres should identify their one-time tower source.`);
+	assert(serializeDiscordPayload(skillFruitResponse).includes(`not guaranteed`), `Skill Fruit cards should disclose that regional tree drops are possible rather than guaranteed.`);
+	assert(
+		serializedRelic.includes(`Sources:`) && serializedRelic.includes(`Fishing`) && serializedRelic.includes(`Junk`),
+		`World Tree pool items should summarize verified fishing and junk sources.`,
+	);
+	const mappedResponses = [
+		ominousEggResponse, peachResponse, treasureMapResponse, ruinSchematicResponse, ancientBoneResponse,
+		ancientBarkResponse, ancientLavaResponse, coalResponse, effigyResponse, bountyResponse,
+		keySphereResponse, skillFruitResponse, relicResponse,
+	];
+	for (const response of mappedResponses) {
+		assert(response.files.length === 2 && response.embeds[0].toJSON().image?.url?.startsWith(`attachment://`), `Limited-location item cards should attach an item thumbnail and map.`);
+	}
+
+	const searchableItems = itemData.Items.filter(item =>
+		item.searchable !== false && item.properties?.bLegalInGame !== 0 && !/^\s*\[WIP\]/i.test(item.description || ``),
+	);
+	assert(searchableItems.every(item => String(item.description || ``).trim()), `Every searchable item should have a user-facing description.`);
+	assert(itemData.Items.every(item => !String(item.description || ``).includes(`|`)), `Item descriptions should not expose upstream pipe delimiters.`);
+	assert(
+		itemData.Items.filter(item => /^[a-z]{2}[_ ]text$/iu.test(String(item.description || ``).trim())).every(item => item.searchable === false),
+		`Placeholder localization records such as Silicon should remain hidden from lookup.`,
+	);
+	assert(UNAVAILABLE_ITEM_IDS.size === 16, `The unavailable-item registry should cover all 16 audited definitions.`);
+	assert(
+		itemData.Items.filter(shouldHideItem).every(item => item.searchable === false),
+		`Unreleased, superseded, WIP, and unresolved item definitions should remain hidden from lookup.`,
+	);
+	assert(
+		!itemData.Items.some(needsAvailabilityReview),
+		`A hidden item with finished localization and a real acquisition signal should require implementation review.`,
+	);
+
+	const cardsRequiringConsistencyChecks = searchableItems.filter(item =>
+		item.acquisition || (item.recipes || []).length > 1,
+	);
+	for (const item of cardsRequiringConsistencyChecks) {
+		const response = paldeck.buildItemResponse(item, null, `consistency-owner`);
+		const fields = response.embeds[0].toJSON().fields || [];
+		const leadingFields = fields.slice(0, 6).map(field => field.name);
+
+		assert(
+			JSON.stringify(leadingFields.slice(0, 5)) === JSON.stringify([
+				`Category:`, `Weight:`, `Maximum Stack:`, `Buy Price:`, `Sell Price:`,
+			]) && [`Ammo Type:`, `\u200b`].includes(leadingFields[5]),
+			`${item.name}: item summary fields should use the canonical six-cell order.`,
+		);
+
+		if (item.acquisition) {
+			assert(
+				fields.filter(field => field.name === `Sources:`).length === 1 &&
+				!fields.some(field => field.name === `Source:` || field.name.includes(`Source —`)),
+				`${item.name}: acquisition data should render in exactly one Sources field.`,
+			);
+		}
+
+		if ((item.recipes || []).length > 1) {
+			assert(
+				fields.some(field => field.name === `Crafting Recipes:`),
+				`${item.name}: alternate recipes should render in a Crafting Recipes field.`,
+			);
+		}
+	}
 }
 
 function validateHtmlTextHelpers() {
 	const { decodeHtml, stripTags } = requireFresh(`scripts`, `lib`, `html-text.js`);
+	const { parseItemDetails } = requireFresh(`scripts`, `lib`, `paldb-items.js`);
 	const encodedTagText = stripTags(`&lt;script&gt;alert(1)&lt;/script&gt;Relaxaurus`);
 	const doubleEncodedTagText = stripTags(`&amp;lt;script&amp;gt;Relaxaurus&amp;lt;/script&amp;gt;`);
 	const nestedTagText = stripTags(`<scr<script>ipt>alert(1)</script>`);
@@ -752,6 +1006,17 @@ function validateHtmlTextHelpers() {
 	assert(!/[<>]/.test(encodedTagText), `Encoded HTML tags should not survive text extraction as angle brackets.`);
 	assert(!/[<>]/.test(doubleEncodedTagText), `Double-encoded HTML tags should not become angle brackets during text extraction.`);
 	assert(!/[<>]/.test(nestedTagText), `Nested or malformed HTML tags should not leave angle brackets behind.`);
+	const recipeFixture = [
+		`<h5>Production</h5><table><tr><td><a class="itemname">Ore</a><small class="itemQuantity">2</small>`,
+		`<td><a class="itemname" data-hover="?s=Items/Ingot">Ingot</a><td>Primitive Workbench</table>`,
+		`<h5>Medal_Shop_1 Wandering Merchant /37</h5><table><tr><td><a class="itemname">Shop Reward</a><small class="itemQuantity">1</small>`,
+		`<td><a class="itemname" data-hover="?s=Items/Ingot">Ingot</a><td></table>`,
+	].join(``);
+	const parsedRecipes = parseItemDetails(recipeFixture, `Items/Ingot`).recipes;
+	assert(
+		parsedRecipes.length === 1 && parsedRecipes[0].ingredients[0].name === `Ore`,
+		`Recipe parsing should include production tables while excluding merchant exchange tables.`,
+	);
 }
 
 async function validateHiddenPalPlaceholdersStayHidden() {
@@ -800,9 +1065,10 @@ async function validateHiddenPalPlaceholdersStayHidden() {
 	assert(calculator.calculateChild(`PinkKangaroo`, `PinkKangaroo`) === null, `Hidden placeholders should not be accepted as direct breeding inputs.`);
 }
 
-function validateEventsLoad() {
+async function validateEventsLoad() {
 	const eventFiles = listFiles(resolveProject(`events`), filePath => filePath.endsWith(`.js`));
 	const eventNames = new Set();
+	let interactionEvent = null;
 
 	assert(eventFiles.length > 0, `No event files were found.`);
 
@@ -819,7 +1085,27 @@ function validateEventsLoad() {
 
 		assert(!eventNames.has(event.name), `Duplicate event handler name: ${event.name}.`);
 		eventNames.add(event.name);
+		if (relative(filePath) === `events/eventsInteractionCreate.js`) {
+			interactionEvent = event;
+		}
 	}
+
+	const unknownInteraction = Object.assign(new Error(`Unknown interaction`), { code: 10062 });
+	await interactionEvent.execute({
+		client: {
+			commands: new Map([[`item`, {
+				autocomplete: async () => {
+					throw unknownInteraction;
+				},
+			}]]),
+		},
+		commandName: `item`,
+		createdTimestamp: Date.now(),
+		isAutocomplete: () => true,
+		isButton: () => false,
+		isChatInputCommand: () => false,
+		isStringSelectMenu: () => false,
+	});
 }
 
 async function validateAnnouncementHelpers() {

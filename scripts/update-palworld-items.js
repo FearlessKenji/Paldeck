@@ -1,9 +1,12 @@
+// Refreshes the local item catalog while preserving curated acquisition, merchant, and visibility metadata.
 const { Buffer } = require(`node:buffer`);
 const fs = require(`node:fs`);
 const path = require(`node:path`);
+const { shouldHideItem } = require(`../utils/itemVisibility.js`);
 const crypto = require(`node:crypto`);
 const { URL } = require(`node:url`);
 const { fetchPaldbItemData, fetchPaldbItemDetails, slugify } = require(`./lib/paldb-items.js`);
+const { compactItemData, resolvedItemData } = require(`../utils/itemData.js`);
 
 const ROOT_DIR = path.resolve(__dirname, `..`);
 const ITEM_DATA_PATH = path.join(ROOT_DIR, `data`, `itemData.json`);
@@ -253,6 +256,40 @@ function mapByCode(items) {
 	return new Map((items || []).map(item => [item.code, item]));
 }
 
+function normalizeItemDescription(value) {
+	return String(value || ``)
+		.replace(/\s*\|\s*([^|]+?)\s*\|\s*$/u, (_match, text) => `\n\n*${text.trim()}*`)
+		.replace(/\|\s*([^|]+?)\s*\|/gu, (_match, text) => text.trim())
+		.trim();
+}
+
+function preserveCuratedItemFields(currentData, localData) {
+	const localByCode = mapByCode(localData.Items);
+
+	for (const item of currentData.Items) {
+		const localItem = localByCode.get(item.code);
+		item.description = normalizeItemDescription(item.description);
+
+		// Acquisition maps, merchant locations, and visibility decisions are curated locally and cannot
+		// be reconstructed from PalDB's generated item catalog alone.
+		if (localItem?.acquisition) {
+			item.acquisition = localItem.acquisition;
+		}
+		if (localItem?.merchantLocations) {
+			item.merchantLocations = localItem.merchantLocations;
+		}
+		if (localItem?.searchable === false) {
+			item.searchable = false;
+		}
+		if (shouldHideItem(item)) {
+			// Unreleased and unlocalized definitions remain available to data tooling but not public lookup.
+			item.searchable = false;
+		}
+	}
+
+	return currentData;
+}
+
 function compareItems(localData, currentData) {
 	const localByCode = mapByCode(localData.Items);
 	const currentByCode = mapByCode(currentData.Items);
@@ -316,12 +353,13 @@ function printReport(report, options) {
 
 async function main() {
 	const options = parseArgs(process.argv.slice(2));
-	const localData = readJsonIfExists(ITEM_DATA_PATH);
+	const localData = resolvedItemData(readJsonIfExists(ITEM_DATA_PATH));
 	// Detail-only mode enriches the trusted catalog when upstream category pages omit internal item codes.
 	const currentData = migrateItemSourceFields(options.detailsOnly ?
 		JSON.parse(JSON.stringify(localData)) :
 		await fetchPaldbItemData());
 	currentData.Items = await fetchPaldbItemDetails(currentData.Items);
+	preserveCuratedItemFields(currentData, localData);
 	const iconPlan = options.detailsOnly ?
 		{
 			downloads: [],
@@ -345,7 +383,7 @@ async function main() {
 	};
 
 	if (options.write) {
-		writeJson(ITEM_DATA_PATH, currentData);
+		writeJson(ITEM_DATA_PATH, compactItemData(currentData));
 	}
 
 	if (options.json) {

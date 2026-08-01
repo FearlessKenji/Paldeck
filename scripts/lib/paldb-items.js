@@ -1,3 +1,4 @@
+// Fetches and normalizes PalDB item catalogs, details, drops, properties, and genuine crafting recipes.
 const { URL } = require(`node:url`);
 const { decodeHtml, stripTags: stripHtmlTags } = require(`./html-text.js`);
 const palFile = require(`../../data/palData.json`);
@@ -235,34 +236,45 @@ function parseDroppedBy(html) {
 function parseCraftingRecipes(html, itemCode) {
 	const recipes = [];
 
-	for (const row of html.split(/<tr><td>/i).slice(1)) {
-		const product = /<td>\s*<a class="itemname"[^>]*data-hover="\?s=([^"]+)"[\s\S]*?<\/a>/i.exec(row);
+	for (const table of html.matchAll(/<table\b[^>]*>[\s\S]*?<\/table>/gi)) {
+		const precedingHtml = html.slice(0, table.index);
+		const headings = [...precedingHtml.matchAll(/<h[1-6]\b[^>]*>([\s\S]*?)<\/h[1-6]>/gi)];
+		const sectionName = stripTags(headings.at(-1)?.[1] || ``);
 
-		if (!product) {
+		// PalDB uses similar item/currency rows for shops and exchanges. Only production sections are recipes.
+		if (!/^(?:Production|Crafting Materials)$/iu.test(sectionName)) {
 			continue;
 		}
 
-		const productCode = decodeUriComponentSafe(decodeHtml(product[1]));
+		for (const row of table[0].split(/<tr><td>/i).slice(1)) {
+			const product = /<td>\s*<a class="itemname"[^>]*data-hover="\?s=([^"]+)"[\s\S]*?<\/a>/i.exec(row);
 
-		if (productCode !== itemCode) {
-			continue;
-		}
+			if (!product) {
+				continue;
+			}
 
-		const materials = row.slice(0, product.index);
-		const afterProduct = row.slice(product.index + product[0].length);
-		const ingredients = [];
-		const ingredientPattern = /<a class="itemname"[^>]*>([\s\S]*?)<\/a>\s*<small class="itemQuantity">([\s\S]*?)<\/small>/gi;
+			const productCode = decodeUriComponentSafe(decodeHtml(product[1]));
 
-		for (const ingredient of materials.matchAll(ingredientPattern)) {
-			ingredients.push({
-				name: stripTags(ingredient[1]),
-				quantity: stripTags(ingredient[2]),
-			});
-		}
+			if (productCode !== itemCode) {
+				continue;
+			}
 
-		if (ingredients.length) {
-			const requirement = /<td>([\s\S]*?)(?=<\/table>|$)/i.exec(afterProduct)?.[1] || ``;
-			recipes.push({ ingredients, requirement: stripTags(requirement) });
+			const materials = row.slice(0, product.index);
+			const afterProduct = row.slice(product.index + product[0].length);
+			const ingredients = [];
+			const ingredientPattern = /<a class="itemname"[^>]*>([\s\S]*?)<\/a>\s*<small class="itemQuantity">([\s\S]*?)<\/small>/gi;
+
+			for (const ingredient of materials.matchAll(ingredientPattern)) {
+				ingredients.push({
+					name: stripTags(ingredient[1]),
+					quantity: stripTags(ingredient[2]),
+				});
+			}
+
+			if (ingredients.length) {
+				const requirement = /<td>([\s\S]*?)(?=<\/table>|$)/i.exec(afterProduct)?.[1] || ``;
+				recipes.push({ ingredients, requirement: stripTags(requirement) });
+			}
 		}
 	}
 

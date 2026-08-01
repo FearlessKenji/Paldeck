@@ -15,6 +15,18 @@ function findPartnerTechProblems(pals) {
 		}));
 }
 
+function findImplementedPlaceholderProblems(pals) {
+	return pals
+		.filter(pal => pal.hidden && pal.placeholder)
+		.filter(pal =>
+			String(pal.number || ``).trim() ||
+			(String(pal.element || ``).trim() && pal.element !== `None`) ||
+			pal.thumbnail !== `data/pals/pal-unknown.png` ||
+			pal.breeding?.canBeParent || pal.breeding?.canBeChild || pal.breeding?.canBeStandardChild,
+		)
+		.map(pal => `${pal.name}: hidden placeholder now contains released Pal data; review visibility.`);
+}
+
 function normalizeName(value) {
 	return String(value || ``).trim().toLowerCase();
 }
@@ -177,6 +189,7 @@ function findEncounterDataProblems(pals, encounterData) {
 const colors = palFile.Colors?.[0] || {};
 const colorProblems = findPalColorProblems(palFile.Pals, colors);
 const partnerTechProblems = findPartnerTechProblems(palFile.Pals);
+const implementedPlaceholderProblems = findImplementedPlaceholderProblems(palFile.Pals);
 const breedingMetadataProblems = findBreedingMetadataProblems(palFile.Pals);
 const breedingReferenceProblems = findBreedingReferenceProblems(
 	palFile.Pals,
@@ -206,6 +219,16 @@ if (partnerTechProblems.length) {
 		// Technology unlock metadata belongs in the separate Tech field, not Partner Skill text.
 		console.error(`${problem.number} ${problem.name}: Partner Skill ends with Technology unlock text.`);
 		console.error(`  partner: ${problem.partner}`);
+	}
+
+	process.exitCode = 1;
+}
+
+if (implementedPlaceholderProblems.length) {
+	console.error(`Found ${implementedPlaceholderProblems.length} hidden Pal implementation candidate(s):`);
+
+	for (const problem of implementedPlaceholderProblems) {
+		console.error(problem);
 	}
 
 	process.exitCode = 1;
@@ -245,6 +268,13 @@ if (encounterDataProblems.length) {
 	process.exitCode = 1;
 }
 
-if (!colorProblems.length && !partnerTechProblems.length && !breedingMetadataProblems.length && !breedingReferenceProblems.length && !encounterDataProblems.length) {
+if (
+	!colorProblems.length &&
+	!partnerTechProblems.length &&
+	!implementedPlaceholderProblems.length &&
+	!breedingMetadataProblems.length &&
+	!breedingReferenceProblems.length &&
+	!encounterDataProblems.length
+) {
 	console.log(`Pal data validation passed.`);
 }

@@ -1,3 +1,4 @@
+// Registers the complete command catalog globally for supported server installations.
 require(`./config/configCheck.js`);
 const { REST, Routes } = require(`discord.js`);
 const path = require(`node:path`);
@@ -6,7 +7,7 @@ const { loadCommandData } = require(`./utils/commandLoader.js`);
 const token = process.env.TOKEN;
 const clientId = process.env.clientId;
 const commandsPath = path.join(__dirname, `commands`, `globalCommands`);
-const commands = loadCommandData(commandsPath, { warn: console.warn });
+const commands = loadCommandData(commandsPath, { serverOnly: true, warn: console.warn });
 const rest = new REST().setToken(token);
 
 (async () => {

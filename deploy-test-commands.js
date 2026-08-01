@@ -1,3 +1,13 @@
+// Registers commands to the isolated test guild using only the dedicated test application credentials.
+const { activateTestEnvironment } = require(`./utils/testEnvironment.js`);
+
+try {
+	activateTestEnvironment();
+} catch (err) {
+	console.error(err.message);
+	process.exit(78);
+}
+
 const { guildId } = require(`./config/configCheck.js`);
 const { REST, Routes } = require(`discord.js`);
 const path = require(`node:path`);
@@ -6,19 +16,18 @@ const { loadCommandData } = require(`./utils/commandLoader.js`);
 const token = process.env.TOKEN;
 const clientId = process.env.clientId;
 const requestedNames = [...new Set(process.argv.slice(2).map(name => name.trim().toLowerCase()).filter(Boolean))];
+const deployAll = !requestedNames.length || (requestedNames.length === 1 && requestedNames[0] === `--all`);
 const guildCommandsPath = path.join(__dirname, `commands`, `guildCommands`);
 const globalCommandsPath = path.join(__dirname, `commands`, `globalCommands`);
 const guildCommands = loadCommandData(guildCommandsPath, { warn: console.warn });
-const globalCommands = loadCommandData(globalCommandsPath, { warn: console.warn });
+const globalCommands = loadCommandData(globalCommandsPath, { serverOnly: true, warn: console.warn });
 const globalCommandsByName = new Map(globalCommands.map(command => [command.name, command]));
 
-if (!requestedNames.length) {
-	console.error(`Choose at least one global command to test. Example: npm run deploy:test -- item`);
-	process.exitCode = 64;
-} else {
-	const unknownNames = requestedNames.filter(name => !globalCommandsByName.has(name));
+{
+	const selectedNames = deployAll ? [...globalCommandsByName.keys()] : requestedNames;
+	const unknownNames = selectedNames.filter(name => !globalCommandsByName.has(name));
 	const guildNames = new Set(guildCommands.map(command => command.name));
-	const conflictingNames = requestedNames.filter(name => guildNames.has(name));
+	const conflictingNames = selectedNames.filter(name => guildNames.has(name));
 
 	if (unknownNames.length) {
 		console.error(`Unknown global command(s): ${unknownNames.join(`, `)}`);
@@ -27,7 +36,7 @@ if (!requestedNames.length) {
 		console.error(`Command name(s) already exist as guild commands: ${conflictingNames.join(`, `)}`);
 		process.exitCode = 64;
 	} else {
-		const selectedGlobalCommands = requestedNames.map(name => globalCommandsByName.get(name));
+		const selectedGlobalCommands = selectedNames.map(name => globalCommandsByName.get(name));
 		const commands = [...guildCommands, ...selectedGlobalCommands];
 		const rest = new REST().setToken(token);
 
@@ -41,7 +50,9 @@ if (!requestedNames.length) {
 				);
 
 				console.log(`Successfully registered ${data.length} guild-scoped application command(s).`);
-				console.log(`Run npm run deploy:guild after testing to remove the temporary global-command copies.`);
+				if (!deployAll) {
+					console.log(`Run npm run deploy:test to replace the focused selection with the complete test command set.`);
+				}
 			} catch (err) {
 				console.error(err);
 				process.exitCode = 1;

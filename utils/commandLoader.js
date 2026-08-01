@@ -1,5 +1,7 @@
+// Loads command modules and applies the installation/context restrictions shared by every deployment path.
 const fs = require(`node:fs`);
 const path = require(`node:path`);
+const { ApplicationIntegrationType, InteractionContextType } = require(`discord.js`);
 
 function noop() {
 	return undefined;
@@ -56,7 +58,17 @@ function loadCommandCollection(collection, directory, options = {}) {
 }
 
 function loadCommandData(directory, options = {}) {
-	return loadCommandFiles(directory, options).map(({ command }) => command.data.toJSON());
+	return loadCommandFiles(directory, options).map(({ command }) => {
+		const data = command.data.toJSON();
+
+		if (options.serverOnly) {
+			// Explicit registration scopes keep global commands out of user installs, bot DMs, and group DMs.
+			data.integration_types = [ApplicationIntegrationType.GuildInstall];
+			data.contexts = [InteractionContextType.Guild];
+		}
+
+		return data;
+	});
 }
 
 module.exports = {
