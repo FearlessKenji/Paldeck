@@ -2,6 +2,113 @@
 const crypto = require(`node:crypto`);
 const rawItemData = require(`../data/itemData.json`);
 
+const REGIONAL_CHEST_RULES = [
+	{
+		pool: `SkyIsland_Treasure`, map: `palpagos`, location: `76 Sunreach chest locations`,
+		marker: { type: `Treasure`, href: `SkyIsland_Treasure` },
+	},
+	{
+		pool: `WorldTree_Treasure`, map: `worldtree`, location: `38 World Tree chest locations`,
+		marker: { type: `Treasure`, locationSet: `worldTreeTreasureChests` },
+	},
+];
+
+function sameMarker(left, right) {
+	return Object.entries(right).every(([key, value]) => left?.[key] === value);
+}
+
+function regionalChestMapPath(mapPath, mapSources) {
+	if (mapPath.endsWith(`/ancient-sphere-sources.png`)) {
+		return mapPath;
+	}
+	const hash = crypto.createHash(`sha256`).update(JSON.stringify(mapSources)).digest(`hex`).slice(0, 8);
+	return mapPath.replace(/\.png$/u, `-regional-chests-${hash}.png`);
+}
+
+function addRegionalChest(acquisition, rule) {
+	if (!acquisition?.lootPools?.some(entry => entry.pool === rule.pool)) {
+		return false;
+	}
+	acquisition.sources ||= [];
+	let treasure = acquisition.sources.find(source => source.type === `Treasure`);
+	if (!treasure) {
+		treasure = { type: `Treasure`, entries: [] };
+		acquisition.sources.push(treasure);
+	}
+	if (!treasure.entries.some(entry => entry.location === rule.location)) {
+		treasure.entries.push({ location: rule.location, probability: `varies` });
+	}
+	if (!acquisition.map || !acquisition.mapSources) {
+		return false;
+	}
+
+	if (acquisition.mapSources.maps) {
+		let panel = acquisition.mapSources.maps.find(entry => entry.map === rule.map);
+		if (!panel) {
+			panel = { map: rule.map, markers: [] };
+			acquisition.mapSources.maps.push(panel);
+		}
+		panel.markers ||= [];
+		if (!panel.markers.some(marker => sameMarker(marker, rule.marker))) {
+			panel.markers.push({ ...rule.marker });
+			return true;
+		}
+		return false;
+	}
+
+	if (acquisition.mapSources.map === rule.map) {
+		acquisition.mapSources.markers ||= [];
+		if (!acquisition.mapSources.markers.some(marker => sameMarker(marker, rule.marker))) {
+			acquisition.mapSources.markers.push({ ...rule.marker });
+			return true;
+		}
+		return false;
+	}
+	acquisition.mapSources = { maps: [acquisition.mapSources, { map: rule.map, markers: [{ ...rule.marker }] }] };
+	return true;
+}
+
+function deriveRegionalChests(acquisition) {
+	if (!acquisition) {
+		return acquisition;
+	}
+	const derived = JSON.parse(JSON.stringify(acquisition));
+	let mapChanged = false;
+	for (const rule of REGIONAL_CHEST_RULES) {
+		mapChanged = addRegionalChest(derived, rule) || mapChanged;
+	}
+	if (mapChanged) {
+		derived.map = regionalChestMapPath(derived.map, derived.mapSources);
+	}
+	return derived;
+}
+
+function stripDerivedRegionalChests(acquisition) {
+	if (!acquisition) {
+		return acquisition;
+	}
+	const stripped = JSON.parse(JSON.stringify(acquisition));
+	stripped.map = stripped.map?.replace(/-regional-chests-[a-f0-9]{8}(?=\.png$)/u, ``);
+	for (const rule of REGIONAL_CHEST_RULES) {
+		const treasure = stripped.sources?.find(source => source.type === `Treasure`);
+		if (treasure) {
+			treasure.entries = treasure.entries.filter(entry => entry.location !== rule.location);
+		}
+		stripped.sources = stripped.sources?.filter(source => source.type !== `Treasure` || source.entries.length);
+		const panels = stripped.mapSources?.maps || (stripped.mapSources ? [stripped.mapSources] : []);
+		for (const panel of panels) {
+			panel.markers = panel.markers?.filter(marker => !sameMarker(marker, rule.marker));
+		}
+		if (stripped.mapSources?.maps) {
+			stripped.mapSources.maps = stripped.mapSources.maps.filter(panel => panel.markers?.length);
+			if (stripped.mapSources.maps.length === 1) {
+				[stripped.mapSources] = stripped.mapSources.maps;
+			}
+		}
+	}
+	return stripped;
+}
+
 function resolvePreset(itemData, item, property, catalogName) {
 	const reference = item[`${property}Ref`];
 	if (!reference) {
@@ -16,18 +123,43 @@ function resolvePreset(itemData, item, property, catalogName) {
 	return preset;
 }
 
-function resolveItem(itemData, item) {
+function indexedLootPools(itemData) {
+	const indexed = new Map();
+	for (const [pool, record] of Object.entries(itemData.LootPools || {})) {
+		for (const [itemId, drops] of Object.entries(record.items || {})) {
+			const entries = indexed.get(itemId) || [];
+			const encodedDrops = Array.isArray(drops) ? drops : [drops];
+			entries.push(...encodedDrops.map(drop => {
+				if (Array.isArray(drop)) {
+					return { pool, category: record.category, quantity: drop[0], probability: drop[1] };
+				}
+				const separator = drop.lastIndexOf(`: `);
+				return { pool, category: record.category, quantity: drop.slice(0, separator), probability: drop.slice(separator + 2) };
+			}));
+			indexed.set(itemId, entries);
+		}
+	}
+	return indexed;
+}
+
+function resolveItem(itemData, item, lootPools) {
+	const acquisition = resolvePreset(itemData, item, `acquisition`, `AcquisitionPresets`);
+	const resolvedAcquisition = acquisition ? JSON.parse(JSON.stringify(acquisition)) : acquisition;
+	if (lootPools.has(item.id)) {
+		resolvedAcquisition.lootPools = lootPools.get(item.id);
+	}
 	return {
 		...item,
-		acquisition: resolvePreset(itemData, item, `acquisition`, `AcquisitionPresets`),
+		acquisition: deriveRegionalChests(resolvedAcquisition),
 		merchantLocations: resolvePreset(itemData, item, `merchantLocations`, `MerchantLocationSets`),
 	};
 }
 
 function resolvedItemData(itemData = rawItemData) {
+	const lootPools = indexedLootPools(itemData);
 	return {
 		...itemData,
-		Items: itemData.Items.map(item => resolveItem(itemData, item)),
+		Items: itemData.Items.map(item => resolveItem(itemData, item, lootPools)),
 	};
 }
 
@@ -72,12 +204,30 @@ function presetId(prefix, value) {
 function compactItemData(itemData) {
 	const acquisitions = {};
 	const merchants = {};
+	const lootPools = {};
 	const acquisitionCounts = new Map();
+	for (const item of itemData.Items) {
+		for (const entry of item.acquisition?.lootPools || []) {
+			const record = lootPools[entry.pool] || { category: entry.category, items: {} };
+			record.items[item.id] ||= [];
+			record.items[item.id].push(`${entry.quantity}: ${entry.probability}`);
+			lootPools[entry.pool] = record;
+		}
+	}
+	for (const record of Object.values(lootPools)) {
+		for (const [itemId, drops] of Object.entries(record.items)) {
+			if (drops.length === 1) {
+				[record.items[itemId]] = drops;
+			}
+		}
+	}
 
 	// Count first so only genuinely shared acquisitions become presets; unique records stay beside their item.
 	for (const item of itemData.Items) {
 		if (item.acquisition) {
-			const encoded = JSON.stringify(item.acquisition);
+			const acquisition = stripDerivedRegionalChests(item.acquisition);
+			delete acquisition.lootPools;
+			const encoded = JSON.stringify(acquisition);
 			acquisitionCounts.set(encoded, (acquisitionCounts.get(encoded) || 0) + 1);
 		}
 	}
@@ -86,6 +236,8 @@ function compactItemData(itemData) {
 		const compact = { ...item };
 
 		if (compact.acquisition) {
+			compact.acquisition = stripDerivedRegionalChests(compact.acquisition);
+			delete compact.acquisition.lootPools;
 			const encoded = JSON.stringify(compact.acquisition);
 			if (acquisitionCounts.get(encoded) > 1) {
 				const id = presetId(`acquisition`, compact.acquisition);
@@ -108,6 +260,7 @@ function compactItemData(itemData) {
 
 	return {
 		Sources: itemData.Sources,
+		LootPools: Object.fromEntries(Object.entries(lootPools).sort(([left], [right]) => left.localeCompare(right))),
 		AcquisitionPresets: acquisitions,
 		MerchantLocationSets: merchants,
 		Items: items,

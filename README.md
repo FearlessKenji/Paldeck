@@ -149,6 +149,8 @@ Use `/paldeck search` to combine criteria:
 The bot replies with matching pal information in Discord embeds. Search results are paginated in batches of 25 with previous and next buttons. Search pagination sessions expire after about 15 minutes. If no match is found, it replies with a private "Nothing found" message.
 
 ## Audit Palworld data
+
+Refresh or audit readable item loot-source exports with `npm run items:sources:sync -- --write` or `npm run items:sources:sync`. Paldeck treats decoded local game files and their asset identities as authoritative; PalDB is used to corroborate and translate those records. Zero-percent and test pools are excluded automatically.
 Palworld updates can change Paldeck numbers, work suitabilities, elements, internal breeding IDs, and available Pals. To compare the local JSON files against current PalDB data:
 
 ```console

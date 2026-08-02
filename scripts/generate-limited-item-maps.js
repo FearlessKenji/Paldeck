@@ -5,12 +5,13 @@ const os = require(`node:os`);
 const path = require(`node:path`);
 const sharp = require(`sharp`);
 const { compactItemData, resolvedItemData } = require(`../utils/itemData.js`);
-const { loadMap, renderMap, selectMarkers } = require(`./lib/item-map-rendering.js`);
+const { fixedLocationMarkers, loadMap, renderMap, selectMarkers } = require(`./lib/item-map-rendering.js`);
 
 const ROOT = path.resolve(__dirname, `..`);
 const CACHE = path.join(ROOT, `tmp`, `paldb-map-cache`);
 const OUTPUT_DIRECTORY = process.env.PALDECK_MAP_OUTPUT_DIR;
 const ITEM_DATA_PATH = process.env.PALDECK_ITEM_DATA_PATH || path.join(ROOT, `data`, `itemData.json`);
+const GAME_SOURCE_DATA = JSON.parse(fs.readFileSync(path.join(ROOT, `data`, `gameSourceData.json`), `utf8`));
 const MAPS = {
 	palpagos: {
 		key: `palpagos`, script: `https://paldb.cc/js/map_data_en.js?_=1783945617`,
@@ -47,7 +48,9 @@ function groupsFor(map, filters) {
 		const display = presentation(filter);
 		const key = JSON.stringify(display);
 		const current = groups.get(key) || { ...display, markers: [] };
-		current.markers.push(...selectMarkers(map, [filter]));
+		const locationSet = filter.locationSet && GAME_SOURCE_DATA.fixedLocationSets[filter.locationSet];
+		if (filter.locationSet && !locationSet) {throw new Error(`Unknown fixed location set: ${filter.locationSet}`);}
+		current.markers.push(...(locationSet ? fixedLocationMarkers(locationSet) : selectMarkers(map, [filter])));
 		groups.set(key, current);
 	}
 	return [...groups.values()];
@@ -91,6 +94,7 @@ async function renderRecord(maps, mapPath, mapSources) {
 
 async function main() {
 	const requestedIndex = process.argv.indexOf(`--map`);
+	const regionalChestsOnly = process.argv.includes(`--regional-chests`);
 	const positional = process.argv.slice(2).filter(value => !value.startsWith(`--`) && value !== `write`);
 	const requestedMap = requestedIndex >= 0 ? process.argv[requestedIndex + 1] : positional[0] || null;
 	const writeData = process.argv.includes(`--write-data`) || process.argv.includes(`write`);
@@ -100,10 +104,13 @@ async function main() {
 	const records = new Map();
 	for (const item of itemData.Items) {
 		for (const value of [item.acquisition, item.merchantLocations, item.medalMerchants]) {
-			if (value?.map && value.mapSources && !value.mapSources.chestPools) {records.set(value.map, value.mapSources);}
+			const regionalChest = value?.lootPools?.some(pool => [`SkyIsland_Treasure`, `WorldTree_Treasure`].includes(pool.pool));
+			if (value?.map && value.mapSources && !value.mapSources.chestPools && (!regionalChestsOnly || regionalChest)) {
+				records.set(value.map, value.mapSources);
+			}
 		}
 	}
-	for (const value of Object.values(sourceData.MerchantLocationSets || {})) {
+	for (const value of regionalChestsOnly ? [] : Object.values(sourceData.MerchantLocationSets || {})) {
 		if (value.map && value.mapSources) {records.set(value.map, value.mapSources);}
 	}
 	for (const [mapPath, sources] of records) {

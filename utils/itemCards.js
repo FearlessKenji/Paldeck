@@ -9,6 +9,12 @@ const ITEM_RARITY_COLORS = {
 const SOURCE_LABELS = {
 	Treasure: `Treasure Chests`, "Treasure Element": `Elemental Chests`, Supply: `Supply Drops`, Junk: `Junk`,
 	"Salvage Rank1": `Salvage`, "Salvage Rank2": `Salvage`, "World Tree Fishing": `Fishing`, "World Tree Junk": `Junk`,
+	Expeditions: `Expeditions`, "Enemy Camps": `Enemy Camps`,
+};
+const SOURCE_CATEGORIES = {
+	"Dungeon Treasure Chests": `Dungeon Chests`, "Dungeon and Regional Chests": `Dungeon Chests`,
+	"Dungeon or Sanctuary Chests": `Dungeon Chests`, "Dungeon Chests": `Dungeon Chests`,
+	"Possible Destinations": `Treasure Maps`, "Skill Fruit Trees": `Skill Fruit Trees`,
 };
 const AMMO_BY_CLASS = {
 	Bow_Fire: `Fire Arrow`, Bow_Poison: `Poison Arrow`, BowGun_Fire: `Fire Arrow`, BowGun_Poison: `Poison Arrow`,
@@ -74,6 +80,14 @@ function sourceText(acquisition) {
 			if (entries) {sections.push(entries);}
 		} else {
 			sections.push(entries ? `${source.type}\n${entries}` : source.type);
+		}
+		seen.add(SOURCE_CATEGORIES[source.type] || source.type);
+	}
+	// Loot-pool categories fill gaps in curated map sources without exposing internal pool identifiers to users.
+	for (const pool of acquisition?.lootPools || []) {
+		if (!seen.has(pool.category)) {
+			sections.push(pool.category);
+			seen.add(pool.category);
 		}
 	}
 	if (acquisition?.note) {sections.push(acquisition.note);}
