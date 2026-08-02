@@ -1,5 +1,4 @@
 // Implements item lookup, autocomplete, and owner-bound navigation for item detail controls.
-// Implements item lookup, autocomplete, and owner-bound navigation for item detail controls.
 const { MessageFlags, SlashCommandBuilder } = require(`discord.js`);
 const { resolvedItemData } = require(`../../../utils/itemData.js`);
 const paldeck = require(`./paldeck.js`);

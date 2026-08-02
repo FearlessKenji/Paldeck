@@ -6,6 +6,17 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+## v1.9.0 - 2026-08-02
+
+- Journal item cards now omit inventory fields and the generic **Locations** label that do not add useful information.
+- World Tree treasure-chest pins now appear at their proper locations instead of outside the island map.
+- Items obtainable from Sunreach or World Tree treasure chests now consistently include those chests in **Sources** and on applicable location maps.
+- Pal habitat maps now consistently show wild distributions and fixed Alpha encounters. Caged Pal locations are not mapped.
+- Item **Sources** now reflect all verified obtainable loot categories, including chests, fishing, expeditions, enemy camps, salvage, oil rigs, and ground spawns where applicable.
+- **Training Manual (M)** no longer shows Desert elemental chests, where it cannot be obtained.
+- **Ancient Sphere** now shows its eligible Sunreach and World Tree treasure chests in addition to its other World Tree sources.
+- `/item` can now look up each journal with its in-game artwork and location map, or **Palpagos Journals** and **World Tree Journals** for regional overviews.
+
 ## v1.8.0 - 2026-08-01
 
 - Item cards now use a consistent summary layout, combine acquisition information under **Sources**, show every applicable recipe, and identify the minimum required **Workbench** for crafted items.

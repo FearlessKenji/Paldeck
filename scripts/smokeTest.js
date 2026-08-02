@@ -714,6 +714,22 @@ async function validateItemLookupAndDroppingPals() {
 	});
 	assert(!choices.some(choice => /\(Ultra\) Slab Fragment$/i.test(choice.name)), `/item autocomplete should hide unused Ultra slab fragment definitions.`);
 
+	await itemCommand.autocomplete({
+		options: { getFocused: () => `journals` },
+		respond: payload => {
+			choices = payload;
+		},
+	});
+	assert(
+		[`Palpagos Journals`, `World Tree Journals`].every(name => choices.some(choice => choice.name === name)),
+		`/item autocomplete should expose both curated journal collections.`,
+	);
+	await itemCommand.autocomplete({
+		options: { getFocused: () => `bjorn seligsson` },
+		respond: payload => {choices = payload;},
+	});
+	assert(choices.some(choice => choice.name === `Bjorn Seligsson's Diary - 1`), `/item autocomplete should expose individual journals.`);
+
 	await itemCommand.execute({
 		options: { getString: name => name === `name` ? `Wool` : `Legendary` },
 		reply: payload => {
@@ -830,6 +846,10 @@ async function validateItemLookupAndDroppingPals() {
 	const keySphereResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Key Sphere of Envy`), null, `item-owner`);
 	const skillFruitResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Ground Skill Fruit: Sand Tornado`), null, `item-owner`);
 	const relicResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Glistening Ancient Relic`), null, `item-owner`);
+	const journalResponses = [`Palpagos Journals`, `World Tree Journals`]
+		.map(name => paldeck.buildItemResponse(itemData.Items.find(item => item.name === name), null, `item-owner`));
+	const individualJournalResponses = [`Bjorn Seligsson's Diary - 1`, `Ancient Recorder`]
+		.map(name => paldeck.buildItemResponse(itemData.Items.find(item => item.name === name), null, `item-owner`));
 	const serializedOminousEgg = serializeDiscordPayload(ominousEggResponse);
 	const serializedPeach = serializeDiscordPayload(peachResponse);
 	const serializedTreasureMap = serializeDiscordPayload(treasureMapResponse);
@@ -883,13 +903,14 @@ async function validateItemLookupAndDroppingPals() {
 	}
 	assert(serializedRuinSchematic.includes(`Sources:`) && serializedRuinSchematic.includes(`Ancient Ruin`), `Ancient Ruin schematics should show their fixed source.`);
 	const sourceSummaryCases = [
-		[`Dog Coin`, serializedDogCoin, [`Sources:`, `Junk`, `Salvage`, `Elemental Chests`], [`Salvage Rank`]],
+		[`Dog Coin`, serializedDogCoin, [`Sources:`, `Junk`, `Salvage`, `Elemental Chests`, `Oil Rigs`, `Expeditions`], [`Salvage Rank`]],
 		[`Single-source salvage item`, serializedSingleSalvage, [`Sources:`, `Salvage`], [`Salvage Rank`]],
-		[`Ancient Sphere`, serializedAncientSphere, [`Sources:`, `Fishing`, `Junk`], [`World Tree Fishing:`]],
+		[`Ancient Sphere`, serializedAncientSphere, [`Sources:`, `Fishing`, `Junk`, `Treasure Chests`, `Expeditions`, `Ground Spawns`], [`World Tree Fishing:`]],
 	];
 	for (const [name, payload, included, excluded] of sourceSummaryCases) {
 		assert(included.every(value => payload.includes(value)) && excluded.every(value => !payload.includes(value)), `${name} should use canonical player-facing source names.`);
 	}
+	assert(ancientSphereResponse.files.length === 2, `Ancient Sphere should attach its combined Sunreach and World Tree source map.`);
 	assert(
 		serializedSolSphere.includes(`Sources:`) &&
 		serializedSolSphere.includes(`Junk`) &&
@@ -899,6 +920,52 @@ async function validateItemLookupAndDroppingPals() {
 		`Sol Sphere should include its Sky Island loot sources and map.`,
 	);
 	assert(serializeDiscordPayload(coalResponse).includes(`553 Palpagos locations`), `Coal should combine normal resource nodes and clusters.`);
+	for (const [index, response] of journalResponses.entries()) {
+		const payload = serializeDiscordPayload(response);
+		const expectedLocation = index ? `9 World Tree locations` : `55 Palpagos locations`;
+		assert(
+			payload.includes(`Category:`) && payload.includes(`Collectible`) &&
+			payload.includes(`Sources:`) && payload.includes(expectedLocation) &&
+			!payload.includes(`N/A`) && !payload.includes(`Weight:`) &&
+			!payload.includes(`Maximum Stack:`) && !payload.includes(`Buy Price:`) &&
+			!payload.includes(`Sell Price:`) && response.files.length === 2,
+			`${index ? `World Tree` : `Palpagos`} Journals should omit inventory-only fields and include a map.`,
+		);
+	}
+	const journalEntries = itemData.Items.filter(item => item.journalEntry);
+	const regionalChestRules = [
+		[`SkyIsland_Treasure`, `palpagos`, `76 Sunreach chest locations`, marker => marker.href === `SkyIsland_Treasure`],
+		[`WorldTree_Treasure`, `worldtree`, `38 World Tree chest locations`, marker => marker.locationSet === `worldTreeTreasureChests`],
+	];
+	for (const item of itemData.Items) {
+		for (const [pool, map, location, matchesMarker] of regionalChestRules) {
+			if (!item.acquisition?.lootPools?.some(entry => entry.pool === pool)) {
+				continue;
+			}
+			const treasure = item.acquisition.sources?.find(source => source.type === `Treasure`);
+			const panels = item.acquisition.mapSources?.maps || (item.acquisition.mapSources?.map ? [item.acquisition.mapSources] : []);
+			assert(treasure?.entries.some(entry => entry.location === location), `${item.name} should derive its ${pool} source.`);
+			assert(!item.acquisition.map || panels.some(panel => panel.map === map && panel.markers?.some(matchesMarker)), `${item.name} should derive its ${pool} map markers.`);
+		}
+	}
+	assert(
+		journalEntries.length === 64 &&
+		journalEntries.filter(item => item.journalEntry.region === `palpagos`).length === 55 &&
+		journalEntries.filter(item => item.journalEntry.region === `worldtree`).length === 9,
+		`All 64 individual journals should remain searchable with the expected regional split.`,
+	);
+	for (const [index, response] of individualJournalResponses.entries()) {
+		const payload = serializeDiscordPayload(response);
+		const expectedItem = itemData.Items.find(item => item.name === (index ? `Ancient Recorder` : `Bjorn Seligsson's Diary - 1`));
+		assert(
+			payload.includes(`Category:`) && payload.includes(`Collectible`) && payload.includes(`Sources:`) &&
+			payload.includes(index ? `World Tree location` : `Palpagos location`) &&
+			!payload.includes(`N/A`) && !payload.includes(`Weight:`) && !payload.includes(`Maximum Stack:`) &&
+			!payload.includes(`Buy Price:`) && !payload.includes(`Sell Price:`) && response.files.length === 2 &&
+			response.embeds[0].toJSON().thumbnail?.url === `attachment://${path.basename(expectedItem.iconUrl)}`,
+			`${index ? `World Tree` : `Palpagos`} individual journal should omit inventory fields and include its single-location map.`,
+		);
+	}
 	const serializedEffigy = serializeDiscordPayload(effigyResponse);
 	const serializedBounty = serializeDiscordPayload(bountyResponse);
 	const serializedRelic = serializeDiscordPayload(relicResponse);
@@ -936,7 +1003,7 @@ async function validateItemLookupAndDroppingPals() {
 	const mappedResponses = [
 		ominousEggResponse, peachResponse, treasureMapResponse, ruinSchematicResponse, ancientBoneResponse,
 		ancientBarkResponse, ancientLavaResponse, coalResponse, effigyResponse, bountyResponse,
-		keySphereResponse, skillFruitResponse, relicResponse,
+		keySphereResponse, skillFruitResponse, relicResponse, ...journalResponses, ...individualJournalResponses,
 	];
 	for (const response of mappedResponses) {
 		assert(response.files.length === 2 && response.embeds[0].toJSON().image?.url?.startsWith(`attachment://`), `Limited-location item cards should attach an item thumbnail and map.`);
@@ -962,7 +1029,8 @@ async function validateItemLookupAndDroppingPals() {
 	);
 
 	const cardsRequiringConsistencyChecks = searchableItems.filter(item =>
-		item.acquisition || (item.recipes || []).length > 1,
+		(item.acquisition || (item.recipes || []).length > 1) &&
+		!item.journalEntry && ![`palpagos-journals`, `world-tree-journals`].includes(item.id),
 	);
 	for (const item of cardsRequiringConsistencyChecks) {
 		const response = paldeck.buildItemResponse(item, null, `consistency-owner`);
@@ -990,6 +1058,22 @@ async function validateItemLookupAndDroppingPals() {
 				`${item.name}: alternate recipes should render in a Crafting Recipes field.`,
 			);
 		}
+	}
+
+	const journals = searchableItems.filter(item =>
+		item.journalEntry || [`palpagos-journals`, `world-tree-journals`].includes(item.id),
+	);
+	assert(journals.length === 66, `All individual and collection journal cards should be covered.`);
+	for (const journal of journals) {
+		const fields = paldeck.buildItemResponse(journal, null, `journal-owner`).embeds[0].toJSON().fields || [];
+		assert(
+			JSON.stringify(fields.map(field => field.name)) === JSON.stringify([`Category:`, `Sources:`]),
+			`${journal.name}: journal cards should omit inventory-only and spacer fields.`,
+		);
+		assert(
+			!fields.find(field => field.name === `Sources:`)?.value.startsWith(`Locations\n`),
+			`${journal.name}: Sources should omit the redundant Locations type label.`,
+		);
 	}
 }
 

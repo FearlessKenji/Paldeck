@@ -56,9 +56,19 @@ async function loadMap(settings, cacheDirectory) {
 }
 
 function selectMarkers(map, filters) {
-	return map.markers.filter(marker => filters.some(filter =>
+	return map.markers.filter(marker => filters.some(filter => !filter.locationSet &&
 		Object.entries(filter).every(([key, value]) => [`style`, `label`].includes(key) || marker[key] === value),
 	));
+}
+
+function fixedLocationMarkers(locationSet) {
+	if (locationSet.coordinateTransform !== `worldTreeMap`) {
+		throw new Error(`Unsupported fixed-location coordinate transform: ${locationSet.coordinateTransform}`);
+	}
+	// Game map coordinates use swapped axes, a 459-unit scale, and the Palpagos world-origin offset.
+	return locationSet.markers.map(([mapX, mapY, mapZ]) => ({
+		pos: { X: mapY * 459 - 123888, Y: mapX * 459 + 158000, Z: mapZ * 100 },
+	}));
 }
 
 function markerSvg(x, y, color, style) {
@@ -96,4 +106,4 @@ async function renderMap(map, groups, target, bottomRight = false) {
 		.composite([{ input: svg }]).png({ compressionLevel: 9, palette: true, colours: 192 }).toFile(target);
 }
 
-module.exports = { fetchCached, loadMap, renderMap, selectMarkers, toPixel };
+module.exports = { fetchCached, fixedLocationMarkers, loadMap, parseJsonVariable, renderMap, selectMarkers, toPixel };

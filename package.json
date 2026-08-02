@@ -1,6 +1,6 @@
 {
   "name": "paldeck",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "private": true,
   "license": "GPL-3.0-only",
   "scripts": {
@@ -29,12 +29,15 @@
     "update:palworld-item-details": "node scripts/update-palworld-items.js --details-only",
     "update:palworld-item-details:write": "node scripts/update-palworld-items.js --details-only --write",
     "validate:pal-data": "node scripts/validate-pal-data.js",
+    "audit:pal-locations": "node scripts/audit-pal-locations.js",
     "validate:item-data": "node scripts/validate-item-data.js",
     "maps:items": "node scripts/generate-limited-item-maps.js",
     "maps:items:write": "node scripts/generate-limited-item-maps.js --write-data",
     "maps:pals": "node scripts/generate-paldb-maps.js",
     "maps:slabs": "node scripts/generate-item-source-maps.js",
     "maps:optimize": "node scripts/optimize-item-maps.js",
+    "journals:sync": "node scripts/sync-journal-items.js",
+    "items:sources:sync": "node scripts/sync-item-loot-sources.js",
     "compact:item-data": "node scripts/compact-item-data.js",
     "lint": "node scripts/lint.js",
     "smoke": "node scripts/smokeTest.js",

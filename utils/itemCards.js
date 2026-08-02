@@ -9,6 +9,12 @@ const ITEM_RARITY_COLORS = {
 const SOURCE_LABELS = {
 	Treasure: `Treasure Chests`, "Treasure Element": `Elemental Chests`, Supply: `Supply Drops`, Junk: `Junk`,
 	"Salvage Rank1": `Salvage`, "Salvage Rank2": `Salvage`, "World Tree Fishing": `Fishing`, "World Tree Junk": `Junk`,
+	Expeditions: `Expeditions`, "Enemy Camps": `Enemy Camps`,
+};
+const SOURCE_CATEGORIES = {
+	"Dungeon Treasure Chests": `Dungeon Chests`, "Dungeon and Regional Chests": `Dungeon Chests`,
+	"Dungeon or Sanctuary Chests": `Dungeon Chests`, "Dungeon Chests": `Dungeon Chests`,
+	"Possible Destinations": `Treasure Maps`, "Skill Fruit Trees": `Skill Fruit Trees`,
 };
 const AMMO_BY_CLASS = {
 	Bow_Fire: `Fire Arrow`, Bow_Poison: `Poison Arrow`, BowGun_Fire: `Fire Arrow`, BowGun_Poison: `Poison Arrow`,
@@ -69,11 +75,19 @@ function sourceText(acquisition) {
 			continue;
 		}
 		const entries = source.entries.map(entry => `${entry.location}${entry.quantity ? ` ×${entry.quantity}` : ``}${entry.probability ? `: ${entry.probability}` : ``}${entry.cost ? `: ${entry.cost}` : ``}`).join(`\n`);
-		// Effigy cards already identify the mapped collectible, so repeating its source type adds no information.
-		if (source.type === `Effigy Locations`) {
+		// Fixed-location cards already identify the mapped collectible, so repeating a generic type adds no information.
+		if ([`Effigy Locations`, `Locations`].includes(source.type)) {
 			if (entries) {sections.push(entries);}
 		} else {
 			sections.push(entries ? `${source.type}\n${entries}` : source.type);
+		}
+		seen.add(SOURCE_CATEGORIES[source.type] || source.type);
+	}
+	// Loot-pool categories fill gaps in curated map sources without exposing internal pool identifiers to users.
+	for (const pool of acquisition?.lootPools || []) {
+		if (!seen.has(pool.category)) {
+			sections.push(pool.category);
+			seen.add(pool.category);
 		}
 	}
 	if (acquisition?.note) {sections.push(acquisition.note);}
@@ -84,12 +98,14 @@ function createItemCards({ normalizeText, resolveLocalImage }) {
 	// Injecting Paldeck's normalization and attachment helpers keeps card output consistent without a circular import.
 	function buildItemEmbed(item, pal, thumbnailUrl, mapUrl) {
 		const stats = item.stats || {};
+		const isJournal = Boolean(item.journalEntry) || item.id === `palpagos-journals` || item.id === `world-tree-journals`;
 		const ammo = AMMO_BY_CLASS[item.properties?.itemActorClass] || AMMO_BY_TYPE[item.properties?.typeB];
 		let effect = itemEffect(item);
 		if (normalizeText(effect?.value) === normalizeText(item.description)) {effect = null;}
 		let description = item.description;
 		if (effect?.label === `Accessory Effect:` && description.endsWith(effect.value)) {description = description.slice(0, -effect.value.length).trim();}
-		const fields = [
+		// Journals are collectibles rather than inventory items, so inventory-only fields would be misleading.
+		let fields = [
 			{ name: `Category:`, value: item.category, inline: true },
 			{ name: `Weight:`, value: stats.weight === undefined ? `—` : formatNumber(stats.weight), inline: true },
 			{ name: `Maximum Stack:`, value: stats.maxStackCount === undefined ? `—` : formatNumber(stats.maxStackCount), inline: true },
@@ -97,6 +113,7 @@ function createItemCards({ normalizeText, resolveLocalImage }) {
 			{ name: `Sell Price:`, value: stats.sellPrice === undefined ? `Cannot be sold` : formatNumber(stats.sellPrice), inline: true },
 			ammo ? { name: `Ammo Type:`, value: ammo, inline: true } : { name: `\u200b`, value: `\u200b`, inline: true },
 		];
+		if (isJournal) {fields = fields.slice(0, 1);}
 		const applicable = [[`Attack`, stats.attack], [`Defense`, stats.defense], [`Health`, stats.health], [`Shield`, stats.shield], [`Nutrition`, stats.nutrition], [`SAN`, stats.san], [`Capture Power`, stats.capturePower], [`Speed`, stats.speed], [`Stamina Drain`, stats.staminaDrain], [`Durability`, stats.durability], [`Magazine Size`, item.properties?.magazineSize], [`Skill Power`, stats.waza]].filter(([, value]) => value !== undefined);
 		if (effect?.value) {fields.push({ name: effect.label, value: effect.value.slice(0, 1024) });} else if (applicable.length) {fields.push({ name: `Stats:`, value: applicable.map(([label, value]) => `${label}: **${formatNumber(value)}**`).join(` • `) });}
 		const recipes = (item.recipes || []).filter(recipe => recipe.ingredients?.length);

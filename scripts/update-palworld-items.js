@@ -286,6 +286,12 @@ function preserveCuratedItemFields(currentData, localData) {
 			item.searchable = false;
 		}
 	}
+	for (const localItem of localData.Items.filter(item => item.localOnly)) {
+		if (!currentData.Items.some(item => item.code === localItem.code)) {
+			// Collection indexes are intentionally local because they represent maps rather than game inventory rows.
+			currentData.Items.push(localItem);
+		}
+	}
 
 	return currentData;
 }

@@ -25,12 +25,6 @@ function slug(value) {
 	return value.toLowerCase().replaceAll(`&`, `and`).replace(/[^a-z0-9]+/gu, `-`).replace(/^-|-$/gu, ``);
 }
 
-async function palCode(name) {
-	const url = `https://paldb.cc/en/` + encodeURIComponent(name.replaceAll(` `, `_`));
-	const match = (await fetchCached(url, CACHE)).toString(`utf8`).match(/href="[^"]*\?pal=([^"&]+)&t=[^"]+"/u);
-	return match ? decodeURIComponent(match[1]) : null;
-}
-
 function locationGroups(row, code, map) {
 	const day = new Map((row?.dayTimeLocations?.Locations || []).map(value => [JSON.stringify(value), value]));
 	const night = new Map((row?.nightTimeLocations?.Locations || []).map(value => [JSON.stringify(value), value]));
@@ -40,7 +34,10 @@ function locationGroups(row, code, map) {
 		groups[bucket].push({ pos: day.get(key) || night.get(key) });
 	}
 	const ids = new Set([code.toLowerCase(), `boss_` + code.toLowerCase()]);
-	const fixed = map.markers.filter(marker => marker.pos && ids.has(String(marker.id || ``).toLowerCase()));
+	// Only fixed Alpha encounters belong on Pal habitat maps. Incident and cage sources are intentionally excluded.
+	const fixed = map.markers.filter(marker =>
+		marker.pos && marker.type === `Alpha Pal` && ids.has(String(marker.id || ``).toLowerCase()),
+	);
 	return [
 		{ label: `Day and night`, color: `#ff0000`, style: `normal`, markers: groups.both },
 		{ label: `Day`, color: `#ff7800`, style: `normal`, markers: groups.day },
@@ -79,7 +76,8 @@ async function main() {
 	for (const pal of pals) {
 		const temporary = fs.mkdtempSync(path.join(os.tmpdir(), `paldeck-pal-map-`));
 		try {
-			const code = await palCode(pal.name);
+			// breeding.id is the canonical internal Pal row name and is more stable than scraping it from a PalDB page.
+			const code = pal.breeding?.id || null;
 			const row = code ? distribution[code] || lower.get(code.toLowerCase()) : null;
 			const panels = [];
 			if (row) {

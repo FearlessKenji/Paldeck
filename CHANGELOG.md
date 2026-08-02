@@ -4,6 +4,20 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+## v1.9.0 - 2026-08-02
+
+- Omitted inventory-only Weight, Maximum Stack, Buy Price, Sell Price, spacer fields, and the redundant Locations source label from journal collectible cards, with rendered-card coverage for every individual and regional journal lookup.
+- Corrected the shared game-coordinate transform for all 38 World Tree treasure chests and added bounds validation so treasure pins cannot drift into the map margin across item cards.
+- Derived Sunreach and World Tree treasure-chest Sources and map panels from each item's verified loot pools, correcting 67 incomplete item presentations and preventing future regional-chest omissions without duplicating per-item data.
+- Assigned deterministic filenames to derived regional-chest map layouts and added collision validation so one item's generated panels cannot overwrite an unrelated shared map.
+- Normalized 8,532 item loot associations into a readable pool-indexed catalog inside `itemData.json`, preserving resolved card behavior while avoiding tens of thousands of repeated object lines and unstable acquisition-preset churn.
+
+- Audited Pal habitat maps against the current game-derived distribution and fixed-encounter tables, restricted fixed pins to Alpha Pal encounters, and added a repeatable Pal location audit that excludes caged and incident Pal sources.
+
+- Added game-derived loot-pool synchronization and validation for every obtainable item association, excluding zero-percent and test pools while preserving curated map-density decisions, and removed an invalid Desert elemental-chest source from Training Manual (M).
+- Corrected Ancient Sphere acquisition mapping to include all 76 eligible Sunreach and 38 World Tree treasure chests alongside its World Tree fishing and junk sources, backed by the World Tree treasure-spawner asset and a reusable fixed-location set.
+- Added 64 individually searchable journal collectible cards with their corresponding PNG artwork and single-location maps, plus Palpagos Journals and World Tree Journals collection cards, validation, a reproducible journal sync script, updater preservation for locally curated records, and exact installed-game note-texture asset provenance for every thumbnail.
+
 ## v1.8.0 - 2026-08-01
 
 - Condensed the 1.8.0 user-facing patch notes to net shipped behavior and removed transient-development details.
