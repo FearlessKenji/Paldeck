@@ -65,8 +65,10 @@ function fixedLocationMarkers(locationSet) {
 	if (locationSet.coordinateTransform !== `worldTreeMap`) {
 		throw new Error(`Unsupported fixed-location coordinate transform: ${locationSet.coordinateTransform}`);
 	}
-	// World Tree chest exports use displayed map coordinates: X/Y are swapped and scaled from world units.
-	return locationSet.markers.map(([mapX, mapY, mapZ]) => ({ pos: { X: mapY * 400, Y: mapX * 400, Z: mapZ * 100 } }));
+	// Game map coordinates use swapped axes, a 459-unit scale, and the Palpagos world-origin offset.
+	return locationSet.markers.map(([mapX, mapY, mapZ]) => ({
+		pos: { X: mapY * 459 - 123888, Y: mapX * 459 + 158000, Z: mapZ * 100 },
+	}));
 }
 
 function markerSvg(x, y, color, style) {

@@ -83,7 +83,7 @@ function journalRecord(regionKey, region, marker, index, artwork) {
 		description: `A journal collectible found in ${region.description}.`,
 		iconUrl: artwork.relativePath,
 		source: `Collectible`, droppedBy: [],
-		stats: { rank: 0, weight: `N/A`, maxStackCount: `N/A`, buyPrice: `N/A`, sellPrice: `N/A` },
+		stats: { rank: 0 },
 		detailPath: marker.href || itemSlug,
 		recipes: [],
 		properties: { iconName: `TechnologyBook_G1`, typeA: `Collectible`, typeB: `Collectible`, sortId: 10100 + index },

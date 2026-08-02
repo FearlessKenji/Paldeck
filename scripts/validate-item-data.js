@@ -3,6 +3,7 @@ const fs = require(`node:fs`);
 const path = require(`node:path`);
 const { availabilityEvidence, needsAvailabilityReview, shouldHideItem } = require(`../utils/itemVisibility.js`);
 const { rawItemData, resolvedItemData } = require(`../utils/itemData.js`);
+const { fixedLocationMarkers } = require(`./lib/item-map-rendering.js`);
 const itemFile = resolvedItemData();
 const { itemWorkbench } = require(`../utils/itemWorkbench.js`);
 
@@ -344,6 +345,11 @@ function findItemDataProblems(itemData) {
 	if (worldTreeChests?.sourceAsset !== `Pal/Content/Pal/Blueprint/MapObject/Spawner/BP_PalMapObjectSpawner_Treasure_WorldTree` ||
 		worldTreeChests.map !== `worldtree` || worldTreeChests.markers?.length !== 38) {
 		problems.push(`Game source data must retain all 38 World Tree treasure chest locations and their game spawner asset.`);
+	}
+	const projectedWorldTreeChests = worldTreeChests ? fixedLocationMarkers(worldTreeChests) : [];
+	if (projectedWorldTreeChests.some(marker => marker.pos.X < 347351.5 || marker.pos.X > 689148.5 ||
+		marker.pos.Y < -818197 || marker.pos.Y > -476400)) {
+		problems.push(`World Tree treasure chest coordinates must project inside the World Tree map bounds.`);
 	}
 	const ancientSphereMapPanels = ancientSphere?.acquisition?.mapSources?.maps || [];
 	if (ancientSphere?.acquisition?.map !== `data/item-maps/ancient-sphere-sources.png` ||

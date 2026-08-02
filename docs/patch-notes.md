@@ -8,6 +8,7 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## v1.9.0 - 2026-08-02
 
+- World Tree treasure-chest pins now appear at their proper locations instead of outside the island map.
 - Items obtainable from Sunreach or World Tree treasure chests now consistently include those chests in **Sources** and on applicable location maps.
 - Pal habitat maps now consistently show wild distributions and fixed Alpha encounters. Caged Pal locations are not mapped.
 - Item **Sources** now reflect all verified obtainable loot categories, including chests, fishing, expeditions, enemy camps, salvage, oil rigs, and ground spawns where applicable.

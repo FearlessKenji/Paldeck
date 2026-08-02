@@ -4,6 +4,9 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+- Omitted inventory-only Weight, Maximum Stack, Buy Price, Sell Price, spacer fields, and the redundant Locations source label from journal collectible cards, with rendered-card coverage for every individual and regional journal lookup.
+- Corrected the shared game-coordinate transform for all 38 World Tree treasure chests and added bounds validation so treasure pins cannot drift into the map margin across item cards.
+
 ## v1.9.0 - 2026-08-02
 
 - Derived Sunreach and World Tree treasure-chest Sources and map panels from each item's verified loot pools, correcting 67 incomplete item presentations and preventing future regional-chest omissions without duplicating per-item data.

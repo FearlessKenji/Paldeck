@@ -926,8 +926,10 @@ async function validateItemLookupAndDroppingPals() {
 		assert(
 			payload.includes(`Category:`) && payload.includes(`Collectible`) &&
 			payload.includes(`Sources:`) && payload.includes(expectedLocation) &&
-			(payload.match(/N\/A/gu) || []).length >= 4 && response.files.length === 2,
-			`${index ? `World Tree` : `Palpagos`} Journals should use the standard item card with N/A fields and a map.`,
+			!payload.includes(`N/A`) && !payload.includes(`Weight:`) &&
+			!payload.includes(`Maximum Stack:`) && !payload.includes(`Buy Price:`) &&
+			!payload.includes(`Sell Price:`) && response.files.length === 2,
+			`${index ? `World Tree` : `Palpagos`} Journals should omit inventory-only fields and include a map.`,
 		);
 	}
 	const journalEntries = itemData.Items.filter(item => item.journalEntry);
@@ -958,9 +960,10 @@ async function validateItemLookupAndDroppingPals() {
 		assert(
 			payload.includes(`Category:`) && payload.includes(`Collectible`) && payload.includes(`Sources:`) &&
 			payload.includes(index ? `World Tree location` : `Palpagos location`) &&
-			(payload.match(/N\/A/gu) || []).length >= 4 && response.files.length === 2 &&
+			!payload.includes(`N/A`) && !payload.includes(`Weight:`) && !payload.includes(`Maximum Stack:`) &&
+			!payload.includes(`Buy Price:`) && !payload.includes(`Sell Price:`) && response.files.length === 2 &&
 			response.embeds[0].toJSON().thumbnail?.url === `attachment://${path.basename(expectedItem.iconUrl)}`,
-			`${index ? `World Tree` : `Palpagos`} individual journal should use the standard item card and single-location map.`,
+			`${index ? `World Tree` : `Palpagos`} individual journal should omit inventory fields and include its single-location map.`,
 		);
 	}
 	const serializedEffigy = serializeDiscordPayload(effigyResponse);
@@ -1026,7 +1029,8 @@ async function validateItemLookupAndDroppingPals() {
 	);
 
 	const cardsRequiringConsistencyChecks = searchableItems.filter(item =>
-		item.acquisition || (item.recipes || []).length > 1,
+		(item.acquisition || (item.recipes || []).length > 1) &&
+		!item.journalEntry && ![`palpagos-journals`, `world-tree-journals`].includes(item.id),
 	);
 	for (const item of cardsRequiringConsistencyChecks) {
 		const response = paldeck.buildItemResponse(item, null, `consistency-owner`);
@@ -1054,6 +1058,22 @@ async function validateItemLookupAndDroppingPals() {
 				`${item.name}: alternate recipes should render in a Crafting Recipes field.`,
 			);
 		}
+	}
+
+	const journals = searchableItems.filter(item =>
+		item.journalEntry || [`palpagos-journals`, `world-tree-journals`].includes(item.id),
+	);
+	assert(journals.length === 66, `All individual and collection journal cards should be covered.`);
+	for (const journal of journals) {
+		const fields = paldeck.buildItemResponse(journal, null, `journal-owner`).embeds[0].toJSON().fields || [];
+		assert(
+			JSON.stringify(fields.map(field => field.name)) === JSON.stringify([`Category:`, `Sources:`]),
+			`${journal.name}: journal cards should omit inventory-only and spacer fields.`,
+		);
+		assert(
+			!fields.find(field => field.name === `Sources:`)?.value.startsWith(`Locations\n`),
+			`${journal.name}: Sources should omit the redundant Locations type label.`,
+		);
 	}
 }
 
