@@ -4,51 +4,40 @@ These notes are written for server owners and moderators. They include changes
 that affect setup, day-to-day use, or visible bot behavior. For the full
 developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/blob/main/CHANGELOG.md).
 
-## v1.9.1 - Unreleased
+## - Unreleased
 
-- Skill Fruit cards no longer stack several copies of the same regional map. All eligible tree pins now appear together on one Palpagos panel, with a separate World Tree panel only when applicable.
+## v1.9.1 - 2026-08-04
+
 - `/journal` is available again for reading all 64 journals and notes, and each result now shows the selected journal's exact individual location map instead of the regional all-journals map.
-- Merged all post-1.9.0 item, Pal, merchant, recipe, source, and map improvements into the next 1.9.1 update without removing the journal cards and expanded loot data already released in 1.9.0.
 - Fixed merchant item cards now use the general NPC types **Wandering Merchant** and **Weapons Merchant** instead of settlement-specific names. Their maps retain every applicable location and distinguish the two merchant types with red and green pins, while redundant Caravan and Dungeon Merchant source lines are omitted when a fixed merchant map is available.
-- Updated Discord and networking dependencies to patched releases, clearing the currently reported npm security vulnerabilities.
-- Item cards now list Medal Merchants, Bounty Shops, the Arena Merchant, Caravan Merchants, Dungeon Merchants, and wandering merchants when the installed game actually sells the item. Special shops show their real currency costs, fixed merchants have location maps, randomized merchants do not receive misleading pins, and internal/test shop names remain hidden. Paldeck's meaningful unique breeding combinations also match the installed game data.
-- Ordinary map pins now use the smaller Lamball-sized dots, making clustered habitats and item-source maps easier to read.
-- Game-data audits can now inspect treasure-chest key requirements in addition to their reward tables.
+- Item cards now list Medal Merchants, Bounty Shops, the Arena Merchant, Caravan Merchants, Dungeon Merchants, and Wandering Merchants. Special shops show their real currency costs, fixed merchants have location maps, randomized merchants do not receive misleading pins, and internal/test shop names remain hidden.
+- Ordinary map pins now use smaller dots, making clustered habitats and item-source maps easier to read.
 - Map previews now use 3 px standard pins, 4 px diamonds, and 5 px emphasized pins. Treasure chests have distinct colors for all six chest grades.
-- Compact dungeon and event diamonds now have a stronger white outline for visibility.
-- Only Xenovader, Xenogard, and Selyne maps show supply-drop/meteorite locations. Chest legends now use concise names such as **Purple Chests** and **Silver Chests**.
-- Full map refreshes now recover from brief Windows image-file locks instead of leaving a partially regenerated catalog.
-- Treasure-chest item maps now color their locations by the actual eligible chest tier recorded in the game loot tables.
-- Item Sources now show only each required chest type, such as **Purple Chests**. The attached map communicates eligible regions without exposing internal game identifiers.
-- Every map now follows one consistent legend and pin-size system. Pal maps distinguish day/night, Alphas, Meteorite Events, dungeons, and the Sealed Realm of Terraria; item maps consistently distinguish ruins, camps, chests, Oil Rigs, fishing, Treasure Maps, Junk, and resource clusters.
-- Items available from Common through Legendary Treasure Maps now list their per-opening drop chances and show where the corresponding Treasure Maps can be obtained. The old `Treasure Map 4 Sources` wording has been replaced with player-facing Treasure Map rarity information.
+- Compact dungeon and event diamonds have a stronger white outline for visibility.
+- Only Xenovader, Xenogard, and Selyne maps show supply-drop/meteorite locations. Chest legends use concise names such as **Purple Chests** and **Silver Chests**.
+- Treasure-chest item maps color their locations by the actual eligible chest tier recorded in the game loot tables.
+- Item Sources now show only each required chest type, such as **Purple Chests**.
+- Every map now follows one consistent legend and pin-size system. Pal maps distinguish day/night, Alphas, Meteorite Events, dungeons, and the Sealed Realm of Terraria; item maps consistently distinguish ruins, camps, chests, oil rigs, fishing, treasure maps, junk, and resource clusters.
+- Items available from Common through Legendary Treasure Maps now list their per-opening drop chances and show where the corresponding Treasure Maps can be obtained.
 - Silvance and Dandilord now show `Alpha Only` on their Pal cards.
-- Pal spawn footers now use **Factions** instead of **Captured Cage**.
-- Special Pal cards now use short, consistent spawn footers and corrected red map pins. Panthalus and the Terraria realm use their actual named markers, Astralym uses the World Tree map, Meteor Event maps show eligible regions, and maps with multiple pin types now include legends.
+- Special Pal cards now use short, consistent spawn footers and corrected red map pins. Panthalus and the Terraria realm use their actual named markers, Astralym uses the World Tree map, Meteor Event maps show eligible regions, and maps now include legends.
 - All non-summoned Pals now have availability maps. The eleven Terraria Pals share the Sealed Realm entrance at `(-422, -796)`, while Mau and Katress Ignis show their eligible dungeon entrances.
 - Xenovader and Xenogard now show their random Meteor Event availability; Xenogard is identified as an Alpha encounter, while Xenovader can appear in normal or Alpha groups and through Factions. Silvance, Dandilord, Panthalus, and Astralym now have accurate encounter labels and maps.
 - Seven special raid rewards now list the correct Summoning Altar boss, level, quantity, and drop chance, including the Moon Lord Statue Schematic.
-- The installed-game audit now automatically decodes every discoverable DataTable across mounted game and patch archives. Maintainers can search the cached build snapshot by table path or internal identifier, and the audit reports extraction coverage and failures explicitly.
-- Craftable schematics now show one clear **Schematic Recipe (Drafting Table)** field, unavailable game-disabled schematics are hidden, and missing loot/shop and Ancient Relic sources are restored. Supply Drops and broad salvage pools remain textual; Gold Coin, Medical Supplies, Training Manual (L), and High Quality Bait now map their eligible Junk and chest sources.
-- Item cards no longer leave words such as `Logging`, `Mining`, or `Pal` dangling after moving bonuses into **Perks**, and six confirmed English grammar errors are corrected when displayed.
+- Craftable schematics now show one clear **Schematic Recipe (Drafting Table)** field, unavailable game-disabled schematics are hidden, and missing loot/shop and Ancient Relic sources are restored. Supply Drops and broad salvage pools remain textual as their pins would overwhelm the map. Gold Coin, Medical Supplies, Training Manual (L), and High Quality Bait now map their eligible Junk and chest sources.
 - Item cards now use the clearer **Enemy Camps** source label and names such as **Cherry Blossom Caves Dungeon**. Five slab-fragment maps also include their verified enemy-camp and dungeon entrances.
 - Item cards now show Tech Level separately from Crafting Materials and list output quantities for recipes that produce multiple items.
 - Source listings are concise inline entries without redundant placeholders, and schematic maps now point to verified Treasure Map chest and camp sources instead of Treasure Map destinations. Oil Rig and single-source map legends are also clearer.
-- Musket Schematic 3's map now includes its Supply Drop and Treasure Chest locations in addition to the Ancient Ruin.
-- The Legendary Treasure Map now lists its current loot sources and maps 136 confirmed locations across sea bases, enemy camps, Dark/Sky Island chests, and Feybreak Caverns. Salvage remains unpinned.
+- Musket Schematic 3's map now includes its Treasure Chest locations in addition to the Ancient Ruin.
+- The Legendary Treasure Map now lists its current loot sources and maps 136 confirmed locations across sea bases, enemy camps, Dark/Sky Island chests, and Feybreak Caverns.
 - Common through Epic Treasure Maps now show where each tier can drop instead of showing treasure destinations. Grenade Launcher Schematics 2-4 also include every mapped Epic Treasure Map source.
 - The Beginner Fishing Rod (Gumoss) Schematic map now includes all 233 eligible natural fishing spots across Grasslands, Forest, Desert, and Volcano. Player-built Fishing Ponds remain listed without fixed pins.
-- Item recipes and internal legality flags now match the installed Palworld build. Recipes retain canonical internal ingredient identities when different game items share the same displayed name, invalid mixed-in schematic recipes and unsupported merchant claims were removed, and malformed empty game ingredients are not shown on cards.
-- Maintainers can now audit Paldeck directly against an installed Palworld build. The read-only audit caches decoded game tables by build, checks item recipes and legality, includes dedicated raid-success rewards, distinguishes fixed shop inventories from randomized weighted stock pools and shop currencies, joins IDs safely across inconsistent game-table capitalization while still flagging canonical-ID drift, inventories other acquisition references, and clearly identifies fields that still require specialized verification.
 - Item source maps now use one **Oil Rig** legend entry instead of listing each Oil Rig level with the same marker color.
-- Live data checks now distinguish missing upstream details from real card changes and safely resolve PalDB's cached item records without treating crafting ingredients as separate items.
-- Grenade Launcher Schematics 1–4 and the Beginner Fishing Rod (Gumoss) Schematic now show their complete verified sources and regenerated maps. Fixed enemy camps, Oil Rigs, and Treasure Map destinations are pinned; Supply Drops and Salvage remain intentionally unpinned.
-- Item availability is now checked against a reviewed, game-build-specific snapshot so Palworld updates cannot silently expose dormant or unused definitions.
-- All 17 unused legendary-headwear blueprints are excluded from item lookup. Their official localized names—including **Blueprint of Capppen Hat 5**—remain unchanged in the underlying catalog.
-- Every available schematic combination recipe now shows the **Drafting Table**. Cards show the five-copy lower-tier recipes present in the current game, armor upgrade materials stay out of schematic recipes, and cards without verified loot information clearly say their non-crafting source is not yet recorded.
+- All 17 unused legendary-headwear blueprints are excluded from item lookup. They remain unchanged in the underlying catalog.
+- Every available schematic combination recipe now shows the **Drafting Table**. Cards show the five-copy lower-tier recipes, armor upgrade materials stay out of schematic recipes, and cards without verified loot information clearly say their non-crafting source is not yet recorded.
 - Item descriptions now remove stray spaces around punctuation and possessives, repair split plurals, and place equipment effects on separate lines for easier reading.
 - Equipment bonuses such as elemental resistances, carrying capacity, and attack modifiers now appear under a dedicated **Perks** field instead of running into the item description.
-- Equipment unlocked by schematics now shows its actual crafting station, including **Ancient Workbench** for every Lightweight Ancient Armor tier, even when its material list is unavailable.
+- Equipment unlocked by schematics now shows its actual crafting station, including **Ancient Workbench** for every Lightweight Ancient Armor tier.
 
 ## v1.9.0 - 2026-08-02
 
