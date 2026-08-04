@@ -92,6 +92,12 @@ function printHumanReport(report, limit) {
 		limit,
 		row => `${row.name}: ${row.changes.map(formatChange).join(`; `)}`,
 	);
+	printRows(
+		`Upstream field coverage gaps`,
+		report.diff.coverageGaps,
+		limit,
+		row => `${row.name}: ${row.fields.map(field => `${field.field} (local: ${field.local})`).join(`; `)}`,
+	);
 }
 
 async function main() {

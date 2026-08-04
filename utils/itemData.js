@@ -83,6 +83,34 @@ function deriveRegionalChests(acquisition) {
 	return derived;
 }
 
+function consolidateMapPanels(acquisition) {
+	const panels = acquisition?.mapSources?.maps;
+	if (!Array.isArray(panels)) {
+		return acquisition;
+	}
+	const merged = new Map();
+	for (const panel of panels) {
+		const current = merged.get(panel.map) || { ...panel, markers: [], unpinnedSources: [] };
+		const markerKeys = new Set(current.markers.map(marker => JSON.stringify(marker)));
+		for (const marker of panel.markers || []) {
+			const key = JSON.stringify(marker);
+			if (!markerKeys.has(key)) {
+				current.markers.push(marker);
+			}
+			markerKeys.add(key);
+		}
+		current.unpinnedSources = [...new Set([...(current.unpinnedSources || []), ...(panel.unpinnedSources || [])])];
+		if (!current.unpinnedSources.length) {
+			delete current.unpinnedSources;
+		}
+		merged.set(panel.map, current);
+	}
+	const consolidated = [...merged.values()];
+	// One physical region should render as one map, regardless of how many loot pools contribute pins.
+	acquisition.mapSources = consolidated.length === 1 ? consolidated[0] : { maps: consolidated };
+	return acquisition;
+}
+
 function stripDerivedRegionalChests(acquisition) {
 	if (!acquisition) {
 		return acquisition;
@@ -150,7 +178,7 @@ function resolveItem(itemData, item, lootPools) {
 	}
 	return {
 		...item,
-		acquisition: deriveRegionalChests(resolvedAcquisition),
+		acquisition: consolidateMapPanels(deriveRegionalChests(resolvedAcquisition)),
 		merchantLocations: resolvePreset(itemData, item, `merchantLocations`, `MerchantLocationSets`),
 	};
 }
@@ -179,7 +207,7 @@ function acquisitionLabel(value) {
 }
 
 function merchantLabel(value) {
-	const shops = new Set((value.entries || []).map(entry => entry.shop));
+	const shops = new Set((value.entries || []).flatMap(entry => entry.shops || [entry.shop]).filter(Boolean));
 	if (shops.size === 5) {
 		return `all-fixed`;
 	}
@@ -247,6 +275,9 @@ function compactItemData(itemData) {
 			} else {
 				delete compact.acquisitionRef;
 			}
+		} else {
+			// Sync passes resolved records through compaction; discard references whose acquisition was removed.
+			delete compact.acquisitionRef;
 		}
 		if (compact.merchantLocations) {
 			const id = presetId(`merchants`, compact.merchantLocations);

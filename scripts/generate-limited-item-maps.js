@@ -5,7 +5,7 @@ const os = require(`node:os`);
 const path = require(`node:path`);
 const sharp = require(`sharp`);
 const { compactItemData, resolvedItemData } = require(`../utils/itemData.js`);
-const { fixedLocationMarkers, loadMap, renderMap, selectMarkers } = require(`./lib/item-map-rendering.js`);
+const { fixedLocationMarkers, itemSourcePresentation, loadMap, renderMap, selectMarkers, writeOutput } = require(`./lib/item-map-rendering.js`);
 
 const ROOT = path.resolve(__dirname, `..`);
 const CACHE = path.join(ROOT, `tmp`, `paldb-map-cache`);
@@ -22,24 +22,8 @@ const MAPS = {
 		tileDirectory: `image/treemap8`, crop: [0, 112, 1024, 912],
 	},
 };
-const COLORS = {
-	'Treasure': `#8b5a2b`, 'Treasure Element': `#facc15`, 'Fishing Spot': `#0ea5e9`,
-	'Rare Fishing Spot': `#22d3ee`, 'Junk': `#ec4899`, 'Dungeon': `#ff9600`,
-	'Lifmunk Effigy': `#4ade80`, 'Lamball Effigy': `#f5f5f5`, 'Pengullet Effigy': `#38bdf8`,
-	'Munchill Effigy': `#2dd4bf`, 'Rooby Effigy': `#f87171`, 'Herbil Effigy': `#f59e0b`,
-	'Tanzee Effigy': `#22c55e`, 'Depresso Effigy': `#6366f1`, 'Cattiva Effigy': `#f472b6`,
-	'Lunaris Effigy': `#ff5eea`, 'Relaxaurus Effigy': `#ff5eea`, 'Yakumo Effigy': `#ff5eea`,
-};
-
 function presentation(filter) {
-	const type = filter.type || `Location`;
-	let style = filter.style;
-	if (!style && type === `Junk`) {style = `density`;}
-	if (!style && [`Treasure`, `Treasure Element`].includes(type)) {style = `compact`;}
-	if (!style && /cluster/iu.test(type)) {style = `cluster`;}
-	if (!style && /dungeon/iu.test(type)) {style = `diamond`;}
-	if (!style) {style = `normal`;}
-	return { label: filter.label || type, color: COLORS[type] || `#ef4444`, style };
+	return itemSourcePresentation(filter);
 }
 
 function groupsFor(map, filters) {
@@ -66,8 +50,9 @@ async function combinePanels(files, target) {
 		top += metadata[index].height;
 		return panel;
 	});
-	await sharp({ create: { width, height, channels: 3, background: `#081621` } })
-		.composite(panels).png({ compressionLevel: 9 }).toFile(target);
+	const output = await sharp({ create: { width, height, channels: 3, background: `#081621` } })
+		.composite(panels).png({ compressionLevel: 9 }).toBuffer();
+	writeOutput(target, output);
 }
 
 async function renderRecord(maps, mapPath, mapSources) {
@@ -94,29 +79,55 @@ async function renderRecord(maps, mapPath, mapSources) {
 
 async function main() {
 	const requestedIndex = process.argv.indexOf(`--map`);
+	const fromIndex = process.argv.indexOf(`--from`);
 	const regionalChestsOnly = process.argv.includes(`--regional-chests`);
 	const positional = process.argv.slice(2).filter(value => !value.startsWith(`--`) && value !== `write`);
 	const requestedMap = requestedIndex >= 0 ? process.argv[requestedIndex + 1] : positional[0] || null;
+	const requestedFrom = fromIndex >= 0 ? process.argv[fromIndex + 1] : null;
 	const writeData = process.argv.includes(`--write-data`) || process.argv.includes(`write`);
 	const sourceData = JSON.parse(fs.readFileSync(ITEM_DATA_PATH, `utf8`));
 	const itemData = resolvedItemData(sourceData);
 	const maps = Object.fromEntries(await Promise.all(Object.entries(MAPS).map(async ([key, settings]) => [key, await loadMap(settings, CACHE)])));
 	const records = new Map();
 	for (const item of itemData.Items) {
-		for (const value of [item.acquisition, item.merchantLocations, item.medalMerchants]) {
+		for (const value of [item.acquisition, item.merchantLocations, item.medalMerchants, item.bountyMerchants, item.arenaMerchant]) {
 			const regionalChest = value?.lootPools?.some(pool => [`SkyIsland_Treasure`, `WorldTree_Treasure`].includes(pool.pool));
-			if (value?.map && value.mapSources && !value.mapSources.chestPools && (!regionalChestsOnly || regionalChest)) {
-				records.set(value.map, value.mapSources);
-			}
+			if (value?.map && value.mapSources && !value.mapSources.chestPools && (!regionalChestsOnly || regionalChest)) {records.set(value.map, value.mapSources);}
 		}
 	}
 	for (const value of regionalChestsOnly ? [] : Object.values(sourceData.MerchantLocationSets || {})) {
 		if (value.map && value.mapSources) {records.set(value.map, value.mapSources);}
 	}
+	const failures = [];
+	let reachedStart = !requestedFrom;
 	for (const [mapPath, sources] of records) {
+		if (!reachedStart && (mapPath === requestedFrom || path.basename(mapPath) === requestedFrom)) {reachedStart = true;}
+		if (!reachedStart) {continue;}
 		if (requestedMap && mapPath !== requestedMap && path.basename(mapPath) !== requestedMap) {continue;}
-		await renderRecord(maps, mapPath, sources);
-		console.log(`Rendered ${mapPath}`);
+		try {
+			await renderRecord(maps, mapPath, sources);
+			console.log(`Rendered ${mapPath}`);
+		} catch (error) {
+			failures.push({ error, mapPath, sources });
+			console.warn(`Deferred ${mapPath}: ${error.message || error}`);
+		}
+	}
+	if (requestedFrom && !reachedStart) {throw new Error(`Unknown starting item map: ${requestedFrom}`);}
+	let pending = failures;
+	for (let round = 1; pending.length && round <= 5; round += 1) {
+		const next = [];
+		for (const failure of pending) {
+			try {
+				await renderRecord(maps, failure.mapPath, failure.sources);
+				console.log(`Rendered ${failure.mapPath} on retry ${round}.`);
+			} catch (error) {
+				next.push({ ...failure, error });
+			}
+		}
+		pending = next;
+	}
+	if (pending.length) {
+		throw new Error(`Could not write ${pending.length} item map(s) after deferred retries: ${pending.map(value => value.mapPath).join(`, `)}`);
 	}
 	if (requestedMap && ![...records.keys()].some(mapPath => mapPath === requestedMap || path.basename(mapPath) === requestedMap)) {
 		throw new Error(`Unknown item map: ${requestedMap}`);

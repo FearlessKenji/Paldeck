@@ -1,28 +1,11 @@
 // Centralizes file-backed visibility rules so data refreshes, validation, and lookup tests agree.
 
-const UNAVAILABLE_ITEM_IDS = new Set([
-	`antibiotic-good`,
-	`antibiotic-normal`,
-	`antibiotic-super`,
-	`gasoline`,
-	`handgun-shield`,
-	`pal-egg-mutation-pal`,
-	`pal-growth-stone-l`,
-	`pal-growth-stone-m`,
-	`pal-growth-stone-s`,
-	`pal-growth-stone-xl`,
-	`pal-sphere-robbery`,
-	`pickaxe-tier-03`,
-	`propellant`,
-	`skill-unlock-dark-mutant`,
-	`sky-heavy-bullet`,
-	`sky-light-bullet`,
-]);
+const availabilityManifest = require(`../data/itemAvailability.json`);
 
-const REVIEW_EXEMPT_ITEM_IDS = new Set([
-	// Ultra raids intentionally reuse the normal slab; this stray recipe is not an obtainable fragment.
-	`pal-summon-night-lady-dark-parts-2`,
-]);
+const AVAILABILITY_BY_ITEM_ID = new Map(availabilityManifest.items.map(entry => [entry.id, entry]));
+const UNAVAILABLE_ITEM_IDS = new Set(availabilityManifest.items
+	.filter(entry => [`unused`, `unreleased`, `superseded`].includes(entry.status))
+	.map(entry => entry.id));
 
 function hasPlaceholderItemText(item) {
 	const description = String(item?.description || ``).trim();
@@ -37,7 +20,9 @@ function hasPlaceholderItemText(item) {
 }
 
 function shouldHideItem(item) {
-	return UNAVAILABLE_ITEM_IDS.has(item?.id) || hasPlaceholderItemText(item);
+	// Schematics explicitly disabled by the installed item table are definitions, not obtainable card entries.
+	const illegalSchematic = item?.category === `Schematic` && Number(item?.properties?.bLegalInGame ?? 0) === 0;
+	return UNAVAILABLE_ITEM_IDS.has(item?.id) || illegalSchematic || hasPlaceholderItemText(item);
 }
 
 function availabilityEvidence(item) {
@@ -60,14 +45,18 @@ function availabilityEvidence(item) {
 }
 
 function needsAvailabilityReview(item) {
+	const decision = AVAILABILITY_BY_ITEM_ID.get(item?.id);
+	const allowedEvidence = new Set(decision?.allowedEvidence || []);
+	const unexpectedEvidence = availabilityEvidence(item).filter(evidence => !allowedEvidence.has(evidence));
+
 	return item?.searchable === false &&
 		!hasPlaceholderItemText(item) &&
-		!REVIEW_EXEMPT_ITEM_IDS.has(item.id) &&
-		availabilityEvidence(item).length > 0;
+		unexpectedEvidence.length > 0;
 }
 
 module.exports = {
 	UNAVAILABLE_ITEM_IDS,
+	availabilityManifest,
 	availabilityEvidence,
 	hasPlaceholderItemText,
 	needsAvailabilityReview,

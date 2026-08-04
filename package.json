@@ -1,6 +1,6 @@
 {
   "name": "paldeck",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "private": true,
   "license": "GPL-3.0-only",
   "scripts": {
@@ -31,9 +31,19 @@
     "validate:pal-data": "node scripts/validate-pal-data.js",
     "audit:pal-locations": "node scripts/audit-pal-locations.js",
     "validate:item-data": "node scripts/validate-item-data.js",
+		"audit:item-availability": "node scripts/audit-item-availability.js --require-installed-game",
+		"audit:installed-game-data": "node scripts/audit-installed-game-data.js",
+		"audit:installed-game-data:refresh": "node scripts/audit-installed-game-data.js --refresh",
+		"inspect:installed-game-data": "node scripts/inspect-installed-game-data.js",
+		"sync:installed-game-items": "node scripts/sync-installed-game-items.js",
+		"sync:installed-game-items:write": "node scripts/sync-installed-game-items.js --write",
+		"sync:installed-game-journals": "node scripts/sync-installed-game-journals.js",
+		"sync:installed-game-journals:write": "node scripts/sync-installed-game-journals.js --write",
+		"validate:item-availability": "node scripts/audit-item-availability.js",
     "maps:items": "node scripts/generate-limited-item-maps.js",
     "maps:items:write": "node scripts/generate-limited-item-maps.js --write-data",
     "maps:pals": "node scripts/generate-paldb-maps.js",
+		"maps:pals:curated": "node scripts/generate-curated-pal-maps.js",
     "maps:slabs": "node scripts/generate-item-source-maps.js",
     "maps:optimize": "node scripts/optimize-item-maps.js",
     "journals:sync": "node scripts/sync-journal-items.js",
@@ -45,7 +55,7 @@
   },
   "dependencies": {
     "cron": "^3.1.6",
-    "discord.js": "^14.26.4",
+    "discord.js": "^14.27.0",
     "dotenv": "^17.4.2",
     "sequelize": "^6.37.3",
     "sharp": "^0.35.3",
@@ -57,7 +67,8 @@
     "eslint": "^10.8.0"
   },
   "overrides": {
-    "undici": "6.27.0",
+    "brace-expansion": "5.0.9",
+    "undici": "6.28.0",
     "sequelize": {
       "uuid": "^11.1.1"
     }

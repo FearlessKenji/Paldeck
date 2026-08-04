@@ -5,7 +5,10 @@ const childProcess = require(`node:child_process`);
 const fs = require(`node:fs`);
 const os = require(`node:os`);
 const path = require(`node:path`);
+const { itemDescriptionParts, normalizeItemDescription } = require(`../utils/itemDescription.js`);
 const { UNAVAILABLE_ITEM_IDS, needsAvailabilityReview, shouldHideItem } = require(`../utils/itemVisibility.js`);
+const { compareGameItemData, compareGamePalAvailability } = require(`../utils/gameDataAudit.js`);
+const { itemSourcePresentation, legendLabel } = require(`./lib/item-map-rendering.js`);
 
 const projectRoot = path.resolve(__dirname, `..`);
 process.chdir(projectRoot);
@@ -684,6 +687,7 @@ async function validateItemLookupAndDroppingPals() {
 	const paldeck = requireFresh(`commands`, `globalCommands`, `utility`, `paldeck.js`);
 	const { resolvedItemData } = requireFresh(`utils`, `itemData.js`);
 	const itemData = resolvedItemData();
+	const availabilityManifest = readJson(`data`, `itemAvailability.json`);
 	let choices = [];
 	let itemPayload = null;
 	let resultsPayload = null;
@@ -787,8 +791,12 @@ async function validateItemLookupAndDroppingPals() {
 		user: { id: `item-owner` },
 	});
 	assert(merchantPayload?.flags === undefined, `Merchant-location responses should remain visible in the channel.`);
-	assert(serializeDiscordPayload(merchantPayload).includes(`Duneshelter Merchant`), `Merchant-location responses should name the applicable fixed merchant.`);
+	assert(serializeDiscordPayload(merchantPayload).includes(`Wandering Merchant`), `Merchant-location responses should name the applicable merchant type.`);
 	assert(merchantPayload.files.length === 2, `Merchant-location responses should attach the item thumbnail and merchant map.`);
+	const bone = itemData.Items.find(item => item.name === `Bone`);
+	const boneSources = serializeDiscordPayload(paldeck.buildItemResponse(bone, null, `item-owner`));
+	assert(boneSources.includes(`Wandering Merchant`), `Bone should identify its fixed general merchant type.`);
+	assert(!/Caravan Merchants|Dungeon Merchant/u.test(boneSources), `Fixed merchant items should suppress redundant procedural merchant categories.`);
 
 	const dogCoin = itemData.Items.find(item => item.name === `Dog Coin`);
 	const dogCoinResponseWithButtons = paldeck.buildItemResponse(dogCoin, null, `item-owner`);
@@ -805,13 +813,40 @@ async function validateItemLookupAndDroppingPals() {
 		serializeDiscordPayload(medalMerchantPayload).includes(`Desolate Church`) && medalMerchantPayload.files.length === 2,
 		`Medal Merchant responses should name fixed locations and attach the item thumbnail and map.`,
 	);
+
+	for (const shopTest of [
+		{ source: `Bounty Shop`, button: `Bounty Officers`, location: `PIDF Bounty Officer`, currency: `Successful Bounty Tokens` },
+		{ source: `Arena Merchant`, button: `Arena Merchant`, location: `Arena Merchant`, currency: `Battle Tickets` },
+	]) {
+		const shopItem = itemData.Items.find(item => item.acquisition?.sources?.some(source => source.type === shopTest.source));
+		const response = paldeck.buildItemResponse(shopItem, null, `item-owner`);
+		const serialized = serializeDiscordPayload(response);
+		const button = response.components[0]?.components.find(component => component.data.label === shopTest.button);
+		assert(button && serialized.includes(shopTest.currency), `${shopTest.source} products should show their currency and location button.`);
+		assert(!/_(?:Shop|SHOP)_\d+/u.test(serialized), `${shopTest.source} cards must not expose internal shop-table identifiers.`);
+		let locationPayload = null;
+		const reply = payload => {
+			locationPayload = payload;
+		};
+		await itemCommand.handleButton({ customId: button.data.custom_id, reply, user: { id: `item-owner` } });
+		assert(serializeDiscordPayload(locationPayload).includes(shopTest.location) && locationPayload.files.length === 2,
+			`${shopTest.source} location responses should attach the fixed-location map.`);
+	}
+	for (const type of [`Caravan Merchants`, `Dungeon Merchant`, `Wandering Merchants`]) {
+		const item = itemData.Items.find(value => !value.merchantLocations && value.acquisition?.sources?.some(source => source.type === type));
+		const serialized = serializeDiscordPayload(paldeck.buildItemResponse(item, null, `item-owner`));
+		assert(serialized.includes(type) && !/_(?:Shop|SHOP)_\d+/u.test(serialized), `${type} must remain readable and hide internal table IDs.`);
+	}
 	assert(dogCoin.recipes.length === 0, `Medal Merchant purchases must not appear as Dog Coin crafting recipes.`);
 
 	const assaultRifle = itemData.Items.find(item => item.name === `Assault Rifle` && item.rarity === `Common`);
+	const rifleAmmo = itemData.Items.find(item => item.name === `Rifle Ammo`);
 	const attackPendant = itemData.Items.find(item => item.name === `Attack Pendant`);
 	const memoryWipingMedicine = itemData.Items.find(item => item.name === `Memory Wiping Medicine`);
 	const bellanoirFragment = itemData.Items.find(item => item.name === `Bellanoir's Slab Fragment`);
+	const epicTreasureMap = itemData.Items.find(item => item.name === `Treasure Map` && item.rarity === `Epic`);
 	const serializedRifle = serializeDiscordPayload(paldeck.buildItemResponse(assaultRifle, null, `item-owner`));
+	const rifleAmmoFields = paldeck.buildItemResponse(rifleAmmo, null, `item-owner`).embeds[0].toJSON().fields;
 	const accessoryResponse = paldeck.buildItemResponse(attackPendant, null, `item-owner`);
 	const serializedAccessory = serializeDiscordPayload(accessoryResponse);
 	const serializedMedicine = serializeDiscordPayload(paldeck.buildItemResponse(memoryWipingMedicine, null, `item-owner`));
@@ -824,11 +859,15 @@ async function validateItemLookupAndDroppingPals() {
 	const accessoryEffect = accessoryResponse.embeds[0].toJSON().fields.find(field => field.name === `Accessory Effect:`);
 	const fragmentResponse = paldeck.buildItemResponse(bellanoirFragment, null, `item-owner`);
 	const serializedFragment = serializeDiscordPayload(fragmentResponse);
+	const epicTreasureMapResponse = paldeck.buildItemResponse(epicTreasureMap, null, `item-owner`);
+	const serializedEpicTreasureMap = serializeDiscordPayload(epicTreasureMapResponse);
 	const serializedSlab = serializeDiscordPayload(paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Xenolord Slab`), null, `item-owner`));
 	const ominousEggResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Ominous Egg`), null, `item-owner`);
 	const peachResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Kinship Peach`), null, `item-owner`);
 	const treasureMapResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Treasure Map`), null, `item-owner`);
 	const ruinSchematicResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Pelt Armor Schematic 3`), null, `item-owner`);
+	const musketSchematic3 = itemData.Items.find(item => item.name === `Musket Schematic 3`);
+	const musketSchematic3Response = paldeck.buildItemResponse(musketSchematic3, null, `item-owner`);
 	const ancientBoneResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Ancient Bone`), null, `item-owner`);
 	const ancientBarkResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Ancient Bark`), null, `item-owner`);
 	const ancientLavaResponse = paldeck.buildItemResponse(itemData.Items.find(item => item.name === `Ancient Lava`), null, `item-owner`);
@@ -852,13 +891,27 @@ async function validateItemLookupAndDroppingPals() {
 		.map(name => paldeck.buildItemResponse(itemData.Items.find(item => item.name === name), null, `item-owner`));
 	const serializedOminousEgg = serializeDiscordPayload(ominousEggResponse);
 	const serializedPeach = serializeDiscordPayload(peachResponse);
-	const serializedTreasureMap = serializeDiscordPayload(treasureMapResponse);
 	const serializedRuinSchematic = serializeDiscordPayload(ruinSchematicResponse);
 	const serializedAncientBone = serializeDiscordPayload(ancientBoneResponse);
 	const serializedAncientBark = serializeDiscordPayload(ancientBarkResponse);
 	const serializedAncientLava = serializeDiscordPayload(ancientLavaResponse);
 	const serializedDogCoin = serializeDiscordPayload(dogCoinResponse);
 	const serializedSingleSalvage = serializeDiscordPayload(singleSalvageResponse);
+	const serializedAncientArmorSchematic = serializeDiscordPayload(paldeck.buildItemResponse(
+		itemData.Items.find(item => item.name === `Lightweight Ancient Armor Schematic 3`),
+		null,
+		`item-owner`,
+	));
+	const legendaryAncientArmorResponse = paldeck.buildItemResponse(
+		itemData.Items.find(item => item.name === `Lightweight Ancient Armor` && item.rarity === `Legendary`),
+		null,
+		`item-owner`,
+	);
+	const uncommonAncientArmorResponse = paldeck.buildItemResponse(
+		itemData.Items.find(item => item.name === `Lightweight Ancient Armor` && item.rarity === `Uncommon`),
+		null,
+		`item-owner`,
+	);
 	const serializedAncientSphere = serializeDiscordPayload(ancientSphereResponse);
 	const serializedSolSphere = serializeDiscordPayload(solSphereResponse);
 	const slabItems = itemData.Items.filter(item => /\bSlab(?: Fragment)?$/i.test(item.name));
@@ -869,6 +922,9 @@ async function validateItemLookupAndDroppingPals() {
 	assert(serializedRifle.includes(`Magazine Size`) && serializedRifle.includes(`20`), `Applicable weapons should show magazine size in Stats.`);
 	assert(serializedRifle.includes(`Workbench:`) && serializedRifle.includes(`Weapon Assembly Line`), `Crafted items should show only their minimum compatible workbench.`);
 	assert(!serializedRifle.includes(`Rank Max`) && !serializedRifle.includes(`Compatible Workbenches`), `Workbench fields should omit derivation details and alternate stations.`);
+	assert(rifleAmmoFields.find(field => field.name === `Output Quantity:`)?.value === `10`, `Multi-output recipes should list their game-declared output quantity.`);
+	assert(rifleAmmoFields.find(field => field.name === `Tech Level:`)?.value === `36`, `Technology requirements should render in a dedicated Tech Level field.`);
+	assert(!rifleAmmoFields.find(field => field.name === `Crafting Materials:`)?.value.includes(`Technology Lv.`), `Crafting Materials should contain ingredients only.`);
 	assert(accessoryEffect?.value === `Attack Up Lv. 3`, `Accessories should show their localized effect in the dedicated field.`);
 	assert(!serializedAccessory.includes(`Stats:`), `Accessory Effect should replace the generic Stats field.`);
 	assert(!serializedMedicine.includes(`Medicine Effect:`), `Medicine Effect should be omitted when it duplicates the description.`);
@@ -881,9 +937,57 @@ async function validateItemLookupAndDroppingPals() {
 		unusedUltraFragments.every(item => item.searchable === false && !item.acquisition),
 		`Unused Ultra fragment definitions should remain hidden and have no acquisition data.`,
 	);
-	assert(serializedFragment.includes(`Sources:`) && serializedFragment.includes(`Treasure Chests`), `Slab fragments should render their treasure-chest sources.`);
+	assert(serializedFragment.includes(`Sources:`) && serializedFragment.includes(`Regular Chests`), `Slab fragments should render their game-matched chest tier.`);
+	assert(!serializedFragment.includes(`**Regular Chests**`), `Source categories should remain plain text within the Sources field.`);
 	assert(!serializedFragment.includes(`Source —`), `Item acquisition field names should not repeat Source with an em dash.`);
+	const epicTreasureMapSources = epicTreasureMapResponse.embeds[0].toJSON().fields.find(field => field.name === `Sources:`)?.value;
+	assert(
+		[`Enemy Camps`, `Cherry Blossom Caves Dungeon`, `Gold Chests`]
+			.every(value => epicTreasureMapSources?.includes(value)) && !epicTreasureMapSources?.includes(`Treasure Chests`),
+		`Epic Treasure Map sources should use broad camp wording, a natural dungeon name, and specific chest tiers.`,
+	);
+	assert(!serializedEpicTreasureMap.includes(`Enemy Camps Desert`), `Broad Enemy Camps labels should replace unreadable region lists.`);
+	for (const name of [
+		`Bellanoir's Slab Fragment`, `Bellanoir Libero's Slab Fragment`, `Blazamut Ryu Slab Fragment`,
+		`Xenolord Slab Fragment`, `Hartalis Slab Fragment`,
+	]) {
+		const item = itemData.Items.find(value => value.name === name);
+		assert(item.acquisition.mapSources.markers.some(marker => marker.type === `Enemy Camp`), `${name} should map its eligible enemy camps.`);
+		assert(item.acquisition.mapSources.markers.some(marker => marker.type === `Dungeon`), `${name} should map its eligible dungeon entrances.`);
+	}
 	assert(serializedSlab.includes(`Workbench:`) && serializedSlab.includes(`Primitive Workbench`), `Rank-one general recipes should show Primitive Workbench.`);
+	assert(
+		serializedAncientArmorSchematic.includes(`Schematic Recipe (Drafting Table):`) && !serializedAncientArmorSchematic.includes(`Workbench:`),
+		`Schematic combination recipes should identify the Drafting Table without a separate Workbench field.`,
+	);
+	assert(serializedAncientArmorSchematic.includes(`Lightweight Ancient Armor Schematic 2 ×5`), `Schematic combination recipes should remain visible.`);
+	assert(!serializedAncientArmorSchematic.includes(`Paloxite Ingot ×52`), `Equipment-upgrade recipes should not be mixed into schematic cards.`);
+	const legendaryAncientArmorEmbed = legendaryAncientArmorResponse.embeds[0].toJSON();
+	const ancientArmorPerks = legendaryAncientArmorEmbed.fields.find(field => field.name === `Perks:`)?.value;
+	assert(
+		ancientArmorPerks === `Cold Resistance Lv. 2\nHeat Resistance Lv. 2\nMax Carrying Capacity Lv. 4\nAttack Up (S) Lv. 4`,
+		`Equipment bonuses should render together in a dedicated Perks field.`,
+	);
+	assert(!legendaryAncientArmorEmbed.description.includes(`Resistance Lv.`), `Equipment perks should not remain mixed into descriptions.`);
+	for (const response of [legendaryAncientArmorResponse, uncommonAncientArmorResponse]) {
+		assert(
+			response.embeds[0].toJSON().fields.some(field => field.name === `Workbench:` && field.value === `Ancient Workbench`),
+			`Schematic-unlocked Ancient equipment should show its game-declared Ancient Workbench even when PalDB omitted the recipe.`,
+		);
+	}
+	const workbenchItems = itemData.Items.filter(item =>
+		item.searchable !== false && !/^\s*\[WIP\]/i.test(item.description || ``),
+	);
+	const itemByCode = new Map(workbenchItems.map(item => [item.code, item]));
+	const schematicEquipmentCodes = new Set(workbenchItems
+		.filter(item => item.category === `Schematic` && item.code?.includes(`/Blueprint_`))
+		.map(item => item.code.replace(`/Blueprint_`, `/`))
+		.filter(code => itemByCode.has(code)));
+	for (const code of schematicEquipmentCodes) {
+		const fields = paldeck.buildItemResponse(itemByCode.get(code), null, `schematic-equipment-owner`).embeds[0].toJSON().fields || [];
+		const workbench = fields.find(field => field.name === `Workbench:`)?.value;
+		assert(workbench && !/^(?:the\b|['"])/iu.test(workbench), `${code}: schematic-unlocked equipment should show a normalized game-declared workbench.`);
+	}
 	assert(serializedFragment.includes(`Forest Dungeon or Sanctuary ×1: 50%`), `Slab source entries should render quantity and colon-separated probability.`);
 	assert(
 		fragmentResponse.embeds[0].toJSON().image?.url === `attachment://${path.basename(bellanoirFragment.acquisition.map)}`,
@@ -893,7 +997,6 @@ async function validateItemLookupAndDroppingPals() {
 	const fixedLocationCases = [
 		[`Ominous Egg`, serializedOminousEgg, `30 World Tree egg spawns`],
 		[`Kinship Peach`, serializedPeach, `22 Palpagos locations`],
-		[`Treasure Map`, serializedTreasureMap, `42 Palpagos locations`],
 		[`Ancient Bone`, serializedAncientBone, `10 Palpagos locations`],
 		[`Ancient Bark`, serializedAncientBark, `10 Palpagos locations`],
 		[`Ancient Lava`, serializedAncientLava, `10 Palpagos locations`],
@@ -902,6 +1005,18 @@ async function validateItemLookupAndDroppingPals() {
 		assert(payload.includes(expected), `${name} should show its verified fixed-location count.`);
 	}
 	assert(serializedRuinSchematic.includes(`Sources:`) && serializedRuinSchematic.includes(`Ancient Ruin`), `Ancient Ruin schematics should show their fixed source.`);
+	const musketSources = musketSchematic3Response.embeds[0].toJSON().fields.find(field => field.name === `Sources:`)?.value;
+	assert(
+		[`Ancient Ruin`, `Supply Drops`, `Silver Chests`, `Purple Chests`, `Common Treasure Map ×1: 1.282%`]
+			.every(value => musketSources?.includes(value)) && !musketSources?.includes(`Fixed location`),
+		`Musket Schematic 3 should show concise direct and Treasure Map sources without a Fixed location placeholder.`,
+	);
+	assert(
+		[`Ancient Ruin`, `Treasure`].every(type => musketSchematic3.acquisition.mapSources.markers.some(marker => marker.type === type)) &&
+		!musketSchematic3.acquisition.mapSources.markers.some(marker => marker.type === `Supply`) &&
+		musketSchematic3.acquisition.mapSources.unpinnedSources?.includes(`Supply`),
+		`Musket Schematic 3 should keep Supply Drops textual while mapping its ruin and treasure chests.`,
+	);
 	const sourceSummaryCases = [
 		[`Dog Coin`, serializedDogCoin, [`Sources:`, `Junk`, `Salvage`, `Elemental Chests`, `Oil Rigs`, `Expeditions`], [`Salvage Rank`]],
 		[`Single-source salvage item`, serializedSingleSalvage, [`Sources:`, `Salvage`], [`Salvage Rank`]],
@@ -915,7 +1030,7 @@ async function validateItemLookupAndDroppingPals() {
 		serializedSolSphere.includes(`Sources:`) &&
 		serializedSolSphere.includes(`Junk`) &&
 		serializedSolSphere.includes(`Supply Drops`) &&
-		serializedSolSphere.includes(`Treasure Chests`) &&
+		serializedSolSphere.includes(`Regular Chests`) &&
 		solSphereResponse.files.length === 2,
 		`Sol Sphere should include its Sky Island loot sources and map.`,
 	);
@@ -983,6 +1098,68 @@ async function validateItemLookupAndDroppingPals() {
 			`${sphere.name} should list Supply Drops and Salvage textually without mapping them.`,
 		);
 	}
+	const correctedSchematicMaps = itemData.Items.filter(item =>
+		[`Grenade Launcher Schematic 1`, `Grenade Launcher Schematic 2`, `Grenade Launcher Schematic 3`, `Grenade Launcher Schematic 4`, `Beginner Fishing Rod (Gumoss) Schematic`].includes(item.name),
+	);
+	assert(
+		correctedSchematicMaps.every(item => item.acquisition?.map && item.acquisition.mapSources?.map === `palpagos` &&
+			item.acquisition.mapSources.markers?.length && item.acquisition.mapSources.unpinnedSources?.length),
+		`Corrected schematic cards should map fixed sources and disclose intentionally unpinned source types.`,
+	);
+	assert(
+		correctedSchematicMaps.every(item => !item.acquisition.mapSources.markers.some(marker =>
+			marker.type === `Supply` || /^Salvage Rank/u.test(marker.type))),
+		`Supply Drops and Salvage must remain textual instead of receiving map pins.`,
+	);
+	assert(
+		correctedSchematicMaps.every(item => paldeck.buildItemResponse(item, null, `corrected-map-owner`).files.length === 2),
+		`Every corrected schematic card should attach its thumbnail and source map.`,
+	);
+	const gumossRodSchematic = correctedSchematicMaps.find(item => item.name === `Beginner Fishing Rod (Gumoss) Schematic`);
+	assert(
+		gumossRodSchematic.acquisition.mapSources.markers.some(marker => marker.type === `Fishing Spot`) &&
+		gumossRodSchematic.acquisition.mapSources.markers.some(marker => marker.type === `Rare Fishing Spot`) &&
+		itemSourcePresentation({ type: `Fishing Spot` }).color === `#0ea5e9` &&
+		itemSourcePresentation({ type: `Rare Fishing Spot` }).color === `#22d3ee` &&
+		gumossRodSchematic.acquisition.mapSources.unpinnedSources?.join() === `Fishing Ponds,Salvage Rank1`,
+		`The Gumoss fishing-rod schematic should map eligible natural fishing spots while leaving buildable ponds and salvage unpinned.`,
+	);
+	const legendaryTreasureMap = itemData.Items.find(item => item.code === `Items/TreasureMap05`);
+	const tieredTreasureMaps = itemData.Items.filter(item => /^Items\/TreasureMap0[1-4]$/u.test(item.code));
+	assert(
+		tieredTreasureMaps.length === 4 && tieredTreasureMaps.every(item =>
+			item.acquisition?.map?.includes(`${item.rarity.toLowerCase()}-treasure-map-sources.png`) &&
+			item.acquisition.mapSources.markers.some(marker => marker.type === `Treasure`) &&
+			item.acquisition.mapSources.markers.some(marker => marker.type === `Enemy Camp`) &&
+			item.acquisition.mapSources.markers.some(marker => marker.type === `Dungeon`)),
+		`Treasure Maps 1-4 should use tier-specific acquisition-source maps rather than the shared destination map.`,
+	);
+	assert(
+		legendaryTreasureMap?.acquisition?.map?.endsWith(`legendary-treasure-map-sources.png`) &&
+		legendaryTreasureMap.acquisition.mapSources.markers.some(marker => marker.RewardName === `Sakurajima1`) &&
+		legendaryTreasureMap.acquisition.mapSources.markers.some(marker => Array.isArray(marker.RewardName) && marker.RewardName.includes(`SeaBase_Yamijima_1`)) &&
+		legendaryTreasureMap.acquisition.mapSources.markers.some(marker => marker.Spawn === `DarkIsland02`) &&
+		legendaryTreasureMap.acquisition.mapSources.markers.some(marker => marker.Spawn === `SkyIsland_Treasure`) &&
+		legendaryTreasureMap.acquisition.mapSources.markers.some(marker => marker.RewardName === `Viking1`) &&
+		legendaryTreasureMap.acquisition.mapSources.markers.some(marker => marker.type === `Dungeon` && marker.item === `Feybreak Cavern`) &&
+		legendaryTreasureMap.acquisition.mapSources.unpinnedSources?.join() === `Salvage Rank2`,
+		`The Legendary Treasure Map should map every coordinate-backed loot pool while leaving only salvage unpinned.`,
+	);
+	const treasureMapLoot = itemData.Items.filter(item => item.acquisition?.sources?.some(source => source.type === `Treasure Maps`));
+	assert(
+		treasureMapLoot.length === 245 && treasureMapLoot.every(item => item.acquisition.map &&
+			item.acquisition.sources.find(source => source.type === `Treasure Maps`).entries.every(entry =>
+				/^(?:Common|Uncommon|Rare|Epic|Legendary) Treasure Map$/u.test(entry.location) && /^\d+(?:\.\d+)?%$/u.test(entry.probability)) &&
+			[...(item.acquisition.mapSources.markers || []), ...(item.acquisition.mapSources.maps || []).flatMap(source => source.markers || [])]
+				.some(marker => marker.legendType === `Treasure Map`)),
+		`Every game-backed Treasure Map loot card should show rarity-qualified probabilities and gold source-map pins.`,
+	);
+	assert(
+		itemSourcePresentation({ type: `Treasure Map` }).color === `#d4af37` &&
+		itemSourcePresentation({ type: `Oilrig Treasure Goal` }).color === `#000000` &&
+		itemSourcePresentation({ type: `Dungeon` }).style === `diamond`,
+		`Item source maps should use the standardized Treasure Map, Oil Rig, and Dungeon presentation.`,
+	);
 	assert(
 		serializedEffigy.includes(`Sources:`) &&
 		serializedEffigy.includes(`140 Palpagos locations`) &&
@@ -1010,15 +1187,55 @@ async function validateItemLookupAndDroppingPals() {
 	}
 
 	const searchableItems = itemData.Items.filter(item =>
-		item.searchable !== false && item.properties?.bLegalInGame !== 0 && !/^\s*\[WIP\]/i.test(item.description || ``),
+		item.searchable !== false && !/^\s*\[WIP\]/i.test(item.description || ``),
+	);
+	assert(
+		itemData.Items.every(item => !item.acquisition?.mapSources?.maps ||
+			new Set(item.acquisition.mapSources.maps.map(source => source.map)).size === item.acquisition.mapSources.maps.length),
+		`Multi-panel item maps should contain at most one panel per physical region.`,
 	);
 	assert(searchableItems.every(item => String(item.description || ``).trim()), `Every searchable item should have a user-facing description.`);
+	for (const item of searchableItems) {
+		const description = normalizeItemDescription(item.description, { formatEffects: true });
+		const parts = itemDescriptionParts(item.description);
+		assert(
+			!(/\s+[,.!?;:]|\s+'s\b|\b[A-Za-z]+ s\b|[ \t]{2,}/u.test(description)),
+			`${item.name}: rendered description should not contain spacing or punctuation artifacts.`,
+		);
+		assert(
+			parts.perks.every(perk => !parts.description.includes(perk)),
+			`${item.name}: recognized perks should not remain in description prose.`,
+		);
+	}
+	const descriptionCases = [
+		[`Metal Axe`, `Logging Yield Up Lv. 1`],
+		[`Metal Pickaxe`, `Mining Yield Up Lv. 1`],
+		[`Attack Support Whistle`, `Pal Attack Up Lv. 3`],
+		[`Defense Support Whistle`, `Pal Defense Up Lv. 3`],
+		[`Growth Acceleration Bell`, `Pal EXP Up Lv. 3`],
+	];
+	for (const [name, perk] of descriptionCases) {
+		const parts = itemDescriptionParts(itemData.Items.find(item => item.name === name).description);
+		assert(parts.perks.includes(perk) && !/\b(?:Logging|Mining|Pal)$/u.test(parts.description), `${name}: full perk label should move out of description prose.`);
+	}
+	for (const name of [`Incendiary Grenade`, `Ice Grenade`, `Metal Spear`, `Refined Metal Spear`, `Refined Metal Axe`, `Helmet`]) {
+		const item = itemData.Items.find(candidate => candidate.name === name);
+		const description = itemDescriptionParts(item.description).description;
+		assert(!/\bA (?:Incendiary|Ice)\b|\btip give\b|\bdurability has improved\b|\ba Eikthyrdeer\b/u.test(description), `${name}: confirmed localization grammar should be repaired at render time.`);
+	}
 	assert(itemData.Items.every(item => !String(item.description || ``).includes(`|`)), `Item descriptions should not expose upstream pipe delimiters.`);
 	assert(
 		itemData.Items.filter(item => /^[a-z]{2}[_ ]text$/iu.test(String(item.description || ``).trim())).every(item => item.searchable === false),
 		`Placeholder localization records such as Silicon should remain hidden from lookup.`,
 	);
-	assert(UNAVAILABLE_ITEM_IDS.size === 16, `The unavailable-item registry should cover all 16 audited definitions.`);
+	assert(UNAVAILABLE_ITEM_IDS.size === availabilityManifest.items.filter(item => [`unused`, `unreleased`, `superseded`].includes(item.status)).length,
+		`The unavailable-item registry should include every versioned hidden definition.`);
+	assert(
+		itemData.Items
+			.filter(item => /^blueprint-head(?:00[1-9]|01[0-7])-5$/u.test(item.id))
+			.every(item => item.searchable === false),
+		`All 17 localized but unimplemented legendary headwear blueprints should remain hidden from lookup.`,
+	);
 	assert(
 		itemData.Items.filter(shouldHideItem).every(item => item.searchable === false),
 		`Unreleased, superseded, WIP, and unresolved item definitions should remain hidden from lookup.`,
@@ -1027,6 +1244,74 @@ async function validateItemLookupAndDroppingPals() {
 		!itemData.Items.some(needsAvailabilityReview),
 		`A hidden item with finished localization and a real acquisition signal should require implementation review.`,
 	);
+	let displayedSchematicCombinationCount = 0;
+	const undisplayedSchematicCombinations = [];
+	for (const item of searchableItems.filter(candidate => candidate.category === `Schematic`)) {
+		const fields = paldeck.buildItemResponse(item, null, `schematic-owner`).embeds[0].toJSON().fields || [];
+		const craftingText = fields.filter(field => field.name.startsWith(`Schematic Recipe`)).map(field => field.value).join(`\n`);
+		if (/ Schematic(?: [1-4])? ×5/u.test(craftingText)) {
+			displayedSchematicCombinationCount += 1;
+		} else if (item.recipes.some(recipe => recipe.ingredients?.some(ingredient =>
+			/ Schematic(?: [1-4])?$/u.test(ingredient.name) && Number(ingredient.quantity) === 5))) {
+			undisplayedSchematicCombinations.push(item.name);
+		}
+		const unlockedItem = item.name.replace(/ Schematic(?: \d+)?$/u, ``);
+		const equipmentRows = item.recipes.filter(recipe => recipe.ingredients?.some(ingredient => ingredient.name === unlockedItem));
+		assert(
+			!craftingText || fields.some(field => /^Schematic Recipes? \(Drafting Table\):$/u.test(field.name)),
+			`${item.name}: every displayed schematic combination recipe should use the Drafting Table.`,
+		);
+		assert(
+			equipmentRows.every(recipe => !recipe.ingredients.every(ingredient => craftingText.includes(`${ingredient.name} ×${ingredient.quantity}`))),
+			`${item.name}: schematic cards should not include equipment-upgrade recipes.`,
+		);
+	}
+	assert(
+		displayedSchematicCombinationCount > 0 && !undisplayedSchematicCombinations.length,
+		`Every searchable game-backed schematic combination should render; found ${displayedSchematicCombinationCount}; missing ${undisplayedSchematicCombinations.join(`, `)}.`,
+	);
+	const schematicCombinationExamples = [
+		[`Lightweight Ancient Armor Schematic 1`, false],
+		[`Lightweight Ancient Armor Schematic 2`, true],
+		[`Excalibur Schematic 1`, true],
+	];
+	for (const [name, hasGameCombination] of schematicCombinationExamples) {
+		const item = searchableItems.find(candidate => candidate.name === name);
+		assert(item, `${name}: game-file schematic regression fixture should exist.`);
+		const fields = paldeck.buildItemResponse(item, null, `schematic-tier-owner`).embeds[0].toJSON().fields || [];
+		const lowerTier = item.name.replace(/ (\d)$/u, (_match, tier) => Number(tier) === 1 ? `` : ` ${Number(tier) - 1}`);
+		const craftingText = fields.filter(field => field.name.startsWith(`Schematic Recipe`)).map(field => field.value).join(`\n`);
+		assert(craftingText.includes(`${lowerTier} ×5`) === hasGameCombination, `${item.name}: combination availability should match the current game recipe table.`);
+		assert(
+			fields.some(field => /^Schematic Recipes? \(Drafting Table\):$/u.test(field.name)) === hasGameCombination &&
+			!fields.some(field => field.name === `Workbench:`),
+			`${item.name}: only game-backed schematic combinations should show the Drafting Table.`,
+		);
+	}
+	assert(
+		itemData.Items.filter(item => item.category === `Schematic` && Number(item.properties?.bLegalInGame ?? 0) === 0)
+			.every(item => item.searchable === false),
+		`Every game-disabled schematic should remain hidden from lookup.`,
+	);
+	const relicBackedItems = itemData.Items.filter(item => item.searchable !== false &&
+		item.acquisition?.lootPools?.some(pool => /^AncientRelicRecycler_/u.test(pool.pool)));
+	assert(
+		relicBackedItems.length && relicBackedItems.every(item => item.acquisition.sources?.some(source => source.type === `Ancient Relics`)),
+		`Every visible item backed by a decoded Ancient Relic recycler pool should identify that source.`,
+	);
+	for (const name of [`Gold Coin`, `Medical Supplies`, `Training Manual (L)`, `High Quality Bait`]) {
+		const item = itemData.Items.find(candidate => candidate.name === name);
+		const markers = [...(item.acquisition?.mapSources?.markers || []), ...(item.acquisition?.mapSources?.maps || []).flatMap(source => source.markers || [])];
+		assert(item.acquisition?.map && markers.length &&
+			!markers.some(marker => /^Salvage/u.test(marker.type)), `${name}: regional source map should exclude broad salvage pools.`);
+	}
+	for (const item of searchableItems.filter(candidate => candidate.category === `Schematic` && !candidate.acquisition && !candidate.merchantLocations)) {
+		const fields = paldeck.buildItemResponse(item, null, `schematic-source-owner`).embeds[0].toJSON().fields || [];
+		assert(
+			fields.some(field => field.name === `Sources:` && field.value === `No verified non-crafting source is recorded.`),
+			`${item.name}: missing acquisition coverage should be disclosed without claiming the schematic is unobtainable.`,
+		);
+	}
 
 	const cardsRequiringConsistencyChecks = searchableItems.filter(item =>
 		(item.acquisition || (item.recipes || []).length > 1) &&
@@ -1052,9 +1337,13 @@ async function validateItemLookupAndDroppingPals() {
 			);
 		}
 
-		if ((item.recipes || []).length > 1) {
+		const unlockedItem = item.category === `Schematic` ? item.name.replace(/ Schematic(?: \d+)?$/u, ``) : null;
+		const visibleRecipeCount = (item.recipes || []).filter(recipe =>
+			!unlockedItem || !recipe.ingredients?.some(ingredient => ingredient.name === unlockedItem),
+		).length;
+		if (visibleRecipeCount > 1) {
 			assert(
-				fields.some(field => field.name === `Crafting Recipes:`),
+				fields.some(field => field.name === (item.category === `Schematic` ? `Schematic Recipes (Drafting Table):` : `Crafting Recipes:`)),
 				`${item.name}: alternate recipes should render in a Crafting Recipes field.`,
 			);
 		}
@@ -1077,9 +1366,9 @@ async function validateItemLookupAndDroppingPals() {
 	}
 }
 
-function validateHtmlTextHelpers() {
+async function validateHtmlTextHelpers() {
 	const { decodeHtml, stripTags } = requireFresh(`scripts`, `lib`, `html-text.js`);
-	const { parseItemDetails } = requireFresh(`scripts`, `lib`, `paldb-items.js`);
+	const { parseItemCards, parseItemDetails } = requireFresh(`scripts`, `lib`, `paldb-items.js`);
 	const encodedTagText = stripTags(`&lt;script&gt;alert(1)&lt;/script&gt;Relaxaurus`);
 	const doubleEncodedTagText = stripTags(`&amp;lt;script&amp;gt;Relaxaurus&amp;lt;/script&amp;gt;`);
 	const nestedTagText = stripTags(`<scr<script>ipt>alert(1)</script>`);
@@ -1100,6 +1389,34 @@ function validateHtmlTextHelpers() {
 	assert(
 		parsedRecipes.length === 1 && parsedRecipes[0].ingredients[0].name === `Ore`,
 		`Recipe parsing should include production tables while excluding merchant exchange tables.`,
+	);
+	const cardFixture = [
+		`<div class="col"><div class="card itemPopup"><div class="hover_banner banner_rarity2">`,
+		`<a class="itemname" data-hover="/cache/en/item" href="Actual_Item">Actual Item</a>`,
+		`<span class="me-auto">Weapon</span><span class="hover_text_rarity2">Rare</span></div>`,
+		`<div class="hover_bg_rarity2"></div><div class="recipes">`,
+		`<a class="itemname" data-hover="?s=Items%2FCopperIngot" href="Ingot">Ingot</a></div>`,
+	].join(``);
+	const [parsedCard] = parseItemCards(cardFixture, { category: `Weapon`, slug: `Weapon` });
+	assert(
+		parsedCard.name === `Actual Item` && parsedCard.code === `` && parsedCard.hoverPath === `/cache/en/item`,
+		`Item-card parsing should retain cached header identity without borrowing a recipe ingredient code.`,
+	);
+
+	const { compareData } = requireFresh(`scripts`, `lib`, `paldb-data.js`);
+	const palDiff = compareData(
+		[{ breedingId: `test`, element: ``, name: `Test Pal`, number: `001`, suitability: `` }],
+		{ Pals: [{ breeding: { id: `test` }, element: `Water`, name: `Test Pal`, number: `001`, suitability: `Watering 1` }] },
+		{},
+	);
+	assert(
+		palDiff.changedPals.length === 0 && palDiff.coverageGaps[0].fields.length === 2,
+		`Blank upstream Pal fields should be reported as coverage gaps rather than data changes.`,
+	);
+	const updaterSource = fs.readFileSync(resolveProject(`scripts`, `update-palworld-items.js`), `utf8`);
+	assert(
+		updaterSource.includes(`String(item.code || \`\`).toLowerCase()`),
+		`Item refreshes should match cached PalDB codes case-insensitively and preserve stable local identities.`,
 	);
 }
 
@@ -1442,6 +1759,86 @@ async function main() {
 	await test(`direct messages forward verbatim with sender and owned-server context`, validateDmForwarding);
 	await test(`database models include update announcement fields`, validateDatabaseModels);
 	await test(`Paldeck data files remain valid`, validatePalData);
+	await test(`oil-rig map levels share one legend label`, () => {
+		assert(legendLabel(`Oilrig Treasure Goal`, `Lv. 55 Oil Rig`) === `Oil Rig`);
+		assert(legendLabel(`Oilrig Treasure Goal`, `Lv. 60 Oil Rig`) === `Oil Rig`);
+		assert(legendLabel(`Enemy Camp`, `Enemy Camp`) === `Enemy Camps`);
+	});
+	await test(`installed-game item audit compares decoded recipes and legality`, () => {
+		const fixtureItems = { Items: [
+			{ id: `wood`, code: `Items/Wood`, name: `Wood`, properties: {}, recipes: [] },
+			{ id: `hot-milk`, code: `Items/HotMilk`, name: `Hot Milk`, properties: {}, recipes: [{ ingredients: [{ name: `Wood`, quantity: `1` }] }] },
+			{ id: `axe`, code: `Items/Axe`, name: `Axe`, merchantLocations: {}, properties: { bLegalInGame: 1 }, recipes: [{ ingredients: [{ name: `Wood`, quantity: `2` }] }] },
+			{ id: `pick`, code: `Items/Pick`, name: `Pick`, properties: { bLegalInGame: 1 }, recipes: [] },
+		] };
+		const fixture = { buildId: `1`, tables: {
+			_metadata: { candidateTables: 4, decodedTables: 3, decodedRows: 12, failedCandidates: 0 },
+			items: { Axe: { bLegalInGame: true }, HotMilk: {}, Pick: { bLegalInGame: false }, Wood: {} },
+			recipes: {
+				Axe: { Product_Id: `Axe`, Product_Count: 1, Material1_Id: `Wood`, Material1_Count: 2 },
+				Pick: { Product_Id: `Pick`, Product_Count: 1, Material1_Id: `Wood`, Material1_Count: 3 },
+				Hotmilk: { Product_Id: `Hotmilk`, Product_Count: 1, Material1_Id: `Wood`, Material1_Count: 1 },
+			},
+			shopCreate: { GroupA: { productDataArray: [{ StaticItemId: `Axe`, ProductNum: 1 }] } },
+			shopLottery: { PoolA: { lotteryDataArray: [{ ShopGroupName: `GroupA`, Weight: 100 }] } },
+			shopSettings: { ShopA: { CurrencyItemID: `Wood` } },
+		} };
+		const report = compareGameItemData(fixtureItems, fixture);
+		assert(report.summary.matchedRecipeItems === 2);
+		assert(report.missingLocalRecipes[0].name === `Pick`);
+		assert(report.legalityMismatches[0].name === `Pick`);
+		assert(report.summary.shopProductItems === 1 && report.summary.randomizedShopItems === 1);
+		assert(report.extraction.decodedTables === 3 && report.extraction.decodedRows === 12);
+		assert(report.shops.currencies[0].itemId === `wood`);
+		assert(report.gameOnlyRecipeProducts.length === 0, `Internal item-ID casing must not create game-only recipes.`);
+		assert(report.localIdCasingMismatches.length === 0);
+		assert(report.gameReferenceCasingMismatches.some(row => row.reference === `Hotmilk` && row.canonical === `HotMilk`));
+	});
+	await test(`installed-game Pal audit classifies event and curated encounters`, () => {
+		const pals = { Pals: [
+			{ name: `Xenogard`, breeding: { id: `whitealiendragon`, canBeChild: true } },
+			{ name: `Panthalus`, breeding: { id: `kingwhale`, canBeChild: true } },
+			{ name: `Mau`, breeding: { id: `bastet`, canBeChild: true } },
+		] };
+		const snapshot = { tables: { _decodedTables: {
+			"Pal/Content/Pal/DataTable/Incident/SupplyIncident/DT_SupplyIncident_Pal_Snow02": { A: { CharacterID: `BOSS_WhiteAlienDragon` } },
+			"Pal/Content/Pal/DataTable/Spawner/DT_PalWildSpawner": { A: { SpawnerName: `50_1_dungeon_grass`, Pal_1: `Bastet` } },
+		} } };
+		const availability = compareGamePalAvailability(pals, snapshot);
+		assert(availability.find(row => row.name === `Xenogard`).classifications.includes(`Meteor Event`));
+		assert(availability.find(row => row.name === `Panthalus`).classifications.includes(`NPC Encounter`));
+		assert(availability.find(row => row.name === `Mau`).classifications.includes(`Dungeon`));
+		assert(!availability.find(row => row.name === `Mau`).classifications.includes(`Wild Spawner`));
+	});
+	await test(`curated encounter maps and raid rewards remain published`, () => {
+		const pals = require(`../data/palData.json`).Pals;
+		for (const name of [`Xenovader`, `Xenogard`, `Selyne`, `Silvance`, `Dandilord`, `Panthalus`, `Astralym`]) {
+			const pal = pals.find(value => value.name === name);
+			assert(pal && pal.habitat !== `data/maps/unknown-habitat.png` && fs.existsSync(resolveProject(pal.habitat)));
+		}
+		const missingMaps = pals.filter(pal => !pal.hidden && pal.habitat === `data/maps/unknown-habitat.png`);
+		assert(missingMaps.length === 5 && missingMaps.every(pal => /Summoning altar|Raid\/Egg/iu.test(pal.spawnTime)));
+		const expectedFooters = {
+			Astralym: `Boss`, Dandilord: `Alpha Only`, "Katress Ignis": `Dungeons/Factions`, Panthalus: `Boss`, Silvance: `Alpha Only`,
+			Xenogard: `Meteorite Event`, Xenovader: `Meteorite Event/Factions`,
+		};
+		for (const [name, footer] of Object.entries(expectedFooters)) {
+			assert(pals.find(pal => pal.name === name)?.spawnTime === footer);
+		}
+		assert(!pals.some(pal => /Captured Cage/iu.test(pal.spawnTime)), `Pal footers must use the broader Factions label.`);
+		const curatedMapGenerator = fs.readFileSync(resolveProject(`scripts/generate-curated-pal-maps.js`), `utf8`);
+		assert((curatedMapGenerator.match(/supplyPools:/gu) || []).length === 3,
+			`Supply Incident map pins must be restricted to Xenovader, Xenogard, and Selyne.`);
+		assert(pals.find(pal => pal.name === `Anubis`)?.worldTreeDrops?.[`80`]);
+		const items = require(`../utils/itemData.js`).resolvedItemData().Items;
+		const raidRewardIds = [
+			`head-equip001-purple`, `head-equip041`, `head-equip044`, `head-equip046`, `yakushima-head-equip005`,
+			`pal-summon-yakushima-boss002-2`, `blueprint-yakushima-boss002-relic`,
+		];
+		for (const id of raidRewardIds) {
+			assert(items.find(item => item.id === id)?.acquisition?.sources?.some(source => source.type === `Summoning Altar`));
+		}
+	});
 	await test(`CI workflow includes lint, smoke, and audit jobs`, validateCiWorkflow);
 	await test(`GitHub Pages docs include theme and update links`, validateGithubPagesDocs);
 	await test(`release workflow creates package-version GitHub releases`, validateReleaseWorkflow);

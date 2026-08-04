@@ -157,6 +157,44 @@ Palworld updates can change Paldeck numbers, work suitabilities, elements, inter
 $ npm run audit:palworld-data
 ```
 
+Item availability decisions are stored in `data/itemAvailability.json` with their reviewed Palworld build and rationale. CI validates that snapshot without requiring a game installation:
+
+```console
+$ npm run validate:item-availability
+```
+
+After Palworld updates, compare the snapshot with the locally installed Steam build before accepting its availability decisions:
+
+```console
+$ npm run audit:item-availability
+```
+
+For a direct, read-only comparison of catalog recipes, legal flags, and acquisition-table references against the installed pak, run:
+
+```console
+$ npm run audit:installed-game-data
+```
+
+The first run builds the pinned decoder and stores a build-keyed snapshot under `%LOCALAPPDATA%\Paldeck\game-audit\snapshots`; later runs reuse it. Use `npm run audit:installed-game-data:refresh` after replacing mappings or game files. The refresh discovers and decodes every mounted DataTable candidate across base and patch archives while retaining stable aliases for the semantic item audit. Override discovery with `--steam-manifest`, `--pak-directory`, or `--usmap`, or the corresponding `PALWORLD_STEAM_MANIFEST`, `PALWORLD_PAK_DIRECTORY`, and `PALWORLD_USMAP` environment variables. The report distinguishes exact recipe/legality mismatches from generic acquisition references, which do not by themselves prove normal-play availability. Shop reporting separately identifies product groups, randomized weighted stock pools, and currency definitions.
+
+Query the broad snapshot by table path or row contents without modifying it:
+
+```powershell
+$ npm run inspect:installed-game-data -- --table RaidBoss --search Blueprint_YakushimaBoss002_Relic
+$ npm run inspect:installed-game-data -- --table DataTable/Character --limit 25
+```
+
+To synchronize deterministic recipe, legality, and unsupported local-merchant differences, review the dry run before writing:
+
+```console
+$ npm run sync:installed-game-items
+$ npm run sync:installed-game-items:write
+```
+
+The synchronizer requires a snapshot matching the installed Steam build. It preserves reviewed visibility decisions, records canonical ingredient IDs, and ignores malformed `None` material slots while reporting them.
+
+The local audit finds common Steam-library locations automatically. For another library, pass `--steam-manifest C:\\path\\to\\appmanifest_1623730.acf` or set `PALWORLD_STEAM_MANIFEST`. A build mismatch fails deliberately and requires the item legality and reachable recipe, loot, merchant, spawn, technology, event, and reward paths to be reviewed before updating the snapshot.
+
 The audit is read-only. It reports added Pals, missing Pals, changed `palData.json` fields, and changed `palData.json` breeding IDs.
 
 To apply safe updates for existing local Pals, run the updater in dry-run mode first:

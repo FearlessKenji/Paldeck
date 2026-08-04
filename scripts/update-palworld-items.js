@@ -6,6 +6,7 @@ const { shouldHideItem } = require(`../utils/itemVisibility.js`);
 const crypto = require(`node:crypto`);
 const { URL } = require(`node:url`);
 const { fetchPaldbItemData, fetchPaldbItemDetails, slugify } = require(`./lib/paldb-items.js`);
+const { normalizeItemDescription: normalizeDescription } = require(`../utils/itemDescription.js`);
 const { compactItemData, resolvedItemData } = require(`../utils/itemData.js`);
 
 const ROOT_DIR = path.resolve(__dirname, `..`);
@@ -253,22 +254,26 @@ function itemChanged(localItem, currentItem) {
 }
 
 function mapByCode(items) {
-	return new Map((items || []).map(item => [item.code, item]));
+	return new Map((items || []).map(item => [String(item.code || ``).toLowerCase(), item]));
 }
 
 function normalizeItemDescription(value) {
-	return String(value || ``)
+	return normalizeDescription(String(value || ``)
 		.replace(/\s*\|\s*([^|]+?)\s*\|\s*$/u, (_match, text) => `\n\n*${text.trim()}*`)
-		.replace(/\|\s*([^|]+?)\s*\|/gu, (_match, text) => text.trim())
-		.trim();
+		.replace(/\|\s*([^|]+?)\s*\|/gu, (_match, text) => text.trim()));
 }
 
 function preserveCuratedItemFields(currentData, localData) {
 	const localByCode = mapByCode(localData.Items);
 
 	for (const item of currentData.Items) {
-		const localItem = localByCode.get(item.code);
+		const localItem = localByCode.get(String(item.code || ``).toLowerCase());
 		item.description = normalizeItemDescription(item.description);
+		if (localItem) {
+			// PalDB's cached hover fragments vary only the casing of some game codes; keep established stable identities.
+			item.code = localItem.code;
+			item.id = localItem.id;
+		}
 
 		// Acquisition maps, merchant locations, and visibility decisions are curated locally and cannot
 		// be reconstructed from PalDB's generated item catalog alone.
@@ -299,17 +304,17 @@ function preserveCuratedItemFields(currentData, localData) {
 function compareItems(localData, currentData) {
 	const localByCode = mapByCode(localData.Items);
 	const currentByCode = mapByCode(currentData.Items);
-	const added = currentData.Items.filter(item => !localByCode.has(item.code));
-	const removed = localData.Items.filter(item => !currentByCode.has(item.code));
+	const added = currentData.Items.filter(item => !localByCode.has(String(item.code || ``).toLowerCase()));
+	const removed = localData.Items.filter(item => !currentByCode.has(String(item.code || ``).toLowerCase()));
 	const changed = currentData.Items
 		.filter(item => {
-			const localItem = localByCode.get(item.code);
+			const localItem = localByCode.get(String(item.code || ``).toLowerCase());
 
 			return localItem && itemChanged(localItem, item);
 		})
 		.map(item => ({
 			current: item,
-			local: localByCode.get(item.code),
+			local: localByCode.get(String(item.code || ``).toLowerCase()),
 		}));
 
 	return {

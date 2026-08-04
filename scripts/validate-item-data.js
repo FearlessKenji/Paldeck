@@ -1,14 +1,17 @@
 // Validates resolved item records, compact preset references, local assets, and curated acquisition rules.
 const fs = require(`node:fs`);
+const crypto = require(`node:crypto`);
 const path = require(`node:path`);
-const { availabilityEvidence, needsAvailabilityReview, shouldHideItem } = require(`../utils/itemVisibility.js`);
+const { availabilityEvidence, hasPlaceholderItemText, needsAvailabilityReview, shouldHideItem } = require(`../utils/itemVisibility.js`);
 const { rawItemData, resolvedItemData } = require(`../utils/itemData.js`);
-const { fixedLocationMarkers } = require(`./lib/item-map-rendering.js`);
+const availabilityManifest = require(`../data/itemAvailability.json`);
+const journalData = require(`../data/journalData.json`);
+const { findAvailabilityManifestProblems } = require(`../utils/itemAvailabilityAudit.js`);
 const itemFile = resolvedItemData();
 const { itemWorkbench } = require(`../utils/itemWorkbench.js`);
 
 const PROJECT_ROOT = path.resolve(__dirname, `..`);
-const GAME_SOURCE_DATA = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, `data`, `gameSourceData.json`), `utf8`));
+const AVAILABILITY_DECISION_IDS = new Set(availabilityManifest.items.map(decision => decision.id));
 
 const REQUIRED_FIELDS = [
 	`id`,
@@ -46,7 +49,7 @@ function findDuplicateValues(items, field) {
 }
 
 function findItemDataProblems(itemData) {
-	const problems = [];
+	const problems = findAvailabilityManifestProblems(itemData, availabilityManifest);
 
 	// Validate raw references before inspecting resolved records, where missing indirection would be hidden.
 	for (const item of rawItemData.Items || []) {
@@ -76,21 +79,6 @@ function findItemDataProblems(itemData) {
 		if ((acquisitionReferenceCounts.get(reference) || 0) < 2) {
 			problems.push(`${reference}: acquisition presets must be shared by at least two items.`);
 		}
-	}
-	for (const [pool, record] of Object.entries(rawItemData.LootPools || {})) {
-		if (!pool || !record.category || !record.items || !Object.keys(record.items).length) {
-			problems.push(`Loot pool ${pool || `(unnamed)`}: invalid normalized catalog record.`);
-		}
-		for (const [itemId, drops] of Object.entries(record.items || {})) {
-			const values = Array.isArray(drops) ? drops : [drops];
-			if (!itemData.Items.some(item => item.id === itemId) || values.some(value => !/^.+: .+$/u.test(value))) {
-				problems.push(`Loot pool ${pool}: invalid item association for ${itemId}.`);
-			}
-		}
-	}
-	if (rawItemData.Items.some(item => item.acquisition?.lootPools) ||
-		Object.values(rawItemData.AcquisitionPresets || {}).some(acquisition => acquisition.lootPools)) {
-		problems.push(`Loot pools must remain normalized in the top-level LootPools catalog.`);
 	}
 	for (const reference of Object.keys(rawItemData.MerchantLocationSets || {})) {
 		if (!/^merchants-[a-z0-9-]+-[a-f0-9]{6}$/u.test(reference)) {
@@ -166,6 +154,9 @@ function findItemDataProblems(itemData) {
 				`Item ${index} ${item.name || `(unnamed)`}: hidden definition now has finished text and ${availabilityEvidence(item).join(`, `)}; review whether it was implemented.`,
 			);
 		}
+		if (item.searchable === false && !hasPlaceholderItemText(item) && !AVAILABILITY_DECISION_IDS.has(item.id)) {
+			problems.push(`Item ${index} ${item.name}: hidden localized definitions require a versioned availability decision.`);
+		}
 
 		const iconPath = path.resolve(PROJECT_ROOT, item.iconUrl || ``);
 		const relativeIconPath = path.relative(PROJECT_ROOT, iconPath);
@@ -211,9 +202,43 @@ function findItemDataProblems(itemData) {
 		dogCoin.medalMerchants.mapSources?.map !== `palpagos` || !dogCoin.medalMerchants.mapSources?.markers?.length) {
 		problems.push(`Dog Coin must include all four fixed Medal Merchant locations and their map.`);
 	}
+	const expectedShopCounts = {
+		"Medal Merchants": 37, "Bounty Shop": 18, "Arena Merchant": 56,
+		"Caravan Merchants": 109, "Dungeon Merchant": 33, "Wandering Merchants": 32,
+	};
+	for (const [type, expected] of Object.entries(expectedShopCounts)) {
+		const actual = itemData.Items.filter(item => item.acquisition?.sources?.some(source => source.type === type)).length;
+		if (actual !== expected) {
+			problems.push(`${type}: expected ${expected} installed-game products, found ${actual}.`);
+		}
+	}
+	for (const [property, expectedEntries] of [[`medalMerchants`, 4], [`bountyMerchants`, 3], [`arenaMerchant`, 1]]) {
+		for (const item of itemData.Items.filter(value => value[property])) {
+			if (item[property].entries?.length !== expectedEntries || !item[property].map || !item[property].mapSources?.markers?.length) {
+				problems.push(`${item.name}: ${property} must include its complete fixed-location map.`);
+			}
+		}
+	}
+	if (itemData.Items.some(item => item.acquisition?.sources?.some(source => /Vagrant|TestTable/iu.test(JSON.stringify(source))))) {
+		problems.push(`Test/vagrant shop tables must never appear as player-facing acquisition sources.`);
+	}
 
 	for (const field of [`id`, `code`]) {
 		problems.push(...findDuplicateValues(itemData.Items, field));
+	}
+	for (const [name, locations] of Object.entries(itemData.MerchantLocationSets || {})) {
+		const markers = locations.mapSources?.markers || [];
+		const signature = crypto.createHash(`sha256`).update(JSON.stringify(locations.mapSources)).digest(`hex`).slice(0, 10);
+		const expectedMap = markers.length ? `data/item-maps/merchant-locations-${signature}.png` : null;
+		if (expectedMap && locations.map !== expectedMap) {
+			problems.push(`${name}: merchant map filename does not match its marker set.`);
+		}
+		for (const marker of markers) {
+			const expectedType = /_Shop_2$/u.test(marker.href || ``) ? `Weapons Merchant` : `Wandering Merchant`;
+			if (marker.legendType !== expectedType) {
+				problems.push(`${name}: ${marker.href} must use the ${expectedType} legend.`);
+			}
+		}
 	}
 
 	for (const source of itemData.Sources || []) {
@@ -233,8 +258,8 @@ function findItemDataProblems(itemData) {
 		if (!acquisition) {
 			continue;
 		}
-		if (!Array.isArray(acquisition.sources) || (!acquisition.sources.length && !acquisition.lootPools?.length)) {
-			problems.push(`Item ${index} ${item.name}: acquisition requires curated sources or validated loot pools.`);
+		if (!Array.isArray(acquisition.sources) || !acquisition.sources.length) {
+			problems.push(`Item ${index} ${item.name}: acquisition sources must be a non-empty array.`);
 		}
 		for (const [sourceIndex, source] of (acquisition.sources || []).entries()) {
 			if (!String(source.type || ``).trim() || !Array.isArray(source.entries) || !source.entries.length) {
@@ -244,13 +269,6 @@ function findItemDataProblems(itemData) {
 				if (!String(entry.location || ``).trim()) {
 					problems.push(`Item ${index} ${item.name}: acquisition source ${sourceIndex} entry ${entryIndex} is missing location.`);
 				}
-			}
-		}
-		for (const [poolIndex, pool] of (acquisition.lootPools || []).entries()) {
-			if (!String(pool.pool || ``).trim() || !String(pool.category || ``).trim() ||
-				!String(pool.quantity || ``).trim() || !String(pool.probability || ``).trim() ||
-				Number.parseFloat(pool.probability) === 0 || /test/iu.test(pool.pool)) {
-				problems.push(`Item ${index} ${item.name}: loot pool ${poolIndex} is invalid, unobtainable, or a test source.`);
 			}
 		}
 		if (!acquisition.map) {
@@ -266,10 +284,18 @@ function findItemDataProblems(itemData) {
 		const mapSources = acquisition.mapSources;
 		const legacySources = Array.isArray(mapSources?.chestPools) && Array.isArray(mapSources?.dungeons);
 		const markerSources = [`palpagos`, `worldtree`].includes(mapSources?.map) && Array.isArray(mapSources?.markers) && mapSources.markers.length;
+		const textualSourceTypes = new Set(acquisition.sources.map(source => source.type));
+		const allowedUnpinnedSource = type => type === `Supply` || /^Salvage Rank/u.test(type) || [`Fishing`, `Fishing Ponds`, `Mission`].includes(type);
+		const unpinnedSources = Array.isArray(mapSources?.unpinnedSources) && mapSources.unpinnedSources.length &&
+			mapSources.unpinnedSources.every(type => textualSourceTypes.has(type) && allowedUnpinnedSource(type));
+		const unpinnedOnlyMap = unpinnedSources && Array.isArray(mapSources?.markers) && mapSources.markers.length === 0;
 		const multiMapSources = Array.isArray(mapSources?.maps) && mapSources.maps.length && mapSources.maps.every(source =>
 			[`palpagos`, `worldtree`].includes(source.map) && Array.isArray(source.markers) && source.markers.length,
 		);
-		if (!legacySources && !markerSources && !multiMapSources) {
+		if (multiMapSources && new Set(mapSources.maps.map(source => source.map)).size !== mapSources.maps.length) {
+			problems.push(`Item ${index} ${item.name}: repeated panels for the same physical map must be consolidated.`);
+		}
+		if (!legacySources && !markerSources && !multiMapSources && !unpinnedOnlyMap) {
 			problems.push(`Item ${index} ${item.name}: mapped acquisition requires legacy chest/dungeon sources or map marker sources.`);
 		}
 		const allMarkers = [
@@ -281,11 +307,6 @@ function findItemDataProblems(itemData) {
 				problems.push(`Item ${index} ${item.name}: map marker ${markerIndex} is missing type.`);
 			}
 		}
-	}
-	const lootSourcedItems = itemData.Items.filter(item => item.acquisition?.lootPools?.length);
-	const lootPoolAssociations = lootSourcedItems.reduce((total, item) => total + item.acquisition.lootPools.length, 0);
-	if (lootSourcedItems.length < 700 || lootPoolAssociations < 8000) {
-		problems.push(`Game-derived item loot coverage is incomplete: ${lootSourcedItems.length} items and ${lootPoolAssociations} associations.`);
 	}
 
 	for (const [index, item] of itemData.Items.entries()) {
@@ -317,8 +338,8 @@ function findItemDataProblems(itemData) {
 	const mappedRegionalItems = itemData.Items.filter(item => item.acquisition?.sources?.some(source =>
 		[`Treasure`, `Treasure Element`, `Supply`, `Junk`, `Salvage Rank1`, `Salvage Rank2`].includes(source.type),
 	));
-	if (mappedRegionalItems.length !== 505) {
-		problems.push(`Expected all 505 verified regional loot-pool records, found ${mappedRegionalItems.length}.`);
+	if (mappedRegionalItems.length !== 572) {
+		problems.push(`Expected all 572 decoded regional loot-pool records for build 24467282, found ${mappedRegionalItems.length}.`);
 	}
 	const solSphere = itemData.Items.find(item => item.name === `Sol Sphere`);
 	if (!solSphere?.acquisition?.map || !solSphere.acquisition.sources?.some(source => source.type === `Junk`) ||
@@ -331,8 +352,53 @@ function findItemDataProblems(itemData) {
 			...(item.acquisition?.mapSources?.markers || []),
 			...(item.acquisition?.mapSources?.maps || []).flatMap(source => source.markers || []),
 		].map(marker => marker.type);
-		if (mappedMarkerTypes.some(type => type === `Supply` || /^Salvage Rank/u.test(type))) {
-			problems.push(`${item.name}: supply drops and salvage sources must remain textual instead of being mapped.`);
+		if (mappedMarkerTypes.some(type => /^Salvage Rank/u.test(type))) {
+			problems.push(`${item.name}: salvage sources must remain textual instead of being mapped.`);
+		}
+	}
+	const mappedItems = itemData.Items.filter(item => item.acquisition?.mapSources);
+	for (const item of mappedItems) {
+		const markers = [
+			...(item.acquisition.mapSources.markers || []),
+			...(item.acquisition.mapSources.maps || []).flatMap(source => source.markers || []),
+		];
+		if (markers.some(marker => marker.type === `Supply` || /^Salvage Rank/iu.test(marker.type))) {
+			problems.push(`${item.name}: Supply Drops and broad salvage pools must remain unpinned.`);
+		}
+		if (markers.some(marker => [`compact`, `density`].includes(marker.style))) {
+			problems.push(`${item.name}: standard map pins must use the uniform Lamball-sized presentation.`);
+		}
+		if (markers.some(marker => /Treasure Map \d Sources/iu.test(marker.label || ``))) {
+			problems.push(`${item.name}: Treasure Map legends must use player-facing rarity or source wording.`);
+		}
+		for (const chestMarker of markers.filter(value => (value.legendType || value.type) === `Treasure`)) {
+			const regionalSpawner = chestMarker.locationSet === `worldTreeTreasureChests` || chestMarker.href === `SkyIsland_Treasure`;
+			if (!regionalSpawner && (!Number.isInteger(chestMarker.treasureGrade) || !Array.isArray(chestMarker.lotteryFields) || !chestMarker.lotteryFields.length)) {
+				problems.push(`${item.name}: treasure-chest map markers require a decoded grade and exact lottery field IDs.`);
+			}
+		}
+	}
+	for (const legalItem of itemData.Items.filter(value => Number(value.properties?.bLegalInGame ?? 0) !== 0)) {
+		for (const chestSource of (legalItem.acquisition?.sources || []).filter(value => value.type === `Treasure`)) {
+			for (const entry of chestSource.entries || []) {
+				const regionalSummary = /^\d+ (?:Sunreach|World Tree) chest locations$/u.test(entry.location || ``);
+				if (!regionalSummary && (!/^((?:Regular|Bronze Key|Purple|Silver|Gold|Gold Key) Chests)$/u.test(entry.chestTier || ``) || !String(entry.lotteryField || ``).trim())) {
+					problems.push(`${legalItem.name}: treasure sources must name their chest tier and retain the exact game lottery field ID.`);
+				}
+			}
+		}
+	}
+	const treasureMapLoot = itemData.Items.filter(item => item.acquisition?.sources?.some(source => source.type === `Treasure Maps`));
+	if (treasureMapLoot.length !== 245) {
+		problems.push(`Expected 245 local card records backed by current Treasure Map loot tables, found ${treasureMapLoot.length}.`);
+	}
+	for (const item of treasureMapLoot) {
+		const entries = item.acquisition.sources.find(source => source.type === `Treasure Maps`).entries;
+		const markers = [...(item.acquisition.mapSources?.markers || []), ...(item.acquisition.mapSources?.maps || []).flatMap(source => source.markers || [])];
+		if (!item.acquisition.map || !markers.some(marker => marker.legendType === `Treasure Map`) ||
+			entries.some(entry => !/^(?:Common|Uncommon|Rare|Epic|Legendary) Treasure Map$/u.test(entry.location) ||
+				!/^\d+(?:\.\d+)?%$/u.test(entry.probability || ``))) {
+			problems.push(`${item.name}: Treasure Map loot requires rarity-qualified probabilities and gold source-map markers.`);
 		}
 	}
 	for (const excludedName of [`Common Egg`, `Mimog Effigy`]) {
@@ -340,97 +406,26 @@ function findItemDataProblems(itemData) {
 			problems.push(`${excludedName}: intentionally non-location-based items must remain unmapped.`);
 		}
 	}
-	const ancientSphere = itemData.Items.find(item => item.name === `Ancient Sphere`);
-	const worldTreeChests = GAME_SOURCE_DATA.fixedLocationSets?.worldTreeTreasureChests;
-	if (worldTreeChests?.sourceAsset !== `Pal/Content/Pal/Blueprint/MapObject/Spawner/BP_PalMapObjectSpawner_Treasure_WorldTree` ||
-		worldTreeChests.map !== `worldtree` || worldTreeChests.markers?.length !== 38) {
-		problems.push(`Game source data must retain all 38 World Tree treasure chest locations and their game spawner asset.`);
-	}
-	const projectedWorldTreeChests = worldTreeChests ? fixedLocationMarkers(worldTreeChests) : [];
-	if (projectedWorldTreeChests.some(marker => marker.pos.X < 347351.5 || marker.pos.X > 689148.5 ||
-		marker.pos.Y < -818197 || marker.pos.Y > -476400)) {
-		problems.push(`World Tree treasure chest coordinates must project inside the World Tree map bounds.`);
-	}
-	const ancientSphereMapPanels = ancientSphere?.acquisition?.mapSources?.maps || [];
-	if (ancientSphere?.acquisition?.map !== `data/item-maps/ancient-sphere-sources.png` ||
-		!ancientSphereMapPanels.some(panel => panel.map === `palpagos` && panel.markers?.some(marker => marker.href === `SkyIsland_Treasure`)) ||
-		!ancientSphereMapPanels.some(panel => panel.map === `worldtree` &&
-			panel.markers?.some(marker => marker.type === `Fishing Spot`) &&
-			panel.markers?.some(marker => marker.locationSet === `worldTreeTreasureChests`)) ||
-		!ancientSphere.acquisition.sources?.some(source => source.entries?.some(entry => entry.location === `76 Sunreach chest locations`)) ||
-		!ancientSphere.acquisition.sources?.some(source => source.entries?.some(entry => entry.location === `38 World Tree chest locations`))) {
-		problems.push(`Ancient Sphere: missing combined Sunreach and World Tree treasure chest acquisition mapping.`);
-	}
-	const regionalChestRules = [
-		[`SkyIsland_Treasure`, `palpagos`, `76 Sunreach chest locations`, marker => marker.href === `SkyIsland_Treasure`],
-		[`WorldTree_Treasure`, `worldtree`, `38 World Tree chest locations`, marker => marker.locationSet === `worldTreeTreasureChests`],
-	];
-	const mapLayouts = new Map();
-	for (const item of itemData.Items) {
-		if (item.acquisition?.map && item.acquisition.mapSources) {
-			const layout = JSON.stringify(item.acquisition.mapSources);
-			const previous = mapLayouts.get(item.acquisition.map);
-			if (previous && previous !== layout) {
-				problems.push(`${item.acquisition.map}: shared map filename has conflicting marker layouts.`);
-			}
-			mapLayouts.set(item.acquisition.map, layout);
-		}
-		for (const [pool, map, location, matchesMarker] of regionalChestRules) {
-			if (!item.acquisition?.lootPools?.some(entry => entry.pool === pool)) {
-				continue;
-			}
-			const treasure = item.acquisition.sources?.find(source => source.type === `Treasure`);
-			const panels = item.acquisition.mapSources?.maps || (item.acquisition.mapSources?.map ? [item.acquisition.mapSources] : []);
-			if (!treasure?.entries.some(entry => entry.location === location) ||
-				(item.acquisition.map && !panels.some(panel => panel.map === map && panel.markers?.some(matchesMarker)))) {
-				problems.push(`${item.name}: incomplete derived ${pool} source or map markers.`);
-			}
-		}
-	}
-	const mediumTrainingManual = itemData.Items.find(item => item.name === `Training Manual (M)`);
-	if (mediumTrainingManual?.acquisition?.mapSources?.markers?.some(marker => marker.href === `Treasure_Element_Desert`) ||
-		mediumTrainingManual?.acquisition?.sources?.some(source => source.entries?.some(entry => entry.location === `Treasure Element Desert`))) {
-		problems.push(`Training Manual (M): Desert elemental chests are not an obtainable source.`);
-	}
 
-	const journalCollections = [
-		[`Palpagos Journals`, `55 Palpagos locations`, `data/item-maps/palpagos-journals.png`, `palpagos`],
-		[`World Tree Journals`, `9 World Tree locations`, `data/item-maps/worldtree-journals.png`, `worldtree`],
-	];
-	for (const [name, location, map, region] of journalCollections) {
-		const item = itemData.Items.find(candidate => candidate.name === name);
-		if (!item?.localOnly || item.category !== `Collectible` || item.acquisition?.map !== map ||
-			item.acquisition?.sources?.[0]?.entries?.[0]?.location !== location ||
-			item.acquisition?.mapSources?.map !== region ||
-			!item.acquisition?.mapSources?.markers?.some(marker => marker.type === `Journals`)) {
-			problems.push(`${name}: missing curated collectible metadata, location total, or map source.`);
-		}
-		if (!fs.existsSync(path.resolve(PROJECT_ROOT, map))) {
-			problems.push(`Missing generated journal map at ${map}.`);
+	for (const journalMap of [`data/item-maps/palpagos-journals.png`, `data/item-maps/worldtree-journals.png`]) {
+		if (!fs.existsSync(path.resolve(PROJECT_ROOT, journalMap))) {
+			problems.push(`Missing generated journal map at ${journalMap}.`);
 		}
 	}
-	const journalEntries = itemData.Items.filter(item => item.journalEntry);
-	const expectedJournalCounts = { palpagos: 55, worldtree: 9 };
-	for (const [region, expected] of Object.entries(expectedJournalCounts)) {
-		const regionalEntries = journalEntries.filter(item => item.journalEntry.region === region);
-		if (regionalEntries.length !== expected) {
-			problems.push(`${region}: expected ${expected} individual journal records, found ${regionalEntries.length}.`);
-		}
+	const journals = itemData.Items.filter(item => item.journalEntry);
+	if (journals.length !== 64) {
+		problems.push(`Journal catalog must contain all 64 installed Note master rows.`);
 	}
-	for (const item of journalEntries) {
-		const marker = item.acquisition?.mapSources?.markers?.[0];
-		if (!item.localOnly || item.category !== `Collectible` || marker?.type !== `Journals` ||
-			marker.item !== item.journalEntry.sourceName || item.acquisition?.sources?.length !== 1 ||
-			Object.values(item.stats || {}).filter(value => value === `N/A`).length < 4 ||
-			!item.iconUrl?.startsWith(`data/items/journals/`) ||
-			!item.journalEntry.textureAsset?.startsWith(`Pal/Content/Pal/Texture/Note/T_Note_`)) {
-			problems.push(`${item.name}: invalid individual journal metadata or standard N/A fields.`);
-		}
-		if (!item.iconUrl || !fs.existsSync(path.resolve(PROJECT_ROOT, item.iconUrl))) {
-			problems.push(`${item.name}: missing individual journal artwork.`);
-		}
-		if (!item.acquisition?.map || !fs.existsSync(path.resolve(PROJECT_ROOT, item.acquisition.map))) {
-			problems.push(`${item.name}: missing individual journal map.`);
+	if (journals.some(journal => !journal.id || !journal.name || !journal.description || !journal.acquisition?.mapSources?.markers?.length || !journal.acquisition?.map)) {
+		problems.push(`Every journal item must include its game ID, title, text, placed marker, and individual map.`);
+	}
+	if (journalData.Journals?.length !== 64 || journalData.Journals.some(journal =>
+		!journal.description || !/^data\/item-maps\/journal-(?:palpagos|worldtree)-.+\.png$/u.test(journal.map || ``))) {
+		problems.push(`The /journal catalog must contain all 64 localized texts with individual journal maps.`);
+	}
+	for (const title of [`Suppression Operation Comms Log`, `Ancient Recorder`, `(A scorched piece of paper)`]) {
+		if (!journals.some(journal => journal.name === title)) {
+			problems.push(`Journal catalog is missing ${title}.`);
 		}
 	}
 

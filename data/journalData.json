@@ -1,0 +1,518 @@
+{
+	"buildId": "24467282",
+	"generatedAt": "2026-08-04",
+	"Journals": [
+		{
+			"id": "WorldTreeBoss6",
+			"title": "(A scorched piece of paper)",
+			"description": "Why?\nThat child and I...\nWhat did we do to deserve this?\n\nThe houses are burning down.\nThe people are melting away.\n\n\nAnd yet, my heart feels... lighter, somehow.\n\n\nOh.\nSo... this must be how I truly feel.\nHow long has it been since a smile last crossed my face?\n\nLet our march begin.\n\nUntil your wrath and mine burn this entire planet to a cinder.\n\n...Auri.\nI'm sorry I couldn't be who you wanted me to be.",
+			"map": "data/item-maps/journal-worldtree-a-scorched-piece-of-paper.png",
+			"mapKey": "worldtree",
+			"placed": true
+		},
+		{
+			"id": "ForestBoss4",
+			"title": "A letter penned in crude handwriting:",
+			"description": "|Deer Sir,\n\nThankyou for helping my injurys yestrday.\nAnd thankyou for helping the Pal with me too.\n\nIt didn't get hert from fighting other Pals.\nPeoples was being meen to it.\n\nDo those peeple hate Pals for some reasun?\n\nI love Pals alot. Lots of my frends love Pals too.\n\nThats why I hope somday we can work togathr and show all those meen Pal-hating adults how cute Pals reely are.\n\nWil you help us, sir?|",
+			"map": "data/item-maps/journal-palpagos-a-letter-penned-in-crude-handwriting.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "WorldTree3",
+			"title": "Ancient Recorder:",
+			"description": "|It's true that connecting with the World Tree will allow you to surpass your human limits. But if you do that, what will happen to all of you?!|\n\n|We are prepared for the consequences. I have already lost everything... my wife, my child, my home.|\n\n|So you'll stay here, conscious for practically an eternity?!|\n\n|There is nothing left for us. The only thing we can do is to leave a flickering spark for those who follow.|\n\n|...Besides, this is our sin to bear. If only I had understood her just a little more...|\n\n|I'm sorry. I wish I weren't so powerless...|\n\n|Lady Auri... we leave the rest to you. The survivors will need a guide.|\n\n|...I promise you. I'll make sure they carry your will with them into the future. So leave that to me... and please go and stop Zenara.|",
+			"map": "data/item-maps/journal-worldtree-ancient-recorder.png",
+			"mapKey": "worldtree",
+			"placed": true
+		},
+		{
+			"id": "WorldTree1",
+			"title": "Audio Recording from a Council Meeting:",
+			"description": "|The people grow more suspicious by the day; a riot could break out at any moment. We need to address this immediately.|\n\n|Tch... All this hysteria just because a few leaves fell from the World Tree. In the first place, we still know absolutely nothing about that monstrous tree!|\n\n|But that is the nature of the public. The World Tree was their unwavering symbol. Seeing its leaves wither and drop is more than enough to spark panic.|\n\n|What they're truly suspicious of is the white dragon. Rumors are spreading that we intend to use the creature to bring about disaster.|\n\n|Absurd! ...And yet, we cannot simply leave it unaddressed. What is the status of Zenara's findings?|\n\n|Unfavorable, apparently. Furthermore, her recent experimental logs have been incredibly vague.|\n\n|...She’s hiding something. Vexing as she is, her genius is undeniable. She has made a breakthrough, and she intends to keep us in the dark.|\n\n|No doubt she stumbled upon a harsh truth. One that inconveniences her ridiculous fantasy of coexisting with all living things.|\n\n|So, how do we proceed?|\n\n|...Freeze the project. By whatever means necessary, neutralize the white dragon in a highly visible manner, and parade that fact to the public.|\n\n|Understood. I will notify Zenara of—|\n\n|Don't bother. We have no time to waste debating a naive girl. At the end of the day, she is merely a single researcher. Cut her loose.|",
+			"map": "data/item-maps/journal-worldtree-audio-recording-from-a-council-meeting.png",
+			"mapKey": "worldtree",
+			"placed": true
+		},
+		{
+			"id": "SorajimaBoss1",
+			"title": "Auri's Diary - 1",
+			"description": "I've decided to start a diary on a total whim. \nIt’s a human custom, or so I was told by a human kid a long time ago. \nApparently, you’re supposed to write down whatever caught your attention that day.\n\nIn a life as long as mine, a single day is practically nothing. \nBut that kid managed to leave behind a whole mountain of diaries during the brief moment I stepped away to indulge in a little nap. I figured I might as well try imitating them.\n\nRight now, I'm staying on a remote island. \nThere's an incredible abundance of lifeforms packed into this tiny space, and they all have the most absurdly diverse traits.\n\nIt's a thoroughly unnatural, bizarre sight, and the culprit is almost certainly that giant tree. \nA massive amount of life force flows from its roots and circulates through the island, shaping everything here. \nIt feels like an excessive power, one that defies the natural order...\n\nIt looks pretty fun, so I think I’ll hang around this island for a while! \nWell, that about wraps it up for the first day of my whimsical diary.\n\nIf the mood strikes me, I'll write another entry. \nMaybe in a century or two.",
+			"map": "data/item-maps/journal-palpagos-auris-diary-1.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SorajimaBoss2",
+			"title": "Auri's Diary - 2",
+			"description": "These human creatures are certainly extraordinary.\nIf I had to describe them in a single word, it would be |insatiable.|\nThey’re never satisfied, and they don't know when to stop.\n\nSure, the differences between individuals can be huge...\nBut as a whole, they are always aiming for the |top,| always looking for what's |next.| \nThey fix their sights and just charge straight ahead.\n\nIn the few centuries since I settled on this island, they've built the most advanced civilization on the planet. \nAnd that giant tree... I think they called it the |World Tree|?\n\nAlthough they owe many of their blessings to that tree, their fast development is still mind-boggling. \nAnd honestly, I've grown quite fond of them. They never tire me out; watching them is just so much fun.\n\nLately, it seems they've been pooling all their resources into researching a life-form that fell from the distant stars. \nIt sounds like a blast, so I'm thinking about dropping in to say hello.\n\nTo a human, I am an existence that defies all logic.\nThat's why I've always decided not to involve myself too much in their affairs.\nA power as overwhelming as mine could easily shatter this world's harmony, after all.\n\nBut you know what? Whatever!\nThe World Tree is already an overwhelming force.\n\nI will get involved, but I'll be sure to suppress my powers.\nYeah, let's go with that!",
+			"map": "data/item-maps/journal-palpagos-auris-diary-2.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SorajimaBoss3",
+			"title": "Auri's Diary - 3",
+			"description": "A bit of time has passed since I started mingling with humans. \nThis is the first time I've ever written another entry so soon after the last one, \nbut I just met a truly incredible human.\n\nHer name is Zenara.\nWhen we first met, I could hardly believe she was human at all. \nOf course, she looks the part. \n\nBut her eyes—the place her gaze is fixed upon—\nis entirely different from any human I've ever known. \nIt’s as if she is always looking down at the world from up high...\n\nAnyway, she’s definitely going to be someone big. \nI found out she's also the one leading the research on that life-form from the stars. \nWell, of course she is. She's what you'd call a once-in-a-generation genius.\n\nOn top of that, she is incredibly earnest and kind-hearted. \nHumans treat the other creatures on this island—they call them |Pals|—in all sorts of ways. \n\nSome abuse them, some exploit them, some treasure them... \nBut Zenara... She wants |coexistence.|\n\nShe spoke to me of building a paradise where humans and Pals \ncan connect their hearts across the boundaries of species, living together in harmony.\n\nI'm genuinely looking forward to it. \nI've witnessed so much of the history that humanity has spun, \nbut I have never once seen a world like the one she envisions.\n\n...By the way, while we were having that chat at the base of the World Tree, \nI started to feel a bit strange. It's odd. \nFor a being like me, the concepts of health and sickness aren't supposed to exist...",
+			"map": "data/item-maps/journal-palpagos-auris-diary-3.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SorajimaBoss4",
+			"title": "Auri's Diary - 4",
+			"description": "That day came without warning. \nBy the time I sensed the bizarre presence and leapt to my feet, |it| had already begun.\n\nThe human civilization that had spread from the base of the World Tree to cover the entire island... \nits light was being extinguished at that very moment.\n\nAs I debated whether to descend to the surface to check the situation, \na sickening terror ran down my spine. \nThere was no doubt about it—what I was sensing was the source of this disaster.\n\nAfter burning most of the surface to ash, \nit tore through the sky at a speed completely unbefitting of a living creature... \nintent on bringing ruin to Sunreach.\n\nI'd promised myself that I wouldn't lend my powers to short-lived mortals,\nand yet I'm surprised how easily I broke that promise.\nIt just goes to show how much I've come to love this place…\n\n...I didn't hold back. \nI split lakes, shattered hills, sacrificed a massive portion of this land—\nand even then, I lost.\n\nThat thing was feeding off the planet itself. \nThe more a creature's life force is deeply rooted in this world—like nature, or like myself—\nthe more easily its power is drained in its presence. \nBefore that beast, we are like helpless infants.\n\nHad the battle drawn out any longer, it would've ended in my death.\nIf it weren't for their help…\n\nIn the face of death, the human children and their powerful Pals put their very lives on the line.\nBecause they fought to the end to seal the monster inside the World Tree, I am still breathing.\n\nIt's pathetic, really. \nI, who am supposed to possess such immense power and live for eons... \nam only alive right now because of their sacrifice.\n\n...I have a duty to end this calamity, once and for all.",
+			"map": "data/item-maps/journal-palpagos-auris-diary-4.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SorajimaBoss5",
+			"title": "Auri's Diary - 5",
+			"description": "Ever since the monster was sealed away, I've been running all over the place, \nand I've finally got a handle on how bad things really are.\n\nThe humans no longer have the strength left to rebuild or maintain their civilization. \nFor the handful who managed to survive, their only path forward is \nto keep passing on the fragile spark of life to the next generation, and the one after that.\n\nSince they've lost their advanced means of transportation,\nI've decided to step in and guide the people who survived here in Sunreach. \nBut before that, there's something I must do…\n\n...Someday, the calamity will befall us again.\nEven now, trapped inside the seal, that beast continues to feast on the World Tree.\nIt may be millennia before that second coming, but it will inevitably come.\n\nI wasn't enough to stop it. \nThe one to truly slay that thing... it has to be a human.\n\n...Some of the Pals who fought alongside humanity managed to survive. \nA clan that has protected the seas since antiquity: the <characterName id=|KingWhale|/>.\nI managed to find a calf and its mother, though both were on the verge of death.\n\n...The mother didn't have much time left. \nWith her help, I decided to erect a barrier \nso that those without power cannot reach the World Tree.\n\nEven those who chose to continue their struggle from within the Tree, \nthey still gave me their blessing.\n\nAfter spending the last of her strength, the <characterName id=|KingWhale|/> entrusted her calf to me.\nIn the distant future, when a human comes to put a true end to the calamity, that child will serve as their guide.\n\nI'll do my part to help, too.\nThat is, after all, my sole purpose and duty as a survivor of the calamity.",
+			"map": "data/item-maps/journal-palpagos-auris-diary-5.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SorajimaBoss6",
+			"title": "Auri's Diary - 6",
+			"description": "It's been a long time since I last wrote in this diary.\nBut the moment I've been waiting for is finally drawing near.\n\nBefore long, they will overcome every obstacle... \nand stand right here before me.\n\nI don't intend to pull my punches, of course, \nbut I am absolutely certain.\nThat human child is the one who will put an end \nto this endless, waking nightmare of a calamity.\n\nWell then! I'd better get ready to greet them with a big smile!\nI've even trained hard with my trusty Pal for just this moment.\n\n...At last, I can finally repay humans for my salvation.\nAnd I can finally lay her —them— to rest.\n\n...I've kept you waiting far too long, Zenara.",
+			"map": "data/item-maps/journal-palpagos-auris-diary-6.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "VolcanoBoss1",
+			"title": "Axel Travers' Diary - 1",
+			"description": "Every day I'm snorin', no rivals to get me goin'.\nI don't care 'bout they type, ain't nobody gonna beat my hype.\n\nI'm lookin' for a fight, a real tough brotha from another motha; throwin' in the towel ain't gonna cut it.\nIt's gotta be a knockout, a throw down brawl out, so fast ya eyes'll bleed.\n\nWhen we ready for the battle, you better believe the shock's gonna rock yo socks off.\nSawed off; my lightning is tougher than high kings; when it hits the ring, ain't nobody gonna be singin' for you, playa.\n\nYou ready for this hype?\nYou read the words, so get ready for the fight.",
+			"map": "data/item-maps/journal-palpagos-axel-travers-diary-1.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "VikingBoss1",
+			"title": "Bjorn Seligsson’s Diary - 1",
+			"description": "I have pursued strength relentlessly for that day, which may or not come.\nHave I ever doubted this path, even once?\nNay.\n\nAnd it seems I shall not end as a fool.\nThe nuisance will surely find its way here.\n\nLong ago, the wise ones,\nwith the light of their wisdom,\nraised the towers on these islands\nas the foundation of a fleeting peace.\n\nNow, as it rises to stir chaos,\nthe nuisance will see them clearly.\nHow ironic.\n\nIs it all bad?\nNay.\n\nThanks to this ever-present reminder,\nI shall not forget my duty.\n\nFor the many nameless souls of the past,\nI shall slay this nameless outsider.\n\nThe burden shall be fulfilled.",
+			"map": "data/item-maps/journal-palpagos-bjorn-seligssons-diary-1.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "VikingBoss2",
+			"title": "Bjorn Seligsson's Diary - 2",
+			"description": "This place is cursed.\nNay, it is I and <characterName id=|SnowTigerBeastMan|/> who are cursed.\n\nThousands of years ago,\nwhen a colossal fortress still stood in this land.\nreaching towards the heavens.\n\nIt appeared suddenly.\n\nThe heavens shattered and we fell disgracefully.\nOur kin, who once looked down upon others from the sky,\nfled in panic, scattered in disgrace.\n\nBut I —nay, my ancestors— alone,\ndid not abandon this land, reduced to ashes, nor its people.\n\nFallen from the sky, we gathered the bewildered folk,\nand bared our fangs against it.\n\nForm that moment, we forged an unchanging resolve,\nbecoming the people of the Feybreak.\n\nAnd so, my kin, who once merely sullied the lowest ranks,\ntook a new throne and vowed to bear all burdens.",
+			"map": "data/item-maps/journal-palpagos-bjorn-seligssons-diary-2.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "VikingBoss3",
+			"title": "Bjorn Seligsson’s Diary - 3",
+			"description": "The battle against it did not end.\nEven with the aid of the thunder dragon,\na pair of celestial horses, and a wise paladin,\nwe could not bring about its destruction.\n\nThe celestial horses, determined not to let it escape,\nshrouded the island in an unending winter night.\nThe black pegasus melted into the night and vanished.\nThis land became still, unseen, and leaving the island became impossible.\n\nThe paladin, ashamed of his failure,\nsplit himself in two, vowing to never show mercy again.\n\nThe dragon vanished into the skies beyond the clouds, disappearing from sight.\nIn hindsight, perhaps it has now returned because it has sensed the coming of that day.\n\nAnd now, here we are.\nIt still slumbers.\n\nDo I guard this land\ntruly for the sake of duty?\nNay.\n\nNo matter the pretense, I cannot hide it.\nPerhaps I simply wish to meet a worthy foe.",
+			"map": "data/item-maps/journal-palpagos-bjorn-seligssons-diary-3.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "VikingBoss4",
+			"title": "Bjorn Seligsson’s Diary - 4",
+			"description": "I wonder if the lone daughter of the blood of Rayne is well.\nI did her a disservice.\nIn any case, the last time I saw her, she was still at her mother’s breast.\nShe will not remember me.\n\nHer father and I never saw eye to eye.\nHe was not a man driven by duty or the past.\n\nOn the day we parted ways, I gave him a |final test.|\nA foolish pretense.\nIn the end, it was nothing more that childish spite.\n\nSurprisingly, he accepted without hesitation.\nHe turned out to be a man of principle, more than I had expected.\nIt was surely a task even a child could manage.\nBut he never returned.\n\nSince then, the young ones gathered around him\nwere left without leadership, but it seems his daughter has taken the helm\nand brought back some semblance of order.\n\nThough our paths diverged, she has faithfully upheld the mission to guard the tower.\nIndeed, she is truly your child.",
+			"map": "data/item-maps/journal-palpagos-bjorn-seligssons-diary-4.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "VikingBoss5",
+			"title": "Bjorn Seligsson’s Diary - 5",
+			"description": "If... just if...\neverything were to end.\nand I were freed from all burdens.\n\nWhat would I do?\nAn old man with little time left,\nwhat would I do?\n\nSurely, I would continue to fight.\nUntil I crumble to dust.\n\nThe world must be vast.\nSurely, there are warriors beyond my imagination.\ncountless in number.\n\nIf so, perhaps I should repair that old ship.\nIt has been too long since I last sailed the seas.\n\nAnd <characterName id=|SnowTigerBeastMan|/>, it is about time for you to as well.\nAfter dealing with the nuisance, perhaps I will seek a mate for you.",
+			"map": "data/item-maps/journal-palpagos-bjorn-seligssons-diary-5.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day0",
+			"title": "Castaway's Journal - Day 0",
+			"description": "Strangely enough, the island is shrouded in a thick fog that makes it impossible to observe from the sea.\nAttempting to steer away from the fog, I turned rudder, only to be enveloped by an even deeper fog. Just then, something attacked me!\nI have no idea where the attack came from, but my boat was all but destroyed. With nothing but wreckage left, I was still somehow able to make it to the coast.\nThis island exists in no database, a secret hidden from the world.\nWhy is it being hidden? Why doesn't it show up on any maps?\nI'm certain this is all intentional. That attack on my vessel, was it part of the efforts to conceal it?\nThere are more mysteries than I can count, but I'm determined to reveal all the secrets of this island.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-0.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day1-1",
+			"title": "Castaway's Journal - Day 1-1",
+			"description": "I found a strange device on the shore.\nIt appears to be some kind of electronic device, but its odd design is unlike anything I've ever seen.\nIt seems to be capable of recording images and displaying information about what is shown.\nI've decided to take photographs of the island using this device, and use them along with this journal to document my findings.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-11.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day1-2",
+			"title": "Castaway's Journal - Day 1-2",
+			"description": "Soon after stepping foot on the island, I discovered a living creature nearby.\nEvery creature I've found here is unlike anything I've ever seen.\nOn the other hand, normal creatures you might find on any other island seem to be almost entirely absent.\nIt seems this island has a unique ecosystem.\nI know now that its absence on any map is not the only special feature of this place.\nI've decided to use the device I found to record the various species I encounter.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-1-2.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day10",
+			"title": "Castaway's Journal - Day 10",
+			"description": "I decided to take my Pals on a bit of an excursion today.\nA tower-like structure visible in the distance had piqued my curiosity.\nAfter walking for a while, I encountered another human! When I tried to talk to them, however, they just pointed a gun at me!\nSince they're on this island, it would make sense to consider them a remnant of the ancient civilization, but their attire was that of the modern era.\nAre they, like me, outsiders? Or has the ancient civilization survived and developed here?\nIt was a dangerous situation, but my sheep Pal protected me, allowing me to escape unscathed.\nI immediately returned to my base, and found that all my Pals were safe. There's still a lot to uncover about this island.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-10.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day11",
+			"title": "Castaway's Journal - Day 11",
+			"description": "Yesterday, I had no choice but to run, but I can't stop thinking about that tower.\nJust as I decided to fashion some gear to try approaching it again,\nI heard gunfire behind me! That person from yesterday was after me.\nI couldn't sit by and do nothing. I mobilized all my Pals for a counterattack.\nBefore I knew it, they got carried away and killed the assailant... It was either their life or mine.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-11.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day12-1",
+			"title": "Castaway's Journal - Day 12-1",
+			"description": "As I started on my journey toward the tower for the second time, I once again heard the sound of gunfire.\nIt seems there are groups that have banded together and are now fighting for territory.\nI believe they're mostly using Pals to fight this battle.\nThis place isn't safe. I need to be stealthy if I'm to wander around here.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-12-1.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day12-2",
+			"title": "Castaway's Journal - Day 12-2",
+			"description": "While taking a break, I tried to figure out who those people were, but to no avail.\nIf they're outsiders like me, it doesn't make sense that nobody outside had ever heard of such a large group.\nThey must be remnants of the ancient civilization here, fighting for survival.\nI can't fathom why or how they have guns, but it seems only natural that they must've created their weapons themselves.\nThat, or it's possible they're imitating things that have drifted ashore for whatever reason.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-12-2.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day12-3",
+			"title": "Castaway's Journal - Day 12-3",
+			"description": "After a long journey, I finally managed to arrive at the tower.\nI'm nearly certain that it's a relic from the ancient civilization. However, I have no guesses as to why it was built.\nStill, I can still feel an energy flowing throughout the place, similar to that of Paldium ore.\nWhen I touched an inscribed stone slab, I found myself teleported!\nWhat I found there was an enormous Pal, and a human in control of it.\nI ran away in terror, and before I knew it, I found myself back outside the tower...",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-12-3.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day13",
+			"title": "Castaway's Journal - Day 13",
+			"description": "I've worked out that the ancients must have lived in luxury alongside the Pals. Yet, due to some unknown reason, that way of life was lost.\nPerhaps it was a massive natural disaster, or maybe a struggle broke out for scarce Pals and resources.\nThen again, maybe it has something to do with the teleportation I experienced in the tower. Supposing that some power is responsible for that spatial teleportation (perhaps similar to how the Pal spheres work?), what would happen if that power were utilized in other ways?\nA power so great that humans could not control it... Perhaps that is what destroyed the civilization on this island.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-13.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day15",
+			"title": "Castaway's Journal - Day 15",
+			"description": "I'd tried to avoid thinking about it, but I've run out of the food I brought, and I'm tired of eating berries.\nI happened upon a Pal eating the flesh of another Pal.\nIt looked so delicious... I can't say I was proud to think as much, but sometimes sacrifices are necessary.\nI captured a wild chicken Pal, butchered it, and cooked it for dinner.\n...Delicious! The sensation of eating meat was enough to make tears run down my face.\nWhether in killing fellow men or Pals, this island has a way of making one forget about their ethics.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-15.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day18",
+			"title": "Castaway's Journal - Day 18",
+			"description": "I decided to distance myself from the tower and have begun to explore other areas.\nThere are places in each area that appear to be vast caverns.\nThey appear to have traces of human involvement, and contain ore veins.\nCould someone have used Pals to dig those holes?\nI can't help but feel overwhelmed by the neverending mysteries, but my Pals come with me no matter where I go.\nAs long as I have food to give them, that is.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-18.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day22",
+			"title": "Castaway's Journal - Day 22",
+			"description": "What on earth was that huge Pal?!\nI was simply walking along an open field when I encountered a massive Pal the likes of which I'd never seen before.\nI fled in surprise, but if I were to tame a Pal like that, I'd have nothing to fear on this island.\nThe existence of a Pal of such massive size is evidence that the Pals don't follow the laws of nature as we understand them.\nPerhaps their energy don't come from food or photosynthesis alone, but from some other source.\nThe power emanating from the tower may also be utilizing the same energy source, but through human hands.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-22.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day25",
+			"title": "Castaway's Journal - Day 25",
+			"description": "After living with Pals for a while, I've come to realize they don't breed like normal animals.\nAll it takes is the presence of a male and female pair. With some time, an egg simply appears.\nFurthermore, it seems that the bodies of dead Pals simply vanish.\nWhere do Pals come from and where do they go? These mysteries have no end in sight.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-25.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day29",
+			"title": "Castaway's Journal - Day 29",
+			"description": "Utilizing an inscription I found in some ruins, I managed to compress the size of Pal Spheres even further.\nApplying the method for remotely moving Pals, I can now also teleport the Spheres themselves.\nThis has made organizing and managing my Pals much easier.\nIt isn't hard to imagine that the ancients must have also moved and managed a large number of Pals simultaneously.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-29.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day3",
+			"title": "Castaway's Journal - Day 3",
+			"description": "I discovered what appears to be an ancient ruin while exploring the island. Did humans once live here?\nFinding some kind of mural on the walls, I found that it was none other than instructions on how to make that strange sphere from before!\nUsing Paldium, the name I've given to the blue ore found throughout the island, as a catalyst, it's possible to transform mere wood and stone into one of these spheres.\nI must record this method of production on my device.\nThere happened to be a weakened Pal near me, unable to move. Rolling a sphere towards it, I was able to capture another Pal.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-3.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day30",
+			"title": "Castaway's Journal - Day 30",
+			"description": "It's been a month since I arrived on Palpagos Island. I've grown quite used to living here.\nLately, I've had Pals make weapons and equipment for me.\nA few pals seem to have taken an interest in guns, so I've devised weapon designs for their use.\nSome are quite adept at handling them, and I'm sure they'll be all the more reliable in the coming battles.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-30.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day32",
+			"title": "Castaway's Journal - Day 32",
+			"description": "I was caught off-guard. On what was supposed to be a short excursion, a group of dangerous nocturnal Pals attacked me, and I was injured.\nWhy are the Pals who live on this island so aggressive?\nI can't help but feel their attacks are well beyond what is necessary for self preservation.\nHumans, for example, will engage in bloody war at the behest of a leader. Similarly, the Pals living here seem to be fighting for the very island itself.\nI suspect they harbor some deep, instinctive drive to protect this place.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-32.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day38",
+			"title": "Castaway's Journal - Day 38",
+			"description": "Having now journeyed far from where I first drifted ashore, I've come across a massive statue in the shape of a Pal.\nIt's most certainly a legacy of the ancient civilization,\nbut why would they build such statues?\nEverything I've found thus far has suggested that Pals lived alongside these ancients as equals,\nbut the existence of monuments like these suggest that some were objects of worship.\nPerhaps there are certain Pals out there that have a special significance to both people and Pals.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-38.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day5",
+			"title": "Castaway's Journal - Day 5",
+			"description": "I've since befriended several Pals.\nSome are similar to sheep and birds, others to cats... Each also appears to be skilled at different kinds of work.\nThey divvy up work amongst themselves and make life easier for me here. I'm sure the ancient civilization must have prospered with the help of the Pals.\nPals are not necessarily intelligent, but they all work quite diligently.\nThose ruins were most certainly built by Pals, but there must be some reason why they were destroyed.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-5.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day6",
+			"title": "Castaway's Journal - Day 6",
+			"description": "Something has bothered me since I arrived here. Far off in the distance, I can see what looks like an enormous tree - big enough to be the so-called |World Tree| spoken about in so many myths.\nStill, it's so large that no amount of fog would be enough to obscure it from view from outside the island.\nThe only hypothesis I can come up with is that something other than the fog enveloping this island prevents it from being seen by the outside world.\nIn other words, some kind of mechanism must be preventing it from being seen from the outside.\nIt seems likely that the mysterious powers of the Pals have have something to do with it.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-6.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day8",
+			"title": "Castaway's Journal - Day 8",
+			"description": "I caught sight of a Pal riding on the back of a deer-like Pal.\nThinking it was a great opportunity to try something new, I tried attaching a saddle to a similar Pal and riding it.\nIt went better than expected: the Pal was quite easy to ride. This will make it much easier to explore the island.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-8.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day-xx",
+			"title": "Castaway's Journal - Day XX",
+			"description": "This world harbors a secret.\nI was convinced of this when I began reexamining the globe's geographical features for my research towards the end of last year.\nLooking over the islands of the world, I noticed that a certain area was strangely |empty.|\nI knew there was something there. I couldn't believe how I'd overlooked such an obvious absence in this location.\nWithin a few months, I was able to prepare, and produce an estimated location of an island based on my hypothesis.\nWith that, I set out for the island alone by boat.",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-xx.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "Day2",
+			"title": "Castaway's Journal Day 2",
+			"description": "As I explored around on foot, I found a sphere emitting a strange blue light.\nI threw it without much thought, and the creature it landed near transformed into what seemed to be light, as though absorbed by the sphere.\nNot believing my eyes, I picked up the sphere, and the creature reappeared and stared at me with what seemed like an amicable expression.\nAs I began to create a shelter to protect me from the elements, the creature astonishingly began to help me.\nHow useful. Wanting to deepen my connection with it, I've decided to name its kind |Pals|.\nTo match, I've named this archipelago the |Palpagos Islands.|",
+			"map": "data/item-maps/journal-palpagos-castaways-journal-day-2.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "ForestBoss1",
+			"title": "Lily Everhart's Diary - 1",
+			"description": "Pals. Such strange creatures.\nThese noble beings have upheld our civilization since ancient times.\nThey not only boast impressive intellect, physical prowess, and adaptability,\nbut are adorable to look at as well. How could anyone not come to love them?\nHumans are savage animals.\nWith an insatiable appetite for the proliferation of their own kind, they subjugate other species and enslave them.\nThey engage in pointless strife, consume flesh for no reason, and develop beyond their needs.\nWhen one takes into account their hideous appearance, how could anyone not detest them?\nHumans capture Pals and exploit them.\nIf a Pal is confined to a so-called Pal Sphere, it becomes obedient to its wielder.\nWhat abhorrent tools. One can only say this is the greatest stain in the history of our civilization.\nPals and humans were originally meant to live alongside each other in mutual support.\nNot a relationship between master and servant, but one of equals - a harmonious coexistence, if you will.\nThere is nothing more blasphemous than eating Pals for food.",
+			"map": "data/item-maps/journal-palpagos-lily-everharts-diary-1.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "ForestBoss2",
+			"title": "Lily Everhart's Diary - 2",
+			"description": "I'll never forget the day I met <characterName id=|LilyQueen|/>.\nI remember that the fog was so thick that day that I could barely see in front of my own eyes.\nI was simply walking along the berry fields, as I am fond of doing,\nwhen I heard the clamorous voices of those abhorrent poachers.\nWhen I looked to where I could hear the sound of their filthy screams, I saw them throwing Spheres at a Pal resembling a vivid lily flower.\nShe was so beautiful and elegant.\nAt that moment, I knew what I must do.\nI pierced their wicked hearts from behind and destroyed their scattered Spheres.\nThey shot at me a few times, but it was a trivial matter.\nUnable to corrupt such a beautiful flower with my trembling, bloodstained hands, I immediately turned to return home.\nInstead, I saw the queen of the lilies, in front of me.\nWhen she touched my hand, my wounds were healed, and the fatigue began to fade away.\nFrom that day forward, I decided that I would never leave my queen.\nShe is the only flower that blooms in this sad, dark world.",
+			"map": "data/item-maps/journal-palpagos-lily-everharts-diary-2.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "ForestBoss3",
+			"title": "Lily Everhart's Diary - 3",
+			"description": "|Won't you join the Free Pal Alliance?|\n\nThe Free Pal Alliance is an organization that works to protect Pals.\nWe live in harmony with the Pals, and every one of us harbors a deep love for them.\n\nOur organization follows five basic tenets:\n1. Do not eat Pals.\n2. Do not overwork Pals.\n3. Do not abuse Pals.\n4. Do not experiment on Pals.\n5. Do not hesitate to sacrifice yourself for Pals.\n\nWon't join us and protect the Pals you love?\nYour life in service of protecting the Pals is a small price to pay.\nThe flesh and blood of humans exist only for the glory of Pals.",
+			"map": "data/item-maps/journal-palpagos-lily-everharts-diary-3.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "DesertBoss1",
+			"title": "Marcus Dryden's Diary - 1",
+			"description": "What a joke. All the idiots do around here is snort up stims. It's a real dump.\nThere's no point in even trying to control it.\nWhy the hell did I even think about forming the PIDF in a place like this.\nThe guys I arrested today couldn't even pay the damn fine.\n\nGuess it's to be expected if they spend all their damn money getting a fix.\nBet they can't even imagine the money they pay ends up lining my pockets.\nSell 'em the drugs, fine 'em for possession, then confiscate the stash and sell it all over again.\nIt's a flawless business model.\n\nThey're idiots, and I'm a genius. Just goes to show that idiocy itself is a crime.\nYou catch my drift? This island is just my little sandbox to play in.\n\nFor all I care, they can live out their sad little lives without ever knowing I'm the one supplying their fix and confiscating it.\nIf I let 'em get carried away, they'll just go off demanding rights that don't belong to garbage like themselves.",
+			"map": "data/item-maps/journal-palpagos-marcus-drydens-diary-1.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "DesertBoss2",
+			"title": "Marcus Dryden's Diary - 2",
+			"description": "Life out here's not all peace and quiet.\nThe damn wind blows, and somehow somebody's cutting into my profits.\n\nJust today, some punk little Syndicate clown who thinks he's smart\ntried selling stims without my permission.\n\nMy partner, <characterName id=|Horus|/>, is always there to deal with brainless fools that.\nJust like me, he's having fun playing in this little sandbox.\nOr maybe he just likes eating the stuff.\n\nHuh? Don't look at me like that.\nNo food today either, boy. Go eat some of that white sand.",
+			"map": "data/item-maps/journal-palpagos-marcus-drydens-diary-2.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "DesertBoss3",
+			"title": "Marcus Dryden's Diary - 3",
+			"description": "Another peaceful day on the island.\nProof that everything's smooth in our little playground, right, <characterName id=|Horus|/>?\n\nDon't worry, I get it.\nYou've got the same look in your eyes as me.\nYou're having fun too, yeah?\n\nOr maybe you're just waiting for me to fall over dead.\nYou sure do like eating that white stuff, huh?\n\nSomeday, we'll find out whether I'm just dust on your wings.\nEither ways, let's just have fun together till then, right, partner?",
+			"map": "data/item-maps/journal-palpagos-marcus-drydens-diary-3.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SakurajimaBoss1",
+			"title": "Saya Kurosaki's Diary - 1",
+			"description": "The moon on these islands remains unchanged.\nNo, is it the true nature of the moon to change its shape?\nI do not know.\n\nMany years ago,\na lost soul who washed up on the shore\nfound it strange that the moon never waned.\nAs if time itself had stopped.\n\nThat person once said the words |Crescent Moon|.\nThose words still stir my heart deeply.\n\nIt is said that when the lost moon appears in this world again, \nit will resemble nothing so much as a blade.\n\nWill I be able to witness\nthe blade of the moon that signals the beginning?\n\nTonight is also a full moon.\nToday's sake tastes awful, too.",
+			"map": "data/item-maps/journal-palpagos-saya-kurosakis-diary-1.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SakurajimaBoss2",
+			"title": "Saya Kurosaki's Diary - 2",
+			"description": "For countless ages, we have continued to protect this tower.\nThe reason is unknown.\nOur conveyed mission is only to maintain this island at a standstill.\n\nWe hunt the madmen from the snowy mountains who defile the land,\nwe hunt those who have proliferated in excess,\nthose who pontificate about research, justice, and such babble.\nTo preserve this landscape forever.\n\nYes, we merely exist here.\nOur time does not pass.\nIt has become unbearable.\n\nOnly when intoxicated by sake, intoxicated by myself,\ncan I avoid pondering such unnecessary matters.\n\nHow long has it been\nsince I can no longer enjoy the taste of alcohol?\n\nSomeone, please shine a light on this perpetual darkness.\n\nTonight is also a full moon.\nToday's sake tastes awful, too.",
+			"map": "data/item-maps/journal-palpagos-saya-kurosakis-diary-2.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SakurajimaBoss3",
+			"title": "Saya Kurosaki's Diary - 3",
+			"description": "There is disarray among the ones from the volcano.\nRumor has it their leader has changed.\n\nBefore, their ways weren't so extreme.\nBut now, \nthey are consumed by a bloody struggle against the maniacs from the white mountain.\n\nThose lunatics,\nthose unscrupulous people who disgrace this place.\nSo this situation benefits us.\n\nBut why did they start fighting now?\n\nI do not know what their leader is thinking,\nbut I hope they do not tarnish our land.\n\nTonight is also a full moon.\nToday's sake tastes awful, too.",
+			"map": "data/item-maps/journal-palpagos-saya-kurosakis-diary-3.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SakurajimaBoss4",
+			"title": "Saya Kurosaki's Diary - 4",
+			"description": "The moon has reached out to our pitiful selves.\nThe crescent moon I longed for so dearly\nis now right before me.\n\nThe everlasting darkness has lifted.\n\nIt is clear to me.\nThis creature is the one who will lead us to the end.\n\nNo matter how our time ends,\nUntil that moment, I will be with you.\n\nIncarnation of the crescent moon, blade of beginnings,\nplease illuminate our path.\n\nTonight is also a full moon.\nToday's sake tastes delicious.",
+			"map": "data/item-maps/journal-palpagos-saya-kurosakis-diary-4.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SakurajimaBoss5",
+			"title": "Saya Kurosaki's Diary - 5",
+			"description": "There is one who is trying to pull out the stakes.\nI hear the sound of the end.\n\nNow to just sit and wait.\n\nAnd so,\nus who just exist here,\nplease destroy us.\n\nWith the blade of the crescent moon,\nlet us herald the dawn of our era.\n\nAnd with death,\nwe shall be released from our shackles.\n\nTonight the moon is hidden from view.\nToday's sake is incredibly delightful.",
+			"map": "data/item-maps/journal-palpagos-saya-kurosakis-diary-5.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "WorldTree2",
+			"title": "Suppression Operation Comms Log:",
+			"description": "|Damn it, the Key Sphere's seal isn't taking?! Wasn't the selling point that it could seal any living creature?!|\n\n|Oh, right, 'in theory'—our dear scientists' favorite phrase! Easy for them to say when they aren't the ones testing it with their lives on the line! Arrogant bastards...!|\n\n|Shut up and keep shooting, you idiots! Listen to me, our orders are 'neutralization by any means necessary.' If the seal is a bust, we only have one option left!|\n\n|Heh, I guess the brass will be just as happy with a corpse. Fine by me, the gloves are off. \n\nHey! This is on you, monster! If you'd just let yourself be sealed quietly...|\n\n(After several seconds of a thunderous roar overlapping with multiple, distorted screams, the recording ends.)",
+			"map": "data/item-maps/journal-worldtree-suppression-operation-comms-log.png",
+			"mapKey": "worldtree",
+			"placed": true
+		},
+		{
+			"id": "SnowBoss1",
+			"title": "Victor Ashford's Diary - 1",
+			"description": "[On Interspecies Pal Experiments]\n\n - Results:\nFailure.\nAttempted to combine various four-legged and winged Pals, but no successful patterns emerged.\nSome combinations succeeded in creating bodies, but these deteriorated in seconds, and all were disposed of.\n\n - Impressions:\nReconsideration of compounds used for reaction suppression required. Expansion of species selected for testing also necessary.\nExtraction and formulation of compounds derived from <characterName id=|Deer|/> antlers to be revisited.\nStorage temperature conditions require review. Additional Ice Pal to be acquired for cooling purposes.\nReassessment of test species on basis of genetic data desirable.\nAnalysis of Pal genetic information now urgent. New equipment required.\nCurrent equipment originally acquired through accidental external acquisition. Further improvement limited.\nEquipment will likely need to be redesigned and constructed from scratch.",
+			"map": "data/item-maps/journal-palpagos-victor-ashfords-diary-1.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SnowBoss2",
+			"title": "Victor Ashford's Diary - 2",
+			"description": "[On the Condensation and Administration of Pals to the Same Species]\n\n - Results:\nSuccess.\nSeveral Pals of the same species dissolved into liquid and condensed under reduced pressure.\nCondensed solution subsequently administered to another Pal of the same species.\nAs expected, administration resulted in enhanced capabilities.\n\n\n - Impressions:\nExperiment initiated as an alternative approach toward the creation of more powerful Pals.\nResults unexpectedly favorable.\nTheory that |the greatest source of nutrients required by a given Pal is another Pal of the same species| appears valid.\nObserved enhancement believed to be a result of this principle. However, improvement exceeded projected values.\nSome uncertainty remains. May not be a matter of nutrients alone.\nDo Pals themselves possess a unique energy source required by their kind? Further investigation required.",
+			"map": "data/item-maps/journal-palpagos-victor-ashfords-diary-2.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "SnowBoss3",
+			"title": "Victor Ashford's Diary - 3",
+			"description": "[On Interspecies Pal Experiments 2]\n\n - Results:\nSuccess.\nSingle specimen successfully produced. Artificial creation of a new species possessing both quadrupedal characteristics and wings achieved.\nSpecimen immediately transferred to cultivation apparatus. Subsequent condition favorable. Growth proceeding normally.\nReplication attempted using identical procedures. No reproduction of results.\nSuccess determined to be a miraculous occurrence attributable to unknown external factors.\n\n - Impressions:\nSuccess of experiment a welcome outcome.\nNew species designated <characterName id=|BlackGriffon|/>. Observation to continue.\nHowever, inability to identify reproducible procedures presents a significant problem.\nFuture experiments to proceed by following current methodology with several minor adjustments.\n\nAddendum: Disappearance of Alex, who served as a lab assistant, remains a concern.",
+			"map": "data/item-maps/journal-palpagos-victor-ashfords-diary-3.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "WorldTreeBoss1",
+			"title": "Zenara's Diary - 1",
+			"description": "As of today, I've been appointed as supervisor of a biological research project. The research subject is a small, unidentified life-form that crash-landed at the base of the World Tree. It's limbless, dragon-like, and pure white.\n\nIt's safe to assume that it's still a juvenile. Further observation and experimentation to come.",
+			"map": "data/item-maps/journal-worldtree-zenaras-diary-1.png",
+			"mapKey": "worldtree",
+			"placed": true
+		},
+		{
+			"id": "WorldTreeBoss2",
+			"title": "Zenara's Diary - 2",
+			"description": "The subject's been named |Astralym.|\n\nAstralym doesn't seem to be a life-form from this planet. It has no observable mouth, digestive system, or reproductive organs.\n\nThe Pals on this island may all be mysterious life-forms in their own right, but they all possess the basic biology for eating and reproducing. Astralym deviates even on that fundamental level.\n\nBut if it doesn't eat, then how does it obtain energy? And if it doesn't reproduce, then how does it preserve its species?",
+			"map": "data/item-maps/journal-worldtree-zenaras-diary-2.png",
+			"mapKey": "worldtree",
+			"placed": true
+		},
+		{
+			"id": "WorldTreeBoss3",
+			"title": "Zenara's Diary - 3",
+			"description": "Ever since Astralym was brought to the laboratory, it's hardly shown any signs of life. That follows, since it neither eats nor reproduces and so shouldn't require any activity.\n\nAnd yet, as I was about to leave just a moment ago... it moved. It seemed as if it were trying to follow me through the glass.\n\nPerhaps my attempts to talk with it did have an effect.\n\nIf this young life-form does actually have thoughts and feelings to connect with, that would be fantastic news. Striving for a world where humans can peacefully coexist with all sentient beings is why I became a researcher, after all.\n\nThere isn't a soul out there that doesn't mock my ideals.\n\n...Or I suppose I should say, there wasn't—not until a visitor arrived from Sunreach. A being who was not human. Auri. She never once laughed at me.",
+			"map": "data/item-maps/journal-worldtree-zenaras-diary-3.png",
+			"mapKey": "worldtree",
+			"placed": true
+		},
+		{
+			"id": "WorldTreeBoss4",
+			"title": "Zenara's Diary - 4",
+			"description": "Within these past few months, the situation has changed drastically. I've begun to make headway on little Astralym's true nature. Astralym could be called a sort of |terraforming terminal.|\n\nIt absorbs energy from the planet to fuel its growth, while simultaneously converting that power into a completely unknown form of energy within its body. That energy is capable of replacing any and all known matter with another specific kind of matter, one that bears a striking resemblance to Astralym's own body tissue.\n\nIn other words, it consumes and reconstitutes the planet, and in doing so reproduces.\n\nIt's a mechanically perfect life-form, one that has no need for sentience.\n\n...It would be so much simpler if it didn't have any.\n\nLately, having grown to a massive size, it has begun communicating with me through an unknown means, its voice resonating directly inside my mind. Though its attempts are clumsy, it is trying to use our language.\n\nIt bears us no ill will. The question is, how can we coexist?\n\nIf the top brass discovers the truth about it, the consequences will be dire... They'll either demand its extermination, or seek to weaponize it.\n\nI must find a way forward.",
+			"map": "data/item-maps/journal-worldtree-zenaras-diary-4.png",
+			"mapKey": "worldtree",
+			"placed": true
+		},
+		{
+			"id": "WorldTreeBoss5",
+			"title": "Zenara's Diary - 5",
+			"description": "I have been absent from the laboratory for an extended period, which is a rarity for me. However, the breakthrough is significant; the key to our solution is indeed the World Tree.\n\nEven as I write this, little Astralym is desperately restraining its energy absorption. The agony of using sheer will to suppress a natural bodily function must be more than I can bear to imagine. I curse the fact that I only have this one body to give.\n\nPlease, just hold out a little longer.",
+			"map": "data/item-maps/journal-worldtree-zenaras-diary-5.png",
+			"mapKey": "worldtree",
+			"placed": true
+		},
+		{
+			"id": "GrassBoss1",
+			"title": "Zoe Rayne's Diary - 1",
+			"description": "I don't have a family.\n\nMy father disappeared a long time ago, and I've never seen my mother's face.\nThe only ones who raised me are the guys and Grizzbolt.\n\nThat's why I know I have no choice but to keep on living in this tiny little world.\n\nThey all chase around Pals with their guns.\nThey capture the ones they hurt and sell them to those weird other guys. \nIn return, they get food.\nThey even share it with me. That's why I don't go hungry.\nI don't think any of those guys really care about me. \nThey just keep me alive 'cause I'm the daughter of their boss.\n\nI still think that, even though I'm the boss now, too.",
+			"map": "data/item-maps/journal-palpagos-zoe-raynes-diary-1.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "GrassBoss2",
+			"title": "Zoe Rayne's Diary - 2",
+			"description": "Grizzbolt was one of the Pals they were gonna sell.\nShe looked so lonely in her cage.\nShe was just like me... and my father.\n\nI was still a little girl back then, but I couldn't just stand by.\nI waited until everybody was sleeping, opened Grizzbolt's cage, and ran off with her.\nI shared half a slice of my breakfast toast with her, but we were both hungry by evening and went back to the base.\n\nOf course, all the guys were super angry. \nThey threw me in a cage with Grizzbolt and I thought we were gonna get taken away, but Grizzbolt protected me.\nNot even their guns or bats could beat her.\n\nHow did she get captured in the first place if she's that strong?\n\nI bet she didn't even try to escape, the big dummy.\nI gave Grizzbolt a command, and she called down a huge bolt of lightning that knocked out all the guys. \nThey didn't wake up till next morning.\n\nEver since then, I've been with Grizzbolt.",
+			"map": "data/item-maps/journal-palpagos-zoe-raynes-diary-2.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "GrassBoss3",
+			"title": "Zoe Rayne's Diary - 3",
+			"description": "There's a group that opposes ours, camped a little ways away from where we live.\nThey don't like the way we sell Pals and use them in battle. \n\nOur group mockingly calls them the Free Pal Alliance. \nWe're always fighting with them for no reason.\n\nSometimes, I bet they're not bad people if they love Pals that much.\nI wonder if there's any chance of us getting along someday.",
+			"map": "data/item-maps/journal-palpagos-zoe-raynes-diary-3.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "GrassBoss4",
+			"title": "Zoe Rayne's Diary - 4",
+			"description": "Sometimes I wonder if there's anything beyond the sea.\nThe only thing I can see far off in the distance is that huge tree. I've never heard anyone talk about what's beyond that place.\nApparently some brave guy from long ago went to see the outside world, but he never came back.\nI have heard about people coming from beyond the sea, though.\nI don't know what those kinds of people do, but they say they use tools different from our own.\nThat's why I know there must be something beyond the sea.\nA whole bunch of islands, a whole bunch of people, a whole bunch of things...\nIt sounds scary, but I'd like to try going sometime.",
+			"map": "data/item-maps/journal-palpagos-zoe-raynes-diary-4.png",
+			"mapKey": "palpagos",
+			"placed": true
+		},
+		{
+			"id": "GrassBoss5",
+			"title": "Zoe Rayne's Diary - 5",
+			"description": "I've started to wonder... Why am I guarding this big tower again?\nI always thought it was obvious since Father also used to do this, but now that I think about it, I have no idea why.\nFrom what I've heard, they say there's a legend passed down on this island.\nThey say this tower is somehow related to that legend and that it has some great power.\nWhat kind of power, I wonder? Even if that's true, why does this power have to be protected?\nAnyway... Even though I don't really know why, I'm always here, protecting this tower.\nThere are other towers around the island, and they say people like me guard them all.",
+			"map": "data/item-maps/journal-palpagos-zoe-raynes-diary-5.png",
+			"mapKey": "palpagos",
+			"placed": true
+		}
+	]
+}
