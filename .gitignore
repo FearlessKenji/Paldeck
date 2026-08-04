@@ -25,3 +25,4 @@ ecosystem.config.js
 ecosystem.config.cjs
 config.json
 config/config.json
+/tools
