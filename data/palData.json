@@ -873,7 +873,7 @@
 			"spawnTime": "Dungeons/Factions",
 			"farmable": "Yes - Gold Coin",
 			"thumbnail": "data/pals/pal-024-mau.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/027-mau.png",
 			"rarity": 1,
 			"breeding": {
 				"id": "bastet",
@@ -2830,10 +2830,10 @@
 			"food": "4/10",
 			"partner": "Blazing Black Magic - While at a base, increases the Kindling Work Suitability Level for all other Base Pals by +1. (Does not stack)",
 			"suitability": "Kindling 3, Handiwork 3, Medicine Production 3, Transporting 2",
-			"spawnTime": "Cherry Blossom Cave/Captured Cage/Recruiter",
+			"spawnTime": "Dungeons/Factions",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-075b-katress-ignis.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/075b-katress-ignis.png",
 			"rarity": 6,
 			"breeding": {
 				"id": "catmage_fire",
@@ -5703,10 +5703,10 @@
 			"food": "4/10",
 			"partner": "Meteorite Enthusiast - While in party, increases damage dealt to ores, and it's easier to obtain Meteorite Fragment.",
 			"suitability": "Lumbering 3, Transporting 2",
-			"spawnTime": "Meteorite event",
+			"spawnTime": "Meteorite Event/Factions",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-125-xenovader.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/145-xenovader.png",
 			"rarity": 7,
 			"breeding": {
 				"id": "darkalien",
@@ -5729,10 +5729,10 @@
 			"partner": "Crater Enthusiast - Can be ridden. While in the team, it's easier to obtain Meteorite Fragment and Pure Quartz.",
 			"tech": "Xenogard Saddle, Lvl 41",
 			"suitability": "Mining 4",
-			"spawnTime": "Meteorite event",
+			"spawnTime": "Meteorite Event",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-126-xenogard.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/146-xenogard.png",
 			"rarity": 9,
 			"breeding": {
 				"id": "whitealiendragon",
@@ -7305,10 +7305,10 @@
 			"food": "9/10",
 			"partner": "Spore Stalwart - While in party, when the player attacks an enemy afflicted with Ivy-Covered, the enemy explodes, dealing additional damage equal to (40~60)% of the player's attack damage. (Does not stack) Also grants immunity to the World Tree's Explosive Spores to both the player and their Pals.",
 			"suitability": "Planting 6, Handiwork 6, Gathering 4, Medicine Production 8, Transporting 2",
-			"spawnTime": "Shinespore Root",
+			"spawnTime": "Alpha Only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-193-silvance.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/193-silvance.png",
 			"rarity": 8,
 			"breeding": {
 				"id": "mothman",
@@ -7333,10 +7333,10 @@
 			"food": "9/10",
 			"partner": "Mist Stalwart - When activated, the player's attacks inflict Poison (2~6). While in party, grants the player and party Pals immunity to Poison, and nullifies the effects of toxic gas in the World Tree area. (Does not stack)",
 			"suitability": "Planting 8, Handiwork 6, Gathering 5, Medicine Production 6, Transporting 3",
-			"spawnTime": "Rotmist Root",
+			"spawnTime": "Alpha Only",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-194-dandilord.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/194-dandilord.png",
 			"rarity": 8,
 			"breeding": {
 				"id": "flowerprince",
@@ -7616,10 +7616,10 @@
 			"food": "9/10",
 			"partner": "Resonant Guardian - Can be ridden as a flying mount. Only 1 can be summoned to a base. While at a base, it constantly patrols the skies and bombards intruders from high above.",
 			"suitability": "None",
-			"spawnTime": "Echoing Flute boss",
+			"spawnTime": "Boss",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-203-panthalus.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/203-panthalus.png",
 			"rarity": 10,
 			"breeding": {
 				"id": "kingwhale",
@@ -7634,17 +7634,17 @@
 		},
 		{
 			"name": "Astralym",
-			"description": "Calamitous Devastation Star - A shadow of its former self, this mysterious Pal descended upon the Palpagos long ago. Bringing ruin and calamity, it was sealed away for millennia until it was ultimately defeated by a certain Pal Tamer",
+			"description": "Calamitous Devastation Star - A shadow of its former self, this mysterious Pal descended upon the Palpagos long ago. Bringing ruin and calamity, it was sealed away for millennia until it was ultimately defeated by a certain Pal Tamer.",
 			"number": "204",
 			"element": "None",
 			"drops": "Leather, High Quality Pal Oil",
 			"food": "9/10",
 			"partner": "This Pal's abilities are still being investigated.",
 			"suitability": "None",
-			"spawnTime": "World Tree final boss",
+			"spawnTime": "Boss",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal-204-astralym.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/204-astralym.png",
 			"rarity": 10,
 			"breeding": {
 				"id": "worldtreedragon",
@@ -7669,7 +7669,7 @@
 			"spawnTime": "Sealed Realm of Terraria",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-blue-slime.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/terraria-sealed-realm.png",
 			"rarity": 3,
 			"breeding": {
 				"id": "yakushimamonster001_blue",
@@ -7694,7 +7694,7 @@
 			"spawnTime": "Sealed Realm of Terraria",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-cave-bat.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/terraria-sealed-realm.png",
 			"rarity": 3,
 			"breeding": {
 				"id": "yakushimamonster003",
@@ -7719,7 +7719,7 @@
 			"spawnTime": "Sealed Realm of Terraria",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-demon-eye.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/terraria-sealed-realm.png",
 			"rarity": 3,
 			"breeding": {
 				"id": "yakushimaboss001_small",
@@ -7744,7 +7744,7 @@
 			"spawnTime": "Sealed Realm of Terraria",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-enchanted-sword.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/terraria-sealed-realm.png",
 			"rarity": 3,
 			"breeding": {
 				"id": "yakushimamonster002",
@@ -7769,7 +7769,7 @@
 			"spawnTime": "Sealed Realm of Terraria",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-eye-of-cthulhu.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/terraria-sealed-realm.png",
 			"rarity": 6,
 			"breeding": {
 				"id": "yakushimaboss001",
@@ -7794,7 +7794,7 @@
 			"spawnTime": "Sealed Realm of Terraria",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-green-slime.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/terraria-sealed-realm.png",
 			"rarity": 3,
 			"breeding": {
 				"id": "yakushimamonster001",
@@ -7819,7 +7819,7 @@
 			"spawnTime": "Sealed Realm of Terraria",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-illuminant-bat.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/terraria-sealed-realm.png",
 			"rarity": 4,
 			"breeding": {
 				"id": "yakushimamonster003_purple",
@@ -7844,7 +7844,7 @@
 			"spawnTime": "Sealed Realm of Terraria",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-illuminant-slime.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/terraria-sealed-realm.png",
 			"rarity": 4,
 			"breeding": {
 				"id": "yakushimamonster001_pink",
@@ -7869,7 +7869,7 @@
 			"spawnTime": "Sealed Realm of Terraria",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-purple-slime.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/terraria-sealed-realm.png",
 			"rarity": 3,
 			"breeding": {
 				"id": "yakushimamonster001_purple",
@@ -7894,7 +7894,7 @@
 			"spawnTime": "Sealed Realm of Terraria",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-rainbow-slime.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/terraria-sealed-realm.png",
 			"rarity": 4,
 			"breeding": {
 				"id": "yakushimamonster001_rainbow",
@@ -7919,7 +7919,7 @@
 			"spawnTime": "Sealed Realm of Terraria",
 			"farmable": "No",
 			"thumbnail": "data/pals/pal--1-red-slime.png",
-			"habitat": "data/maps/unknown-habitat.png",
+			"habitat": "data/maps/terraria-sealed-realm.png",
 			"rarity": 3,
 			"breeding": {
 				"id": "yakushimamonster001_red",
@@ -8134,46 +8134,206 @@
 	],
 	"Colors": [
 		{
-			"Neutral": [255, 255, 255],
-			"Neutral, Dark": [128, 128, 128],
-			"Neutral, Grass": [140, 192, 128],
-			"Neutral, Water": [128, 128, 255],
-			"Fire": [255, 0, 0],
-			"Fire, Ground": [211, 41, 23],
-			"Fire, Dark": [128, 0, 0],
-			"Fire, Dragon": [255, 0, 128],
-			"Fire, Ice": [154, 123, 200],
-			"Water": [0, 0, 255],
-			"Water, Fire": [128, 0, 128],
-			"Water, Grass": [13, 64, 128],
-			"Water, Ice": [0, 128, 255],
-			"Water, Dragon": [128, 0, 255],
-			"Water, Electric": [0, 184, 192],
-			"Water, Dark": [0, 0, 128],
-			"Water, Ground": [83, 41, 150],
-			"Grass": [25, 128, 0],
-			"Grass, Water": [13, 64, 128],
-			"Grass, Ground": [96, 105, 23],
-			"Grass, Dark": [13, 64, 0],
-			"Grass, Dragon": [140, 64, 128],
-			"Electric": [255, 255, 0],
-			"Electric, Dark": [128, 128, 0],
-			"Electric, Dragon": [255, 128, 128],
-			"Ice": [0, 255, 255],
-			"Ice, Ground": [83, 169, 150],
-			"Ice, Dark": [0, 128, 128],
-			"Ice, Dragon": [90, 77, 166],
-			"Ground": [166, 82, 45],
-			"Ground, Dark": [83, 41, 23],
-			"Ground, Water": [83, 41, 150],
-			"Dark": [0, 0, 0],
-			"Dark, Electric": [128, 128, 0],
-			"Dark, Dragon": [83, 0, 83],
-			"Dragon": [255, 0, 255],
-			"Fire, Grass": [140, 64, 0],
-			"Electric, Ground": [211, 169, 23],
-			"Dragon, Ground": [211, 41, 150],
-			"None": [255, 255, 255]
+			"Neutral": [
+				255,
+				255,
+				255
+			],
+			"Neutral, Dark": [
+				128,
+				128,
+				128
+			],
+			"Neutral, Grass": [
+				140,
+				192,
+				128
+			],
+			"Neutral, Water": [
+				128,
+				128,
+				255
+			],
+			"Fire": [
+				255,
+				0,
+				0
+			],
+			"Fire, Ground": [
+				211,
+				41,
+				23
+			],
+			"Fire, Dark": [
+				128,
+				0,
+				0
+			],
+			"Fire, Dragon": [
+				255,
+				0,
+				128
+			],
+			"Fire, Ice": [
+				154,
+				123,
+				200
+			],
+			"Water": [
+				0,
+				0,
+				255
+			],
+			"Water, Fire": [
+				128,
+				0,
+				128
+			],
+			"Water, Grass": [
+				13,
+				64,
+				128
+			],
+			"Water, Ice": [
+				0,
+				128,
+				255
+			],
+			"Water, Dragon": [
+				128,
+				0,
+				255
+			],
+			"Water, Electric": [
+				0,
+				184,
+				192
+			],
+			"Water, Dark": [
+				0,
+				0,
+				128
+			],
+			"Water, Ground": [
+				83,
+				41,
+				150
+			],
+			"Grass": [
+				25,
+				128,
+				0
+			],
+			"Grass, Water": [
+				13,
+				64,
+				128
+			],
+			"Grass, Ground": [
+				96,
+				105,
+				23
+			],
+			"Grass, Dark": [
+				13,
+				64,
+				0
+			],
+			"Grass, Dragon": [
+				140,
+				64,
+				128
+			],
+			"Electric": [
+				255,
+				255,
+				0
+			],
+			"Electric, Dark": [
+				128,
+				128,
+				0
+			],
+			"Electric, Dragon": [
+				255,
+				128,
+				128
+			],
+			"Ice": [
+				0,
+				255,
+				255
+			],
+			"Ice, Ground": [
+				83,
+				169,
+				150
+			],
+			"Ice, Dark": [
+				0,
+				128,
+				128
+			],
+			"Ice, Dragon": [
+				90,
+				77,
+				166
+			],
+			"Ground": [
+				166,
+				82,
+				45
+			],
+			"Ground, Dark": [
+				83,
+				41,
+				23
+			],
+			"Ground, Water": [
+				83,
+				41,
+				150
+			],
+			"Dark": [
+				0,
+				0,
+				0
+			],
+			"Dark, Electric": [
+				128,
+				128,
+				0
+			],
+			"Dark, Dragon": [
+				83,
+				0,
+				83
+			],
+			"Dragon": [
+				255,
+				0,
+				255
+			],
+			"Fire, Grass": [
+				140,
+				64,
+				0
+			],
+			"Electric, Ground": [
+				211,
+				169,
+				23
+			],
+			"Dragon, Ground": [
+				211,
+				41,
+				150
+			],
+			"None": [
+				255,
+				255,
+				255
+			]
 		}
 	]
 }

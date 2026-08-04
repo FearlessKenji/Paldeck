@@ -1,0 +1,474 @@
+{
+  "blueprint-grenade-launcher-2": {
+    "sources": [
+      {
+        "type": "Supply",
+        "entries": [
+          {
+            "location": "Feybreak",
+            "quantity": "1",
+            "probability": "23.742%"
+          }
+        ]
+      },
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Sakurajima",
+            "quantity": "1",
+            "probability": "11.924%"
+          }
+        ]
+      },
+      {
+        "type": "Oil Rigs",
+        "entries": [
+          {
+            "location": "Lv. 55 Oil Rig Greater Chest",
+            "quantity": "1",
+            "probability": "8%"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/grenade-launcher-schematic-1-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Enemy Camp",
+          "RewardName": "Sakurajima1"
+        },
+        {
+          "type": "Oilrig Treasure Goal",
+          "bounds": {
+            "minX": -350000,
+            "maxX": -300000,
+            "minY": 390000,
+            "maxY": 460000
+          }
+        }
+      ],
+      "unpinnedSources": [
+        "Supply"
+      ]
+    }
+  },
+  "blueprint-grenade-launcher-3": {
+    "sources": [
+      {
+        "type": "Mission",
+        "entries": [
+          {
+            "location": "A True Ascent Ends in Descent",
+            "quantity": "1",
+            "probability": "100%"
+          }
+        ]
+      },
+      {
+        "type": "Treasure Maps",
+        "entries": [
+          {
+            "location": "Epic Treasure Map",
+            "quantity": "1",
+            "probability": "6.41%"
+          }
+        ]
+      },
+      {
+        "type": "Supply",
+        "entries": [
+          {
+            "location": "Feybreak",
+            "quantity": "1",
+            "probability": "4.748%"
+          }
+        ]
+      },
+      {
+        "type": "Oil Rigs",
+        "entries": [
+          {
+            "location": "Lv. 55 Oil Rig Greater Chest",
+            "quantity": "1",
+            "probability": "4%"
+          }
+        ]
+      },
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Sakurajima",
+            "quantity": "1",
+            "probability": "2.385%"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/grenade-launcher-schematic-2-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Enemy Camp",
+          "RewardName": "Sakurajima1"
+        },
+        {
+          "type": "Oilrig Treasure Goal",
+          "bounds": {
+            "minX": -350000,
+            "maxX": -300000,
+            "minY": 390000,
+            "maxY": 460000
+          }
+        },
+        {
+          "type": "Treasure",
+          "Spawn": "DarkIsland02",
+          "treasureGrade": 5,
+          "lotteryFields": [
+            "DarkIsland02"
+          ],
+          "legendType": "Treasure Map"
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Desert1",
+            "Forest1",
+            "Volcano1",
+            "Snow1",
+            "Sakurajima1",
+            "SeaBase_Desert_1",
+            "SeaBase_Snow_1"
+          ],
+          "legendType": "Treasure Map"
+        },
+        {
+          "type": "Dungeon",
+          "item": "Cherry Blossom Cave",
+          "legendType": "Treasure Map"
+        }
+      ],
+      "unpinnedSources": [
+        "Supply",
+        "Mission"
+      ]
+    }
+  },
+  "blueprint-grenade-launcher-4": {
+    "sources": [
+      {
+        "type": "Treasure Maps",
+        "entries": [
+          {
+            "location": "Epic Treasure Map",
+            "quantity": "1",
+            "probability": "2.564%"
+          }
+        ]
+      },
+      {
+        "type": "Oil Rigs",
+        "entries": [
+          {
+            "location": "Lv. 55 Oil Rig Greater Chest",
+            "quantity": "1",
+            "probability": "2%"
+          }
+        ]
+      },
+      {
+        "type": "Supply",
+        "entries": [
+          {
+            "location": "Feybreak",
+            "quantity": "1",
+            "probability": "0.95%"
+          }
+        ]
+      },
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Sakurajima",
+            "quantity": "1",
+            "probability": "0.477%"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/grenade-launcher-schematic-3-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Enemy Camp",
+          "RewardName": "Sakurajima1"
+        },
+        {
+          "type": "Oilrig Treasure Goal",
+          "bounds": {
+            "minX": -350000,
+            "maxX": -300000,
+            "minY": 390000,
+            "maxY": 460000
+          }
+        },
+        {
+          "type": "Treasure",
+          "Spawn": "DarkIsland02",
+          "treasureGrade": 5,
+          "lotteryFields": [
+            "DarkIsland02"
+          ],
+          "legendType": "Treasure Map"
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Desert1",
+            "Forest1",
+            "Volcano1",
+            "Snow1",
+            "Sakurajima1",
+            "SeaBase_Desert_1",
+            "SeaBase_Snow_1"
+          ],
+          "legendType": "Treasure Map"
+        },
+        {
+          "type": "Dungeon",
+          "item": "Cherry Blossom Cave",
+          "legendType": "Treasure Map"
+        }
+      ],
+      "unpinnedSources": [
+        "Supply"
+      ]
+    }
+  },
+  "blueprint-grenade-launcher-5": {
+    "sources": [
+      {
+        "type": "Oil Rigs",
+        "entries": [
+          {
+            "location": "Lv. 60 Oil Rig Greater Chest",
+            "quantity": "1",
+            "probability": "1.471%"
+          },
+          {
+            "location": "Lv. 55 Oil Rig Greater Chest",
+            "quantity": "1",
+            "probability": "0.5%"
+          }
+        ]
+      },
+      {
+        "type": "Treasure Maps",
+        "entries": [
+          {
+            "location": "Epic Treasure Map",
+            "quantity": "1",
+            "probability": "1.026%"
+          }
+        ]
+      },
+      {
+        "type": "Supply",
+        "entries": [
+          {
+            "location": "Feybreak",
+            "quantity": "1",
+            "probability": "0.19%"
+          }
+        ]
+      },
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Sakurajima",
+            "quantity": "1",
+            "probability": "0.095%"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/grenade-launcher-schematic-4-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Enemy Camp",
+          "RewardName": "Sakurajima1"
+        },
+        {
+          "type": "Oilrig Treasure Goal",
+          "bounds": {
+            "minX": -350000,
+            "maxX": -300000,
+            "minY": 390000,
+            "maxY": 460000
+          }
+        },
+        {
+          "type": "Oilrig Treasure Goal",
+          "bounds": {
+            "minX": -830000,
+            "maxX": -750000,
+            "minY": -660000,
+            "maxY": -590000
+          }
+        },
+        {
+          "type": "Treasure",
+          "Spawn": "DarkIsland02",
+          "treasureGrade": 5,
+          "lotteryFields": [
+            "DarkIsland02"
+          ],
+          "legendType": "Treasure Map"
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Desert1",
+            "Forest1",
+            "Volcano1",
+            "Snow1",
+            "Sakurajima1",
+            "SeaBase_Desert_1",
+            "SeaBase_Snow_1"
+          ],
+          "legendType": "Treasure Map"
+        },
+        {
+          "type": "Dungeon",
+          "item": "Cherry Blossom Cave",
+          "legendType": "Treasure Map"
+        }
+      ],
+      "unpinnedSources": [
+        "Supply"
+      ]
+    }
+  },
+  "blueprint-fishing-rod-01-2": {
+    "sources": [
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Grasslands Sea Base",
+            "quantity": "1",
+            "probability": "18.302%"
+          }
+        ]
+      },
+      {
+        "type": "Fishing",
+        "entries": [
+          {
+            "location": "Forest",
+            "quantity": "1",
+            "probability": "20%"
+          },
+          {
+            "location": "Volcano",
+            "quantity": "1",
+            "probability": "11.111%"
+          },
+          {
+            "location": "Grasslands",
+            "quantity": "1",
+            "probability": "10.975%"
+          },
+          {
+            "location": "Desert",
+            "quantity": "1",
+            "probability": "10.345%"
+          }
+        ]
+      },
+      {
+        "type": "Fishing Ponds",
+        "entries": [
+          {
+            "location": "Forest",
+            "quantity": "1",
+            "probability": "0.498%"
+          },
+          {
+            "location": "Volcano",
+            "quantity": "1",
+            "probability": "0.489%"
+          },
+          {
+            "location": "Desert",
+            "quantity": "1",
+            "probability": "0.488%"
+          },
+          {
+            "location": "Grasslands",
+            "quantity": "1",
+            "probability": "0.474%"
+          }
+        ]
+      },
+      {
+        "type": "Salvage Rank1",
+        "entries": [
+          {
+            "location": "Salvage Rank 1",
+            "quantity": "1",
+            "probability": "0.999%"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/beginner-fishing-rod-gumoss-schematic-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Enemy Camp",
+          "RewardName": "SeaBase_Grass_1"
+        },
+        {
+          "type": "Fishing Spot",
+          "comment": [
+            "A_Common",
+            "B_Common",
+            "E_Common",
+            "E_Common_Mini",
+            "E_River_Common",
+            "F_Common",
+            "F_River_Common"
+          ]
+        },
+        {
+          "type": "Rare Fishing Spot",
+          "comment": [
+            "A_Rare",
+            "A_Rare_Mini",
+            "B_Rare",
+            "B_River_Rare_Mini",
+            "E_Rare",
+            "E_River_Rare_Mini",
+            "F_Rare"
+          ]
+        }
+      ],
+      "unpinnedSources": [
+        "Fishing Ponds",
+        "Salvage Rank1"
+      ]
+    }
+  }
+}

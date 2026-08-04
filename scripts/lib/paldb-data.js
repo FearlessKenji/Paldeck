@@ -296,7 +296,11 @@ function visiblePals(palFile) {
 }
 
 function hasChangedField(changes, field, localValue, currentValue, normalizer = value => String(value || ``), options = {}) {
-	if (options.ignoreBlankCurrent && !String(currentValue || ``).trim()) {
+	if (!String(currentValue || ``).trim() && String(localValue || ``).trim()) {
+		options.coverageGaps?.push({
+			field,
+			local: localValue || ``,
+		});
 		return;
 	}
 
@@ -319,6 +323,7 @@ function compareData(currentRows, localPalFile, _localBreedingFile, options = {}
 	const removed = localPals.filter(row => !currentByName.has(normalizeKey(row.name)));
 	const changedPals = [];
 	const changedBreeding = [];
+	const coverageGaps = [];
 
 	for (const localPal of localPals) {
 		const current = currentByName.get(normalizeKey(localPal.name));
@@ -329,9 +334,13 @@ function compareData(currentRows, localPalFile, _localBreedingFile, options = {}
 
 		const changes = [];
 
-		hasChangedField(changes, `number`, localPal.number, current.number, normalizeNumber, options);
-		hasChangedField(changes, `element`, localPal.element, current.element, normalizeElement, options);
-		hasChangedField(changes, `suitability`, localPal.suitability, current.suitability, normalizeSuitability, options);
+		const fieldOptions = { ...options, coverageGaps: [] };
+		hasChangedField(changes, `number`, localPal.number, current.number, normalizeNumber, fieldOptions);
+		hasChangedField(changes, `element`, localPal.element, current.element, normalizeElement, fieldOptions);
+		hasChangedField(changes, `suitability`, localPal.suitability, current.suitability, normalizeSuitability, fieldOptions);
+		if (fieldOptions.coverageGaps.length) {
+			coverageGaps.push({ fields: fieldOptions.coverageGaps, name: localPal.name });
+		}
 
 		if (changes.length) {
 			changedPals.push({
@@ -364,6 +373,7 @@ function compareData(currentRows, localPalFile, _localBreedingFile, options = {}
 		added,
 		changedBreeding,
 		changedPals,
+		coverageGaps,
 		removed,
 	};
 }

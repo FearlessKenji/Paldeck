@@ -85,7 +85,7 @@ module.exports = {
 	async handleButton(interaction) {
 		const [, action, itemId, ownerId, rawOriginPal] = interaction.customId.split(`:`);
 
-		if (![`drops`, `merchants`, `medalmerchants`].includes(action)) {
+		if (![`drops`, `merchants`, `medalmerchants`, `bountymerchants`, `arenamerchant`].includes(action)) {
 			await interaction.reply({ content: `Unknown item action.`, flags: MessageFlags.Ephemeral });
 			return;
 		}
@@ -114,6 +114,18 @@ module.exports = {
 			}
 
 			await interaction.reply(paldeck.buildMedalMerchantResponse(item));
+			return;
+		}
+
+		if (action === `bountymerchants` || action === `arenamerchant`) {
+			const property = action === `bountymerchants` ? `bountyMerchants` : `arenaMerchant`;
+			if (!item?.[property]?.entries?.length) {
+				await interaction.reply({ content: `No fixed merchant locations are available for this item.`, flags: MessageFlags.Ephemeral });
+				return;
+			}
+			await interaction.reply(action === `bountymerchants` ?
+				paldeck.buildBountyMerchantResponse(item) :
+				paldeck.buildArenaMerchantResponse(item));
 			return;
 		}
 

@@ -1,4 +1,31 @@
 // Derives the earliest compatible production station from an item's internal type and recipe rank.
+const rawItemData = require(`../data/itemData.json`);
+
+function normalizeDeclaredWorkbench(value) {
+	return String(value || ``)
+		.replace(/^the\s+/iu, ``)
+		.replace(/^['"]\s*|\s*['"]$/gu, ``)
+		.trim();
+}
+
+const GAME_DECLARED_WORKBENCH_BY_ITEM = new Map();
+const GAME_DECLARED_WORKBENCH_BY_FAMILY = new Map();
+for (const item of rawItemData.Items) {
+	if (item.category !== `Schematic` || !item.code?.includes(`/Blueprint_`)) {
+		continue;
+	}
+	const targetCode = item.code.replace(`/Blueprint_`, `/`);
+	const targetFamily = targetCode.replace(/_[2-5]$/u, ``);
+	const match = /(?:Can be crafted|craft it) at ([^.]+?)\s*\./iu.exec(item.description || ``);
+	if (!match) {
+		continue;
+	}
+	const workbench = normalizeDeclaredWorkbench(match[1]);
+	// Schematic descriptions name the station for their unlocked equipment, including recipes missing from PalDB.
+	GAME_DECLARED_WORKBENCH_BY_ITEM.set(targetCode, workbench);
+	GAME_DECLARED_WORKBENCH_BY_FAMILY.set(targetFamily, workbench);
+}
+
 function stationForRank(rank, progression) {
 	if (!Number.isFinite(rank) || rank <= 0) {
 		return null;
@@ -53,6 +80,15 @@ const COOKING_PROGRESSION = [
 ];
 
 function itemWorkbench(item) {
+	// Card rendering separately confirms that a schematic has a real or inferred combination recipe.
+	if (item?.category === `Schematic`) {
+		return `Drafting Table`;
+	}
+	const itemFamily = String(item?.code || ``).replace(/_[2-5]$/u, ``);
+	const declaredWorkbench = GAME_DECLARED_WORKBENCH_BY_ITEM.get(item?.code) || GAME_DECLARED_WORKBENCH_BY_FAMILY.get(itemFamily);
+	if (declaredWorkbench) {
+		return declaredWorkbench;
+	}
 	if (!item?.recipes?.some(recipe => recipe?.ingredients?.length)) {
 		return null;
 	}

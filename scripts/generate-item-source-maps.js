@@ -39,8 +39,8 @@ async function main() {
 		const eligible = new Set(sources.dungeons);
 		const dungeons = map.markers.filter(marker => marker.type === `Dungeon` && eligible.has(marker.item));
 		await renderMap(map, [
-			{ label: `Fixed chest / ancient ruin`, color: `#ff0000`, style: `normal`, markers: chests },
-			{ label: `Dungeon entrance`, color: `#ff9600`, style: `diamond`, markers: dungeons },
+			{ label: `Treasure Chests`, color: `#8b5a2b`, style: `normal`, markers: chests },
+			{ label: `Dungeon`, color: `#ff9600`, style: `diamond`, markers: dungeons },
 		], OUTPUT_DIRECTORY ? path.join(OUTPUT_DIRECTORY, path.basename(item.acquisition.map)) : path.join(ROOT, item.acquisition.map));
 		console.log(`${item.name}: ${chests.length} chest pin(s), ${dungeons.length} dungeon pin(s).`);
 	}

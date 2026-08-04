@@ -1,0 +1,419 @@
+{
+  "treasure-map01": {
+    "sources": [
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Grasslands and Forest"
+          }
+        ]
+      },
+      {
+        "type": "Dungeons",
+        "entries": [
+          {
+            "location": "Volcanic Caverns"
+          }
+        ]
+      },
+      {
+        "type": "Treasure",
+        "entries": [
+          {
+            "location": "Desert02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "Desert02"
+          },
+          {
+            "location": "Snow02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "Snow02"
+          },
+          {
+            "location": "Volcano02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "Volcano02"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/common-treasure-map-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Treasure",
+          "Spawn": [
+            "Desert02",
+            "Volcano02",
+            "Snow02"
+          ],
+          "treasureGrade": 5,
+          "lotteryFields": [
+            "Desert02",
+            "Volcano02",
+            "Snow02"
+          ]
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Grass",
+            "Forest1"
+          ]
+        },
+        {
+          "type": "Dungeon",
+          "item": "Volcanic Cavern"
+        }
+      ]
+    }
+  },
+  "treasure-map02": {
+    "sources": [
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Grasslands, Desert, Forest, Volcano, Snow, and Grasslands Sea Bases"
+          }
+        ]
+      },
+      {
+        "type": "Dungeons",
+        "entries": [
+          {
+            "location": "Caverns of the Dunes"
+          }
+        ]
+      },
+      {
+        "type": "Treasure",
+        "entries": [
+          {
+            "location": "Desert02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "Desert02"
+          },
+          {
+            "location": "Sakurajima02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "Sakurajima02"
+          },
+          {
+            "location": "Snow02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "Snow02"
+          },
+          {
+            "location": "Volcano02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "Volcano02"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/uncommon-treasure-map-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Treasure",
+          "Spawn": [
+            "Desert02",
+            "Volcano02",
+            "Snow02"
+          ],
+          "treasureGrade": 5,
+          "lotteryFields": [
+            "Desert02",
+            "Volcano02",
+            "Snow02"
+          ]
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Grass",
+            "Desert1",
+            "Forest1",
+            "Volcano1",
+            "Snow1",
+            "SeaBase_Grass_1"
+          ]
+        },
+        {
+          "type": "Dungeon",
+          "item": "Cavern of the Dunes"
+        }
+      ]
+    }
+  },
+  "treasure-map03": {
+    "sources": [
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Desert, Forest, Volcano, Snow, Sakurajima, and regional Sea Bases"
+          }
+        ]
+      },
+      {
+        "type": "Dungeons",
+        "entries": [
+          {
+            "location": "Astral Mountains Caverns"
+          }
+        ]
+      },
+      {
+        "type": "Treasure",
+        "entries": [
+          {
+            "location": "DarkIsland02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "DarkIsland02"
+          },
+          {
+            "location": "Sakurajima02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "Sakurajima02"
+          },
+          {
+            "location": "SkyIsland02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "SkyIsland02"
+          },
+          {
+            "location": "Snow02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "Snow02"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/rare-treasure-map-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Treasure",
+          "Spawn": [
+            "Snow02",
+            "DarkIsland02"
+          ],
+          "treasureGrade": 5,
+          "lotteryFields": [
+            "Snow02",
+            "DarkIsland02"
+          ]
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Desert1",
+            "Forest1",
+            "Volcano1",
+            "Snow1",
+            "Sakurajima1",
+            "SeaBase_Grass_1",
+            "SeaBase_Desert_1",
+            "SeaBase_Snow_1",
+            "SeaBase_Volcano_1"
+          ]
+        },
+        {
+          "type": "Dungeon",
+          "item": "Astral Mountains Cavern"
+        }
+      ]
+    }
+  },
+  "treasure-map04": {
+    "sources": [
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Desert, Forest, Volcano, Snow, Sakurajima, Desert Sea Bases, and Snow Sea Bases"
+          }
+        ]
+      },
+      {
+        "type": "Dungeons",
+        "entries": [
+          {
+            "location": "Cherry Blossom Caves"
+          }
+        ]
+      },
+      {
+        "type": "Treasure",
+        "entries": [
+          {
+            "location": "DarkIsland02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "DarkIsland02"
+          },
+          {
+            "location": "Sakurajima02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "Sakurajima02"
+          },
+          {
+            "location": "SkyIsland02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "SkyIsland02"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/epic-treasure-map-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Treasure",
+          "Spawn": "DarkIsland02",
+          "treasureGrade": 5,
+          "lotteryFields": [
+            "DarkIsland02"
+          ]
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Desert1",
+            "Forest1",
+            "Volcano1",
+            "Snow1",
+            "Sakurajima1",
+            "SeaBase_Desert_1",
+            "SeaBase_Snow_1"
+          ]
+        },
+        {
+          "type": "Dungeon",
+          "item": "Cherry Blossom Cave"
+        }
+      ]
+    }
+  },
+  "treasure-map05": {
+    "sources": [
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Sakurajima"
+          },
+          {
+            "location": "Sakurajima Sea Base"
+          },
+          {
+            "location": "World Tree Sea Bases"
+          },
+          {
+            "location": "Sky Island"
+          }
+        ]
+      },
+      {
+        "type": "Salvage Rank2",
+        "entries": [
+          {
+            "location": "Salvage Rank 2",
+            "probability": "varies"
+          }
+        ]
+      },
+      {
+        "type": "Dungeons",
+        "entries": [
+          {
+            "location": "Viking001 dungeon technology-book pool",
+            "probability": "varies"
+          }
+        ]
+      },
+      {
+        "type": "Treasure",
+        "entries": [
+          {
+            "location": "DarkIsland02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "DarkIsland02"
+          },
+          {
+            "location": "SkyIsland02",
+            "probability": "varies",
+            "chestTier": "Gold Chests",
+            "lotteryField": "SkyIsland02"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/legendary-treasure-map-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "SeaBase_Sakurajima_1",
+            "SeaBase_Yamijima_1"
+          ]
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": "Sakurajima1"
+        },
+        {
+          "type": "Treasure",
+          "Spawn": "DarkIsland02",
+          "treasureGrade": 5,
+          "lotteryFields": [
+            "DarkIsland02"
+          ]
+        },
+        {
+          "type": "Treasure",
+          "Spawn": "SkyIsland_Treasure",
+          "lotteryFields": [
+            "SkyIsland02"
+          ],
+          "treasureGrade": 5
+        },
+        {
+          "type": "Anti-Air Turret",
+          "RewardName": "Viking1",
+          "legendType": "Enemy Camp"
+        },
+        {
+          "type": "Dungeon",
+          "item": "Feybreak Cavern"
+        }
+      ],
+      "unpinnedSources": [
+        "Salvage Rank2"
+      ]
+    }
+  }
+}

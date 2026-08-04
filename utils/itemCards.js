@@ -1,21 +1,76 @@
 /* eslint-disable max-len, max-statements-per-line -- compact lookup tables and Discord builder chains remain more readable together. */
 // Builds consistent item, acquisition-map, and fixed-merchant Discord responses.
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require(`discord.js`);
+const { itemDescriptionParts } = require(`./itemDescription.js`);
 const { itemWorkbench } = require(`./itemWorkbench.js`);
 
 const ITEM_RARITY_COLORS = {
 	Common: 0x9ca3af, Uncommon: 0x22c55e, Rare: 0x3b82f6, Epic: 0xa855f7, Legendary: 0xf59e0b,
 };
+
+// These are the schematic combination families present in build 24467282's authoritative recipe table.
+const SCHEMATIC_COMBINATION_FAMILIES = new Set([
+	`Blueprint_Bat3`, `Blueprint_Sword`, `Blueprint_Katana`, `Blueprint_BeamSword`, `Blueprint_SkyBeamSword`,
+	`Blueprint_WeakerBow`, `Blueprint_BowGun`, `Blueprint_BowGun_Poison`, `Blueprint_BowGun_Fire`, `Blueprint_CompoundBow`,
+	`Blueprint_SFBow`, `Blueprint_SkyBow`, `Blueprint_MakeshiftHandgun`, `Blueprint_HandGun_Default`, `Blueprint_OldRevolver`,
+	`Blueprint_MakeshiftShotgun`, `Blueprint_DoubleBarrelShotgun`, `Blueprint_PumpActionShotgun`, `Blueprint_SemiAutoShotgun`,
+	`Blueprint_EnergyShotgun`, `Blueprint_SkyShotgun`, `Blueprint_WidePenetrateShotgun`, `Blueprint_Musket`,
+	`Blueprint_SingleShotRifle`, `Blueprint_SemiAutoRifle`, `Blueprint_MakeshiftAssaultRifle`, `Blueprint_AssaultRifle_Default`,
+	`Blueprint_SkyAssaultRifle`, `Blueprint_ElectricArcAssaultRifle`, `Blueprint_MakeshiftSubmachineGun`,
+	`Blueprint_SubmachineGun`, `Blueprint_SkySubmachineGun`, `Blueprint_Launcher_Default`, `Blueprint_LaserRifle`,
+	`Blueprint_ChargeLaserRifle`, `Blueprint_OverheatRifle`, `Blueprint_FlameThrower`, `Blueprint_GatlingGun`,
+	`Blueprint_LaserGatlingGun`, `Blueprint_GrenadeLauncher`, `Blueprint_SkyGrenadeLauncher`, `Blueprint_GuidedMissileLauncher`,
+	`Blueprint_MultiGuidedMissileLauncher`, `Blueprint_EnergyRocketLauncher`, `Blueprint_BeamLauncher`, `Blueprint_DroneLauncher`,
+	`Blueprint_YakushimaBlade004`, `Blueprint_YakushimaBlade002`, `Blueprint_YakushimaGun001`,
+	`Blueprint_YakushimaLantern001`, `Blueprint_YakushimaBlade003`, `Blueprint_ClothArmor`, `Blueprint_ClothArmorHeat`,
+	`Blueprint_ClothArmorCold`, `Blueprint_FurArmor`, `Blueprint_FurArmorHeat`, `Blueprint_FurArmorCold`,
+	`Blueprint_CopperArmor`, `Blueprint_CopperArmorHeat`, `Blueprint_CopperArmorCold`, `Blueprint_IronArmor`,
+	`Blueprint_IronArmorHeat`, `Blueprint_IronArmorCold`, `Blueprint_StealArmor`, `Blueprint_StealArmorHeat`,
+	`Blueprint_StealArmorCold`, `Blueprint_PlasticArmor`, `Blueprint_PlasticArmorHeat`, `Blueprint_PlasticArmorCold`,
+	`Blueprint_PlasticArmorWeight`, `Blueprint_SFArmor`, `Blueprint_SFArmorHeat`, `Blueprint_SFArmorCold`,
+	`Blueprint_SFArmorWeight`, `Blueprint_AncientArmor`, `Blueprint_AncientArmorHeat`, `Blueprint_AncientArmorCold`,
+	`Blueprint_AncientArmorWeight`, `Blueprint_YakushimaArmor001`, `Blueprint_FurHelmet`, `Blueprint_CopperHelmet`,
+	`Blueprint_IronHelmet`, `Blueprint_StealHelmet`, `Blueprint_PlasticHelmet`, `Blueprint_SFHelmet`, `Blueprint_AncientHelmet`,
+	`Blueprint_YakushimaHeadEquip001`, `Blueprint_YakushimaHeadEquip003`, `Blueprint_YakushimaHeadEquip002`,
+	`Blueprint_YakushimaHeadEquip004`,
+]);
+
+// Only these newer families have a Common-to-Uncommon row; legacy quality chains start at Rare.
+const TIER_ONE_SCHEMATIC_COMBINATIONS = new Set([
+	`Blueprint_MultiGuidedMissileLauncher_2`,
+	`Blueprint_YakushimaArmor001_2`,
+	`Blueprint_YakushimaBlade002_2`,
+	`Blueprint_YakushimaBlade003_2`,
+	`Blueprint_YakushimaBlade004_2`,
+	`Blueprint_YakushimaGun001_2`,
+	`Blueprint_YakushimaHeadEquip001_2`,
+	`Blueprint_YakushimaHeadEquip002_2`,
+	`Blueprint_YakushimaHeadEquip003_2`,
+	`Blueprint_YakushimaHeadEquip004_2`,
+	`Blueprint_YakushimaLantern001_2`,
+]);
 const SOURCE_LABELS = {
-	Treasure: `Treasure Chests`, "Treasure Element": `Elemental Chests`, Supply: `Supply Drops`, Junk: `Junk`,
+	"Treasure Element": `Elemental Chests`, Supply: `Supply Drops`, Junk: `Junk`,
 	"Salvage Rank1": `Salvage`, "Salvage Rank2": `Salvage`, "World Tree Fishing": `Fishing`, "World Tree Junk": `Junk`,
-	Expeditions: `Expeditions`, "Enemy Camps": `Enemy Camps`,
+	Expeditions: `Expeditions`, "Enemy Camps": `Enemy Camps`, Fishing: `Fishing`, "Fishing Ponds": `Fishing Ponds`,
 };
-const SOURCE_CATEGORIES = {
-	"Dungeon Treasure Chests": `Dungeon Chests`, "Dungeon and Regional Chests": `Dungeon Chests`,
-	"Dungeon or Sanctuary Chests": `Dungeon Chests`, "Dungeon Chests": `Dungeon Chests`,
-	"Possible Destinations": `Treasure Maps`, "Skill Fruit Trees": `Skill Fruit Trees`,
-};
+const SELF_DESCRIBING_SOURCES = new Set([
+	`Oil Rigs`, `Treasure Maps`, `Effigy Locations`, `Medal Merchants`, `Bounty Shop`, `Arena Merchant`,
+	`Caravan Merchants`, `Dungeon Merchant`, `Wandering Merchants`,
+]);
+const SPECIAL_MERCHANT_BUTTONS = [
+	[`medalMerchants`, `medalmerchants`, `Medal Merchants`],
+	[`bountyMerchants`, `bountymerchants`, `Bounty Officers`],
+	[`arenaMerchant`, `arenamerchant`, `Arena Merchant`],
+];
+const PROCEDURAL_MERCHANT_SOURCES = new Set([`Wandering Merchants`, `Caravan Merchants`, `Dungeon Merchant`]);
+
+function fixedMerchantTypes(locations) {
+	return [...new Set((locations?.entries || []).map(entry => {
+		const shops = entry.shops || [entry.shop];
+		return shops.some(shop => /_Shop_2$/u.test(shop)) ? `Weapons Merchant` : `Wandering Merchant`;
+	}))];
+}
 const AMMO_BY_CLASS = {
 	Bow_Fire: `Fire Arrow`, Bow_Poison: `Poison Arrow`, BowGun_Fire: `Fire Arrow`, BowGun_Poison: `Poison Arrow`,
 	ChargeLaserRifle: `Charge Rifle Ammo`, CompoundBow: `Reinforced Arrow`, ElectricArcAssaultRifle: `Plasma Rifle Ammo`,
@@ -64,31 +119,75 @@ function itemEffect(item) {
 	return null;
 }
 
-function sourceText(acquisition) {
+function visibleRecipes(item) {
+	const recipes = (item.recipes || []).filter(recipe => recipe.ingredients?.length);
+	if (item.category !== `Schematic`) {return recipes;}
+
+	const unlockedItem = item.name.replace(/ Schematic(?: \d+)?$/u, ``);
+	// PalDB mixes equipment-upgrade rows into some schematic production tables; those belong to the equipment path.
+	const combinations = recipes.filter(recipe => !recipe.ingredients.some(ingredient => ingredient.name === unlockedItem));
+	const tier = /^(.* Schematic) ([1-4])$/u.exec(item.name);
+	if (!tier) {return combinations;}
+	const code = String(item.code || ``).split(`/`).pop();
+	const family = code.replace(/_[2-5]$/u, ``).replace(/(?<=Default)[3-5]$/u, ``);
+	if (!SCHEMATIC_COMBINATION_FAMILIES.has(family)) {return [];}
+	if (Number(tier[2]) === 1 && !TIER_ONE_SCHEMATIC_COMBINATIONS.has(code)) {return [];}
+
+	const lowerTier = Number(tier[2]) === 1 ? tier[1] : `${tier[1]} ${Number(tier[2]) - 1}`;
+	if (!combinations.some(recipe => recipe.ingredients.some(ingredient => ingredient.name === lowerTier))) {
+		// Current game recipe rows use five copies of the immediately lower tier at the Drafting Table.
+		combinations.unshift({ ingredients: [{ name: lowerTier, quantity: `5` }], requirement: `` });
+	}
+	return combinations;
+}
+
+function sourceText(acquisition, merchantLocations) {
 	const sections = [];
 	const seen = new Set();
 	for (const source of acquisition?.sources || []) {
+		// A fixed merchant map is more precise than overlapping procedural stock tables and avoids duplicate merchant claims.
+		if (merchantLocations && PROCEDURAL_MERCHANT_SOURCES.has(source.type)) {continue;}
+		if (source.type === `Treasure`) {
+			// The attached map communicates eligible regions; the card only needs each distinct chest type.
+			for (const chestTier of new Set(source.entries.map(entry => entry.chestTier).filter(Boolean))) {
+				if (!seen.has(chestTier)) {sections.push(chestTier);}
+				seen.add(chestTier);
+			}
+			continue;
+		}
 		const summary = SOURCE_LABELS[source.type];
 		if (summary) {
 			if (!seen.has(summary)) {sections.push(summary);}
 			seen.add(summary);
 			continue;
 		}
-		const entries = source.entries.map(entry => `${entry.location}${entry.quantity ? ` ×${entry.quantity}` : ``}${entry.probability ? `: ${entry.probability}` : ``}${entry.cost ? `: ${entry.cost}` : ``}`).join(`\n`);
-		// Fixed-location cards already identify the mapped collectible, so repeating a generic type adds no information.
-		if ([`Effigy Locations`, `Locations`].includes(source.type)) {
+		const entries = source.entries.map(entry => {
+			const redundantLocation = source.type === `Ancient Ruin` && /^Fixed location$/iu.test(entry.location);
+			const selfDescribingLocation = SELF_DESCRIBING_SOURCES.has(source.type);
+			const dungeonLocation = source.type === `Dungeons` ?
+				`${entry.location} Dungeon` :
+				(/^Dungeon/iu.test(source.type) ? entry.location : null);
+			let location;
+			if (!location) {
+				if (redundantLocation) {location = source.type;} else if (dungeonLocation) {location = dungeonLocation;} else if (selfDescribingLocation) {location = entry.location;} else {location = `${source.type} ${entry.location}`;}
+			}
+			return `${location}${entry.quantity ? ` ×${entry.quantity}` : ``}${entry.probability ? `: ${entry.probability}` : ``}${entry.cost ? `: ${entry.cost}` : ``}`;
+		}).join(`\n`);
+		// Effigy cards already identify the mapped collectible, so repeating its source type adds no information.
+		if (source.type === `Effigy Locations`) {
 			if (entries) {sections.push(entries);}
 		} else {
-			sections.push(entries ? `${source.type}\n${entries}` : source.type);
+			sections.push(entries || source.type);
 		}
-		seen.add(SOURCE_CATEGORIES[source.type] || source.type);
 	}
-	// Loot-pool categories fill gaps in curated map sources without exposing internal pool identifiers to users.
+	for (const merchant of fixedMerchantTypes(merchantLocations)) {
+		if (!seen.has(merchant)) {sections.push(merchant);}
+		seen.add(merchant);
+	}
+	// Normalized loot-pool categories fill gaps without exposing internal game table identifiers.
 	for (const pool of acquisition?.lootPools || []) {
-		if (!seen.has(pool.category)) {
-			sections.push(pool.category);
-			seen.add(pool.category);
-		}
+		if (!seen.has(pool.category)) {sections.push(pool.category);}
+		seen.add(pool.category);
 	}
 	if (acquisition?.note) {sections.push(acquisition.note);}
 	return sections.join(`\n`).slice(0, 1024);
@@ -102,9 +201,9 @@ function createItemCards({ normalizeText, resolveLocalImage }) {
 		const ammo = AMMO_BY_CLASS[item.properties?.itemActorClass] || AMMO_BY_TYPE[item.properties?.typeB];
 		let effect = itemEffect(item);
 		if (normalizeText(effect?.value) === normalizeText(item.description)) {effect = null;}
-		let description = item.description;
+		const descriptionParts = itemDescriptionParts(item.description);
+		let description = descriptionParts.description;
 		if (effect?.label === `Accessory Effect:` && description.endsWith(effect.value)) {description = description.slice(0, -effect.value.length).trim();}
-		// Journals are collectibles rather than inventory items, so inventory-only fields would be misleading.
 		let fields = [
 			{ name: `Category:`, value: item.category, inline: true },
 			{ name: `Weight:`, value: stats.weight === undefined ? `—` : formatNumber(stats.weight), inline: true },
@@ -113,24 +212,35 @@ function createItemCards({ normalizeText, resolveLocalImage }) {
 			{ name: `Sell Price:`, value: stats.sellPrice === undefined ? `Cannot be sold` : formatNumber(stats.sellPrice), inline: true },
 			ammo ? { name: `Ammo Type:`, value: ammo, inline: true } : { name: `\u200b`, value: `\u200b`, inline: true },
 		];
+		// Journals are collectibles rather than inventory items, so inventory-only fields would be misleading.
 		if (isJournal) {fields = fields.slice(0, 1);}
 		const applicable = [[`Attack`, stats.attack], [`Defense`, stats.defense], [`Health`, stats.health], [`Shield`, stats.shield], [`Nutrition`, stats.nutrition], [`SAN`, stats.san], [`Capture Power`, stats.capturePower], [`Speed`, stats.speed], [`Stamina Drain`, stats.staminaDrain], [`Durability`, stats.durability], [`Magazine Size`, item.properties?.magazineSize], [`Skill Power`, stats.waza]].filter(([, value]) => value !== undefined);
 		if (effect?.value) {fields.push({ name: effect.label, value: effect.value.slice(0, 1024) });} else if (applicable.length) {fields.push({ name: `Stats:`, value: applicable.map(([label, value]) => `${label}: **${formatNumber(value)}**`).join(` • `) });}
-		const recipes = (item.recipes || []).filter(recipe => recipe.ingredients?.length);
+		if (descriptionParts.perks.length) {fields.push({ name: `Perks:`, value: descriptionParts.perks.join(`\n`) });}
+		const recipes = visibleRecipes(item);
+		const workbench = itemWorkbench(item);
 		if (recipes.length === 1) {
 			const recipe = recipes[0];
-			fields.push({ name: `Crafting Materials:`, value: `${recipe.ingredients.map(i => `${i.name} ×${i.quantity}`).join(`\n`)}${recipe.requirement ? `\n${recipe.requirement}` : ``}`.slice(0, 1024) });
+			if (recipe.outputQuantity) {fields.push({ name: `Output Quantity:`, value: formatNumber(recipe.outputQuantity) });}
+			if (recipe.requirement) {fields.push({ name: `Tech Level:`, value: recipe.requirement.replace(/^Technology Lv\.\s*/u, ``) });}
+			const recipeLabel = item.category === `Schematic` ? `Schematic Recipe (${workbench || `Drafting Table`}):` : `Crafting Materials:`;
+			fields.push({ name: recipeLabel, value: recipe.ingredients.map(i => `${i.name} ×${i.quantity}`).join(`\n`).slice(0, 1024) });
 		} else if (recipes.length > 1) {
-			const lines = recipes.map(recipe => `${recipe.ingredients.map(i => `${i.name} ×${i.quantity}`).join(` + `)}${recipe.requirement ? ` (${recipe.requirement})` : ``}`);
-			for (const [index, value] of chunkLines(lines).entries()) {fields.push({ name: index ? `Crafting Recipes (continued):` : `Crafting Recipes:`, value });}
+			const lines = recipes.map(recipe => `${recipe.outputQuantity ? `Produces ×${formatNumber(recipe.outputQuantity)}: ` : ``}${recipe.ingredients.map(i => `${i.name} ×${i.quantity}`).join(` + `)}${recipe.requirement ? ` (${recipe.requirement})` : ``}`);
+			const recipeLabel = item.category === `Schematic` ? `Schematic Recipes (${workbench || `Drafting Table`}):` : `Crafting Recipes:`;
+			for (const [index, value] of chunkLines(lines).entries()) {fields.push({ name: index ? `${recipeLabel.slice(0, -1)} (continued):` : recipeLabel, value });}
 		}
-		if (recipes.length && itemWorkbench(item)) {fields.push({ name: `Workbench:`, value: itemWorkbench(item) });}
+		if (workbench && item.category !== `Schematic`) {fields.push({ name: `Workbench:`, value: workbench });}
 		if (pal) {
 			const drop = (item.droppedBy || []).find(entry => normalizeText(entry.pal) === normalizeText(pal.name));
 			fields.push({ name: `Dropped by ${pal.name}:`, value: drop ? `Drop Chance: **${drop.probability}**\nQuantity: **${drop.quantity}**` : `Drop details are not available.` });
 		}
-		const sources = sourceText(item.acquisition);
-		if (sources) {fields.push({ name: `Sources:`, value: sources });}
+		const sources = sourceText(item.acquisition, item.merchantLocations);
+		if (sources) {
+			fields.push({ name: `Sources:`, value: sources });
+		} else if (item.category === `Schematic`) {
+			fields.push({ name: `Sources:`, value: `No verified non-crafting source is recorded.` });
+		}
 		const embed = new EmbedBuilder().setAuthor({ name: `Rarity: ${item.rarity}` }).setDescription(description || `No description available.`).setColor(ITEM_RARITY_COLORS[item.rarity] || ITEM_RARITY_COLORS.Common).setTitle(item.name).addFields(fields);
 		if (thumbnailUrl) {embed.setThumbnail(thumbnailUrl);}
 		if (mapUrl) {embed.setImage(mapUrl);}
@@ -144,16 +254,17 @@ function createItemCards({ normalizeText, resolveLocalImage }) {
 		const add = (condition, action, label) => condition && row.addComponents(new ButtonBuilder().setCustomId(`item:${action}:${item.id}:${ownerId}:${action === `drops` && pal ? encodeURIComponent(pal.number) : ``}`).setLabel(label).setStyle(ButtonStyle.Secondary));
 		add((item.droppedBy || []).length && ownerId, `drops`, `View Dropping Pals`);
 		add(item.merchantLocations?.entries?.length && ownerId, `merchants`, `Merchant Locations`);
-		add(item.medalMerchants?.entries?.length && ownerId, `medalmerchants`, `Medal Merchants`);
+		for (const [property, action, label] of SPECIAL_MERCHANT_BUTTONS) {add(item[property]?.entries?.length && ownerId, action, label);}
 		if (pal && ownerId) {row.addComponents(new ButtonBuilder().setCustomId(`paldeck:back:${encodeURIComponent(pal.number)}:${ownerId}`).setLabel(`Back to Pal`).setStyle(ButtonStyle.Secondary));}
 		return { components: row.components.length ? [row] : [], embeds: [buildItemEmbed(item, pal, thumbnail.url, map.url)], files: [...thumbnail.files, ...map.files] };
 	}
 
-	function buildMerchantResponse(item, property, title) {
+	function buildMerchantResponse(item, property, title, normalizeTypes = false) {
 		const locations = item[property];
 		const thumbnail = resolveLocalImage(item.iconUrl);
 		const map = resolveLocalImage(locations?.map);
-		const embed = new EmbedBuilder().setTitle(title).setDescription(locations.entries.map(entry => `• ${entry.merchant}`).join(`\n`)).setColor(ITEM_RARITY_COLORS[item.rarity] || ITEM_RARITY_COLORS.Common);
+		const merchants = normalizeTypes ? fixedMerchantTypes(locations) : [...new Set(locations.entries.map(entry => entry.merchant))];
+		const embed = new EmbedBuilder().setTitle(title).setDescription(merchants.map(merchant => `• ${merchant}`).join(`\n`)).setColor(ITEM_RARITY_COLORS[item.rarity] || ITEM_RARITY_COLORS.Common);
 		if (thumbnail.url) {embed.setThumbnail(thumbnail.url);}
 		if (map.url) {embed.setImage(map.url);}
 		return { embeds: [embed], files: [...thumbnail.files, ...map.files] };
@@ -161,8 +272,10 @@ function createItemCards({ normalizeText, resolveLocalImage }) {
 
 	return {
 		buildItemResponse,
-		buildMerchantResponse: item => buildMerchantResponse(item, `merchantLocations`, `Merchant Locations: ${item.name}`),
+		buildMerchantResponse: item => buildMerchantResponse(item, `merchantLocations`, `Merchant Locations: ${item.name}`, true),
 		buildMedalMerchantResponse: item => buildMerchantResponse(item, `medalMerchants`, `Medal Merchants`),
+		buildBountyMerchantResponse: item => buildMerchantResponse(item, `bountyMerchants`, `Bounty Officers`),
+		buildArenaMerchantResponse: item => buildMerchantResponse(item, `arenaMerchant`, `Arena Merchant`),
 	};
 }
 

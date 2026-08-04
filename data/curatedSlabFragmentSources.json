@@ -1,0 +1,825 @@
+{
+  "pal-summon-night-lady-parts": {
+    "sources": [
+      {
+        "type": "Dungeon or Sanctuary Chests",
+        "entries": [
+          {
+            "location": "Forest Dungeon or Sanctuary",
+            "quantity": "1",
+            "probability": "50%"
+          },
+          {
+            "location": "Desert Dungeon",
+            "quantity": "1",
+            "probability": "66.667%"
+          },
+          {
+            "location": "Volcano Dungeon",
+            "quantity": "1",
+            "probability": "60%"
+          }
+        ]
+      },
+      {
+        "type": "Expeditions",
+        "entries": [
+          {
+            "location": "Forest",
+            "quantity": "1–2",
+            "probability": "100%"
+          },
+          {
+            "location": "Volcano",
+            "quantity": "1–2",
+            "probability": "50%"
+          },
+          {
+            "location": "Desert",
+            "quantity": "1–2",
+            "probability": "100%"
+          },
+          {
+            "location": "Grasslands Hard",
+            "quantity": "1–2",
+            "probability": "100%"
+          }
+        ]
+      },
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Desert",
+            "quantity": "1",
+            "probability": "23.077%"
+          },
+          {
+            "location": "Volcano",
+            "quantity": "1",
+            "probability": "60%"
+          }
+        ]
+      },
+      {
+        "type": "Pal Critics",
+        "entries": [
+          {
+            "location": "Kitsun",
+            "quantity": "1"
+          },
+          {
+            "location": "Sekhmet",
+            "quantity": "1"
+          },
+          {
+            "location": "Reptyro",
+            "quantity": "1"
+          }
+        ]
+      },
+      {
+        "type": "Treasure",
+        "entries": [
+          {
+            "location": "Desert02",
+            "probability": "varies",
+            "chestTier": "Regular Chests",
+            "lotteryField": "Desert02"
+          },
+          {
+            "location": "Forest02",
+            "probability": "varies",
+            "chestTier": "Regular Chests",
+            "lotteryField": "Forest02"
+          },
+          {
+            "location": "Volcano02",
+            "probability": "varies",
+            "chestTier": "Regular Chests",
+            "lotteryField": "Volcano02"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/regional-item-sources-ac8045ebe9.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Treasure",
+          "href": "Desert02",
+          "treasureGrade": 1,
+          "lotteryFields": [
+            "Desert02"
+          ]
+        },
+        {
+          "type": "Treasure",
+          "href": "Forest02",
+          "treasureGrade": 1,
+          "lotteryFields": [
+            "Forest02"
+          ]
+        },
+        {
+          "type": "Treasure",
+          "href": "Volcano02",
+          "treasureGrade": 1,
+          "lotteryFields": [
+            "Volcano02"
+          ]
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Desert1",
+            "Volcano1",
+            "Snow1",
+            "SeaBase_Desert_1",
+            "SeaBase_Volcano_1"
+          ]
+        },
+        {
+          "type": "Dungeon",
+          "item": [
+            "Cavern of the Dunes",
+            "Volcanic Cavern",
+            "Astral Mountains Cavern"
+          ]
+        }
+      ]
+    }
+  },
+  "pal-summon-night-lady-dark-parts": {
+    "sources": [
+      {
+        "type": "Dungeon Chests",
+        "entries": [
+          {
+            "location": "Desert Dungeon",
+            "quantity": "1",
+            "probability": "81.818%"
+          },
+          {
+            "location": "Volcano Dungeon",
+            "quantity": "1",
+            "probability": "81.818%"
+          },
+          {
+            "location": "Snow Dungeon",
+            "quantity": "1",
+            "probability": "50%"
+          }
+        ]
+      },
+      {
+        "type": "Expeditions",
+        "entries": [
+          {
+            "location": "Volcano",
+            "quantity": "1–2",
+            "probability": "50%"
+          },
+          {
+            "location": "Snow",
+            "quantity": "1–2",
+            "probability": "50%"
+          },
+          {
+            "location": "Forest Hard",
+            "quantity": "1–2",
+            "probability": "100%"
+          }
+        ]
+      },
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Desert",
+            "quantity": "1",
+            "probability": "81.818%"
+          },
+          {
+            "location": "Volcano",
+            "quantity": "1",
+            "probability": "81.818%"
+          },
+          {
+            "location": "Volcano Advanced",
+            "quantity": "1",
+            "probability": "50%"
+          },
+          {
+            "location": "Snow",
+            "quantity": "1",
+            "probability": "50%"
+          },
+          {
+            "location": "Desert Sea Base",
+            "quantity": "1–2",
+            "probability": "50%"
+          },
+          {
+            "location": "Volcano Sea Base",
+            "quantity": "1",
+            "probability": "50%"
+          }
+        ]
+      },
+      {
+        "type": "Treasure",
+        "entries": [
+          {
+            "location": "Desert02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "Desert02"
+          },
+          {
+            "location": "Snow02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "Snow02"
+          },
+          {
+            "location": "Volcano02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "Volcano02"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/regional-item-sources-e12fc98b77.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Treasure",
+          "href": "Desert02",
+          "treasureGrade": 3,
+          "lotteryFields": [
+            "Desert02"
+          ]
+        },
+        {
+          "type": "Treasure",
+          "href": "Snow02",
+          "treasureGrade": 3,
+          "lotteryFields": [
+            "Snow02"
+          ]
+        },
+        {
+          "type": "Treasure",
+          "href": "Volcano02",
+          "treasureGrade": 3,
+          "lotteryFields": [
+            "Volcano02"
+          ]
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Desert1",
+            "Volcano1",
+            "Snow1",
+            "SeaBase_Desert_1",
+            "SeaBase_Volcano_1"
+          ]
+        },
+        {
+          "type": "Dungeon",
+          "item": [
+            "Cavern of the Dunes",
+            "Volcanic Cavern",
+            "Astral Mountains Cavern"
+          ]
+        }
+      ]
+    }
+  },
+  "pal-summon-king-bahamut-dragon-parts": {
+    "sources": [
+      {
+        "type": "Dungeon and Regional Chests",
+        "entries": [
+          {
+            "location": "Snow Dungeon",
+            "quantity": "1",
+            "probability": "50%"
+          },
+          {
+            "location": "Sakurajima Dungeon",
+            "quantity": "1",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Feybreak Dungeon",
+            "quantity": "1",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Sky Island",
+            "quantity": "1",
+            "probability": "33.333%"
+          }
+        ]
+      },
+      {
+        "type": "Expeditions",
+        "entries": [
+          {
+            "location": "Snow",
+            "quantity": "1–2",
+            "probability": "50%"
+          },
+          {
+            "location": "Sakurajima",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Feybreak",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Sky Island",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Desert Hard",
+            "quantity": "1–2",
+            "probability": "100%"
+          },
+          {
+            "location": "Sakurajima Hard",
+            "quantity": "1–2",
+            "probability": "100%"
+          },
+          {
+            "location": "World Tree",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          }
+        ]
+      },
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Volcano",
+            "quantity": "1",
+            "probability": "50%"
+          },
+          {
+            "location": "Snow",
+            "quantity": "1",
+            "probability": "50%"
+          },
+          {
+            "location": "Sakurajima",
+            "quantity": "1",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Desert Sea Base",
+            "quantity": "1–2",
+            "probability": "50%"
+          },
+          {
+            "location": "Other eligible camps",
+            "quantity": "1",
+            "probability": "33.333%"
+          }
+        ]
+      },
+      {
+        "type": "Pal Critic",
+        "entries": [
+          {
+            "location": "Warsect Terra",
+            "quantity": "1"
+          }
+        ]
+      },
+      {
+        "type": "Treasure",
+        "entries": [
+          {
+            "location": "DarkIsland02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "DarkIsland02"
+          },
+          {
+            "location": "Sakurajima02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "Sakurajima02"
+          },
+          {
+            "location": "SkyIsland02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "SkyIsland02"
+          },
+          {
+            "location": "Snow02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "Snow02"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/blazamut-ryu-slab-fragment-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Treasure",
+          "href": "DarkIsland02",
+          "treasureGrade": 3,
+          "lotteryFields": [
+            "DarkIsland02"
+          ]
+        },
+        {
+          "type": "Treasure",
+          "href": "Snow02",
+          "treasureGrade": 3,
+          "lotteryFields": [
+            "Snow02"
+          ]
+        },
+        {
+          "type": "Treasure",
+          "Spawn": "Sakurajima_Treasure",
+          "lotteryFields": [
+            "Sakurajima02"
+          ],
+          "treasureGrade": 3
+        },
+        {
+          "type": "Treasure",
+          "Spawn": "SkyIsland_Treasure",
+          "lotteryFields": [
+            "SkyIsland02"
+          ],
+          "treasureGrade": 3
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Volcano1",
+            "Snow1",
+            "Sakurajima1",
+            "SeaBase_Desert_1",
+            "SeaBase_Snow_1",
+            "SeaBase_Volcano_1",
+            "SeaBase_Sakurajima_1",
+            "SeaBase_Yamijima_1"
+          ]
+        },
+        {
+          "type": "Anti-Air Turret",
+          "RewardName": "Viking1",
+          "legendType": "Enemy Camp"
+        },
+        {
+          "type": "Dungeon",
+          "item": [
+            "Astral Mountains Cavern",
+            "Cherry Blossom Cave",
+            "Feybreak Cavern",
+            "Sunreach Skies"
+          ]
+        }
+      ]
+    }
+  },
+  "pal-summon-dark-mecha-dragon-parts": {
+    "sources": [
+      {
+        "type": "Dungeon and Regional Chests",
+        "entries": [
+          {
+            "location": "Sakurajima Dungeon",
+            "quantity": "1",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Feybreak Dungeon",
+            "quantity": "1",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Sky Island",
+            "quantity": "1",
+            "probability": "33.333%"
+          }
+        ]
+      },
+      {
+        "type": "Expeditions",
+        "entries": [
+          {
+            "location": "Sakurajima",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Feybreak",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Sky Island",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Volcano Hard",
+            "quantity": "1–2",
+            "probability": "100%"
+          },
+          {
+            "location": "Snow Hard",
+            "quantity": "1–2",
+            "probability": "100%"
+          },
+          {
+            "location": "World Tree",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          }
+        ]
+      },
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Snow",
+            "quantity": "1",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Sakurajima",
+            "quantity": "1",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Snow, Sakurajima, Feybreak, or Sky Island Sea Base",
+            "quantity": "1",
+            "probability": "33.333%"
+          }
+        ]
+      },
+      {
+        "type": "Pal Critic",
+        "entries": [
+          {
+            "location": "Omascul",
+            "quantity": "1"
+          }
+        ]
+      },
+      {
+        "type": "Treasure",
+        "entries": [
+          {
+            "location": "DarkIsland02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "DarkIsland02"
+          },
+          {
+            "location": "Sakurajima02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "Sakurajima02"
+          },
+          {
+            "location": "SkyIsland02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "SkyIsland02"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/xenolord-hartalis-slab-fragment-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Treasure",
+          "href": "DarkIsland02",
+          "treasureGrade": 3,
+          "lotteryFields": [
+            "DarkIsland02"
+          ]
+        },
+        {
+          "type": "Treasure",
+          "Spawn": "Sakurajima_Treasure",
+          "lotteryFields": [
+            "Sakurajima02"
+          ],
+          "treasureGrade": 3
+        },
+        {
+          "type": "Treasure",
+          "Spawn": "SkyIsland_Treasure",
+          "lotteryFields": [
+            "SkyIsland02"
+          ],
+          "treasureGrade": 3
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Snow1",
+            "Sakurajima1",
+            "SeaBase_Snow_1",
+            "SeaBase_Sakurajima_1",
+            "SeaBase_Yamijima_1"
+          ]
+        },
+        {
+          "type": "Anti-Air Turret",
+          "RewardName": "Viking1",
+          "legendType": "Enemy Camp"
+        },
+        {
+          "type": "Dungeon",
+          "item": [
+            "Cherry Blossom Cave",
+            "Feybreak Cavern",
+            "Sunreach Skies"
+          ]
+        }
+      ]
+    }
+  },
+  "pal-summon-legend-deer-parts": {
+    "sources": [
+      {
+        "type": "Dungeon and Regional Chests",
+        "entries": [
+          {
+            "location": "Sakurajima Dungeon",
+            "quantity": "1",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Feybreak Dungeon",
+            "quantity": "1",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Sky Island",
+            "quantity": "1",
+            "probability": "33.333%"
+          }
+        ]
+      },
+      {
+        "type": "Expeditions",
+        "entries": [
+          {
+            "location": "Sakurajima",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Feybreak",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Sky Island",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Feybreak Hard",
+            "quantity": "1–2",
+            "probability": "100%"
+          },
+          {
+            "location": "Sky Island Hard",
+            "quantity": "1–2",
+            "probability": "100%"
+          },
+          {
+            "location": "World Tree",
+            "quantity": "1–2",
+            "probability": "33.333%"
+          }
+        ]
+      },
+      {
+        "type": "Enemy Camps",
+        "entries": [
+          {
+            "location": "Snow",
+            "quantity": "1",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Sakurajima",
+            "quantity": "1",
+            "probability": "33.333%"
+          },
+          {
+            "location": "Snow, Sakurajima, Feybreak, or Sky Island Sea Base",
+            "quantity": "1",
+            "probability": "33.333%"
+          }
+        ]
+      },
+      {
+        "type": "Treasure",
+        "entries": [
+          {
+            "location": "DarkIsland02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "DarkIsland02"
+          },
+          {
+            "location": "Sakurajima02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "Sakurajima02"
+          },
+          {
+            "location": "SkyIsland02",
+            "probability": "varies",
+            "chestTier": "Purple Chests",
+            "lotteryField": "SkyIsland02"
+          }
+        ]
+      }
+    ],
+    "map": "data/item-maps/xenolord-hartalis-slab-fragment-sources.png",
+    "mapSources": {
+      "map": "palpagos",
+      "markers": [
+        {
+          "type": "Treasure",
+          "href": "DarkIsland02",
+          "treasureGrade": 3,
+          "lotteryFields": [
+            "DarkIsland02"
+          ]
+        },
+        {
+          "type": "Treasure",
+          "Spawn": "Sakurajima_Treasure",
+          "lotteryFields": [
+            "Sakurajima02"
+          ],
+          "treasureGrade": 3
+        },
+        {
+          "type": "Treasure",
+          "Spawn": "SkyIsland_Treasure",
+          "lotteryFields": [
+            "SkyIsland02"
+          ],
+          "treasureGrade": 3
+        },
+        {
+          "type": "Enemy Camp",
+          "RewardName": [
+            "Snow1",
+            "Sakurajima1",
+            "SeaBase_Snow_1",
+            "SeaBase_Sakurajima_1",
+            "SeaBase_Yamijima_1"
+          ]
+        },
+        {
+          "type": "Anti-Air Turret",
+          "RewardName": "Viking1",
+          "legendType": "Enemy Camp"
+        },
+        {
+          "type": "Dungeon",
+          "item": [
+            "Cherry Blossom Cave",
+            "Feybreak Cavern",
+            "Sunreach Skies"
+          ]
+        }
+      ]
+    }
+  }
+}

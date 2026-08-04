@@ -61,7 +61,10 @@ function itemDetailPathFromHref(href) {
 }
 
 function parseItemCard(card, source) {
-	const nameMatch = card.match(/<a class="itemname" data-hover="\?s=([^"]+)" href="([^"]+)">([\s\S]*?)<\/a>/);
+	// Identity must come from the banner. Searching the whole card can mistake a linked recipe ingredient for the item.
+	const bannerEnd = card.search(/<div class="hover_bg_rarity\d+"/i);
+	const banner = bannerEnd >= 0 ? card.slice(0, bannerEnd) : card;
+	const nameMatch = banner.match(/<a class="itemname" data-hover="([^"]+)" href="([^"]+)">([\s\S]*?)<\/a>/);
 
 	if (!nameMatch) {
 		return null;
@@ -72,7 +75,8 @@ function parseItemCard(card, source) {
 	const iconMatch = card.match(/<img loading="lazy" src="([^"]+)"[^>]*class="[^"]*size128/);
 	const descriptionMatch = card.match(/<div class="card-body py-2">\s*<div>([\s\S]*?)<\/div>\s*<\/div>/);
 	const name = stripTags(nameMatch[3]);
-	const code = decodeUriComponentSafe(decodeHtml(nameMatch[1]));
+	const hoverTarget = decodeHtml(nameMatch[1]);
+	const code = hoverTarget.startsWith(`?s=`) ? decodeUriComponentSafe(hoverTarget.slice(3)) : ``;
 	const id = itemIdFromCode(code, name);
 
 	return {
@@ -86,6 +90,7 @@ function parseItemCard(card, source) {
 		description: stripTags(descriptionMatch?.[1] || ``),
 		iconUrl: decodeHtml(iconMatch?.[1] || ``),
 		detailPath: itemDetailPathFromHref(nameMatch[2]),
+		hoverPath: code ? `` : hoverTarget,
 		source: source.slug,
 	};
 }
@@ -376,7 +381,27 @@ async function fetchPaldbItemData() {
 	for (const source of PALDB_ITEM_CATEGORY_SOURCES) {
 		const url = `${PALDB_BASE_URL}${source.slug}`;
 		const html = await fetchText(url);
-		const sourceItems = parseItemCards(html, source);
+		const parsedItems = parseItemCards(html, source);
+		const sourceItems = await mapWithConcurrency(parsedItems, ITEM_DETAIL_CONCURRENCY, async item => {
+			if (item.code) {
+				delete item.hoverPath;
+				return item;
+			}
+
+			if (!item.hoverPath.startsWith(`/cache/`)) {
+				throw new Error(`Cannot resolve item code for ${item.name}: unsupported hover target ${item.hoverPath}`);
+			}
+
+			const hoverHtml = await fetchText(new URL(item.hoverPath, PALDB_BASE_URL));
+			const resolved = parseItemCard(hoverHtml, source);
+
+			if (!resolved?.code || resolved.name !== item.name || resolved.detailPath !== item.detailPath) {
+				throw new Error(`Cannot safely resolve cached item identity for ${item.name}`);
+			}
+
+			delete resolved.hoverPath;
+			return resolved;
+		});
 
 		sources.push({
 			category: source.category,

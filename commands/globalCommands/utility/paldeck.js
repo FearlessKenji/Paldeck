@@ -398,6 +398,8 @@ const {
 	buildItemResponse,
 	buildMerchantResponse,
 	buildMedalMerchantResponse,
+	buildBountyMerchantResponse,
+	buildArenaMerchantResponse,
 } = createItemCards({ normalizeText, resolveLocalImage });
 
 function parseSuitability(entry) {
@@ -921,5 +923,7 @@ module.exports = {
 	buildItemResponse,
 	buildMerchantResponse,
 	buildMedalMerchantResponse,
+	buildBountyMerchantResponse,
+	buildArenaMerchantResponse,
 	replyWithDroppingPals,
 };
