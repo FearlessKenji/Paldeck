@@ -1,13 +1,13 @@
 // Implements item lookup, autocomplete, and owner-bound navigation for item detail controls.
 const { MessageFlags, SlashCommandBuilder } = require(`discord.js`);
 const { resolvedItemData } = require(`../../../utils/itemData.js`);
+const { shouldHideItem } = require(`../../../utils/itemVisibility.js`);
 const paldeck = require(`./paldeck.js`);
 
 const ITEMS = resolvedItemData().Items;
 const ITEMS_BY_ID = new Map(ITEMS.map(item => [item.id, item]));
-const SEARCHABLE_ITEMS = ITEMS.filter(item =>
-	item.searchable !== false && item.properties?.bLegalInGame !== 0 && !/^\s*\[WIP\]/i.test(item.description || ``),
-);
+// The legality flag also appears on obtainable ordinary items, so availability decisions stay centralized.
+const SEARCHABLE_ITEMS = ITEMS.filter(item => !shouldHideItem(item));
 const UNAUTHORIZED_CONTROL_MESSAGE = `I'm not your button, pal!`;
 const RARITY_CHOICES = [`Common`, `Uncommon`, `Rare`, `Epic`, `Legendary`]
 	.map(rarity => ({ name: rarity, value: rarity }));

@@ -4,7 +4,13 @@ These notes are written for server owners and moderators. They include changes
 that affect setup, day-to-day use, or visible bot behavior. For the full
 developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/blob/main/CHANGELOG.md).
 
-## - Unreleased
+## v1.9.2 - 2026-08-04
+
+- Restored Effigies to `/item` search.
+- Added source maps to 67 items that previously listed mappable Enemy Camps, Oil Rigs, dungeons, fishing spots, World Tree sources, or Sakurajima chests without showing their locations.
+- Item cards are wider and easier to scan: Maximum Stack has been removed, Category/Weight and Buy/Sell remain aligned, and maps now appear directly beneath the card with the same rarity color. Pal habitat cards retain their existing layout.
+- Item Sources now use concise player-facing names, consistent location details, and predictable ordering. Chest and Treasure Map tiers follow progression order, comparable chances appear highest first, and regional details remain on maps instead of cluttering cards.
+- Pal Reverser now maps its Enemy Camp locations, Ancient Relic Recycler rewards show the overall chance for each relic tier, and Pal drop tables list higher chances first with alphabetical tie-breaking.
 
 ## v1.9.1 - 2026-08-04
 

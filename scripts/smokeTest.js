@@ -525,6 +525,7 @@ async function validateGroupedPalDrops() {
 		`Lamball's Alpha table should repeat its inherited normal drops.`,
 	);
 	assert(lamball.includes(`Ancient Civilization Parts ×1–2: 100%`) && lamball.includes(`Precious Pelt ×1–2: 100%`), `Lamball's Alpha table should include its Alpha-only drops.`);
+	assert(lamball.indexOf(`Lamball Mutton ×1: 100%`) < lamball.indexOf(`Wool ×1–3: 100%`), `Equal-chance Pal drops should use alphabetical tie-breaking.`);
 	assert(dandilord.includes(`Pal Drops — Normal`) && dandilord.includes(`Pal Drops — World Tree: Lvl 70`), `Dandilord should separate normal and World Tree Pal drops.`);
 	assert(dandilord.includes(`Ancient Civilization Core ×1: 100%`), `Dandilord should show its butcherable Ancient Civilization Core drop.`);
 	assert(
@@ -701,6 +702,15 @@ async function validateItemLookupAndDroppingPals() {
 	});
 	assert(choices.some(choice => choice.name === `Wool` && choice.value === `Wool`), `/item autocomplete should show only the plain Wool name.`);
 	assert(choices.every(choice => !choice.name.includes(` — `)), `/item autocomplete should not show rarity or category labels.`);
+
+	await itemCommand.autocomplete({
+		options: { getFocused: () => `effigy` },
+		respond: payload => {
+			choices = payload;
+		},
+	});
+	assert(choices.some(choice => choice.name === `Lifmunk Effigy`), `/item autocomplete should include obtainable Effigies.`);
+	assert(choices.some(choice => choice.name === `Yakumo Effigy`), `/item autocomplete should include current Effigy variants.`);
 
 	await itemCommand.autocomplete({
 		options: { getFocused: () => `ballistic` },
@@ -942,9 +952,9 @@ async function validateItemLookupAndDroppingPals() {
 	assert(!serializedFragment.includes(`Source —`), `Item acquisition field names should not repeat Source with an em dash.`);
 	const epicTreasureMapSources = epicTreasureMapResponse.embeds[0].toJSON().fields.find(field => field.name === `Sources:`)?.value;
 	assert(
-		[`Enemy Camps`, `Cherry Blossom Caves Dungeon`, `Gold Chests`]
+		[`Enemy Camps`, `Dungeons`, `Gold Chests`]
 			.every(value => epicTreasureMapSources?.includes(value)) && !epicTreasureMapSources?.includes(`Treasure Chests`),
-		`Epic Treasure Map sources should use broad camp wording, a natural dungeon name, and specific chest tiers.`,
+		`Epic Treasure Map sources should use broad camp and dungeon wording with specific chest tiers.`,
 	);
 	assert(!serializedEpicTreasureMap.includes(`Enemy Camps Desert`), `Broad Enemy Camps labels should replace unreadable region lists.`);
 	for (const name of [
@@ -988,18 +998,25 @@ async function validateItemLookupAndDroppingPals() {
 		const workbench = fields.find(field => field.name === `Workbench:`)?.value;
 		assert(workbench && !/^(?:the\b|['"])/iu.test(workbench), `${code}: schematic-unlocked equipment should show a normalized game-declared workbench.`);
 	}
-	assert(serializedFragment.includes(`Forest Dungeon or Sanctuary ×1: 50%`), `Slab source entries should render quantity and colon-separated probability.`);
 	assert(
-		fragmentResponse.embeds[0].toJSON().image?.url === `attachment://${path.basename(bellanoirFragment.acquisition.map)}`,
+		serializedFragment.includes(`Dungeon Chests (Forest) ×1: 50%`) &&
+		serializedFragment.includes(`Treasure Chests (No. 1 Wildlife Sanctuary) ×1: 50%`) &&
+		serializedFragment.includes(`Treasure Chests (No. 2 Wildlife Sanctuary) ×1: 60%`) &&
+		serializedFragment.includes(`Treasure Chests (No. 3 Wildlife Sanctuary) ×1: 66.667%`),
+		`Slab sources should separate regional dungeon and numbered Wildlife Sanctuary chest pathways.`,
+	);
+	assert(
+		fragmentResponse.embeds[1].toJSON().image?.url === `attachment://${path.basename(bellanoirFragment.acquisition.map)}` &&
+		!fragmentResponse.embeds[0].toJSON().image,
 		`Mapped slab items should use the acquisition map as the embed image.`,
 	);
 	assert(fragmentResponse.files.length === 2, `Mapped slab items should attach both the item thumbnail and acquisition map.`);
 	const fixedLocationCases = [
-		[`Ominous Egg`, serializedOminousEgg, `30 World Tree egg spawns`],
-		[`Kinship Peach`, serializedPeach, `22 Palpagos locations`],
-		[`Ancient Bone`, serializedAncientBone, `10 Palpagos locations`],
-		[`Ancient Bark`, serializedAncientBark, `10 Palpagos locations`],
-		[`Ancient Lava`, serializedAncientLava, `10 Palpagos locations`],
+		[`Ominous Egg`, serializedOminousEgg, `Egg Spawns (World Tree): 30 locations`],
+		[`Kinship Peach`, serializedPeach, `Fixed Locations (Palpagos): 22 locations`],
+		[`Ancient Bone`, serializedAncientBone, `Fixed Locations (Palpagos): 10 locations`],
+		[`Ancient Bark`, serializedAncientBark, `Fixed Locations (Palpagos): 10 locations`],
+		[`Ancient Lava`, serializedAncientLava, `Fixed Locations (Palpagos): 10 locations`],
 	];
 	for (const [name, payload, expected] of fixedLocationCases) {
 		assert(payload.includes(expected), `${name} should show its verified fixed-location count.`);
@@ -1007,7 +1024,7 @@ async function validateItemLookupAndDroppingPals() {
 	assert(serializedRuinSchematic.includes(`Sources:`) && serializedRuinSchematic.includes(`Ancient Ruin`), `Ancient Ruin schematics should show their fixed source.`);
 	const musketSources = musketSchematic3Response.embeds[0].toJSON().fields.find(field => field.name === `Sources:`)?.value;
 	assert(
-		[`Ancient Ruin`, `Supply Drops`, `Silver Chests`, `Purple Chests`, `Common Treasure Map ×1: 1.282%`]
+		[`Ancient Ruin`, `Supply Drops`, `Silver Chests`, `Purple Chests`, `Treasure Maps (Common) ×1: 1.282%`]
 			.every(value => musketSources?.includes(value)) && !musketSources?.includes(`Fixed location`),
 		`Musket Schematic 3 should show concise direct and Treasure Map sources without a Fixed location placeholder.`,
 	);
@@ -1020,7 +1037,7 @@ async function validateItemLookupAndDroppingPals() {
 	const sourceSummaryCases = [
 		[`Dog Coin`, serializedDogCoin, [`Sources:`, `Junk`, `Salvage`, `Elemental Chests`, `Oil Rigs`, `Expeditions`], [`Salvage Rank`]],
 		[`Single-source salvage item`, serializedSingleSalvage, [`Sources:`, `Salvage`], [`Salvage Rank`]],
-		[`Ancient Sphere`, serializedAncientSphere, [`Sources:`, `Fishing`, `Junk`, `Treasure Chests`, `Expeditions`, `Ground Spawns`], [`World Tree Fishing:`]],
+		[`Ancient Sphere`, serializedAncientSphere, [`Sources:`, `Fishing`, `Junk`, `Purple Chests`, `Regular Chests`, `Expeditions`, `Ground Spawns`], [`World Tree Fishing:`, `Treasure Chests`]],
 	];
 	for (const [name, payload, included, excluded] of sourceSummaryCases) {
 		assert(included.every(value => payload.includes(value)) && excluded.every(value => !payload.includes(value)), `${name} should use canonical player-facing source names.`);
@@ -1034,10 +1051,10 @@ async function validateItemLookupAndDroppingPals() {
 		solSphereResponse.files.length === 2,
 		`Sol Sphere should include its Sky Island loot sources and map.`,
 	);
-	assert(serializeDiscordPayload(coalResponse).includes(`553 Palpagos locations`), `Coal should combine normal resource nodes and clusters.`);
+	assert(serializeDiscordPayload(coalResponse).includes(`Resource Nodes (Palpagos): 553 locations`), `Coal should combine normal resource nodes and clusters.`);
 	for (const [index, response] of journalResponses.entries()) {
 		const payload = serializeDiscordPayload(response);
-		const expectedLocation = index ? `9 World Tree locations` : `55 Palpagos locations`;
+		const expectedLocation = index ? `Fixed Locations (World Tree): 9 locations` : `Fixed Locations (Palpagos): 55 locations`;
 		assert(
 			payload.includes(`Category:`) && payload.includes(`Collectible`) &&
 			payload.includes(`Sources:`) && payload.includes(expectedLocation) &&
@@ -1074,7 +1091,7 @@ async function validateItemLookupAndDroppingPals() {
 		const expectedItem = itemData.Items.find(item => item.name === (index ? `Ancient Recorder` : `Bjorn Seligsson's Diary - 1`));
 		assert(
 			payload.includes(`Category:`) && payload.includes(`Collectible`) && payload.includes(`Sources:`) &&
-			payload.includes(index ? `World Tree location` : `Palpagos location`) &&
+			payload.includes(index ? `Fixed Location (World Tree)` : `Fixed Location (Palpagos)`) &&
 			!payload.includes(`N/A`) && !payload.includes(`Weight:`) && !payload.includes(`Maximum Stack:`) &&
 			!payload.includes(`Buy Price:`) && !payload.includes(`Sell Price:`) && response.files.length === 2 &&
 			response.embeds[0].toJSON().thumbnail?.url === `attachment://${path.basename(expectedItem.iconUrl)}`,
@@ -1125,6 +1142,12 @@ async function validateItemLookupAndDroppingPals() {
 		`The Gumoss fishing-rod schematic should map eligible natural fishing spots while leaving buildable ponds and salvage unpinned.`,
 	);
 	const legendaryTreasureMap = itemData.Items.find(item => item.code === `Items/TreasureMap05`);
+	const legendaryTreasureMapSources = paldeck.buildItemResponse(legendaryTreasureMap, null, `item-owner`)
+		.embeds[0].toJSON().fields.find(field => field.name === `Sources:`)?.value;
+	assert(
+		legendaryTreasureMapSources === [`Dungeons`, `Enemy Camps`, `Salvage`, `Gold Chests`].join(`\n`),
+		`Legendary Treasure Map sources should be compact and must not expose internal dungeon or chest-pool identifiers.`,
+	);
 	const tieredTreasureMaps = itemData.Items.filter(item => /^Items\/TreasureMap0[1-4]$/u.test(item.code));
 	assert(
 		tieredTreasureMaps.length === 4 && tieredTreasureMaps.every(item =>
@@ -1162,16 +1185,15 @@ async function validateItemLookupAndDroppingPals() {
 	);
 	assert(
 		serializedEffigy.includes(`Sources:`) &&
-		serializedEffigy.includes(`140 Palpagos locations`) &&
-		serializedEffigy.includes(`15 World Tree locations`) &&
-		!serializedEffigy.includes(`Effigy Locations`),
-		`Cross-map Effigy cards should describe both map panels without a redundant Effigy Locations label.`,
+		serializedEffigy.includes(`Effigy Locations (Palpagos): 140 locations`) &&
+		serializedEffigy.includes(`Effigy Locations (World Tree): 15 locations`),
+		`Cross-map Effigy cards should use qualified counts for both map panels.`,
 	);
 	assert(
 		serializedBounty.includes(`33 fixed targets`) && serializedBounty.includes(`Elder`),
 		`Bounty Tokens should map fixed targets and disclose the unpinned Elder source.`,
 	);
-	assert(serializeDiscordPayload(keySphereResponse).includes(`Tower of the Rayne Syndicate — first clear only`), `Key Spheres should identify their one-time tower source.`);
+	assert(serializeDiscordPayload(keySphereResponse).includes(`Tower Boss (Tower of the Rayne Syndicate, first clear only)`), `Key Spheres should identify their one-time tower source.`);
 	assert(serializeDiscordPayload(skillFruitResponse).includes(`not guaranteed`), `Skill Fruit cards should disclose that regional tree drops are possible rather than guaranteed.`);
 	assert(
 		serializedRelic.includes(`Sources:`) && serializedRelic.includes(`Fishing`) && serializedRelic.includes(`Junk`),
@@ -1183,7 +1205,8 @@ async function validateItemLookupAndDroppingPals() {
 		keySphereResponse, skillFruitResponse, relicResponse, ...journalResponses, ...individualJournalResponses,
 	];
 	for (const response of mappedResponses) {
-		assert(response.files.length === 2 && response.embeds[0].toJSON().image?.url?.startsWith(`attachment://`), `Limited-location item cards should attach an item thumbnail and map.`);
+		assert(response.files.length === 2 && !response.embeds[0].toJSON().image &&
+			response.embeds[1].toJSON().image?.url?.startsWith(`attachment://`), `Limited-location item cards should attach their map in a separate embed.`);
 	}
 
 	const searchableItems = itemData.Items.filter(item =>
@@ -1299,6 +1322,30 @@ async function validateItemLookupAndDroppingPals() {
 		relicBackedItems.length && relicBackedItems.every(item => item.acquisition.sources?.some(source => source.type === `Ancient Relics`)),
 		`Every visible item backed by a decoded Ancient Relic recycler pool should identify that source.`,
 	);
+	const ancientManual = itemData.Items.find(item => item.name === `Ancient Technical Manual`);
+	const ancientManualSources = paldeck.buildItemResponse(ancientManual, null, `relic-probability-owner`)
+		.embeds[0].toJSON().fields.find(field => field.name === `Sources:`)?.value;
+	assert(
+		[`Decayed Ancient Relic) ×1: 0.07%`, `Dormant Ancient Relic) ×1: 0.084%`,
+			`Gorgeous Ancient Relic) ×1: 0.101%`, `Glowing Ancient Relic) ×1: 0.121%`,
+			`Glistening Ancient Relic) ×1: 0.145%`].every(value => ancientManualSources?.includes(value)),
+		`Ancient Technical Manual should show combined per-recycling chances for every Ancient Relic tier.`,
+	);
+	const palReverser = itemData.Items.find(item => item.name === `Pal Reverser`);
+	assert(
+		palReverser.acquisition?.mapSources?.markers?.some(marker => marker.type === `Enemy Camp`) &&
+		palReverser.acquisition.map.endsWith(`pal-reverser-enemy-camps.png`),
+		`Pal Reverser should map its decoded Enemy Camp availability.`,
+	);
+	const palReverserResponse = paldeck.buildItemResponse(palReverser, null, `pal-reverser-map-preview-owner`);
+	assert(
+		palReverserResponse.embeds.length === 2 &&
+		!palReverserResponse.embeds[0].toJSON().image &&
+		palReverserResponse.embeds[1].toJSON().image?.url === `attachment://${path.basename(palReverser.acquisition.map)}` &&
+		!palReverserResponse.embeds[1].toJSON().title &&
+		palReverserResponse.embeds[1].toJSON().color === palReverserResponse.embeds[0].toJSON().color,
+		`Pal Reverser should preview its Enemy Camp map in a separate embed without constraining the item card.`,
+	);
 	for (const name of [`Gold Coin`, `Medical Supplies`, `Training Manual (L)`, `High Quality Bait`]) {
 		const item = itemData.Items.find(candidate => candidate.name === name);
 		const markers = [...(item.acquisition?.mapSources?.markers || []), ...(item.acquisition?.mapSources?.maps || []).flatMap(source => source.markers || [])];
@@ -1320,21 +1367,30 @@ async function validateItemLookupAndDroppingPals() {
 	for (const item of cardsRequiringConsistencyChecks) {
 		const response = paldeck.buildItemResponse(item, null, `consistency-owner`);
 		const fields = response.embeds[0].toJSON().fields || [];
-		const leadingFields = fields.slice(0, 6).map(field => field.name);
+		const leadingFields = fields.slice(0, 7).map(field => field.name);
 
 		assert(
-			JSON.stringify(leadingFields.slice(0, 5)) === JSON.stringify([
-				`Category:`, `Weight:`, `Maximum Stack:`, `Buy Price:`, `Sell Price:`,
-			]) && [`Ammo Type:`, `\u200b`].includes(leadingFields[5]),
-			`${item.name}: item summary fields should use the canonical six-cell order.`,
+			JSON.stringify(leadingFields.slice(0, 6)) === JSON.stringify([
+				`Category:`, `Weight:`, `\u200b`, `Buy Price:`, `Sell Price:`, `\u200b`,
+			]) && !fields.some(field => field.name === `Maximum Stack:`) &&
+			(!fields.some(field => field.name === `Ammo Type:`) || leadingFields[6] === `Ammo Type:`),
+			`${item.name}: item summary fields should use the compact canonical order.`,
 		);
 
 		if (item.acquisition) {
 			assert(
 				fields.filter(field => field.name === `Sources:`).length === 1 &&
-				!fields.some(field => field.name === `Source:` || field.name.includes(`Source —`)),
+					!fields.some(field => field.name === `Source:` || field.name.includes(`Source —`)),
 				`${item.name}: acquisition data should render in exactly one Sources field.`,
 			);
+			if (item.acquisition.map) {
+				assert(
+					response.embeds.length === 2 && !response.embeds[0].toJSON().image &&
+					response.embeds[1].toJSON().image?.url === `attachment://${path.basename(item.acquisition.map)}` &&
+					response.embeds[1].toJSON().color === response.embeds[0].toJSON().color,
+					`${item.name}: mapped item cards should use a separate image-only embed with the matching rarity accent.`,
+				);
+			}
 		}
 
 		const unlockedItem = item.category === `Schematic` ? item.name.replace(/ Schematic(?: \d+)?$/u, ``) : null;

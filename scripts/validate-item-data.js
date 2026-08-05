@@ -9,6 +9,7 @@ const journalData = require(`../data/journalData.json`);
 const { findAvailabilityManifestProblems } = require(`../utils/itemAvailabilityAudit.js`);
 const itemFile = resolvedItemData();
 const { itemWorkbench } = require(`../utils/itemWorkbench.js`);
+const { sourceText } = require(`../utils/itemCards.js`);
 
 const PROJECT_ROOT = path.resolve(__dirname, `..`);
 const AVAILABILITY_DECISION_IDS = new Set(availabilityManifest.items.map(decision => decision.id));
@@ -271,6 +272,20 @@ function findItemDataProblems(itemData) {
 				}
 			}
 		}
+		const renderedSources = sourceText(acquisition, item.merchantLocations);
+		if (/\b(?:Viking\d+|DarkIsland|SkyIsland|technology-book pool|Oilrig(?: Large)? 0?\d)\b|_/iu.test(renderedSources)) {
+			problems.push(`Item ${index} ${item.name}: rendered acquisition sources expose an internal game identifier.`);
+		}
+		if (/^Ancient Relic Recycler [^(\n]/mu.test(renderedSources)) {
+			problems.push(`Item ${index} ${item.name}: qualified acquisition sources must place their subtype in parentheses.`);
+		}
+		if (/Dungeon (?:or Sanctuary|and Regional) Chests|^Pal Critics?(?:\s|$)|\([^)]*: Lvl \d+|\b\d{4,}\b|^Locations \(|^Spawn Locations \(|^\w+ Treasure Map /mu.test(renderedSources)) {
+			problems.push(`Item ${index} ${item.name}: rendered acquisition sources contain an unnormalized pathway label.`);
+		}
+		const renderedSourceLines = renderedSources.split(`\n`).filter(Boolean);
+		if (new Set(renderedSourceLines).size !== renderedSourceLines.length) {
+			problems.push(`Item ${index} ${item.name}: rendered acquisition sources contain duplicate lines.`);
+		}
 		if (!acquisition.map) {
 			continue;
 		}
@@ -376,6 +391,15 @@ function findItemDataProblems(itemData) {
 			if (!regionalSpawner && (!Number.isInteger(chestMarker.treasureGrade) || !Array.isArray(chestMarker.lotteryFields) || !chestMarker.lotteryFields.length)) {
 				problems.push(`${item.name}: treasure-chest map markers require a decoded grade and exact lottery field IDs.`);
 			}
+		}
+	}
+	const generatedPhysicalMaps = itemData.Items.filter(item => /\/item-sources-[a-f0-9]{12}(?:-|\.png$)/u.test(item.acquisition?.map || ``));
+	if (generatedPhysicalMaps.length !== 67) {
+		problems.push(`Expected 67 generated physical-source item maps, found ${generatedPhysicalMaps.length}.`);
+	}
+	for (const item of generatedPhysicalMaps) {
+		if (!fs.existsSync(path.resolve(PROJECT_ROOT, item.acquisition.map))) {
+			problems.push(`${item.name}: generated physical-source map is missing.`);
 		}
 	}
 	for (const legalItem of itemData.Items.filter(value => Number(value.properties?.bLegalInGame ?? 0) !== 0)) {

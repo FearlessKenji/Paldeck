@@ -233,6 +233,20 @@ function formatPalDrop(drop) {
 	return `• ${drop.item} ×${drop.quantity}: ${drop.probability}`;
 }
 
+function comparePalDrops(first, second) {
+	const firstChance = Number.parseFloat(first.probability);
+	const secondChance = Number.parseFloat(second.probability);
+	const firstHasChance = Number.isFinite(firstChance);
+	const secondHasChance = Number.isFinite(secondChance);
+	if (firstHasChance !== secondHasChance) {
+		return firstHasChance ? -1 : 1;
+	}
+	if (firstHasChance && firstChance !== secondChance) {
+		return secondChance - firstChance;
+	}
+	return first.item.localeCompare(second.item, `en`, { sensitivity: `base` });
+}
+
 function palDropFields(pal) {
 	const groups = structuredPalDrops(pal);
 
@@ -244,7 +258,7 @@ function palDropFields(pal) {
 		const context = ` — ${group.label}${group.level ? `: Lvl ${group.level}` : ``}${group.variant ? ` (${group.variant})` : ``}`;
 		return {
 			name: `Pal Drops${context}`,
-			value: group.drops.map(formatPalDrop).join(`\n`).slice(0, 1024),
+			value: [...group.drops].sort(comparePalDrops).map(formatPalDrop).join(`\n`).slice(0, 1024),
 		};
 	});
 }

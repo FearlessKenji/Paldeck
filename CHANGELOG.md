@@ -2,7 +2,23 @@
 
 Notable changes to Paldeck are documented here.
 
-## v1.9.1 - Unreleased
+## v1.9.2 - 2026-08-04
+
+- Updated Paldeck's package and release metadata to v1.9.2.
+- Restored Effigies to `/item` lookup by routing search through the centralized availability policy instead of treating the installed table's legality flag as a blanket ordinary-item exclusion; added autocomplete regression coverage.
+- Added repeatable physical-source map assignment for 67 previously unmapped items across Enemy Camps, Oil Rigs, regional dungeons, fishing spots, World Tree junk/chests, and Sakurajima chests, with exact pool-to-marker joins and shared generated maps.
+- Standardized item Sources alphabetically by acquisition method, with progression order for chest, Treasure Map, and Ancient Relic tiers and descending probability only within comparable methods; standardized Pal drop tables by descending chance with alphabetical tie-breaking.
+- Moved acquisition maps for every mapped item card into a titleless image-only embed sharing the card's rarity accent, while leaving Pal habitat cards unchanged.
+- Added a matching inline zero-width field after Sell Price so both item-summary rows consistently occupy two visible columns plus one blank Discord field.
+- Moved Pal Reverser's Enemy Camp map into a titleless image-only embed with the same rarity accent as its card, allowing the information and map embeds to size independently without changing other items.
+- Added the missing Enemy Camp source map to Pal Reverser while keeping its broad salvage and Ancient Relic pathways unpinned and its merchant maps separate.
+- Added calculated per-recycling quantities and probabilities to Ancient Relic Recycler sources by combining the three independently rolled reward slots decoded for each relic tier.
+- Removed the low-value Maximum Stack field and retained Category, Weight, Buy Price, and Sell Price as distinct fields; an inline zero-width spacer keeps the price fields together without the excessive gap caused by a full-width spacer.
+- Separated combined dungeon, regional, and Wildlife Sanctuary chest labels into player-facing pathways, using the installed Forest/Volcano/Desert mapping for No. 1/2/3 Wildlife Sanctuaries; normalized dungeon qualifiers, raid levels, Treasure Map rarities, location counts, special-shop quantities, Tower clears, and Arrogant Pal Critic sources across the full card catalog.
+- Standardized qualified acquisition wording as `Source (location or subtype): probability`, including relic rewards such as `Ancient Relic Recycler (Glistening Ancient Relic)`, instead of joining qualifiers with spaces or dashes.
+- Condensed regional item acquisition into one player-facing line per source method, replaced internal dungeon, Oil Rig, relic-recycler, and captured-cage pool labels with readable categories, and added full-catalog validation against exposed identifiers and duplicate source lines.
+
+## v1.9.1 - 2026-08-04
 
 - Consolidated repeated same-region acquisition panels before rendering, correcting all 14 shared Skill Fruit maps and preventing individual loot pools from producing stacked duplicate Palpagos or World Tree maps; multi-region maps retain one panel per physical region.
 - Restored the dedicated `/journal` command with all 64 installed-game localized journal texts and changed every result to attach that journal's individual single-location map instead of a shared regional overview; the existing `/item` journal cards remain available.
