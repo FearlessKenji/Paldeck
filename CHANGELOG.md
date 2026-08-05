@@ -2,6 +2,10 @@
 
 Notable changes to Paldeck are documented here.
 
+## Unreleased
+
+- Excluded the entire optional `tools/` workspace and removed the repository-owned C#/.NET Unreal archive decoder so Paldeck remains JavaScript-only; installed-game audit refreshes now import an externally decoded table JSON through `--tables` or `PALWORLD_TABLE_EXPORT`, while cached snapshot comparisons remain unchanged.
+
 ## v1.9.2 - 2026-08-04
 
 - Updated Paldeck's package and release metadata to v1.9.2.
