@@ -8,6 +8,9 @@ tmp-map-crops/
 __pycache__/
 *.pyc
 
+# Optional external data-extraction and development helpers
+tools/
+
 # Local Codex/agent instructions
 AGENTS.md
 

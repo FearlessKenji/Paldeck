@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-// Extracts authoritative installed-game tables into a build-keyed cache and compares them without rewriting cards.
+// Imports authoritative decoded game tables into a build-keyed cache and compares them without rewriting cards.
 /* eslint-disable max-statements-per-line -- concise command-line guards keep failure paths readable. */
-const childProcess = require(`node:child_process`);
 const fs = require(`node:fs`);
 const os = require(`node:os`);
 const path = require(`node:path`);
@@ -11,8 +10,6 @@ const palData = require(`../data/palData.json`);
 const palBreeding = require(`../data/palBreeding.json`);
 const { compareGameBreeding, compareGameItemData, compareGamePalAvailability } = require(`../utils/gameDataAudit.js`);
 const { steamBuildId } = require(`../utils/itemAvailabilityAudit.js`);
-
-const ROOT = path.resolve(__dirname, `..`);
 
 function optionValue(name) {
 	const index = process.argv.indexOf(name);
@@ -31,39 +28,26 @@ function configuration() {
 	]);
 	if (!steamManifest) {throw new Error(`Palworld Steam manifest not found.`);}
 	const buildId = steamBuildId(fs.readFileSync(steamManifest, `utf8`));
-	const steamApps = path.dirname(steamManifest);
-	const pakDirectory = firstExisting([
-		optionValue(`--pak-directory`), process.env.PALWORLD_PAK_DIRECTORY,
-		path.join(steamApps, `common`, `Palworld`, `Pal`, `Content`, `Paks`),
-	]);
-	const mapping = firstExisting([
-		optionValue(`--usmap`), process.env.PALWORLD_USMAP,
-		path.join(process.env.LOCALAPPDATA || os.tmpdir(), `Paldeck`, `game-audit`, `Mappings102.usmap`),
-	]);
-	if (!pakDirectory) {throw new Error(`Palworld pak directory not found; pass --pak-directory.`);}
-	if (!mapping) {throw new Error(`Palworld mapping not found; pass --usmap or set PALWORLD_USMAP.`);}
-	return { buildId, mapping, pakDirectory, steamManifest };
+	const tableExport = firstExisting([optionValue(`--tables`), process.env.PALWORLD_TABLE_EXPORT]);
+	return { buildId, steamManifest, tableExport };
 }
 
 function extractSnapshot(config, target) {
-	const rawTarget = `${target}.tables.tmp`;
-	const project = path.join(ROOT, `tools`, `palworld-game-data-extractor`, `PalworldGameDataExtractor.csproj`);
-	const result = childProcess.spawnSync(`dotnet`, [
-		`run`, `--project`, project, `--configuration`, `Release`, `--`, config.pakDirectory, config.mapping, rawTarget,
-	], { encoding: `utf8`, stdio: [`ignore`, `pipe`, `pipe`] });
-	if (result.status !== 0) {
-		throw new Error(`Game-table extraction failed.\n${result.stdout}${result.stderr}`);
+	if (!config.tableExport) {
+		throw new Error(`No decoded game-table export found; pass --tables or set PALWORLD_TABLE_EXPORT.`);
 	}
+	const decoded = JSON.parse(fs.readFileSync(config.tableExport, `utf8`));
+	// Accept either the raw table dictionary or a previously wrapped snapshot export.
+	const tables = decoded.tables && typeof decoded.tables === `object` ? decoded.tables : decoded;
 	const snapshot = {
 		schemaVersion: 2,
 		buildId: config.buildId,
 		extractedAt: new Date().toISOString(),
-		mapping: path.basename(config.mapping),
-		tables: JSON.parse(fs.readFileSync(rawTarget, `utf8`)),
+		mapping: decoded.mapping || null,
+		tables,
 	};
 	fs.mkdirSync(path.dirname(target), { recursive: true });
 	fs.writeFileSync(target, `${JSON.stringify(snapshot)}\n`);
-	fs.rmSync(rawTarget, { force: true });
 	return snapshot;
 }
 
