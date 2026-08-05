@@ -53,6 +53,23 @@ const SOURCE_LABELS = {
 	"Treasure Element": `Elemental Chests`, Supply: `Supply Drops`, Junk: `Junk`,
 	"Salvage Rank1": `Salvage`, "Salvage Rank2": `Salvage`, "World Tree Fishing": `Fishing`, "World Tree Junk": `Junk`,
 	Expeditions: `Expeditions`, "Enemy Camps": `Enemy Camps`, Fishing: `Fishing`, "Fishing Ponds": `Fishing Ponds`,
+	Dungeons: `Dungeons`, "Oil Rigs": `Oil Rigs`, "Skill Fruit Trees": `Skill Fruit Trees`,
+};
+const LOOT_POOL_LABELS = {
+	"Captured Pal Cages": `Factions`, "Dungeon Chests": `Dungeons`, "Relic Recycler": `Ancient Relics`,
+};
+const CHEST_TIER_LABELS = new Set([
+	`Regular Chests`, `Bronze Key Chests`, `Purple Chests`, `Silver Chests`, `Gold Chests`, `Gold Key Chests`,
+]);
+const WILDLIFE_SANCTUARY_BY_REGION = {
+	Forest: `No. 1 Wildlife Sanctuary`, Volcano: `No. 2 Wildlife Sanctuary`, Desert: `No. 3 Wildlife Sanctuary`,
+};
+const RELIC_POOL_BY_NAME = {
+	"Decayed Ancient Relic": `AncientRelicRecycler_WorldTreeRelic_01`,
+	"Dormant Ancient Relic": `AncientRelicRecycler_WorldTreeRelic_02`,
+	"Gorgeous Ancient Relic": `AncientRelicRecycler_WorldTreeRelic_03`,
+	"Glowing Ancient Relic": `AncientRelicRecycler_WorldTreeRelic_04`,
+	"Glistening Ancient Relic": `AncientRelicRecycler_WorldTreeRelic_05`,
 };
 const SELF_DESCRIBING_SOURCES = new Set([
 	`Oil Rigs`, `Treasure Maps`, `Effigy Locations`, `Medal Merchants`, `Bounty Shop`, `Arena Merchant`,
@@ -119,6 +136,46 @@ function itemEffect(item) {
 	return null;
 }
 
+function relicRecyclerResult(acquisition, relicName) {
+	const poolName = RELIC_POOL_BY_NAME[relicName];
+	const matches = (acquisition?.lootPools || []).filter(pool => pool.pool === poolName);
+	const chances = matches.map(pool => Number.parseFloat(pool.probability) / 100).filter(Number.isFinite);
+	if (!chances.length) {return null;}
+	// Recycler tables use three independently rolled reward slots; combine them into the useful per-recycling chance.
+	const percentage = (1 - chances.reduce((miss, chance) => miss * (1 - chance), 1)) * 100;
+	const quantities = new Set(matches.map(pool => pool.quantity).filter(Boolean));
+	return {
+		probability: `${percentage.toFixed(3).replace(/0+$/u, ``).replace(/\.$/u, ``)}%`,
+		quantity: quantities.size === 1 ? [...quantities][0] : null,
+	};
+}
+
+function sourceLineOrder(line) {
+	const chestTiers = [`Regular Chests`, `Bronze Key Chests`, `Purple Chests`, `Silver Chests`, `Gold Chests`, `Gold Key Chests`];
+	const relicTiers = Object.keys(RELIC_POOL_BY_NAME);
+	const treasureMapTiers = [`Common`, `Uncommon`, `Rare`, `Epic`, `Legendary`];
+	const chestTier = chestTiers.findIndex(value => line.startsWith(value));
+	const relicTier = relicTiers.findIndex(value => line.includes(`(${value})`));
+	const treasureMapTier = treasureMapTiers.findIndex(value => line.startsWith(`Treasure Maps (${value})`));
+	const label = chestTier >= 0 ? `Treasure Chests` : line.split(/[(:×]/u, 1)[0].trim();
+	const tier = chestTier >= 0 ? chestTier : relicTier >= 0 ? relicTier : treasureMapTier >= 0 ? treasureMapTier : -1;
+	const probability = Number.parseFloat(line.match(/: (\d+(?:\.\d+)?)%$/u)?.[1]);
+	return { label, line, probability, tier };
+}
+
+function compareSourceLines(left, right) {
+	const first = sourceLineOrder(left);
+	const second = sourceLineOrder(right);
+	const labelOrder = first.label.localeCompare(second.label, `en`, { sensitivity: `base` });
+	if (labelOrder) {return labelOrder;}
+	if (first.tier >= 0 || second.tier >= 0) {return (first.tier < 0 ? Number.MAX_SAFE_INTEGER : first.tier) - (second.tier < 0 ? Number.MAX_SAFE_INTEGER : second.tier);}
+	const firstHasChance = Number.isFinite(first.probability);
+	const secondHasChance = Number.isFinite(second.probability);
+	if (firstHasChance !== secondHasChance) {return firstHasChance ? -1 : 1;}
+	if (firstHasChance && first.probability !== second.probability) {return second.probability - first.probability;}
+	return first.line.localeCompare(second.line, `en`, { sensitivity: `base` });
+}
+
 function visibleRecipes(item) {
 	const recipes = (item.recipes || []).filter(recipe => recipe.ingredients?.length);
 	if (item.category !== `Schematic`) {return recipes;}
@@ -161,24 +218,53 @@ function sourceText(acquisition, merchantLocations) {
 			seen.add(summary);
 			continue;
 		}
-		const entries = source.entries.map(entry => {
+		const entries = source.entries.flatMap(entry => {
 			const redundantLocation = source.type === `Ancient Ruin` && /^Fixed location$/iu.test(entry.location);
 			const selfDescribingLocation = SELF_DESCRIBING_SOURCES.has(source.type);
-			const dungeonLocation = source.type === `Dungeons` ?
-				`${entry.location} Dungeon` :
-				(/^Dungeon/iu.test(source.type) ? entry.location : null);
-			let location;
-			if (!location) {
-				if (redundantLocation) {location = source.type;} else if (dungeonLocation) {location = dungeonLocation;} else if (selfDescribingLocation) {location = entry.location;} else {location = `${source.type} ${entry.location}`;}
+			const recyclerResult = source.type === `Ancient Relics` && !entry.probability ? relicRecyclerResult(acquisition, entry.location) : null;
+			const cost = String(entry.cost || ``).replace(/^1 (.+)s$/u, `1 $1`);
+			const quantity = entry.quantity || recyclerResult?.quantity;
+			const probability = entry.probability || recyclerResult?.probability;
+			const suffix = `${quantity ? ` ×${formatNumber(quantity)}` : ``}${probability ? `: ${probability}` : ``}${cost ? `: ${cost}` : ``}`;
+			const qualify = (label, qualifier) => `${label} (${String(qualifier).replace(/: Lvl (?=\d)/u, `, Lv. `)})${suffix}`;
+			if (redundantLocation) {return source.type;}
+			const countedLocation = entry.location.match(/^(\d+) (Palpagos|World Tree) locations$/u);
+			if (countedLocation && [`Locations`, `Resource Nodes`, `Effigy Locations`].includes(source.type)) {
+				const label = source.type === `Locations` ? `Fixed Locations` : source.type;
+				return `${label} (${countedLocation[2]}): ${formatNumber(countedLocation[1])} locations`;
 			}
-			return `${location}${entry.quantity ? ` ×${entry.quantity}` : ``}${entry.probability ? `: ${entry.probability}` : ``}${entry.cost ? `: ${entry.cost}` : ``}`;
+			const singleLocation = entry.location.match(/^(Palpagos|World Tree) location$/u);
+			if (singleLocation && source.type === `Locations`) {return `Fixed Location (${singleLocation[1]})`;}
+			const eggSpawns = entry.location.match(/^(\d+) (Palpagos|World Tree) egg spawns$/u);
+			if (eggSpawns && source.type === `Spawn Locations`) {
+				return `Egg Spawns (${eggSpawns[2]}): ${formatNumber(eggSpawns[1])} locations`;
+			}
+			if (source.type === `Ancient Relics`) {return qualify(`Ancient Relic Recycler`, entry.location);}
+			if ([`Pal Critic`, `Pal Critics`].includes(source.type)) {return qualify(`Arrogant Pal Critic`, entry.location);}
+			if (source.type === `Treasure Maps`) {
+				return qualify(`Treasure Maps`, entry.location.replace(/ Treasure Map$/u, ``));
+			}
+			if (source.type === `Tower Boss`) {
+				return qualify(`Tower Boss`, entry.location.replace(` — first clear only`, `, first clear only`));
+			}
+			if (source.type === `Dungeon Treasure Chests`) {return qualify(`Dungeon Chests`, entry.location);}
+			if (source.type === `Dungeon Chests`) {return qualify(`Dungeon Chests`, entry.location.replace(/ Dungeon$/u, ``));}
+			if (source.type === `Dungeon and Regional Chests`) {
+				return / Dungeon$/u.test(entry.location) ?
+					qualify(`Dungeon Chests`, entry.location.replace(/ Dungeon$/u, ``)) :
+					qualify(`Treasure Chests`, entry.location);
+			}
+			if (source.type === `Dungeon or Sanctuary Chests`) {
+				const region = entry.location.match(/^(Forest|Volcano|Desert)/u)?.[1];
+				if (region && WILDLIFE_SANCTUARY_BY_REGION[region]) {
+					return [qualify(`Dungeon Chests`, region), qualify(`Treasure Chests`, WILDLIFE_SANCTUARY_BY_REGION[region])];
+				}
+			}
+			if (selfDescribingLocation) {return `${entry.location}${suffix}`;}
+			return qualify(source.type, entry.location);
 		}).join(`\n`);
-		// Effigy cards already identify the mapped collectible, so repeating its source type adds no information.
-		if (source.type === `Effigy Locations`) {
-			if (entries) {sections.push(entries);}
-		} else {
-			sections.push(entries || source.type);
-		}
+		sections.push(entries || source.type);
+		seen.add(source.type);
 	}
 	for (const merchant of fixedMerchantTypes(merchantLocations)) {
 		if (!seen.has(merchant)) {sections.push(merchant);}
@@ -186,11 +272,16 @@ function sourceText(acquisition, merchantLocations) {
 	}
 	// Normalized loot-pool categories fill gaps without exposing internal game table identifiers.
 	for (const pool of acquisition?.lootPools || []) {
-		if (!seen.has(pool.category)) {sections.push(pool.category);}
-		seen.add(pool.category);
+		const category = LOOT_POOL_LABELS[pool.category] || pool.category;
+		// A decoded regional chest pool is already represented more precisely by its player-facing chest type.
+		if (category === `Treasure Chests` && [...seen].some(value => CHEST_TIER_LABELS.has(value))) {continue;}
+		if (category === `Dungeons` && sections.some(value => /^Dungeon Chests(?:\s|$)/u.test(value))) {continue;}
+		if (!seen.has(category)) {sections.push(category);}
+		seen.add(category);
 	}
-	if (acquisition?.note) {sections.push(acquisition.note);}
-	return sections.join(`\n`).slice(0, 1024);
+	const ordered = sections.flatMap(section => section.split(`\n`)).filter(Boolean).sort(compareSourceLines);
+	if (acquisition?.note) {ordered.push(acquisition.note);}
+	return ordered.join(`\n`).slice(0, 1024);
 }
 
 function createItemCards({ normalizeText, resolveLocalImage }) {
@@ -204,14 +295,21 @@ function createItemCards({ normalizeText, resolveLocalImage }) {
 		const descriptionParts = itemDescriptionParts(item.description);
 		let description = descriptionParts.description;
 		if (effect?.label === `Accessory Effect:` && description.endsWith(effect.value)) {description = description.slice(0, -effect.value.length).trim();}
-		let fields = [
-			{ name: `Category:`, value: item.category, inline: true },
-			{ name: `Weight:`, value: stats.weight === undefined ? `—` : formatNumber(stats.weight), inline: true },
-			{ name: `Maximum Stack:`, value: stats.maxStackCount === undefined ? `—` : formatNumber(stats.maxStackCount), inline: true },
-			{ name: `Buy Price:`, value: stats.buyPrice === undefined ? `Not sold` : formatNumber(stats.buyPrice), inline: true },
-			{ name: `Sell Price:`, value: stats.sellPrice === undefined ? `Cannot be sold` : formatNumber(stats.sellPrice), inline: true },
-			ammo ? { name: `Ammo Type:`, value: ammo, inline: true } : { name: `\u200b`, value: `\u200b`, inline: true },
-		];
+		let fields;
+		if (isJournal) {
+			fields = [{ name: `Category:`, value: item.category }];
+		} else {
+			fields = [
+				{ name: `Category:`, value: item.category, inline: true },
+				{ name: `Weight:`, value: stats.weight === undefined ? `—` : formatNumber(stats.weight), inline: true },
+				// Discord groups inline fields in threes; this keeps the two price fields together on the next row.
+				{ name: `\u200b`, value: `\u200b`, inline: true },
+				{ name: `Buy Price:`, value: stats.buyPrice === undefined ? `Not sold` : formatNumber(stats.buyPrice), inline: true },
+				{ name: `Sell Price:`, value: stats.sellPrice === undefined ? `Cannot be sold` : formatNumber(stats.sellPrice), inline: true },
+				{ name: `\u200b`, value: `\u200b`, inline: true },
+			];
+		}
+		if (ammo) {fields.push({ name: `Ammo Type:`, value: ammo });}
 		// Journals are collectibles rather than inventory items, so inventory-only fields would be misleading.
 		if (isJournal) {fields = fields.slice(0, 1);}
 		const applicable = [[`Attack`, stats.attack], [`Defense`, stats.defense], [`Health`, stats.health], [`Shield`, stats.shield], [`Nutrition`, stats.nutrition], [`SAN`, stats.san], [`Capture Power`, stats.capturePower], [`Speed`, stats.speed], [`Stamina Drain`, stats.staminaDrain], [`Durability`, stats.durability], [`Magazine Size`, item.properties?.magazineSize], [`Skill Power`, stats.waza]].filter(([, value]) => value !== undefined);
@@ -256,7 +354,13 @@ function createItemCards({ normalizeText, resolveLocalImage }) {
 		add(item.merchantLocations?.entries?.length && ownerId, `merchants`, `Merchant Locations`);
 		for (const [property, action, label] of SPECIAL_MERCHANT_BUTTONS) {add(item[property]?.entries?.length && ownerId, action, label);}
 		if (pal && ownerId) {row.addComponents(new ButtonBuilder().setCustomId(`paldeck:back:${encodeURIComponent(pal.number)}:${ownerId}`).setLabel(`Back to Pal`).setStyle(ButtonStyle.Secondary));}
-		return { components: row.components.length ? [row] : [], embeds: [buildItemEmbed(item, pal, thumbnail.url, map.url)], files: [...thumbnail.files, ...map.files] };
+		const separateMap = Boolean(map.url);
+		const embeds = [buildItemEmbed(item, pal, thumbnail.url, separateMap ? null : map.url)];
+		if (separateMap) {
+			// Preview a detached map embed so its dimensions cannot constrain the information card layout.
+			embeds.push(new EmbedBuilder().setImage(map.url).setColor(ITEM_RARITY_COLORS[item.rarity] || ITEM_RARITY_COLORS.Common));
+		}
+		return { components: row.components.length ? [row] : [], embeds, files: [...thumbnail.files, ...map.files] };
 	}
 
 	function buildMerchantResponse(item, property, title, normalizeTypes = false) {
@@ -279,4 +383,4 @@ function createItemCards({ normalizeText, resolveLocalImage }) {
 	};
 }
 
-module.exports = { createItemCards };
+module.exports = { createItemCards, sourceText };
