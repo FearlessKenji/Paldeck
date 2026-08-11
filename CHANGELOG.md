@@ -4,6 +4,8 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+- Changed manual patch-note broadcast summaries to condense successful deliveries while retaining every skipped and failed result across Discord-safe follow-up messages.
+
 ## v1.10.0 - 2026-08-11
 
 - Updated Paldeck's package and release metadata to v1.10.0.

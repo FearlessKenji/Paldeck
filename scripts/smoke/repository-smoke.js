@@ -145,8 +145,25 @@ async function validateEventsLoad() {
 	});
 }
 
+function validateBroadcastSummary(announceCommand) {
+	const broadcastSummary = announceCommand.summarizeResults([
+		...Array.from({ length: 12 }, (_, index) => ({ guildId: `sent-${index}`, message: `Sent.`, ok: true, skipped: false })),
+		{ guildId: `skipped-guild`, message: `No updates channel is configured.`, ok: true, skipped: true },
+		{ guildId: `failed-guild`, message: `Missing Send Messages permission.`, ok: false, skipped: false },
+		{ guildId: `long-failure`, message: `x`.repeat(2000), ok: false, skipped: false },
+	]);
+	const completeBroadcastSummary = broadcastSummary.join(`\n`);
+
+	assert(broadcastSummary.every(message => message.length <= 1900), `Broadcast result summaries should stay within Discord's safe message length.`);
+	assert(completeBroadcastSummary.includes(`Sent: 12`), `Broadcast result summaries should condense successful deliveries into the sent total.`);
+	assert(completeBroadcastSummary.includes(`skipped-guild`) && completeBroadcastSummary.includes(`failed-guild`) && completeBroadcastSummary.includes(`long-failure`),
+		`Broadcast result summaries should include every skipped and failed result.`);
+	assert(!completeBroadcastSummary.includes(`more result`), `Broadcast result summaries should never replace results with an overflow count.`);
+}
+
 async function validateAnnouncementHelpers() {
 	const announcements = requireFresh(`utils`, `announcements.js`);
+	const announceCommand = requireFresh(`commands`, `globalCommands`, `admin`, `announce.js`);
 	const { PermissionFlagsBits } = require(`discord.js`);
 	const sample = `## Unreleased
 
@@ -172,6 +189,7 @@ async function validateAnnouncementHelpers() {
 	assert(!splitMessages.some(message => /_Part \d+\/\d+_/u.test(message)), `Split patch-note announcements should not add Part X/Y labels.`);
 	assert(announcements.normalizeAnnouncementId({ id: 123456789n }) === `123456789`, `Announcement ID normalization did not handle bigint IDs.`);
 	assert(announcements.splitAnnouncementText(`a`.repeat(3900)).every(chunk => chunk.length <= 1900), `Announcement splitter exceeded Discord-safe chunk size.`);
+	validateBroadcastSummary(announceCommand);
 
 	const realLatest = announcements.getLatestPatchNotes();
 	const expectedLatestPatchNoteId = `v${readJson(`package.json`).version}`;

@@ -6,6 +6,8 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+- `/announce patch-notes` now shows every skipped and failed server result instead of hiding later entries behind an unhelpful overflow count; successful deliveries remain condensed into the total.
+
 ## v1.10.0 - 2026-08-11 - Learned Moves and Item Source Improvements
 
 - Legendary Meowmere now lists **Moon Lord: 22.22%** instead of a generic Pal Drops source and no longer shows an empty **View Dropping Pals** result.
