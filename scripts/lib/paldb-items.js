@@ -29,6 +29,14 @@ function normalizeWhitespace(value) {
 	return String(value || ``).replace(/\s+/g, ` `).trim();
 }
 
+function itemDetailRowPattern() {
+	return new RegExp(
+		String.raw`<div class="d-flex justify-content-between p-2 align-items-center border-bottom">\s*` +
+		String.raw`<div>([\s\S]*?)<\/div>\s*<div>([\s\S]*?)<\/div>\s*<\/div>`,
+		`gi`,
+	);
+}
+
 function stripTags(value) {
 	return normalizeWhitespace(stripHtmlTags(value, ` `));
 }
@@ -60,13 +68,24 @@ function itemDetailPathFromHref(href) {
 	return new URL(decodeHtml(href), PALDB_BASE_URL).pathname.replace(/^\/en\//, ``);
 }
 
-function parseItemCard(card, source) {
-	// Identity must come from the banner. Searching the whole card can mistake a linked recipe ingredient for the item.
+function itemCardIdentity(card) {
 	const bannerEnd = card.search(/<div class="hover_bg_rarity\d+"/i);
 	const banner = bannerEnd >= 0 ? card.slice(0, bannerEnd) : card;
-	const nameMatch = banner.match(/<a class="itemname" data-hover="([^"]+)" href="([^"]+)">([\s\S]*?)<\/a>/);
+	const match = banner.match(/<a class="itemname" data-hover="([^"]+)" href="([^"]+)">([\s\S]*?)<\/a>/);
+	if (!match) {
+		return null;
+	}
+	const name = stripTags(match[3]);
+	const hoverTarget = decodeHtml(match[1]);
+	const code = hoverTarget.startsWith(`?s=`) ? decodeUriComponentSafe(hoverTarget.slice(3)) : ``;
+	const id = itemIdFromCode(code, name);
+	return { code, detailPath: itemDetailPathFromHref(match[2]), hoverTarget, id, name };
+}
 
-	if (!nameMatch) {
+function parseItemCard(card, source) {
+	// Identity must come from the banner. Searching the whole card can mistake a linked recipe ingredient for the item.
+	const identity = itemCardIdentity(card);
+	if (!identity) {
 		return null;
 	}
 
@@ -74,10 +93,7 @@ function parseItemCard(card, source) {
 	const rarityMatch = card.match(/hover_text_rarity(\d+)"[^>]*>([^<]+)<\/span>/);
 	const iconMatch = card.match(/<img loading="lazy" src="([^"]+)"[^>]*class="[^"]*size128/);
 	const descriptionMatch = card.match(/<div class="card-body py-2">\s*<div>([\s\S]*?)<\/div>\s*<\/div>/);
-	const name = stripTags(nameMatch[3]);
-	const hoverTarget = decodeHtml(nameMatch[1]);
-	const code = hoverTarget.startsWith(`?s=`) ? decodeUriComponentSafe(hoverTarget.slice(3)) : ``;
-	const id = itemIdFromCode(code, name);
+	const { code, detailPath, hoverTarget, id, name } = identity;
 
 	return {
 		id,
@@ -89,7 +105,7 @@ function parseItemCard(card, source) {
 		rarityRank: Number.parseInt(rarityMatch?.[1] || `0`, 10),
 		description: stripTags(descriptionMatch?.[1] || ``),
 		iconUrl: decodeHtml(iconMatch?.[1] || ``),
-		detailPath: itemDetailPathFromHref(nameMatch[2]),
+		detailPath,
 		hoverPath: code ? `` : hoverTarget,
 		source: source.slug,
 	};
@@ -147,7 +163,7 @@ function parseItemStats(html, itemCode = ``) {
 		}
 	}
 	const stats = {};
-	const rowPattern = /<div class="d-flex justify-content-between p-2 align-items-center border-bottom">\s*<div>([\s\S]*?)<\/div>\s*<div>([\s\S]*?)<\/div>\s*<\/div>/gi;
+	const rowPattern = itemDetailRowPattern();
 
 	for (const match of section.matchAll(rowPattern)) {
 		const label = stripTags(match[1]);
@@ -155,31 +171,52 @@ function parseItemStats(html, itemCode = ``) {
 		const value = stripTags(visibleSpanValue || match[2]);
 		const key = statKey(label);
 
-		if (key && value && ![`rarity`, `type`, `code`].includes(key)) {
-			stats[key] = numberIfNumeric(value);
-		}
-
-		if (label === `Gold Coin`) {
-			const tooltip = match[2].match(/data-bs-title="([^"]+)"/i)?.[1] || ``;
-			const buyPrice = tooltip.match(/Buy:\s*([\d,]+)/i)?.[1];
-			const sellPrice = tooltip.match(/Sell:\s*([\d,]+)/i)?.[1];
-
-			if (buyPrice) {
-				stats.buyPrice = numberIfNumeric(buyPrice);
-			}
-
-			if (sellPrice) {
-				stats.sellPrice = numberIfNumeric(sellPrice);
-			}
-		}
+		addItemStat(stats, { key, label, rawValue: match[2], value });
 	}
 
 	return stats;
 }
 
+function addItemStat(stats, { key, label, rawValue, value }) {
+	if (key && value && ![`rarity`, `type`, `code`].includes(key)) {
+		stats[key] = numberIfNumeric(value);
+	}
+	if (label !== `Gold Coin`) {
+		return;
+	}
+	const tooltip = rawValue.match(/data-bs-title="([^"]+)"/i)?.[1] || ``;
+	const prices = { buyPrice: /Buy:\s*([\d,]+)/i, sellPrice: /Sell:\s*([\d,]+)/i };
+	for (const [field, pattern] of Object.entries(prices)) {
+		const price = tooltip.match(pattern)?.[1];
+		if (price) {
+			stats[field] = numberIfNumeric(price);
+		}
+	}
+}
+
+function parsedDropSource(sourceLabel) {
+	const levelMatch = sourceLabel.match(/\s+Lv\.(\d+)$/i);
+	const level = levelMatch ? Number(levelMatch[1]) : undefined;
+	const labelWithoutLevel = sourceLabel.replace(/\s+Lv\.\d+$/i, ``);
+	const rampaging = /^Rampaging\s+/i.test(labelWithoutLevel);
+	const labelWithoutVariant = labelWithoutLevel.replace(/^Rampaging\s+/i, ``);
+	const canonicalPal = CANONICAL_PAL_NAMES.find(name =>
+		labelWithoutVariant === name || labelWithoutVariant.endsWith(` ${name}`));
+	const pal = canonicalPal || labelWithoutVariant;
+	let variant;
+	if (rampaging) {
+		variant = `Rampaging`;
+	} else if (canonicalPal && labelWithoutVariant !== canonicalPal) {
+		variant = `Alpha`;
+	} else if (level) {
+		variant = `World Tree`;
+	}
+	return { level, pal, variant };
+}
+
 function parseDetailRows(section) {
 	const values = {};
-	const rowPattern = /<div class="d-flex justify-content-between p-2 align-items-center border-bottom">\s*<div>([\s\S]*?)<\/div>\s*<div>([\s\S]*?)<\/div>\s*<\/div>/gi;
+	const rowPattern = itemDetailRowPattern();
 
 	for (const match of section.matchAll(rowPattern)) {
 		const key = statKey(stripTags(match[1]));
@@ -208,17 +245,7 @@ function parseDroppedBy(html) {
 		const sourceLabel = stripTags(match[1]);
 		const quantity = stripTags(match[2]);
 		const probability = stripTags(match[3]);
-		const levelMatch = sourceLabel.match(/\s+Lv\.(\d+)$/i);
-		const level = levelMatch ? Number(levelMatch[1]) : undefined;
-		const labelWithoutLevel = sourceLabel.replace(/\s+Lv\.\d+$/i, ``);
-		const rampaging = /^Rampaging\s+/i.test(labelWithoutLevel);
-		const labelWithoutVariant = labelWithoutLevel.replace(/^Rampaging\s+/i, ``);
-		const canonicalPal = CANONICAL_PAL_NAMES.find(name =>
-			labelWithoutVariant === name || labelWithoutVariant.endsWith(` ${name}`),
-		);
-		const pal = canonicalPal || labelWithoutVariant;
-		const titled = canonicalPal && labelWithoutVariant !== canonicalPal;
-		const variant = rampaging ? `Rampaging` : titled ? `Alpha` : level ? `World Tree` : undefined;
+		const { level, pal, variant } = parsedDropSource(sourceLabel);
 		const key = `${pal}\0${variant || ``}\0${level || ``}\0${quantity}\0${probability}`;
 
 		if (!sourceLabel || !pal || !quantity || !probability || seen.has(key)) {

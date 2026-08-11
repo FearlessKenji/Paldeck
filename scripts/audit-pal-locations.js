@@ -3,6 +3,7 @@
 const fs = require(`node:fs`);
 const path = require(`node:path`);
 const { fetchCached, parseJsonVariable } = require(`./lib/item-map-rendering.js`);
+const { curatedPalHabitats } = require(`../utils/curatedPalHabitats.js`);
 
 const ROOT = path.resolve(__dirname, `..`);
 const CACHE = path.join(ROOT, `tmp`, `paldb-map-cache`);
@@ -25,7 +26,10 @@ function locationCount(row) {
 	return (row?.dayTimeLocations?.Locations?.length || 0) + (row?.nightTimeLocations?.Locations?.length || 0);
 }
 
-function expectedHabitat(pal, hasLocations) {
+function expectedHabitat(pal, hasLocations, curated) {
+	if (curated[pal.name]) {
+		return `data/maps/${curated[pal.name].file}`;
+	}
 	const shared = SHARED_HABITATS.get(pal.name.toLowerCase());
 	if (shared) {
 		return shared;
@@ -35,6 +39,38 @@ function expectedHabitat(pal, hasLocations) {
 	}
 	const prefix = pal.number.toLowerCase() === `-1` ? `terraria` : pal.number.toLowerCase();
 	return `data/maps/${prefix}-${slug(pal.name)}.png`;
+}
+
+function auditPal({ pal, rowsById, maps, curated }) {
+	const problems = [];
+	const code = String(pal.breeding?.id || ``).toLowerCase();
+	if (!code) {
+		return { problems: [`${pal.name}: missing canonical internal Pal ID.`], distributed: 0, alphaPals: 0, alphaMarkers: 0, unknown: 0 };
+	}
+	const distributed = locationCount(rowsById.get(code)) > 0;
+	const ids = new Set([code, `boss_${code}`]);
+	const matchingMarkers = maps.flatMap(map =>
+		map.markers.filter(marker => marker.pos && ids.has(String(marker.id || ``).toLowerCase())));
+	const alphaMarkers = matchingMarkers.filter(marker => marker.type === `Alpha Pal`);
+	const forbidden = matchingMarkers.filter(marker => marker.type !== `Alpha Pal`);
+	if (forbidden.length) {
+		const types = [...new Set(forbidden.map(marker => marker.type))].join(`, `);
+		problems.push(`${pal.name}: non-Alpha fixed markers would contaminate its habitat map (${types}).`);
+	}
+	const expected = expectedHabitat(pal, distributed || alphaMarkers.length > 0, curated);
+	if (pal.habitat !== expected) {
+		problems.push(`${pal.name}: habitat is ${pal.habitat || `(missing)`}; expected ${expected}.`);
+	}
+	if (expected !== UNKNOWN && !fs.existsSync(path.join(ROOT, expected))) {
+		problems.push(`${pal.name}: habitat image does not exist at ${expected}.`);
+	}
+	return {
+		problems,
+		distributed: Number(distributed),
+		alphaPals: Number(alphaMarkers.length > 0),
+		alphaMarkers: alphaMarkers.length,
+		unknown: Number(expected === UNKNOWN),
+	};
 }
 
 async function main() {
@@ -47,47 +83,19 @@ async function main() {
 		markers: parseJsonVariable((await fetchCached(map.url, CACHE)).toString(`utf8`), `fixedDungeon`),
 	})));
 	const problems = [];
+	const curated = curatedPalHabitats(pals);
 	let distributionPals = 0;
 	let fixedAlphaPals = 0;
 	let unknownHabitats = 0;
 	let fixedAlphaMarkers = 0;
 
 	for (const pal of pals) {
-		const code = String(pal.breeding?.id || ``).toLowerCase();
-		if (!code) {
-			problems.push(`${pal.name}: missing canonical internal Pal ID.`);
-			continue;
-		}
-		const row = rowsById.get(code);
-		const distributed = locationCount(row) > 0;
-		const ids = new Set([code, `boss_${code}`]);
-		const matchingMarkers = maps.flatMap(map => map.markers.filter(marker =>
-			marker.pos && ids.has(String(marker.id || ``).toLowerCase()),
-		));
-		const alphaMarkers = matchingMarkers.filter(marker => marker.type === `Alpha Pal`);
-		const forbidden = matchingMarkers.filter(marker => marker.type !== `Alpha Pal`);
-
-		if (forbidden.length) {
-			problems.push(`${pal.name}: non-Alpha fixed markers would contaminate its habitat map (${[...new Set(forbidden.map(marker => marker.type))].join(`, `)}).`);
-		}
-		if (distributed) {
-			distributionPals += 1;
-		}
-		if (alphaMarkers.length) {
-			fixedAlphaPals += 1;
-		}
-		fixedAlphaMarkers += alphaMarkers.length;
-
-		const hasLocations = distributed || alphaMarkers.length > 0;
-		const expected = expectedHabitat(pal, hasLocations);
-		if (pal.habitat !== expected) {
-			problems.push(`${pal.name}: habitat is ${pal.habitat || `(missing)`}; expected ${expected}.`);
-		}
-		if (expected === UNKNOWN) {
-			unknownHabitats += 1;
-		} else if (!fs.existsSync(path.join(ROOT, expected))) {
-			problems.push(`${pal.name}: habitat image does not exist at ${expected}.`);
-		}
+		const result = auditPal({ pal, rowsById, maps, curated });
+		problems.push(...result.problems);
+		distributionPals += result.distributed;
+		fixedAlphaPals += result.alphaPals;
+		fixedAlphaMarkers += result.alphaMarkers;
+		unknownHabitats += result.unknown;
 	}
 
 	console.log(

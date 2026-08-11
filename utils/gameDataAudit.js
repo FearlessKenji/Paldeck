@@ -131,6 +131,29 @@ function collectPalReferences(value, knownIds, found = new Set()) {
 	return found;
 }
 
+function addPalFamilyEvidence({ decoded, pattern, classification, byId, evidence }) {
+	const knownIds = new Set(byId.keys());
+	for (const [table, rows] of Object.entries(decoded)) {
+		if (!pattern.test(table)) {continue;}
+		for (const id of collectPalReferences(rows, knownIds)) {
+			evidence.get(byId.get(id).name).add(classification);
+		}
+	}
+}
+
+function addWildSpawnerEvidence(decoded, byId, evidence) {
+	const knownIds = new Set(byId.keys());
+	for (const [table, rows] of Object.entries(decoded)) {
+		if (!/\/DT_PalWildSpawner$/iu.test(table)) {continue;}
+		for (const row of Object.values(rows)) {
+			const classification = /dungeon/iu.test(String(row.SpawnerName || ``)) ? `Dungeon` : `Wild Spawner`;
+			for (const id of collectPalReferences(row, knownIds)) {
+				evidence.get(byId.get(id).name).add(classification);
+			}
+		}
+	}
+}
+
 function compareGamePalAvailability(palData, snapshot) {
 	const pals = palData.Pals || [];
 	const byId = new Map(pals.map(pal => [normalizedId(pal.breeding?.id), pal]).filter(([id]) => id));
@@ -142,19 +165,10 @@ function compareGamePalAvailability(palData, snapshot) {
 	];
 	const evidence = new Map(pals.map(pal => [pal.name, new Set()]));
 	for (const [classification, pattern] of families) {
-		for (const [table, rows] of Object.entries(decoded)) {
-			if (!pattern.test(table)) {continue;}
-			for (const id of collectPalReferences(rows, new Set(byId.keys()))) {evidence.get(byId.get(id).name).add(classification);}
-		}
+		addPalFamilyEvidence({ decoded, pattern, classification, byId, evidence });
 	}
 	// The shared wild-spawner table also contains dungeon pools, so classify its rows by spawner semantics.
-	for (const [table, rows] of Object.entries(decoded)) {
-		if (!/\/DT_PalWildSpawner$/iu.test(table)) {continue;}
-		for (const row of Object.values(rows)) {
-			const classification = /dungeon/iu.test(String(row.SpawnerName || ``)) ? `Dungeon` : `Wild Spawner`;
-			for (const id of collectPalReferences(row, new Set(byId.keys()))) {evidence.get(byId.get(id).name).add(classification);}
-		}
-	}
+	addWildSpawnerEvidence(decoded, byId, evidence);
 	const curated = {
 		Silvance: [`Alpha`], Dandilord: [`Alpha`], Panthalus: [`NPC Encounter`], Astralym: [`Tower Boss`],
 	};
@@ -166,6 +180,44 @@ function compareGamePalAvailability(palData, snapshot) {
 		if (pal.breeding?.canBeChild && !evidence.get(pal.name)?.size) {evidence.get(pal.name)?.add(`Breeding Only`);}
 	}
 	return [...evidence].map(([name, classifications]) => ({ name, classifications: [...classifications].sort() }));
+}
+
+function compareLocalRecipes(items, recipesByProduct, idsByName) {
+	const report = { missingLocalRecipes: [], mismatchedLocalRecipes: [], matchedRecipes: [] };
+	for (const item of items) {
+		const gameRows = recipesByProduct.get(gameId(item)) || [];
+		const localRows = (item.recipes || []).map(recipe => normalizedLocalRecipe(recipe, idsByName));
+		if (!localRows.length && gameRows.length) {
+			report.missingLocalRecipes.push({ id: item.id, name: item.name, gameRows });
+			continue;
+		}
+		const unmatched = localRows.filter(local => !gameRows.some(game => sameIngredients(local, game)));
+		if (unmatched.length) {
+			report.mismatchedLocalRecipes.push({ id: item.id, name: item.name, localRows, gameRows });
+		} else if (localRows.length) {
+			report.matchedRecipes.push({ id: item.id, name: item.name, count: localRows.length });
+		}
+	}
+	return report;
+}
+
+function itemTableComparison(items, snapshot) {
+	const itemTable = tableRows(snapshot, `items`);
+	const gameItemRows = new Map(itemTable.map(entry => [normalizedId(entry.Key), rowValue(entry)]));
+	const canonicalIds = new Map(itemTable.map(entry => [normalizedId(entry.Key), entry.Key]));
+	const localIdCasingMismatches = items.flatMap(item => {
+		const local = rawGameId(item);
+		const game = canonicalIds.get(normalizedId(local));
+		return game && local !== game ? [{ id: item.id, name: item.name, local, game }] : [];
+	});
+	const legalityMismatches = items.flatMap(item => {
+		const row = gameItemRows.get(gameId(item));
+		if (!row || row.bLegalInGame === undefined) {return [];}
+		const local = Number(item.properties?.bLegalInGame ?? 0);
+		const game = Number(row.bLegalInGame);
+		return local === game ? [] : [{ id: item.id, name: item.name, local, game }];
+	});
+	return { canonicalIds, gameItemRows, legalityMismatches, localIdCasingMismatches };
 }
 
 function normalizeShopData(snapshot, itemByGameId) {
@@ -222,44 +274,17 @@ function compareGameItemData(itemData, snapshot) {
 		recipesByProduct.set(recipe.productId, current);
 	}
 
-	const missingLocalRecipes = [];
-	const mismatchedLocalRecipes = [];
-	const matchedRecipes = [];
-	for (const item of items) {
-		const id = gameId(item);
-		const gameRows = recipesByProduct.get(id) || [];
-		const localRows = (item.recipes || []).map(recipe => normalizedLocalRecipe(recipe, idsByName));
-		if (!localRows.length && gameRows.length) {
-			missingLocalRecipes.push({ id: item.id, name: item.name, gameRows });
-			continue;
-		}
-		const unmatched = localRows.filter(local => !gameRows.some(game => sameIngredients(local, game)));
-		if (unmatched.length) {
-			mismatchedLocalRecipes.push({ id: item.id, name: item.name, localRows, gameRows });
-		} else if (localRows.length) {
-			matchedRecipes.push({ id: item.id, name: item.name, count: localRows.length });
-		}
-	}
-
-	const itemTable = tableRows(snapshot, `items`);
-	const gameItemRows = new Map(itemTable.map(entry => [normalizedId(entry.Key), rowValue(entry)]));
-	const canonicalIds = new Map(itemTable.map(entry => [normalizedId(entry.Key), entry.Key]));
-	const localIdCasingMismatches = items.flatMap(item => {
-		const local = rawGameId(item);
-		const game = canonicalIds.get(normalizedId(local));
-		return game && local !== game ? [{ id: item.id, name: item.name, local, game }] : [];
-	});
-	const legalityMismatches = items.flatMap(item => {
-		const row = gameItemRows.get(gameId(item));
-		if (!row || row.bLegalInGame === undefined) {return [];}
-		const local = Number(item.properties?.bLegalInGame ?? 0);
-		const game = Number(row.bLegalInGame);
-		return local === game ? [] : [{ id: item.id, name: item.name, local, game }];
-	});
+	const { missingLocalRecipes, mismatchedLocalRecipes, matchedRecipes } =
+		compareLocalRecipes(items, recipesByProduct, idsByName);
+	const { canonicalIds, gameItemRows, legalityMismatches, localIdCasingMismatches } =
+		itemTableComparison(items, snapshot);
 
 	const knownIds = new Set(itemById.keys());
 	const evidenceTables = [`palDrops`, `itemLottery`, `itemPickup`, `shopCreate`, `shopLottery`, `shopSettings`, `technology`, `mapObjectLottery`, `mapObjectProducts`];
-	const evidence = Object.fromEntries(evidenceTables.map(name => [name, [...collectStringEvidence(tableRows(snapshot, name), knownIds)].sort()]));
+	const evidence = Object.fromEntries(evidenceTables.map(name => {
+		const identifiers = collectStringEvidence(tableRows(snapshot, name), knownIds);
+		return [name, [...identifiers].sort()];
+	}));
 	const gameReferenceCasingMismatches = [...[`recipes`, ...evidenceTables].reduce((found, name) =>
 		collectCasingMismatches(tableRows(snapshot, name), canonicalIds, name, found), new Map()).values()];
 	const shops = normalizeShopData(snapshot, itemById);
@@ -272,7 +297,10 @@ function compareGameItemData(itemData, snapshot) {
 	).map(gameId));
 	const gameShopIds = new Set(shops.playableCatalogItemIds);
 	const missingLocalShopItems = [...gameShopIds].filter(id => !localShopCoverageIds.has(id)).map(id => itemById.get(id).name).sort();
-	const localShopItemsMissingGameEvidence = [...localMerchantIds].filter(id => !gameShopIds.has(id)).map(id => itemById.get(id).name).sort();
+	const localShopItemsMissingGameEvidence = [...localMerchantIds]
+		.filter(id => !gameShopIds.has(id))
+		.map(id => itemById.get(id).name)
+		.sort();
 
 	return {
 		extraction: snapshot.tables?._metadata || {},

@@ -1,15 +1,15 @@
 // Validates resolved item records, compact preset references, local assets, and curated acquisition rules.
 const fs = require(`node:fs`);
-const crypto = require(`node:crypto`);
 const path = require(`node:path`);
 const { availabilityEvidence, hasPlaceholderItemText, needsAvailabilityReview, shouldHideItem } = require(`../utils/itemVisibility.js`);
 const { rawItemData, resolvedItemData } = require(`../utils/itemData.js`);
 const availabilityManifest = require(`../data/itemAvailability.json`);
-const journalData = require(`../data/journalData.json`);
 const { findAvailabilityManifestProblems } = require(`../utils/itemAvailabilityAudit.js`);
 const itemFile = resolvedItemData();
 const { itemWorkbench } = require(`../utils/itemWorkbench.js`);
 const { sourceText } = require(`../utils/itemCards.js`);
+const { createItemVariantIndex } = require(`../utils/itemVariants.js`);
+const { validateCuratedItemData, validateRegionalLootData } = require(`./lib/item-data-regional-validation.js`);
 
 const PROJECT_ROOT = path.resolve(__dirname, `..`);
 const AVAILABILITY_DECISION_IDS = new Set(availabilityManifest.items.map(decision => decision.id));
@@ -49,20 +49,22 @@ function findDuplicateValues(items, field) {
 	return duplicates;
 }
 
-function findItemDataProblems(itemData) {
-	const problems = findAvailabilityManifestProblems(itemData, availabilityManifest);
+function validateItemPresetReferences(item, problems) {
+	for (const [property, catalog] of [[`acquisition`, `AcquisitionPresets`], [`merchantLocations`, `MerchantLocationSets`]]) {
+		const reference = item[`${property}Ref`];
+		if (reference && !rawItemData[catalog]?.[reference]) {
+			problems.push(`${item.name}: unknown ${catalog} reference ${reference}.`);
+		}
+		if (reference && item[property]) {
+			problems.push(`${item.name}: ${property} must use either inline data or a preset reference, not both.`);
+		}
+	}
+}
 
+function validatePresetReferences(problems) {
 	// Validate raw references before inspecting resolved records, where missing indirection would be hidden.
 	for (const item of rawItemData.Items || []) {
-		for (const [property, catalog] of [[`acquisition`, `AcquisitionPresets`], [`merchantLocations`, `MerchantLocationSets`]]) {
-			const reference = item[`${property}Ref`];
-			if (reference && !rawItemData[catalog]?.[reference]) {
-				problems.push(`${item.name}: unknown ${catalog} reference ${reference}.`);
-			}
-			if (reference && item[property]) {
-				problems.push(`${item.name}: ${property} must use either inline data or a preset reference, not both.`);
-			}
-		}
+		validateItemPresetReferences(item, problems);
 	}
 	const acquisitionReferenceCounts = new Map();
 	for (const item of rawItemData.Items || []) {
@@ -73,136 +75,146 @@ function findItemDataProblems(itemData) {
 			);
 		}
 	}
+	validateAcquisitionPresetNames(acquisitionReferenceCounts, problems);
+	validateMerchantPresetNames(problems);
+}
+
+function validateAcquisitionPresetNames(referenceCounts, problems) {
 	for (const reference of Object.keys(rawItemData.AcquisitionPresets || {})) {
-		if (!/^acq-[a-z0-9-]+-[a-f0-9]{6}$/u.test(reference)) {
-			problems.push(`${reference}: acquisition preset IDs must include a readable label and six-character hash.`);
+		if (!/^acq-[a-z0-9-]+$/u.test(reference) || /-[a-f0-9]{6}$/u.test(reference)) {
+			problems.push(`${reference}: acquisition preset IDs must use descriptive words instead of hashes.`);
 		}
-		if ((acquisitionReferenceCounts.get(reference) || 0) < 2) {
+		if ((referenceCounts.get(reference) || 0) < 2) {
 			problems.push(`${reference}: acquisition presets must be shared by at least two items.`);
 		}
 	}
+}
+
+function validateMerchantPresetNames(problems) {
 	for (const reference of Object.keys(rawItemData.MerchantLocationSets || {})) {
-		if (!/^merchants-[a-z0-9-]+-[a-f0-9]{6}$/u.test(reference)) {
-			problems.push(`${reference}: merchant preset IDs must include a readable label and six-character hash.`);
+		if (!/^merchants-[a-z0-9-]+$/u.test(reference) || /-[a-f0-9]{6}$/u.test(reference)) {
+			problems.push(`${reference}: merchant preset IDs must use descriptive words instead of hashes.`);
 		}
 	}
+}
 
-	if (!Array.isArray(itemData.Sources) || !itemData.Sources.length) {
-		problems.push(`Sources must be a non-empty array.`);
+function validateRequiredItemFields(item, index, problems) {
+	const objectFields = [`stats`, `properties`];
+	const arrayFields = [`droppedBy`, `recipes`];
+	for (const field of REQUIRED_FIELDS) {
+		const label = `Item ${index} ${item.name || `(unnamed)`}`;
+		if (objectFields.includes(field)) {
+			validateObjectField(item, field, label, problems);
+		} else if (arrayFields.includes(field) && !Array.isArray(item[field])) {
+			problems.push(`${label}: ${field} must be an array.`);
+		} else if (field === `rarityRank` && !Number.isInteger(item[field])) {
+			problems.push(`${label}: rarityRank must be an integer.`);
+		} else if (!objectFields.includes(field) && !arrayFields.includes(field) && field !== `rarityRank` && !String(item[field] || ``).trim()) {
+			problems.push(`${label}: missing ${field}.`);
+		}
 	}
+}
 
-	if (!Array.isArray(itemData.Items) || !itemData.Items.length) {
-		problems.push(`Items must be a non-empty array.`);
-		return problems;
+function validateObjectField(item, field, label, problems) {
+	const value = item[field];
+	if (!value || typeof value !== `object` || Array.isArray(value)) {
+		problems.push(`${label}: ${field} must be an object.`);
 	}
+}
 
+function validateDrop(drop, dropIndex, context) {
+	const { item, index, problems } = context;
+	for (const field of [`pal`, `quantity`, `probability`]) {
+		if (!String(drop[field] || ``).trim()) {
+			problems.push(`Item ${index} ${item.name}: drop ${dropIndex} is missing ${field}.`);
+		}
+	}
+	if (drop.title !== undefined) {
+		problems.push(`Item ${index} ${item.name}: drop ${dropIndex} should not store decorative Pal titles.`);
+	}
+	if (drop.level !== undefined && (!Number.isInteger(drop.level) || drop.level <= 0)) {
+		problems.push(`Item ${index} ${item.name}: drop ${dropIndex} level must be a positive integer.`);
+	}
+}
+
+function validateItemDropsAndRecipes(item, index, problems) {
+	for (const [dropIndex, drop] of (item.droppedBy || []).entries()) {
+		validateDrop(drop, dropIndex, { item, index, problems });
+	}
+	for (const [recipeIndex, recipe] of (item.recipes || []).entries()) {
+		if (!Array.isArray(recipe.ingredients) || !recipe.ingredients.length) {
+			problems.push(`Item ${index} ${item.name}: recipe ${recipeIndex} must contain ingredients.`);
+		}
+	}
+	if (item.recipes?.some(recipe => recipe.ingredients?.length) && !itemWorkbench(item)) {
+		problems.push(`Item ${index} ${item.name}: crafted items must resolve to a workbench.`);
+	}
+	if ([`Dog Coin`, `Battle Ticket`, `Successful Bounty Token`].includes(item.name) && item.recipes?.length) {
+		problems.push(`Item ${index} ${item.name}: merchant exchange rows must not be stored as crafting recipes.`);
+	}
+}
+
+function validateItemPresentation(item, index, problems) {
+	const label = `Item ${index} ${item.name || `(unnamed)`}`;
+	if (/^https?:\/\//i.test(String(item.iconUrl || ``))) {
+		problems.push(`${label}: iconUrl must be a local path.`);
+	}
+	if (item.url !== undefined || /^https?:\/\//i.test(String(item.detailPath || ``))) {
+		problems.push(`${label}: item source must be a non-link detailPath.`);
+	}
+	if (item.iconUrl && path.extname(item.iconUrl).toLowerCase() !== `.png`) {
+		problems.push(`${label}: iconUrl must point to a PNG file.`);
+	}
+	if (item.searchable !== false && !String(item.description || ``).trim()) {
+		problems.push(`${label}: searchable items require a user-facing description.`);
+	}
+	if (String(item.description || ``).includes(`|`)) {
+		problems.push(`${label}: description contains an unnormalized pipe delimiter.`);
+	}
+}
+
+function validateItemAvailability(item, index, problems) {
+	const label = `Item ${index} ${item.name || `(unnamed)`}`;
+	if (item.searchable !== false && shouldHideItem(item)) {
+		problems.push(`${label}: unavailable or placeholder definitions must not be searchable.`);
+	}
+	if (needsAvailabilityReview(item)) {
+		problems.push(`${label}: hidden definition now has finished text and ${availabilityEvidence(item).join(`, `)}; review whether it was implemented.`);
+	}
+	if (item.searchable === false && !hasPlaceholderItemText(item) && !AVAILABILITY_DECISION_IDS.has(item.id)) {
+		problems.push(`Item ${index} ${item.name}: hidden localized definitions require a versioned availability decision.`);
+	}
+}
+
+function validateItemIcon(item, index, problems) {
+	const iconPath = path.resolve(PROJECT_ROOT, item.iconUrl || ``);
+	const relativeIconPath = path.relative(PROJECT_ROOT, iconPath);
+	if (relativeIconPath.startsWith(`..`) || path.isAbsolute(relativeIconPath)) {
+		problems.push(`Item ${index} ${item.name || `(unnamed)`}: iconUrl escapes project root.`);
+	} else if (!fs.existsSync(iconPath)) {
+		problems.push(`Item ${index} ${item.name || `(unnamed)`}: icon file does not exist at ${item.iconUrl}.`);
+	}
+}
+
+function validateBaseItems(itemData, problems) {
 	for (const [index, item] of itemData.Items.entries()) {
-		for (const field of REQUIRED_FIELDS) {
-			if (field === `stats` || field === `properties` || field === `droppedBy` || field === `recipes`) {
-				if (field === `stats` && (!item.stats || typeof item.stats !== `object` || Array.isArray(item.stats))) {
-					problems.push(`Item ${index} ${item.name || `(unnamed)`}: stats must be an object.`);
-				}
-
-				if (field === `properties` && (!item.properties || typeof item.properties !== `object` || Array.isArray(item.properties))) {
-					problems.push(`Item ${index} ${item.name || `(unnamed)`}: properties must be an object.`);
-				}
-
-				if (field === `droppedBy` && !Array.isArray(item.droppedBy)) {
-					problems.push(`Item ${index} ${item.name || `(unnamed)`}: droppedBy must be an array.`);
-				}
-
-				if (field === `recipes` && !Array.isArray(item.recipes)) {
-					problems.push(`Item ${index} ${item.name || `(unnamed)`}: recipes must be an array.`);
-				}
-
-				continue;
-			}
-			if (field === `rarityRank`) {
-				if (!Number.isInteger(item[field])) {
-					problems.push(`Item ${index} ${item.name || `(unnamed)`}: rarityRank must be an integer.`);
-				}
-
-				continue;
-			}
-
-			if (!String(item[field] || ``).trim()) {
-				problems.push(`Item ${index} ${item.name || `(unnamed)`}: missing ${field}.`);
-			}
-		}
-
-		if (/^https?:\/\//i.test(String(item.iconUrl || ``))) {
-			problems.push(`Item ${index} ${item.name || `(unnamed)`}: iconUrl must be a local path.`);
-		}
-
-		if (item.url !== undefined || /^https?:\/\//i.test(String(item.detailPath || ``))) {
-			problems.push(`Item ${index} ${item.name || `(unnamed)`}: item source must be a non-link detailPath.`);
-		}
-
-		if (item.iconUrl && path.extname(item.iconUrl).toLowerCase() !== `.png`) {
-			problems.push(`Item ${index} ${item.name || `(unnamed)`}: iconUrl must point to a PNG file.`);
-		}
-		if (item.searchable !== false && !String(item.description || ``).trim()) {
-			problems.push(`Item ${index} ${item.name || `(unnamed)`}: searchable items require a user-facing description.`);
-		}
-		if (String(item.description || ``).includes(`|`)) {
-			problems.push(`Item ${index} ${item.name || `(unnamed)`}: description contains an unnormalized pipe delimiter.`);
-		}
-		if (item.searchable !== false && shouldHideItem(item)) {
-			problems.push(`Item ${index} ${item.name || `(unnamed)`}: unavailable or placeholder definitions must not be searchable.`);
-		}
-		if (needsAvailabilityReview(item)) {
-			problems.push(
-				`Item ${index} ${item.name || `(unnamed)`}: hidden definition now has finished text and ${availabilityEvidence(item).join(`, `)}; review whether it was implemented.`,
-			);
-		}
-		if (item.searchable === false && !hasPlaceholderItemText(item) && !AVAILABILITY_DECISION_IDS.has(item.id)) {
-			problems.push(`Item ${index} ${item.name}: hidden localized definitions require a versioned availability decision.`);
-		}
-
-		const iconPath = path.resolve(PROJECT_ROOT, item.iconUrl || ``);
-		const relativeIconPath = path.relative(PROJECT_ROOT, iconPath);
-
-		if (relativeIconPath.startsWith(`..`) || path.isAbsolute(relativeIconPath)) {
-			problems.push(`Item ${index} ${item.name || `(unnamed)`}: iconUrl escapes project root.`);
-		} else if (!fs.existsSync(iconPath)) {
-			problems.push(`Item ${index} ${item.name || `(unnamed)`}: icon file does not exist at ${item.iconUrl}.`);
-		}
-
-		for (const [dropIndex, drop] of (item.droppedBy || []).entries()) {
-			for (const field of [`pal`, `quantity`, `probability`]) {
-				if (!String(drop[field] || ``).trim()) {
-					problems.push(`Item ${index} ${item.name}: drop ${dropIndex} is missing ${field}.`);
-				}
-			}
-
-			if (drop.title !== undefined) {
-				problems.push(`Item ${index} ${item.name}: drop ${dropIndex} should not store decorative Pal titles.`);
-			}
-
-			if (drop.level !== undefined && (!Number.isInteger(drop.level) || drop.level <= 0)) {
-				problems.push(`Item ${index} ${item.name}: drop ${dropIndex} level must be a positive integer.`);
-			}
-		}
-
-		for (const [recipeIndex, recipe] of (item.recipes || []).entries()) {
-			if (!Array.isArray(recipe.ingredients) || !recipe.ingredients.length) {
-				problems.push(`Item ${index} ${item.name}: recipe ${recipeIndex} must contain ingredients.`);
-			}
-		}
-
-		if (item.recipes?.some(recipe => recipe.ingredients?.length) && !itemWorkbench(item)) {
-			problems.push(`Item ${index} ${item.name}: crafted items must resolve to a workbench.`);
-		}
-		if ([`Dog Coin`, `Battle Ticket`, `Successful Bounty Token`].includes(item.name) && item.recipes?.length) {
-			problems.push(`Item ${index} ${item.name}: merchant exchange rows must not be stored as crafting recipes.`);
-		}
+		validateRequiredItemFields(item, index, problems);
+		validateItemPresentation(item, index, problems);
+		validateItemAvailability(item, index, problems);
+		validateItemIcon(item, index, problems);
+		validateItemDropsAndRecipes(item, index, problems);
 	}
+}
 
+function validateDogCoinMerchants(itemData, problems) {
 	const dogCoin = itemData.Items.find(item => item.name === `Dog Coin`);
 	if (!dogCoin?.medalMerchants?.map || dogCoin.medalMerchants.entries?.length !== 4 ||
 		dogCoin.medalMerchants.mapSources?.map !== `palpagos` || !dogCoin.medalMerchants.mapSources?.markers?.length) {
 		problems.push(`Dog Coin must include all four fixed Medal Merchant locations and their map.`);
 	}
+}
+
+function validateInstalledShopCounts(itemData, problems) {
 	const expectedShopCounts = {
 		"Medal Merchants": 37, "Bounty Shop": 18, "Arena Merchant": 56,
 		"Caravan Merchants": 109, "Dungeon Merchant": 33, "Wandering Merchants": 32,
@@ -213,6 +225,9 @@ function findItemDataProblems(itemData) {
 			problems.push(`${type}: expected ${expected} installed-game products, found ${actual}.`);
 		}
 	}
+}
+
+function validateFixedShopMaps(itemData, problems) {
 	for (const [property, expectedEntries] of [[`medalMerchants`, 4], [`bountyMerchants`, 3], [`arenaMerchant`, 1]]) {
 		for (const item of itemData.Items.filter(value => value[property])) {
 			if (item[property].entries?.length !== expectedEntries || !item[property].map || !item[property].mapSources?.markers?.length) {
@@ -223,16 +238,22 @@ function findItemDataProblems(itemData) {
 	if (itemData.Items.some(item => item.acquisition?.sources?.some(source => /Vagrant|TestTable/iu.test(JSON.stringify(source))))) {
 		problems.push(`Test/vagrant shop tables must never appear as player-facing acquisition sources.`);
 	}
-
 	for (const field of [`id`, `code`]) {
 		problems.push(...findDuplicateValues(itemData.Items, field));
 	}
+}
+
+function validateInstalledShopData(itemData, problems) {
+	validateDogCoinMerchants(itemData, problems);
+	validateInstalledShopCounts(itemData, problems);
+	validateFixedShopMaps(itemData, problems);
+}
+
+function validateMerchantLocationSets(itemData, problems) {
 	for (const [name, locations] of Object.entries(itemData.MerchantLocationSets || {})) {
 		const markers = locations.mapSources?.markers || [];
-		const signature = crypto.createHash(`sha256`).update(JSON.stringify(locations.mapSources)).digest(`hex`).slice(0, 10);
-		const expectedMap = markers.length ? `data/item-maps/merchant-locations-${signature}.png` : null;
-		if (expectedMap && locations.map !== expectedMap) {
-			problems.push(`${name}: merchant map filename does not match its marker set.`);
+		if (markers.length && !/^data\/item-maps\/merchant-locations-[a-z0-9-]+\.png$/u.test(locations.map || ``)) {
+			problems.push(`${name}: merchant map filename must describe its locations.`);
 		}
 		for (const marker of markers) {
 			const expectedType = /_Shop_2$/u.test(marker.href || ``) ? `Weapons Merchant` : `Wandering Merchant`;
@@ -241,7 +262,9 @@ function findItemDataProblems(itemData) {
 			}
 		}
 	}
+}
 
+function validateItemSources(itemData, problems) {
 	for (const source of itemData.Sources || []) {
 		if (source.url !== undefined) {
 			problems.push(`Source ${source.slug}: stored source URLs are not allowed.`);
@@ -253,263 +276,175 @@ function findItemDataProblems(itemData) {
 			problems.push(`Source ${source.slug}: expected ${source.count} item(s), found ${actualCount}.`);
 		}
 	}
+}
 
+function validateMerchantAndSourceData(itemData, problems) {
+	validateInstalledShopData(itemData, problems);
+	validateMerchantLocationSets(itemData, problems);
+	validateItemSources(itemData, problems);
+}
+
+function validateAcquisitionSourceEntries(source, sourceIndex, context) {
+	const { item, index, problems } = context;
+	if (!String(source.type || ``).trim() || !Array.isArray(source.entries) || !source.entries.length) {
+		problems.push(`Item ${index} ${item.name}: acquisition source ${sourceIndex} requires a type and entries.`);
+	}
+	for (const [entryIndex, entry] of (source.entries || []).entries()) {
+		if (!String(entry.location || ``).trim()) {
+			problems.push(`Item ${index} ${item.name}: acquisition source ${sourceIndex} entry ${entryIndex} is missing location.`);
+		}
+	}
+}
+
+function validateAcquisitionSources(item, index, problems) {
+	const acquisition = item.acquisition;
+	const missingSources = !Array.isArray(acquisition.sources) || !acquisition.sources.length;
+	if (item.searchable !== false && missingSources && !acquisition.lootPools?.length) {
+		problems.push(`Item ${index} ${item.name}: acquisition sources must be a non-empty array.`);
+	}
+	for (const [sourceIndex, source] of (acquisition.sources || []).entries()) {
+		validateAcquisitionSourceEntries(source, sourceIndex, { item, index, problems });
+	}
+}
+
+function validateRenderedSources(item, index, problems) {
+	const renderedSources = sourceText(item.acquisition, item.merchantLocations);
+	if (/\b(?:Viking\d+|DarkIsland|SkyIsland|technology-book pool|Oilrig(?: Large)? 0?\d)\b|_/iu.test(renderedSources)) {
+		problems.push(`Item ${index} ${item.name}: rendered acquisition sources expose an internal game identifier.`);
+	}
+	if (/^Ancient Relic Recycler [^(\n]/mu.test(renderedSources)) {
+		problems.push(`Item ${index} ${item.name}: qualified acquisition sources must place their subtype in parentheses.`);
+	}
+	const internalLabel = /Dungeon (?:or Sanctuary|and Regional) Chests|^Pal Critics?(?:\s|$)|\([^)]*: Lvl \d+|^Locations \(/mu;
+	if (internalLabel.test(renderedSources) || /^Spawn Locations \(|^\w+ Treasure Map /mu.test(renderedSources)) {
+		problems.push(`Item ${index} ${item.name}: rendered acquisition sources contain an unnormalized pathway label.`);
+	}
+	const lines = renderedSources.split(`\n`).filter(Boolean);
+	if (new Set(lines).size !== lines.length) {
+		problems.push(`Item ${index} ${item.name}: rendered acquisition sources contain duplicate lines.`);
+	}
+}
+
+function hasLegacyOrMarkerSources(mapSources) {
+	return {
+		legacy: Array.isArray(mapSources?.chestPools) && Array.isArray(mapSources?.dungeons),
+		markers: [`palpagos`, `worldtree`].includes(mapSources?.map) && Array.isArray(mapSources?.markers) && mapSources.markers.length,
+	};
+}
+
+function hasUnpinnedSources(acquisition, mapSources) {
+	const textualTypes = new Set(acquisition.sources.map(source => source.type));
+	const allowed = type => type === `Supply` || /^Salvage Rank/u.test(type) || [`Fishing`, `Fishing Ponds`, `Mission`].includes(type);
+	const unpinned = Array.isArray(mapSources?.unpinnedSources) && mapSources.unpinnedSources.length &&
+		mapSources.unpinnedSources.every(type => textualTypes.has(type) && allowed(type));
+	return unpinned && Array.isArray(mapSources?.markers) && mapSources.markers.length === 0;
+}
+
+function hasValidMapSources(acquisition) {
+	const mapSources = acquisition.mapSources;
+	const { legacy, markers } = hasLegacyOrMarkerSources(mapSources);
+	const unpinnedOnly = hasUnpinnedSources(acquisition, mapSources);
+	const multiple = Array.isArray(mapSources?.maps) && mapSources.maps.length && mapSources.maps.every(source =>
+		[`palpagos`, `worldtree`].includes(source.map) && Array.isArray(source.markers) && source.markers.length);
+	return { legacy, markers, multiple, unpinnedOnly };
+}
+
+function validateMapFile(item, index, problems) {
+	const mapPath = path.resolve(PROJECT_ROOT, item.acquisition.map);
+	const relativeMapPath = path.relative(PROJECT_ROOT, mapPath);
+	if (relativeMapPath.startsWith(`..`) || path.isAbsolute(relativeMapPath)) {
+		problems.push(`Item ${index} ${item.name}: acquisition map escapes project root.`);
+	} else if (path.extname(mapPath).toLowerCase() !== `.png` || !fs.existsSync(mapPath)) {
+		problems.push(`Item ${index} ${item.name}: acquisition map must be an existing PNG at ${item.acquisition.map}.`);
+	}
+}
+
+function validateAcquisitionMap(item, index, problems) {
+	const { acquisition } = item;
+	validateMapFile(item, index, problems);
+	const validity = hasValidMapSources(acquisition);
+	const mapSources = acquisition.mapSources;
+	if (validity.multiple && new Set(mapSources.maps.map(source => source.map)).size !== mapSources.maps.length) {
+		problems.push(`Item ${index} ${item.name}: repeated panels for the same physical map must be consolidated.`);
+	}
+	if (!validity.legacy && !validity.markers && !validity.multiple && !validity.unpinnedOnly) {
+		problems.push(`Item ${index} ${item.name}: mapped acquisition requires legacy chest/dungeon sources or map marker sources.`);
+	}
+	const allMarkers = [...(mapSources?.markers || []), ...(mapSources?.maps || []).flatMap(source => source.markers || [])];
+	for (const [markerIndex, marker] of allMarkers.entries()) {
+		if (!String(marker.type || ``).trim()) {
+			problems.push(`Item ${index} ${item.name}: map marker ${markerIndex} is missing type.`);
+		}
+	}
+}
+
+function validateMerchantMapFile(item, index, problems) {
+	const { merchantLocations: merchants } = item;
+	if (!Array.isArray(merchants.entries) || !merchants.entries.length ||
+		merchants.entries.some(entry => !String(entry.merchant || ``).trim() || !String(entry.shop || ``).trim())) {
+		problems.push(`Item ${index} ${item.name}: merchantLocations requires named merchant/shop entries.`);
+	}
+	const mapPath = path.resolve(PROJECT_ROOT, merchants.map || ``);
+	const relativeMapPath = path.relative(PROJECT_ROOT, mapPath);
+	if (!merchants.map || relativeMapPath.startsWith(`..`) || path.isAbsolute(relativeMapPath) ||
+		path.extname(mapPath).toLowerCase() !== `.png` || !fs.existsSync(mapPath)) {
+		problems.push(`Item ${index} ${item.name}: merchantLocations requires an existing in-project PNG map.`);
+	}
+}
+
+function validateMerchantLocation(item, index, problems) {
+	const merchants = item.merchantLocations;
+	if (!merchants) {
+		return;
+	}
+	validateMerchantMapFile(item, index, problems);
+	if (merchants.mapSources?.map !== `palpagos` || !Array.isArray(merchants.mapSources?.markers) || !merchants.mapSources.markers.length) {
+		problems.push(`Item ${index} ${item.name}: merchantLocations requires Palpagos marker sources.`);
+	}
+}
+
+function validateAcquisitionData(itemData, problems) {
 	for (const [index, item] of itemData.Items.entries()) {
 		const acquisition = item.acquisition;
 		if (!acquisition) {
 			continue;
 		}
-		if (!Array.isArray(acquisition.sources) || !acquisition.sources.length) {
-			problems.push(`Item ${index} ${item.name}: acquisition sources must be a non-empty array.`);
-		}
-		for (const [sourceIndex, source] of (acquisition.sources || []).entries()) {
-			if (!String(source.type || ``).trim() || !Array.isArray(source.entries) || !source.entries.length) {
-				problems.push(`Item ${index} ${item.name}: acquisition source ${sourceIndex} requires a type and entries.`);
-			}
-			for (const [entryIndex, entry] of (source.entries || []).entries()) {
-				if (!String(entry.location || ``).trim()) {
-					problems.push(`Item ${index} ${item.name}: acquisition source ${sourceIndex} entry ${entryIndex} is missing location.`);
-				}
-			}
-		}
-		const renderedSources = sourceText(acquisition, item.merchantLocations);
-		if (/\b(?:Viking\d+|DarkIsland|SkyIsland|technology-book pool|Oilrig(?: Large)? 0?\d)\b|_/iu.test(renderedSources)) {
-			problems.push(`Item ${index} ${item.name}: rendered acquisition sources expose an internal game identifier.`);
-		}
-		if (/^Ancient Relic Recycler [^(\n]/mu.test(renderedSources)) {
-			problems.push(`Item ${index} ${item.name}: qualified acquisition sources must place their subtype in parentheses.`);
-		}
-		if (/Dungeon (?:or Sanctuary|and Regional) Chests|^Pal Critics?(?:\s|$)|\([^)]*: Lvl \d+|\b\d{4,}\b|^Locations \(|^Spawn Locations \(|^\w+ Treasure Map /mu.test(renderedSources)) {
-			problems.push(`Item ${index} ${item.name}: rendered acquisition sources contain an unnormalized pathway label.`);
-		}
-		const renderedSourceLines = renderedSources.split(`\n`).filter(Boolean);
-		if (new Set(renderedSourceLines).size !== renderedSourceLines.length) {
-			problems.push(`Item ${index} ${item.name}: rendered acquisition sources contain duplicate lines.`);
-		}
-		if (!acquisition.map) {
-			continue;
-		}
-		const mapPath = path.resolve(PROJECT_ROOT, acquisition.map);
-		const relativeMapPath = path.relative(PROJECT_ROOT, mapPath);
-		if (relativeMapPath.startsWith(`..`) || path.isAbsolute(relativeMapPath)) {
-			problems.push(`Item ${index} ${item.name}: acquisition map escapes project root.`);
-		} else if (path.extname(mapPath).toLowerCase() !== `.png` || !fs.existsSync(mapPath)) {
-			problems.push(`Item ${index} ${item.name}: acquisition map must be an existing PNG at ${acquisition.map}.`);
-		}
-		const mapSources = acquisition.mapSources;
-		const legacySources = Array.isArray(mapSources?.chestPools) && Array.isArray(mapSources?.dungeons);
-		const markerSources = [`palpagos`, `worldtree`].includes(mapSources?.map) && Array.isArray(mapSources?.markers) && mapSources.markers.length;
-		const textualSourceTypes = new Set(acquisition.sources.map(source => source.type));
-		const allowedUnpinnedSource = type => type === `Supply` || /^Salvage Rank/u.test(type) || [`Fishing`, `Fishing Ponds`, `Mission`].includes(type);
-		const unpinnedSources = Array.isArray(mapSources?.unpinnedSources) && mapSources.unpinnedSources.length &&
-			mapSources.unpinnedSources.every(type => textualSourceTypes.has(type) && allowedUnpinnedSource(type));
-		const unpinnedOnlyMap = unpinnedSources && Array.isArray(mapSources?.markers) && mapSources.markers.length === 0;
-		const multiMapSources = Array.isArray(mapSources?.maps) && mapSources.maps.length && mapSources.maps.every(source =>
-			[`palpagos`, `worldtree`].includes(source.map) && Array.isArray(source.markers) && source.markers.length,
-		);
-		if (multiMapSources && new Set(mapSources.maps.map(source => source.map)).size !== mapSources.maps.length) {
-			problems.push(`Item ${index} ${item.name}: repeated panels for the same physical map must be consolidated.`);
-		}
-		if (!legacySources && !markerSources && !multiMapSources && !unpinnedOnlyMap) {
-			problems.push(`Item ${index} ${item.name}: mapped acquisition requires legacy chest/dungeon sources or map marker sources.`);
-		}
-		const allMarkers = [
-			...(mapSources?.markers || []),
-			...(mapSources?.maps || []).flatMap(source => source.markers || []),
-		];
-		for (const [markerIndex, marker] of allMarkers.entries()) {
-			if (!String(marker.type || ``).trim()) {
-				problems.push(`Item ${index} ${item.name}: map marker ${markerIndex} is missing type.`);
-			}
+		validateAcquisitionSources(item, index, problems);
+		validateRenderedSources(item, index, problems);
+		if (acquisition.map) {
+			validateAcquisitionMap(item, index, problems);
 		}
 	}
 
 	for (const [index, item] of itemData.Items.entries()) {
-		const merchants = item.merchantLocations;
-		if (!merchants) {
-			continue;
-		}
-		if (!Array.isArray(merchants.entries) || !merchants.entries.length || merchants.entries.some(entry => !String(entry.merchant || ``).trim() || !String(entry.shop || ``).trim())) {
-			problems.push(`Item ${index} ${item.name}: merchantLocations requires named merchant/shop entries.`);
-		}
-		const mapPath = path.resolve(PROJECT_ROOT, merchants.map || ``);
-		const relativeMapPath = path.relative(PROJECT_ROOT, mapPath);
-		if (!merchants.map || relativeMapPath.startsWith(`..`) || path.isAbsolute(relativeMapPath) || path.extname(mapPath).toLowerCase() !== `.png` || !fs.existsSync(mapPath)) {
-			problems.push(`Item ${index} ${item.name}: merchantLocations requires an existing in-project PNG map.`);
-		}
-		if (merchants.mapSources?.map !== `palpagos` || !Array.isArray(merchants.mapSources?.markers) || !merchants.mapSources.markers.length) {
-			problems.push(`Item ${index} ${item.name}: merchantLocations requires Palpagos marker sources.`);
-		}
+		validateMerchantLocation(item, index, problems);
 	}
+}
 
-	const mappedSkillFruits = itemData.Items.filter(item => /Skill Fruit:/u.test(item.name) && item.acquisition?.sources?.some(source => source.type === `Skill Fruit Trees`));
-	if (mappedSkillFruits.length !== 89) {
-		problems.push(`Expected 89 pool-verified Skill Fruit records, found ${mappedSkillFruits.length}.`);
-	}
-	const mappedKeySpheres = itemData.Items.filter(item => /^Key Sphere of /u.test(item.name) && item.acquisition?.sources?.some(source => source.type === `Tower Boss`));
-	if (mappedKeySpheres.length !== 8) {
-		problems.push(`Expected all 8 Key Spheres to have verified tower maps, found ${mappedKeySpheres.length}.`);
-	}
-	const mappedRegionalItems = itemData.Items.filter(item => item.acquisition?.sources?.some(source =>
-		[`Treasure`, `Treasure Element`, `Supply`, `Junk`, `Salvage Rank1`, `Salvage Rank2`].includes(source.type),
-	));
-	if (mappedRegionalItems.length !== 572) {
-		problems.push(`Expected all 572 decoded regional loot-pool records for build 24467282, found ${mappedRegionalItems.length}.`);
-	}
-	const solSphere = itemData.Items.find(item => item.name === `Sol Sphere`);
-	if (!solSphere?.acquisition?.map || !solSphere.acquisition.sources?.some(source => source.type === `Junk`) ||
-		!solSphere.acquisition.sources?.some(source => source.type === `Supply`) ||
-		!solSphere.acquisition.sources?.some(source => source.type === `Treasure`)) {
-		problems.push(`Sol Sphere must include its verified Sky Island junk, supply, and treasure sources.`);
-	}
-	for (const item of mappedRegionalItems) {
-		const mappedMarkerTypes = [
-			...(item.acquisition?.mapSources?.markers || []),
-			...(item.acquisition?.mapSources?.maps || []).flatMap(source => source.markers || []),
-		].map(marker => marker.type);
-		if (mappedMarkerTypes.some(type => /^Salvage Rank/u.test(type))) {
-			problems.push(`${item.name}: salvage sources must remain textual instead of being mapped.`);
-		}
-	}
-	const mappedItems = itemData.Items.filter(item => item.acquisition?.mapSources);
-	for (const item of mappedItems) {
-		const markers = [
-			...(item.acquisition.mapSources.markers || []),
-			...(item.acquisition.mapSources.maps || []).flatMap(source => source.markers || []),
-		];
-		if (markers.some(marker => marker.type === `Supply` || /^Salvage Rank/iu.test(marker.type))) {
-			problems.push(`${item.name}: Supply Drops and broad salvage pools must remain unpinned.`);
-		}
-		if (markers.some(marker => [`compact`, `density`].includes(marker.style))) {
-			problems.push(`${item.name}: standard map pins must use the uniform Lamball-sized presentation.`);
-		}
-		if (markers.some(marker => /Treasure Map \d Sources/iu.test(marker.label || ``))) {
-			problems.push(`${item.name}: Treasure Map legends must use player-facing rarity or source wording.`);
-		}
-		for (const chestMarker of markers.filter(value => (value.legendType || value.type) === `Treasure`)) {
-			const regionalSpawner = chestMarker.locationSet === `worldTreeTreasureChests` || chestMarker.href === `SkyIsland_Treasure`;
-			if (!regionalSpawner && (!Number.isInteger(chestMarker.treasureGrade) || !Array.isArray(chestMarker.lotteryFields) || !chestMarker.lotteryFields.length)) {
-				problems.push(`${item.name}: treasure-chest map markers require a decoded grade and exact lottery field IDs.`);
-			}
-		}
-	}
-	const generatedPhysicalMaps = itemData.Items.filter(item => /\/item-sources-[a-f0-9]{12}(?:-|\.png$)/u.test(item.acquisition?.map || ``));
-	if (generatedPhysicalMaps.length !== 67) {
-		problems.push(`Expected 67 generated physical-source item maps, found ${generatedPhysicalMaps.length}.`);
-	}
-	for (const item of generatedPhysicalMaps) {
-		if (!fs.existsSync(path.resolve(PROJECT_ROOT, item.acquisition.map))) {
-			problems.push(`${item.name}: generated physical-source map is missing.`);
-		}
-	}
-	for (const legalItem of itemData.Items.filter(value => Number(value.properties?.bLegalInGame ?? 0) !== 0)) {
-		for (const chestSource of (legalItem.acquisition?.sources || []).filter(value => value.type === `Treasure`)) {
-			for (const entry of chestSource.entries || []) {
-				const regionalSummary = /^\d+ (?:Sunreach|World Tree) chest locations$/u.test(entry.location || ``);
-				if (!regionalSummary && (!/^((?:Regular|Bronze Key|Purple|Silver|Gold|Gold Key) Chests)$/u.test(entry.chestTier || ``) || !String(entry.lotteryField || ``).trim())) {
-					problems.push(`${legalItem.name}: treasure sources must name their chest tier and retain the exact game lottery field ID.`);
-				}
-			}
-		}
-	}
-	const treasureMapLoot = itemData.Items.filter(item => item.acquisition?.sources?.some(source => source.type === `Treasure Maps`));
-	if (treasureMapLoot.length !== 245) {
-		problems.push(`Expected 245 local card records backed by current Treasure Map loot tables, found ${treasureMapLoot.length}.`);
-	}
-	for (const item of treasureMapLoot) {
-		const entries = item.acquisition.sources.find(source => source.type === `Treasure Maps`).entries;
-		const markers = [...(item.acquisition.mapSources?.markers || []), ...(item.acquisition.mapSources?.maps || []).flatMap(source => source.markers || [])];
-		if (!item.acquisition.map || !markers.some(marker => marker.legendType === `Treasure Map`) ||
-			entries.some(entry => !/^(?:Common|Uncommon|Rare|Epic|Legendary) Treasure Map$/u.test(entry.location) ||
-				!/^\d+(?:\.\d+)?%$/u.test(entry.probability || ``))) {
-			problems.push(`${item.name}: Treasure Map loot requires rarity-qualified probabilities and gold source-map markers.`);
-		}
-	}
-	for (const excludedName of [`Common Egg`, `Mimog Effigy`]) {
-		if (itemData.Items.some(item => item.name === excludedName && item.acquisition)) {
-			problems.push(`${excludedName}: intentionally non-location-based items must remain unmapped.`);
-		}
-	}
+function findItemDataProblems(itemData) {
+	const problems = findAvailabilityManifestProblems(itemData, availabilityManifest);
 
-	for (const journalMap of [`data/item-maps/palpagos-journals.png`, `data/item-maps/worldtree-journals.png`]) {
-		if (!fs.existsSync(path.resolve(PROJECT_ROOT, journalMap))) {
-			problems.push(`Missing generated journal map at ${journalMap}.`);
+	validatePresetReferences(problems);
+	if (!Array.isArray(itemData.Sources) || !itemData.Sources.length) {
+		problems.push(`Sources must be a non-empty array.`);
+	}
+	if (!Array.isArray(itemData.Items) || !itemData.Items.length) {
+		problems.push(`Items must be a non-empty array.`);
+		return problems;
+	}
+	const variantIndex = createItemVariantIndex(itemData.Items);
+	for (const schematic of itemData.Items.filter(item => item.category === `Schematic` && item.searchable !== false &&
+		/unlocks recipe for/iu.test(item.description || ``))) {
+		const counterpart = variantIndex.counterpart(schematic);
+		if (!counterpart || counterpart.searchable === false || counterpart.rarity !== schematic.rarity) {
+			problems.push(`${schematic.name}: searchable recipe schematics require an exact-rarity item counterpart.`);
 		}
 	}
-	const journals = itemData.Items.filter(item => item.journalEntry);
-	if (journals.length !== 64) {
-		problems.push(`Journal catalog must contain all 64 installed Note master rows.`);
-	}
-	if (journals.some(journal => !journal.id || !journal.name || !journal.description || !journal.acquisition?.mapSources?.markers?.length || !journal.acquisition?.map)) {
-		problems.push(`Every journal item must include its game ID, title, text, placed marker, and individual map.`);
-	}
-	if (journalData.Journals?.length !== 64 || journalData.Journals.some(journal =>
-		!journal.description || !/^data\/item-maps\/journal-(?:palpagos|worldtree)-.+\.png$/u.test(journal.map || ``))) {
-		problems.push(`The /journal catalog must contain all 64 localized texts with individual journal maps.`);
-	}
-	for (const title of [`Suppression Operation Comms Log`, `Ancient Recorder`, `(A scorched piece of paper)`]) {
-		if (!journals.some(journal => journal.name === title)) {
-			problems.push(`Journal catalog is missing ${title}.`);
-		}
-	}
-
-	const slabItems = itemData.Items.filter(item => /\bSlab(?: Fragment)?$/i.test(item.name));
-
-	for (const [index, item] of slabItems.entries()) {
-		const acquisition = item.acquisition;
-		const unusedUltraFragment = /\(Ultra\) Slab Fragment$/i.test(item.name);
-
-		if (unusedUltraFragment) {
-			if (item.searchable !== false) {
-				problems.push(`${item.name}: unused Ultra fragment definitions must be hidden from item lookup.`);
-			}
-			if (acquisition !== undefined) {
-				problems.push(`${item.name}: unused Ultra fragment definitions must not have acquisition data.`);
-			}
-			continue;
-		}
-
-		if (!acquisition || !Array.isArray(acquisition.sources)) {
-			problems.push(`${item.name}: missing embedded acquisition sources.`);
-			continue;
-		}
-		if (!acquisition.sources.length && !String(acquisition.note || ``).trim()) {
-			problems.push(`Acquisition ${index} ${item.name}: an empty source list requires a note.`);
-		}
-
-		for (const [sourceIndex, source] of acquisition.sources.entries()) {
-			if (source.type === `Crafting`) {
-				problems.push(`Acquisition ${index} ${item.name}: crafting belongs in recipes, not acquisition sources.`);
-			}
-			if (!String(source.type || ``).trim() || !Array.isArray(source.entries) || !source.entries.length) {
-				problems.push(`Acquisition ${index} ${item.name}: source ${sourceIndex} requires a type and entries.`);
-				continue;
-			}
-			for (const [entryIndex, entry] of source.entries.entries()) {
-				if (!String(entry.location || ``).trim()) {
-					problems.push(`Acquisition ${index} ${item.name}: source ${sourceIndex} entry ${entryIndex} is missing location.`);
-				}
-			}
-		}
-
-		if (acquisition.map) {
-			const mapPath = path.resolve(PROJECT_ROOT, acquisition.map);
-			const relativeMapPath = path.relative(PROJECT_ROOT, mapPath);
-			if (relativeMapPath.startsWith(`..`) || path.isAbsolute(relativeMapPath)) {
-				problems.push(`Acquisition ${index} ${item.name}: map escapes project root.`);
-			} else if (path.extname(mapPath).toLowerCase() !== `.png` || !fs.existsSync(mapPath)) {
-				problems.push(`Acquisition ${index} ${item.name}: map must be an existing PNG at ${acquisition.map}.`);
-			}
-			const legacyMap = Array.isArray(acquisition.mapSources?.chestPools) && Array.isArray(acquisition.mapSources?.dungeons);
-			const regionalMap = [`palpagos`, `worldtree`].includes(acquisition.mapSources?.map) && acquisition.mapSources?.markers?.length;
-			if (!legacyMap && !regionalMap) {
-				problems.push(`Acquisition ${index} ${item.name}: mapped slab items require legacy or regional marker sources.`);
-			}
-		} else if (acquisition.mapSources !== undefined) {
-			problems.push(`Acquisition ${index} ${item.name}: mapSources requires a map.`);
-		}
-	}
-
+	validateBaseItems(itemData, problems);
+	validateMerchantAndSourceData(itemData, problems);
+	validateAcquisitionData(itemData, problems);
+	validateRegionalLootData(itemData, problems);
+	validateCuratedItemData(itemData, problems);
 	return problems;
 }
 

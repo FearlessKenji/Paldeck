@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-// Adds deterministic maps for decoded physical item sources that currently lack acquisition maps.
+// Adds deterministic, descriptively named maps for decoded physical item sources.
 /* eslint-disable max-statements-per-line -- concise pool-to-marker guards keep the mapping table auditable. */
-const crypto = require(`node:crypto`);
 const fs = require(`node:fs`);
 const path = require(`node:path`);
 const { compactItemData, resolvedItemData } = require(`../utils/itemData.js`);
@@ -13,6 +12,10 @@ const CHEST_GRADES = {
 	"Regular Chests": 1, "Bronze Key Chests": 2, "Purple Chests": 3,
 	"Silver Chests": 4, "Gold Chests": 5, "Gold Key Chests": 6,
 };
+const MAPPABLE_CHEST_FIELDS = new Set([
+	`DarkIsland02`, `DarkIsland_Treasure`, `Desert01`, `Desert02`, `Forest01`, `Forest02`, `Grass01`, `Grass02`,
+	`Sakurajima02`, `Snow01`, `Snow02`, `Volcano01`, `Volcano02`,
+]);
 const OIL_RIG_BOUNDS = {
 	Mini: { minX: -290000, maxX: -230000, minY: 210000, maxY: 270000 },
 	Normal: { minX: -350000, maxX: -300000, minY: 390000, maxY: 460000 },
@@ -44,47 +47,63 @@ function campMarker(pool) {
 	return reward ? { type: `Enemy Camp`, RewardName: reward } : null;
 }
 
+function addFishingMarkers(pool, palpagos, worldtree) {
+	if (pool.category !== `Fishing` || !/_Fishing$/u.test(pool.pool)) {return;}
+	if (pool.pool === `WorldTree_Treasure_Fishing`) {
+		worldtree.push({ type: `Fishing Spot` }, { type: `Rare Fishing Spot` });
+		return;
+	}
+	const comments = FISHING_COMMENTS_BY_POOL[pool.pool.replace(/_Fishing$/u, ``)] || [];
+	const common = comments.filter(value => /Common/u.test(value));
+	const rare = comments.filter(value => /Rare/u.test(value));
+	if (common.length) {palpagos.push({ type: `Fishing Spot`, comment: common });}
+	if (rare.length) {palpagos.push({ type: `Rare Fishing Spot`, comment: rare });}
+}
+
+function addPoolMarkers(pool, palpagos, worldtree) {
+	if (pool.category === `Enemy Camps`) {
+		const marker = campMarker(pool.pool);
+		if (marker) {palpagos.push(marker);}
+	}
+	if (pool.category === `Oil Rigs`) {
+		const rig = pool.pool.includes(`_Large_`) ? `Large` : pool.pool.includes(`_Mini_`) ? `Mini` : `Normal`;
+		palpagos.push({ type: `Oilrig Treasure Goal`, bounds: OIL_RIG_BOUNDS[rig] });
+	}
+	if (pool.category === `Dungeon Chests`) {
+		const prefix = pool.pool.match(/^([A-Za-z]+\d{3})_Dungeon/u)?.[1];
+		if (DUNGEONS_BY_POOL[prefix]) {palpagos.push({ type: `Dungeon`, item: DUNGEONS_BY_POOL[prefix] });}
+	}
+	addFishingMarkers(pool, palpagos, worldtree);
+	if (pool.category === `Junk` && pool.pool === `Junk_WorldTree`) {worldtree.push({ type: `Junk` });}
+	if (pool.category === `Treasure Chests` && pool.pool === `WorldTree_Treasure`) {
+		worldtree.push({ type: `Treasure`, locationSet: `worldTreeTreasureChests` });
+	}
+}
+
+function addChestMarkers(item, palpagos) {
+	const entries = (item.acquisition?.sources || [])
+		.filter(source => source.type === `Treasure`)
+		.flatMap(source => source.entries || [])
+		.filter(entry => MAPPABLE_CHEST_FIELDS.has(entry.lotteryField) && entry.chestTier);
+	for (const entry of entries) {
+		if ([`SkyIsland_Treasure`, `WorldTree_Treasure`].includes(entry.lotteryField)) {continue;}
+		palpagos.push({
+			type: `Treasure`,
+			href: entry.lotteryField === `Sakurajima02` ? `Sakurajima_Treasure` : entry.lotteryField,
+			lotteryFields: [entry.lotteryField],
+			treasureGrade: CHEST_GRADES[entry.chestTier] || 1,
+		});
+	}
+}
+
 function mapDefinition(item) {
 	const pools = item.acquisition?.lootPools || [];
 	const palpagos = [];
 	const worldtree = [];
 	for (const pool of pools) {
-		if (pool.category === `Enemy Camps`) {
-			const marker = campMarker(pool.pool);
-			if (marker) {palpagos.push(marker);}
-		}
-		if (pool.category === `Oil Rigs`) {
-			const rig = pool.pool.includes(`_Large_`) ? `Large` : pool.pool.includes(`_Mini_`) ? `Mini` : `Normal`;
-			palpagos.push({ type: `Oilrig Treasure Goal`, bounds: OIL_RIG_BOUNDS[rig] });
-		}
-		if (pool.category === `Dungeon Chests`) {
-			const prefix = pool.pool.match(/^([A-Za-z]+\d{3})_Dungeon/u)?.[1];
-			if (DUNGEONS_BY_POOL[prefix]) {palpagos.push({ type: `Dungeon`, item: DUNGEONS_BY_POOL[prefix] });}
-		}
-		if (pool.category === `Fishing` && /_Fishing$/u.test(pool.pool)) {
-			if (pool.pool === `WorldTree_Treasure_Fishing`) {
-				worldtree.push({ type: `Fishing Spot` }, { type: `Rare Fishing Spot` });
-			} else {
-				const prefix = pool.pool.replace(/_Fishing$/u, ``);
-				const comments = FISHING_COMMENTS_BY_POOL[prefix] || [];
-				const common = comments.filter(value => /Common/u.test(value));
-				const rare = comments.filter(value => /Rare/u.test(value));
-				if (common.length) {palpagos.push({ type: `Fishing Spot`, comment: common });}
-				if (rare.length) {palpagos.push({ type: `Rare Fishing Spot`, comment: rare });}
-			}
-		}
-		if (pool.category === `Junk` && pool.pool === `Junk_WorldTree`) {worldtree.push({ type: `Junk` });}
-		if (pool.category === `Treasure Chests` && pool.pool === `WorldTree_Treasure`) {
-			worldtree.push({ type: `Treasure`, locationSet: `worldTreeTreasureChests` });
-		}
+		addPoolMarkers(pool, palpagos, worldtree);
 	}
-	const treasureEntries = (item.acquisition?.sources || []).filter(source => source.type === `Treasure`).flatMap(source => source.entries || []);
-	for (const entry of treasureEntries.filter(value => value.lotteryField === `Sakurajima02`)) {
-		palpagos.push({
-			type: `Treasure`, href: `Sakurajima_Treasure`, lotteryFields: [`Sakurajima02`],
-			treasureGrade: CHEST_GRADES[entry.chestTier] || 1,
-		});
-	}
+	addChestMarkers(item, palpagos);
 	const dedupe = markers => [...new Map(markers.map(marker => [JSON.stringify(marker), marker])).values()];
 	const panels = [
 		{ map: `palpagos`, markers: dedupe(palpagos) },
@@ -98,26 +117,132 @@ function mapDefinition(item) {
 	return { maps: panels, ...(unpinnedSources.length ? { unpinnedSources } : {}) };
 }
 
+function mergeDefinitions(existing, derived) {
+	const panels = new Map();
+	for (const definition of [existing, derived].filter(Boolean)) {
+		for (const panel of definition.maps || [definition].filter(value => value.map)) {
+			const markers = panels.get(panel.map) || [];
+			markers.push(...(panel.markers || []));
+			panels.set(panel.map, markers);
+		}
+	}
+	const merged = [...panels].map(([map, markers]) => ({
+		map, markers: [...new Map(markers.map(marker => [JSON.stringify(marker), marker])).values()],
+	})).filter(panel => panel.markers.length);
+	const unpinnedSources = unique([...(existing?.unpinnedSources || []), ...(derived?.unpinnedSources || [])]);
+	if (!merged.length) {return null;}
+	const result = merged.length === 1 ? merged[0] : { maps: merged };
+	if (unpinnedSources.length) {result.unpinnedSources = unpinnedSources;}
+	return result;
+}
+
+function slug(value) {
+	return String(value || ``).toLowerCase().replace(/[^a-z0-9]+/gu, `-`).replace(/^-|-$/gu, ``);
+}
+
+function mapLabel(definition) {
+	const panels = definition.maps || [definition];
+	const regions = unique(panels.map(panel => panel.map).filter(Boolean));
+	const sources = unique(panels.flatMap(panel => panel.markers || [])
+		.map(marker => slug(marker.legendType || marker.type || `locations`)));
+	return [...regions, ...sources].join(`-`) || `physical-sources`;
+}
+
+function readableMapPaths(definitions) {
+	const paths = new Map();
+	const variantsByLabel = new Map();
+	for (const encoded of [...definitions].sort()) {
+		const definition = JSON.parse(encoded);
+		const label = mapLabel(definition);
+		const variant = (variantsByLabel.get(label) || 0) + 1;
+		variantsByLabel.set(label, variant);
+		const suffix = variant === 1 ? `` : `-variant-${variant}`;
+		paths.set(encoded, `data/item-maps/${label}${suffix}.png`);
+	}
+	return paths;
+}
+
+function readableMerchantMapPath(locations) {
+	const shops = (locations.mapSources?.markers || [])
+		.map(marker => slug(marker.href || marker.shop || `unknown-shop`))
+		.sort();
+	return shops.length ? `data/item-maps/merchant-locations-${shops.join(`-and-`)}.png` : locations.map;
+}
+
+function migrateMapAsset(previousMap, nextMap) {
+	if (!previousMap || !nextMap || previousMap === nextMap) {
+		return;
+	}
+	const previousPath = path.join(ROOT, previousMap);
+	const nextPath = path.join(ROOT, nextMap);
+	if (fs.existsSync(previousPath) && !fs.existsSync(nextPath)) {
+		fs.copyFileSync(previousPath, nextPath);
+	}
+}
+
+function writeItemData(itemData) {
+	const output = `${JSON.stringify(compactItemData(itemData), null, `\t`)}\n`;
+	for (let attempt = 0; attempt < 12; attempt += 1) {
+		try {
+			fs.writeFileSync(ITEM_DATA_PATH, output);
+			return;
+		} catch (error) {
+			if (attempt === 11) {throw error;}
+			// Antivirus and preview readers can hold the large JSON briefly on Windows.
+			Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 25 * (attempt + 1));
+		}
+	}
+}
+
+function migrateMerchantMaps(items, write) {
+	for (const item of items) {
+		if (!item.merchantLocations?.mapSources?.markers?.length) {continue;}
+		const previousMap = item.merchantLocations.map;
+		item.merchantLocations.map = readableMerchantMapPath(item.merchantLocations);
+		if (write) {migrateMapAsset(previousMap, item.merchantLocations.map);}
+	}
+}
+
+function mapAssignments(items, rebuildAll) {
+	const assignments = [];
+	const definitions = new Set();
+	for (const item of items) {
+		const generatedMap = /\/item-sources-[a-f0-9]{12}(?:-|\.png$)/u.test(item.acquisition?.map || ``);
+		if (item.searchable === false || (!rebuildAll && item.acquisition?.map && !generatedMap)) {continue;}
+		const derived = mapDefinition(item);
+		const definition = rebuildAll ? mergeDefinitions(item.acquisition?.mapSources, derived) : derived;
+		if (!definition) {continue;}
+		const encoded = JSON.stringify(definition);
+		definitions.add(encoded);
+		assignments.push({ definition, encoded, item, previousMap: item.acquisition?.map });
+	}
+	return { assignments, definitions };
+}
+
+function applyMapAssignments(assignments, mapPaths, write) {
+	const changed = [];
+	for (const { definition, encoded, item, previousMap } of assignments) {
+		item.acquisition.map = mapPaths.get(encoded);
+		item.acquisition.mapSources = definition;
+		changed.push(item.name);
+		if (write) {migrateMapAsset(previousMap, item.acquisition.map);}
+	}
+	return changed;
+}
+
 function main() {
 	const write = process.argv.includes(`--write`);
 	const source = JSON.parse(fs.readFileSync(ITEM_DATA_PATH, `utf8`));
 	const itemData = resolvedItemData(source);
-	const changed = [];
-	for (const item of itemData.Items) {
-		const generatedMap = /\/item-sources-[a-f0-9]{12}(?:-|\.png$)/u.test(item.acquisition?.map || ``);
-		if (item.searchable === false || (item.acquisition?.map && !generatedMap)) {continue;}
-		const definition = mapDefinition(item);
-		if (!definition) {continue;}
-		const signature = crypto.createHash(`sha256`).update(JSON.stringify(definition)).digest(`hex`).slice(0, 12);
-		item.acquisition.map = `data/item-maps/item-sources-${signature}.png`;
-		item.acquisition.mapSources = definition;
-		changed.push(item.name);
-	}
-	if (changed.length !== 67) {throw new Error(`Expected 67 missing physical-source maps, found ${changed.length}.`);}
+	const rebuildAll = process.argv.includes(`--all`);
+	migrateMerchantMaps(itemData.Items, write);
+	const { assignments, definitions } = mapAssignments(itemData.Items, rebuildAll);
+	const mapPaths = readableMapPaths(definitions);
+	const changed = applyMapAssignments(assignments, mapPaths, write);
 	console.log(changed.join(`\n`));
 	console.log(`Prepared ${changed.length} item map assignment(s).`);
 	if (write) {
-		fs.writeFileSync(ITEM_DATA_PATH, `${JSON.stringify(compactItemData(itemData), null, `\t`)}\n`);
+		writeItemData(itemData);
 		console.log(`Updated ${path.relative(ROOT, ITEM_DATA_PATH)}.`);
 	}
 }

@@ -21,4 +21,7 @@ const BotSettings = require(`./models/BotSettings.js`)(sequelize, Sequelize.Data
 BannedServers.belongsTo(BannedUsers, { foreignKey: `owner_id`, targetKey: `user_id` });
 BannedUsers.hasMany(BannedServers, { foreignKey: `owner_id`, sourceKey: `user_id` });
 
-module.exports = { sequelize, BotSettings, Channels, JoinedServers, BannedServers, BannedUsers, Suggestions, SearchSessions, SchemaMigrations };
+module.exports = {
+	sequelize, BotSettings, Channels, JoinedServers, BannedServers, BannedUsers,
+	Suggestions, SearchSessions, SchemaMigrations,
+};

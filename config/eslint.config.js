@@ -24,6 +24,7 @@ module.exports = [
 
 		rules: {
 			// Rules
+			'complexity': [`warn`, 15],
 			'default-case': `warn`,
 			'eqeqeq': [`error`, `always`],
 			'no-async-promise-executor': `error`,
@@ -43,6 +44,7 @@ module.exports = [
 			'no-useless-catch': `error`,
 			'no-useless-return': `error`,
 			'no-var': `error`,
+			'no-warning-comments': [`warn`, { terms: [`TODO`, `FIXME`, `HACK`], location: `anywhere` }],
 			'prefer-const': `error`,
 			'require-atomic-updates': `error`,
 
@@ -61,7 +63,20 @@ module.exports = [
 			'indent': [`error`, `tab`],
 			'keyword-spacing': [`error`],
 			'linebreak-style': [`error`, `unix`],
-			'max-len': [`error`, { code: 200, ignoreUrls: true }],
+			'max-depth': [`warn`, 4],
+			// Long prose and URLs cannot be wrapped without changing their runtime value; enforce width on code structure.
+			'max-len': [`warn`, {
+				code: 140,
+				ignoreComments: true,
+				ignoreStrings: true,
+				ignoreTemplateLiterals: true,
+				ignoreUrls: true,
+			}],
+			'max-lines': [`warn`, { max: 600, skipBlankLines: true, skipComments: true }],
+			'max-lines-per-function': [`warn`, { max: 100, skipBlankLines: true, skipComments: true }],
+			'max-nested-callbacks': [`warn`, 3],
+			'max-params': [`warn`, 4],
+			'max-statements': [`warn`, 40],
 			'max-statements-per-line': [`error`, { max: 1 }],
 			'multiline-ternary': [`error`, `always-multiline`],
 			'no-multi-spaces': `error`,

@@ -16,36 +16,56 @@ const MAPS = {
 	worldtree: { key: `worldtree`, script: `https://paldb.cc/js/treemap_data_en.js?_=1783945617`, tileDirectory: `image/treemap8`, crop: [0, 112, 1024, 912] },
 };
 
+const SOURCE_CATEGORY_RULES = [
+	[/^Expedition_/iu, `Expeditions`], [/^Salvage_/iu, `Salvage`], [/^Junk_/iu, `Junk`],
+	[/_Supply$/iu, `Supply Drops`], [/_Fishing$|_Fishpond$/iu, `Fishing`], [/^EnemyCamp_/iu, `Enemy Camps`],
+	[/(?:Electric|Fire|Water)Treasure/iu, `Elemental Chests`], [/Dungeon|Cavern|Sanctuary/iu, `Dungeon Chests`],
+	[/_Drop(?:_|$)/iu, `Ground Spawns`], [/^TreasureMap/iu, `Treasure Maps`], [/^Oilrig_/iu, `Oil Rigs`],
+	[/^Fruits_/iu, `Skill Fruit Trees`], [/^AncientRelicRecycler_/iu, `Relic Recycler`],
+];
+
 function sourceCategory(pool) {
 	if (/test/iu.test(pool)) {return null;}
-	if (/^Expedition_/iu.test(pool)) {return `Expeditions`;}
-	if (/^Salvage_/iu.test(pool)) {return `Salvage`;}
-	if (/^Junk_/iu.test(pool)) {return `Junk`;}
-	if (/_Supply$/iu.test(pool)) {return `Supply Drops`;}
-	if (/_Fishing$|_Fishpond$/iu.test(pool)) {return `Fishing`;}
-	if (/^EnemyCamp_/iu.test(pool)) {return `Enemy Camps`;}
-	if (/(?:Electric|Fire|Water)Treasure/iu.test(pool)) {return `Elemental Chests`;}
-	if (/Dungeon|Cavern|Sanctuary/iu.test(pool)) {return `Dungeon Chests`;}
-	if (/_Drop(?:_|$)/iu.test(pool)) {return `Ground Spawns`;}
-	if (/^TreasureMap/iu.test(pool)) {return `Treasure Maps`;}
-	if (/^Oilrig_/iu.test(pool)) {return `Oil Rigs`;}
-	if (/^Fruits_/iu.test(pool)) {return `Skill Fruit Trees`;}
-	if (/^AncientRelicRecycler_/iu.test(pool)) {return `Relic Recycler`;}
+	if (pool === `WorldTree_Drop_HolyWater`) {return `Teafant Springs`;}
+	const matchedRule = SOURCE_CATEGORY_RULES.find(([pattern]) => pattern.test(pool));
+	if (matchedRule) {return matchedRule[1];}
 	if (pool === `PalCapturedCage`) {return `Captured Pal Cages`;}
-	if (/Treasure|^(?:Grass|Forest|Desert|Dessert|Volcano|Snow)0[12]$|^(?:Sakurajima|DarkIsland|SkyIsland|Yakushima|WorldTree)0?2$/iu.test(pool)) {
+	const regionalChest = /^(?:Grass|Forest|Desert|Dessert|Volcano|Snow)0[12]$/iu.test(pool) ||
+		/^(?:Sakurajima|DarkIsland|SkyIsland|Yakushima|WorldTree)0?2$/iu.test(pool);
+	if (/Treasure/iu.test(pool) || regionalChest) {
 		return `Treasure Chests`;
 	}
 	return null;
 }
 
+function validateMapFilter({ item, panel, filter, maps }) {
+	const locationSet = filter.locationSet && GAME_SOURCE_DATA.fixedLocationSets[filter.locationSet];
+	const selected = locationSet ? fixedLocationMarkers(locationSet) : selectMarkers(maps[panel.map], [filter]);
+	const problems = [];
+	if (!selected.length) {
+		problems.push(`${item.name}: map filter ${JSON.stringify(filter)} has no game-derived locations.`);
+	} else if (filter.href && sourceCategory(filter.href) && !mappedPoolContains(item, filter.href)) {
+		problems.push(`${item.name}: mapped pool ${filter.href} does not contain the item.`);
+	}
+	return { locations: selected.length, problems };
+}
+
 function parseLootPools(html) {
 	const byItem = new Map();
-	const cards = html.matchAll(/<h5 class="card-header">([^<]+?)\s*\/\d+\s*<\/h5>([\s\S]*?)(?=<div\s+class='card mb-2|<h5 class="card-header">|$)/gu);
+	const headingPattern = /<h5 class="card-header">([^<]+?)\s*\/\d+\s*<\/h5>/gu;
+	const cards = html.matchAll(new RegExp(
+		`${headingPattern.source}([\\s\\S]*?)(?=<div\\s+class='card mb-2|${headingPattern.source}|$)`, `gu`,
+	));
 	for (const [, rawPool, body] of cards) {
 		const pool = stripTags(rawPool);
 		const category = sourceCategory(pool);
 		if (!category) {continue;}
-		const entries = body.matchAll(/<a class="itemname"[^>]*href="([^"]+)"[^>]*>[\s\S]*?<\/a>\s*<small class="itemQuantity">([\s\S]*?)<\/small>\s*<span class="float-end">([^<]+)<\/spen>/gu);
+		const entries = body.matchAll(new RegExp(
+			String.raw`<a class="itemname"[^>]*href="([^"]+)"[^>]*>[\s\S]*?<\/a>\s*` +
+			String.raw`<small class="itemQuantity">([\s\S]*?)<\/small>\s*` +
+			String.raw`<span class="float-end">([^<]+)<\/spen>`,
+			`gu`,
+		));
 		for (const [, href, rawQuantity, rawProbability] of entries) {
 			const probability = decodeHtml(rawProbability).trim();
 			if (Number.parseFloat(probability) === 0) {continue;}
@@ -58,6 +78,10 @@ function parseLootPools(html) {
 }
 
 function mappedPoolContains(item, href) {
+	if (Array.isArray(href)) {return href.every(value => mappedPoolContains(item, value));}
+	if (href === `Sakurajima_Treasure`) {
+		return item.acquisition.lootPools?.some(pool => [`Sakurajima02`, href].includes(pool.pool));
+	}
 	const elementalRegion = href.match(/^Treasure_Element_(.+)$/u)?.[1];
 	if (elementalRegion) {
 		const pattern = new RegExp(`^${elementalRegion}_(?:Electric|Fire|Water)Treasure$`, `u`);
@@ -113,22 +137,41 @@ async function validateMappedLocations(itemData) {
 		const panels = sources?.maps || (sources?.map ? [sources] : []);
 		for (const panel of panels) {
 			for (const filter of panel.markers || []) {
-				const locationSet = filter.locationSet && GAME_SOURCE_DATA.fixedLocationSets[filter.locationSet];
-				const selected = locationSet ? fixedLocationMarkers(locationSet) : selectMarkers(maps[panel.map], [filter]);
-				if (!selected.length) {
-					problems.push(`${item.name}: map filter ${JSON.stringify(filter)} has no game-derived locations.`);
-					continue;
-				}
-				if (filter.href && sourceCategory(filter.href) && !mappedPoolContains(item, filter.href)) {
-					problems.push(`${item.name}: mapped pool ${filter.href} does not contain the item.`);
-				}
+				const result = validateMapFilter({ item, panel, filter, maps });
+				problems.push(...result.problems);
 				filters += 1;
-				locations += selected.length;
+				locations += result.locations;
 			}
 		}
 	}
 	if (problems.length) {throw new Error(`${problems.length} mapped source problem(s):\n${problems.join(`\n`)}`);}
 	console.log(`Validated ${locations} fixed locations selected by ${filters} item map filters.`);
+}
+
+function applyLootPools(item, lootPools, removedDetails) {
+	if (item.category === `Schematic` && Number(item.properties?.bLegalInGame ?? 0) === 0) {
+		if (item.acquisition) {
+			item.acquisition = JSON.parse(JSON.stringify(item.acquisition));
+			delete item.acquisition.lootPools;
+			if (!item.acquisition.sources?.length && !item.acquisition.map && !item.acquisition.note) {
+				delete item.acquisition;
+			}
+		}
+		return { associations: 0, matched: 0, removed: 0 };
+	}
+	const pools = lootPools.get(item.detailPath) || [];
+	if (!pools.length) {
+		if (item.acquisition?.lootPools) {delete item.acquisition.lootPools;}
+		return { associations: 0, matched: 0, removed: 0 };
+	}
+	// Resolved presets may be shared by several items; clone before attaching item-specific pools.
+	item.acquisition = item.acquisition ? JSON.parse(JSON.stringify(item.acquisition)) : { sources: [] };
+	item.acquisition.lootPools = pools;
+	return {
+		associations: pools.length,
+		matched: 1,
+		removed: pruneInvalidCuratedSources(item, removedDetails),
+	};
 }
 
 async function main() {
@@ -142,17 +185,10 @@ async function main() {
 	let removedCuratedEntries = 0;
 	const removedDetails = [];
 	for (const item of itemData.Items) {
-		const pools = lootPools.get(item.detailPath) || [];
-		if (pools.length) {
-			// Resolved presets may be shared by several items; clone before attaching item-specific pools.
-			item.acquisition = item.acquisition ? JSON.parse(JSON.stringify(item.acquisition)) : { sources: [] };
-			item.acquisition.lootPools = pools;
-			matchedItems += 1;
-			associations += pools.length;
-			removedCuratedEntries += pruneInvalidCuratedSources(item, removedDetails);
-		} else if (item.acquisition?.lootPools) {
-			delete item.acquisition.lootPools;
-		}
+		const result = applyLootPools(item, lootPools, removedDetails);
+		matchedItems += result.matched;
+		associations += result.associations;
+		removedCuratedEntries += result.removed;
 	}
 	if (matchedItems < 700 || associations < 8000) {
 		throw new Error(`Loot source extraction was unexpectedly incomplete.`);

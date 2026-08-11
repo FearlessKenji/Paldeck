@@ -4,7 +4,22 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
-- Excluded the entire optional `tools/` workspace and removed the repository-owned C#/.NET Unreal archive decoder so Paldeck remains JavaScript-only; installed-game audit refreshes now import an externally decoded table JSON through `--tables` or `PALWORLD_TABLE_EXPORT`, while cached snapshot comparisons remain unchanged.
+## v1.10.0 - 2026-08-11
+
+- Updated Paldeck's package and release metadata to v1.10.0.
+- Distinguished non-Pal boss rewards from searchable Pal drops so Legendary Meowmere names Moon Lord directly and does not expose an empty dropping-Pal result.
+- Decoded level-up move progressions for all 299 visible Pals from installed build 24467282, added repeatable synchronization and validation, and introduced owner-bound Learned Moves and breeding-result navigation back to the originating Pal card.
+- Decomposed oversized item-card, breeding, synchronization, validation, and smoke-test workflows into focused modules; added repository-wide formatting and complexity checks plus maintainability guidance for readable identifiers and data structures.
+- Replaced hash-derived acquisition, merchant-map, item-map, and icon identifiers with descriptive names and explicit variant suffixes; map deduplication now confirms byte equality without cryptographic hashes.
+- Centralized Discord interaction dispatch and separated the administrative ban workflow into explicit user, server-owner, and guild-removal paths.
+- Renamed Source Details to Source Chances, bounded probability pages, removed redundant single-page pagination labels, and omitted the unsupported inferred loot-region map.
+- Centralized curated Pal habitats across map generation and audits; corrected Eidrolon to include its World Tree Alpha and Skymarch dungeon encounters and outlined single-point Ancient Ruin item markers.
+- Simplified Bounty Officer and Arena Merchant location responses by removing merchant-name repetition while retaining their maps and item thumbnails.
+- Restored direct `/item name:<name>` lookup, added mutually exclusive `/item source:<source>` browsing, normalized schematic rarity selection, and converted item, merchant, Pal-drop, breeding, and related-item controls to owner-bound replace-in-place navigation.
+- Preserved all 8,529 decoded nonzero item-loot associations with quantities and probabilities, restored missing direct sources, and rebuilt item maps with complete legends, exact chest and Oil Rig markers, shared-map variants, and safe obsolete-asset pruning. Broad salvage, ground Ancient Relics, player-built Fishing Ponds, and ordinary Supply Drops remain intentionally unpinned.
+- Removed indirect Treasure Map acquisition markers from all 245 affected reward-item maps; Treasure Map cards retain acquisition locations while reward cards map only direct physical sources.
+- Added validated Normal first-clear rewards for eight Key Spheres and nine Hard-mode schematic drop associations, including exact quantities, chances, World Tree and tower maps, and standardized boss markers.
+- Excluded the optional `tools/` workspace and removed the repository-owned C#/.NET decoder; installed-game refreshes now accept external decoded tables through `--tables` or `PALWORLD_TABLE_EXPORT` while retaining cached snapshot audits.
 
 ## v1.9.2 - 2026-08-04
 

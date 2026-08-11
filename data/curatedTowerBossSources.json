@@ -1,0 +1,74 @@
+{
+	"key-sphere-01": {
+		"entries": [{ "location": "Zoe & Grizzbolt, Normal, first clear only", "quantity": "1", "probability": "100%" }],
+		"marker": { "type": "Tower", "href": "Rayne_Syndicate_Boss_Zoe_%26_Grizzbolt", "legendType": "Tower Boss" }
+	},
+	"key-sphere-02": {
+		"entries": [{ "location": "Lily & Lyleen, Normal, first clear only", "quantity": "1", "probability": "100%" }],
+		"marker": { "type": "Tower", "href": "Free_Pal_Alliance_Founder_Lily_%26_Lyleen", "legendType": "Tower Boss" }
+	},
+	"key-sphere-03": {
+		"entries": [{ "location": "Marcus & Faleris, Normal, first clear only", "quantity": "1", "probability": "100%" }],
+		"marker": { "type": "Tower", "href": "PIDF_Commander_Marcus_%26_Faleris", "legendType": "Tower Boss" }
+	},
+	"key-sphere-04": {
+		"entries": [{ "location": "Axel & Orserk, Normal, first clear only", "quantity": "1", "probability": "100%" }],
+		"marker": { "type": "Tower", "href": "Brothers_of_the_Eternal_Pyre_Soul_Leader_Axel_%26_Orserk", "legendType": "Tower Boss" }
+	},
+	"key-sphere-05": {
+		"entries": [{ "location": "Victor & Shadowbeak, Normal, first clear only", "quantity": "1", "probability": "100%" }],
+		"marker": { "type": "Tower", "href": "PAL_Genetic_Research_Unit_Commander_Victor_%26_Shadowbeak", "legendType": "Tower Boss" }
+	},
+	"key-sphere-06": {
+		"entries": [{ "location": "Saya & Selyne, Normal, first clear only", "quantity": "1", "probability": "100%" }],
+		"marker": { "type": "Tower", "href": "Leader_of_the_Moonflowers_Saya_%26_Selyne", "legendType": "Tower Boss" }
+	},
+	"key-sphere-07": {
+		"entries": [{ "location": "Bjorn & Bastigor, Normal, first clear only", "quantity": "1", "probability": "100%" }],
+		"marker": { "type": "Tower", "href": "Jarl_of_Feybreak__Bjorn_%26_Bastigor", "legendType": "Tower Boss" }
+	},
+	"key-sphere-08": {
+		"entries": [{ "location": "Auri & Shaolong, Normal, first clear only", "quantity": "1", "probability": "100%" }],
+		"marker": { "type": "Tower", "href": "High_Keeper_of_the_Azure_Covenant_Auri_%26_Shaolong", "legendType": "Tower Boss" }
+	},
+	"blueprint-wide-penetrate-shotgun-5": {
+		"entries": [{ "location": "Zoe & Grizzbolt, Hard", "quantity": "1", "probability": "10%" }],
+		"markers": [{ "type": "Tower", "href": "Rayne_Syndicate_Boss_Zoe_%26_Grizzbolt", "legendType": "Tower Boss" }]
+	},
+	"blueprint-drone-launcher-5": {
+		"entries": [{ "location": "Lily & Lyleen, Hard", "quantity": "1", "probability": "10%" }],
+		"markers": [{ "type": "Tower", "href": "Free_Pal_Alliance_Founder_Lily_%26_Lyleen", "legendType": "Tower Boss" }]
+	},
+	"blueprint-ancient-armor-heat-5": {
+		"entries": [
+			{ "location": "Marcus & Faleris, Hard", "quantity": "1", "probability": "5%" },
+			{ "location": "Axel & Orserk, Hard", "quantity": "1", "probability": "10%" }
+		],
+		"markers": [
+			{ "type": "Tower", "href": "PIDF_Commander_Marcus_%26_Faleris", "legendType": "Tower Boss" },
+			{ "type": "Tower", "href": "Brothers_of_the_Eternal_Pyre_Soul_Leader_Axel_%26_Orserk", "legendType": "Tower Boss" }
+		]
+	},
+	"blueprint-ancient-armor-cold-5": {
+		"entries": [
+			{ "location": "Marcus & Faleris, Hard", "quantity": "1", "probability": "5%" },
+			{ "location": "Victor & Shadowbeak, Hard", "quantity": "1", "probability": "10%" }
+		],
+		"markers": [
+			{ "type": "Tower", "href": "PIDF_Commander_Marcus_%26_Faleris", "legendType": "Tower Boss" },
+			{ "type": "Tower", "href": "PAL_Genetic_Research_Unit_Commander_Victor_%26_Shadowbeak", "legendType": "Tower Boss" }
+		]
+	},
+	"blueprint-electric-arc-assault-rifle-5": {
+		"entries": [{ "location": "Saya & Selyne, Hard", "quantity": "1", "probability": "10%" }],
+		"markers": [{ "type": "Tower", "href": "Leader_of_the_Moonflowers_Saya_%26_Selyne", "legendType": "Tower Boss" }]
+	},
+	"blueprint-ancient-armor-weight-5": {
+		"entries": [{ "location": "Bjorn & Bastigor, Hard", "quantity": "1", "probability": "10%" }],
+		"markers": [{ "type": "Tower", "href": "Jarl_of_Feybreak__Bjorn_%26_Bastigor", "legendType": "Tower Boss" }]
+	},
+	"blueprint-beam-launcher-5": {
+		"entries": [{ "location": "Auri & Shaolong, Hard", "quantity": "1", "probability": "10%" }],
+		"markers": [{ "type": "Tower", "href": "High_Keeper_of_the_Azure_Covenant_Auri_%26_Shaolong", "legendType": "Tower Boss" }]
+	}
+}

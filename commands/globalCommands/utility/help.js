@@ -25,8 +25,10 @@ module.exports = {
 				{
 					name: `Item Lookups`,
 					value: [
-						`\`/item name:<name> rarity:<rarity>\` — Look up one item by name. Rarity is optional and falls back to the basic item when unavailable.`,
+						`\`/item name:<name> rarity:<rarity>\` — Look up an item; rarity selects schematic and equipment variants.`,
+						`\`/item source:<source>\` — Browse items from a player-facing source such as Gold Chests, Towers, or Fishing.`,
 						`**View Dropping Pals** opens Paldeck results when drop sources are available.`,
+						`**Source Chances** explains meaningful location-dependent probability differences when available.`,
 						`Controls belong to the person who started the lookup; resulting item cards remain public.`,
 					].join(`\n`),
 				},

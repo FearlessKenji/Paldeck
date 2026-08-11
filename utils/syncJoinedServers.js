@@ -70,7 +70,11 @@ async function syncJoinedServers(client) {
 	const bannedUserIds = new Set(bannedUsers.map(user => user.user_id));
 
 	const staleRemoved = await removeStaleJoinedServers(joinedServers, currentGuildIds);
-	const syncResults = await runWithConcurrency(guilds, OWNER_FETCH_CONCURRENCY, guild => syncGuild(guild, bannedServerIds, bannedUserIds));
+	const syncResults = await runWithConcurrency(
+		guilds,
+		OWNER_FETCH_CONCURRENCY,
+		guild => syncGuild(guild, bannedServerIds, bannedUserIds),
+	);
 	const leftBanned = syncResults.filter(result => result === `leftBanned`).length;
 	const summary = {
 		current: guilds.length - leftBanned,
@@ -79,7 +83,10 @@ async function syncJoinedServers(client) {
 		failed: syncResults.filter(result => result === `failed`).length,
 	};
 
-	info(`Servers synced. Current: ${summary.current}, Stale: ${summary.staleRemoved}, Left: ${summary.leftBanned}, Failed: ${summary.failed}`);
+	info(
+		`Servers synced. Current: ${summary.current}, Stale: ${summary.staleRemoved}, ` +
+		`Left: ${summary.leftBanned}, Failed: ${summary.failed}`,
+	);
 
 	return summary;
 }

@@ -1,5 +1,3 @@
-// Implements Pal lookup/search interactions and delegates item-card presentation to the shared renderer.
-// Implements Pal lookup/search interactions and delegates item-card presentation to the shared renderer.
 const {
 	ActionRowBuilder,
 	AttachmentBuilder,
@@ -8,7 +6,6 @@ const {
 	EmbedBuilder,
 	MessageFlags,
 	SlashCommandBuilder,
-	StringSelectMenuBuilder,
 } = require(`discord.js`);
 const crypto = require(`node:crypto`);
 const path = require(`node:path`);
@@ -17,8 +14,22 @@ const { Op } = require(`sequelize`);
 const { SearchSessions } = require(`../../../database/dbObjects.js`);
 const palFile = require(`../../../data/palData.json`);
 const { resolvedItemData } = require(`../../../utils/itemData.js`);
-const encounterFile = require(`../../../data/palEncounterData.json`);
+const { createItemVariantIndex } = require(`../../../utils/itemVariants.js`);
 const { getPalColor } = require(`../../../utils/palColors.js`);
+const { replaceInteractionMessage } = require(`../../../utils/interactionNavigation.js`);
+const { buildLearnedMovesButton, showLearnedMoves } = require(`../../../utils/palMoves.js`);
+const {
+	autocompleteDropValues,
+	buildBackToPalButton,
+	buildDropSelect,
+	distinctPalDrops,
+	farmableValues,
+	findItemByDropName,
+	palDropFields,
+	searchableDropValues,
+	splitValues,
+	uniqueSorted,
+} = require(`../../../utils/palDrops.js`);
 
 const PALS = palFile.Pals.filter(pal => !pal.hidden);
 const PAL_COLORS = palFile.Colors?.[0] || {};
@@ -28,17 +39,6 @@ const SEARCH_TTL_MS = 15 * 60 * 1000;
 const searchCache = new Map();
 const itemFile = resolvedItemData();
 const ITEMS_BY_ID = new Map(itemFile.Items.map(item => [item.id, item]));
-const ITEMS_BY_NAME = new Map(itemFile.Items.map(item => [normalizeText(item.name), item]));
-const ENCOUNTERS_BY_PAL = new Map();
-
-for (const encounter of encounterFile.Encounters) {
-	const key = normalizeText(encounter.pal);
-	ENCOUNTERS_BY_PAL.set(key, [...(ENCOUNTERS_BY_PAL.get(key) || []), encounter]);
-}
-const WORLD_TREE_BOSS_LEVELS = new Map([
-	[`dandilord`, 78],
-	[`silvance`, 78],
-]);
 const UNAUTHORIZED_CONTROL_MESSAGE = `I'm not your button, pal!`;
 
 const ELEMENT_CHOICES = [
@@ -61,254 +61,8 @@ const RARITY_CHOICES = [
 	{ name: `Epic`, value: `Epic` },
 	{ name: `Legendary`, value: `Legendary` },
 ];
-const ANCIENT_RELIC_LABEL = `Ancient Relics`;
-const ANCIENT_RELIC_DROPS = new Set([
-	`Decayed Ancient Relic`,
-	`Dormant Ancient Relic`,
-	`Glistening Ancient Relic`,
-	`Glowing Ancient Relic`,
-	`Gorgeous Ancient Relic`,
-].map(value => value.toLowerCase()));
 
-function splitValues(value) {
-	return String(value || ``)
-		.split(`,`)
-		.map(entry => entry.trim())
-		.filter(Boolean);
-}
-
-function uniqueSorted(values) {
-	return [...new Set(values)].sort((a, b) => a.localeCompare(b));
-}
-
-function worldTreeDropEntries(pal) {
-	return Object.entries(pal.worldTreeDrops || {})
-		.filter(([, value]) => String(value || ``).trim())
-		.sort(([firstLevel], [secondLevel]) => Number(firstLevel) - Number(secondLevel));
-}
-
-function worldTreeDropValues(pal) {
-	return worldTreeDropEntries(pal).flatMap(([, value]) => splitValues(value));
-}
-
-function encounterDropValues(pal) {
-	return (ENCOUNTERS_BY_PAL.get(normalizeText(pal.name)) || [])
-		.flatMap(encounter => encounter.drops.map(drop => drop.item));
-}
-
-function isAncientRelicDrop(value) {
-	return ANCIENT_RELIC_DROPS.has(String(value || ``).trim().toLowerCase());
-}
-
-function collapseAncientRelicDrops(values) {
-	const collapsed = [];
-	let addedRelicLabel = false;
-
-	for (const value of values) {
-		// Keep exact relic names in palData, but avoid repeating five relic variants in the embed.
-		if (isAncientRelicDrop(value)) {
-			if (!addedRelicLabel) {
-				collapsed.push(ANCIENT_RELIC_LABEL);
-				addedRelicLabel = true;
-			}
-
-			continue;
-		}
-
-		collapsed.push(value);
-	}
-
-	return collapsed;
-}
-
-function searchableDropValues(pal) {
-	const values = [
-		...splitValues(pal.drops),
-		...worldTreeDropValues(pal),
-		...encounterDropValues(pal),
-	];
-
-	if (values.some(isAncientRelicDrop)) {
-		values.push(ANCIENT_RELIC_LABEL);
-	}
-
-	return values;
-}
-
-function autocompleteDropValues(pal) {
-	return [
-		...splitValues(pal.drops),
-		...collapseAncientRelicDrops(worldTreeDropValues(pal)),
-		...encounterDropValues(pal),
-	];
-}
-
-function distinctPalDrops(pal) {
-	const structuredNames = itemFile.Items
-		.filter(item => (item.droppedBy || []).some(drop => normalizeText(drop.pal) === normalizeText(pal.name)))
-		.map(item => item.name);
-	return uniqueSorted([
-		...splitValues(pal.drops),
-		...worldTreeDropValues(pal),
-		...encounterDropValues(pal),
-		...structuredNames,
-	]);
-}
-
-function structuredPalDrops(pal) {
-	const groups = new Map();
-
-	for (const item of itemFile.Items) {
-		for (const drop of item.droppedBy || []) {
-			if (normalizeText(drop.pal) !== normalizeText(pal.name)) {
-				continue;
-			}
-
-			const label = drop.variant || `Normal`;
-			const key = `${label}\0${drop.level || ``}`;
-			const group = groups.get(key) || { label, level: drop.level, drops: [] };
-			group.drops.push({ item: item.name, probability: drop.probability, quantity: drop.quantity });
-			groups.set(key, group);
-		}
-	}
-
-	const worldTreeBossLevel = WORLD_TREE_BOSS_LEVELS.get(normalizeText(pal.name));
-	const encounters = ENCOUNTERS_BY_PAL.get(normalizeText(pal.name)) || [];
-
-	if (!worldTreeBossLevel) {
-		const normalDrops = groups.get(`Normal\0`)?.drops || [];
-
-		for (const group of groups.values()) {
-			if (group.label !== `Alpha`) {
-				continue;
-			}
-
-			// Alpha characters inherit the species' normal table in addition to their Alpha-only rows.
-			const explicitNames = new Set(group.drops.map(drop => normalizeText(drop.item)));
-			group.drops = [...normalDrops.filter(drop => !explicitNames.has(normalizeText(drop.item))), ...group.drops];
-		}
-	}
-
-	if (worldTreeBossLevel) {
-		// The game exposes generic and level-specific rows for these story bosses; present one actual encounter table.
-		const bossGroups = [...groups.entries()].filter(([, group]) => group.label === `Alpha`);
-		const mergedDrops = [];
-		const seen = new Set();
-
-		for (const [key, group] of bossGroups) {
-			groups.delete(key);
-			for (const drop of group.drops) {
-				const dropKey = `${drop.item}\0${drop.quantity}\0${drop.probability}`;
-				if (!seen.has(dropKey)) {
-					seen.add(dropKey);
-					mergedDrops.push(drop);
-				}
-			}
-		}
-
-		if (mergedDrops.length) {
-			groups.set(`Story Boss\0${worldTreeBossLevel}`, { label: `Story Boss`, level: worldTreeBossLevel, drops: mergedDrops });
-		}
-	}
-
-	for (const encounter of encounters) {
-		const key = `${encounter.source}\0${encounter.level}\0${encounter.variant || ``}`;
-		groups.set(key, {
-			drops: encounter.drops,
-			label: encounter.source,
-			level: encounter.level,
-			variant: encounter.variant,
-		});
-	}
-
-	return [...groups.values()]
-		.filter(group => group.drops.length)
-		.sort((first, second) => {
-			const order = { Normal: 0, Alpha: 1, "World Tree": 2, "Story Boss": 3, Rampaging: 4, "Summoning Altar": 5 };
-			return (order[first.label] ?? 99) - (order[second.label] ?? 99) || (first.level || 0) - (second.level || 0);
-		});
-}
-
-function formatPalDrop(drop) {
-	return `• ${drop.item} ×${drop.quantity}: ${drop.probability}`;
-}
-
-function comparePalDrops(first, second) {
-	const firstChance = Number.parseFloat(first.probability);
-	const secondChance = Number.parseFloat(second.probability);
-	const firstHasChance = Number.isFinite(firstChance);
-	const secondHasChance = Number.isFinite(secondChance);
-	if (firstHasChance !== secondHasChance) {
-		return firstHasChance ? -1 : 1;
-	}
-	if (firstHasChance && firstChance !== secondChance) {
-		return secondChance - firstChance;
-	}
-	return first.item.localeCompare(second.item, `en`, { sensitivity: `base` });
-}
-
-function palDropFields(pal) {
-	const groups = structuredPalDrops(pal);
-
-	if (!groups.length) {
-		return [{ name: `Pal Drops:`, value: splitValues(pal.drops).map(item => `• ${item}`).join(`\n`) || `None` }];
-	}
-
-	return groups.map(group => {
-		const context = ` — ${group.label}${group.level ? `: Lvl ${group.level}` : ``}${group.variant ? ` (${group.variant})` : ``}`;
-		return {
-			name: `Pal Drops${context}`,
-			value: [...group.drops].sort(comparePalDrops).map(formatPalDrop).join(`\n`).slice(0, 1024),
-		};
-	});
-}
-
-function findItemByDropName(dropName) {
-	return ITEMS_BY_NAME.get(normalizeText(dropName));
-}
-
-function palByNumber(number) {
-	return PALS.find(pal => normalizeNumber(pal.number) === normalizeNumber(number));
-}
-
-function buildBackToPalButton(palNumber, ownerId) {
-	return new ButtonBuilder()
-		.setCustomId(`paldeck:back:${encodeURIComponent(palNumber)}:${ownerId}`)
-		.setLabel(`Back to Pal`)
-		.setStyle(ButtonStyle.Secondary);
-}
-
-function buildDropSelect(pal, userId) {
-	const options = distinctPalDrops(pal)
-		.map(dropName => ({ dropName, item: findItemByDropName(dropName) }))
-		.filter(entry => entry.item)
-		.slice(0, 25)
-		.map(({ dropName, item }) => ({
-			label: dropName,
-			value: item.id,
-		}));
-
-	if (!options.length) {
-		return null;
-	}
-
-	return new ActionRowBuilder().addComponents(
-		new StringSelectMenuBuilder()
-			.setCustomId(`paldeck:drop:${encodeURIComponent(pal.number)}:${userId}`)
-			.setPlaceholder(`Choose one of ${pal.name}'s drops`)
-			.addOptions(options),
-	);
-}
-
-function farmableValues(pal) {
-	const farmable = String(pal.farmable || ``).trim();
-
-	if (!farmable.startsWith(`Yes - `)) {
-		return [];
-	}
-
-	return splitValues(farmable.slice(`Yes - `.length));
-}
+const palByNumber = number => PALS.find(pal => normalizeNumber(pal.number) === normalizeNumber(number));
 
 const AUTOCOMPLETE_CHOICES = {
 	name: uniqueSorted(PALS.map(pal => pal.name)),
@@ -317,9 +71,7 @@ const AUTOCOMPLETE_CHOICES = {
 	farmable: uniqueSorted(PALS.flatMap(farmableValues)),
 };
 
-function normalizeText(value) {
-	return String(value || ``).trim().toLowerCase();
-}
+const normalizeText = value => String(value || ``).trim().toLowerCase();
 
 function autocompleteChoices(optionName, input) {
 	const choices = AUTOCOMPLETE_CHOICES[optionName] || [];
@@ -414,7 +166,8 @@ const {
 	buildMedalMerchantResponse,
 	buildBountyMerchantResponse,
 	buildArenaMerchantResponse,
-} = createItemCards({ normalizeText, resolveLocalImage });
+	buildSourceDetailsResponse,
+} = createItemCards({ normalizeText, relatedItem: createItemVariantIndex(itemFile.Items).counterpart, resolveLocalImage });
 
 function parseSuitability(entry) {
 	const match = String(entry || ``).trim().match(/^(.*?)(?:\s+(\d+))?$/);
@@ -503,10 +256,14 @@ function buildPalResponse(pal, userId) {
 	const habitat = resolveLocalImage(pal.habitat);
 	const actionButtons = new ActionRowBuilder().addComponents(
 		new ButtonBuilder()
-			.setCustomId(`breed:parents:${encodeURIComponent(pal.name)}`)
+			.setCustomId(`breed:parents:${encodeURIComponent(pal.name)}:${userId}:${encodeURIComponent(pal.number)}`)
 			.setLabel(`Breeding Parents`)
 			.setStyle(ButtonStyle.Primary),
 	);
+	const learnedMovesButton = buildLearnedMovesButton(pal, userId);
+	if (learnedMovesButton) {
+		actionButtons.addComponents(learnedMovesButton);
+	}
 	const knownDrops = distinctPalDrops(pal).filter(dropName => findItemByDropName(dropName));
 
 	if (knownDrops.length) {
@@ -588,11 +345,19 @@ async function replyWithDroppingPals(interaction, item, originPalNumber = null, 
 
 	const page = 0;
 	const totalPages = getTotalPages(results);
-	const searchId = await storeSearch(interaction.user.id, criteria, results, originPalNumber, ownerId);
+	const searchId = await storeSearch({
+		userId: interaction.user.id,
+		criteria,
+		results,
+		originPalNumber,
+		originItemId: item.id,
+		ownerId,
+	});
 
-	await interaction.reply({
+	await replaceInteractionMessage(interaction, {
 		embeds: [buildSearchEmbed(criteria, results, page)],
-		components: buildSearchComponents(searchId, page, totalPages, originPalNumber, ownerId),
+		components: buildSearchComponents({ searchId, page, totalPages, originPalNumber, originItemId: item.id, ownerId }),
+		files: [],
 	});
 }
 
@@ -609,10 +374,11 @@ function buildSearchEmbed(criteria, results, page) {
 	const currentPage = clampPage(page, totalPages);
 	const pageResults = results.slice(currentPage * RESULTS_PER_PAGE, (currentPage + 1) * RESULTS_PER_PAGE);
 
+	const footer = totalPages > 1 ? `Page ${currentPage + 1}/${totalPages} | ${results.length} result(s)` : `${results.length} result(s)`;
 	return new EmbedBuilder()
 		.setTitle(`Matching:`)
 		.setDescription(buildCriteriaLine(criteria))
-		.setFooter({ text: `Page ${currentPage + 1}/${totalPages} | ${results.length} result(s)` })
+		.setFooter({ text: footer })
 		.addFields(
 			{ name: `Name\n-------\n`, value: pageResults.map(result => result.name).join(`\n-------\n`), inline: true },
 			{ name: `Element\n-------\n`, value: pageResults.map(result => result.element).join(`\n-------\n`), inline: true },
@@ -631,7 +397,7 @@ function buildNumberMatchesEmbed(number, results) {
 		);
 }
 
-function buildSearchComponents(searchId, page, totalPages, originPalNumber = null, ownerId = null) {
+function buildSearchComponents({ searchId, page, totalPages, originPalNumber = null, originItemId = null, ownerId = null }) {
 	const rows = [];
 
 	if (totalPages > 1) {
@@ -651,15 +417,20 @@ function buildSearchComponents(searchId, page, totalPages, originPalNumber = nul
 
 	if (originPalNumber && ownerId) {
 		rows.push(new ActionRowBuilder().addComponents(buildBackToPalButton(originPalNumber, ownerId)));
+	} else if (originItemId && ownerId) {
+		rows.push(new ActionRowBuilder().addComponents(new ButtonBuilder()
+			.setCustomId(`item:back:${originItemId}:${ownerId}`)
+			.setLabel(`Back`)
+			.setStyle(ButtonStyle.Secondary)));
 	}
 
 	return rows;
 }
 
-async function storeSearch(userId, criteria, results, originPalNumber = null, ownerId = null) {
+async function storeSearch({ userId, criteria, results, originPalNumber = null, originItemId = null, ownerId = null }) {
 	const searchId = crypto.randomUUID();
 	const expiresAt = Date.now() + SEARCH_TTL_MS;
-	const state = { userId, criteria, results, expiresAt, originPalNumber, ownerId };
+	const state = { userId, criteria, results, expiresAt, originPalNumber, originItemId, ownerId };
 	const timeout = setTimeout(() => searchCache.delete(searchId), SEARCH_TTL_MS);
 
 	if (typeof timeout.unref === `function`) {
@@ -830,11 +601,11 @@ module.exports = {
 
 		const page = 0;
 		const totalPages = getTotalPages(results);
-		const searchId = await storeSearch(interaction.user.id, criteria, results);
+		const searchId = await storeSearch({ userId: interaction.user.id, criteria, results });
 
 		await interaction.reply({
 			embeds: [buildSearchEmbed(criteria, results, page)],
-			components: buildSearchComponents(searchId, page, totalPages),
+			components: buildSearchComponents({ searchId, page, totalPages }),
 		});
 	},
 
@@ -854,7 +625,7 @@ module.exports = {
 				return;
 			}
 
-			await interaction.update(buildPalResponse(pal, rawPage));
+			await replaceInteractionMessage(interaction, buildPalResponse(pal, rawPage));
 			return;
 		}
 
@@ -878,6 +649,13 @@ module.exports = {
 			return;
 		}
 
+		if (action === `moves`) {
+			await showLearnedMoves(interaction, searchId, rawPage, {
+				colors: PAL_COLORS, palByNumber, unauthorizedMessage: UNAUTHORIZED_CONTROL_MESSAGE,
+			});
+			return;
+		}
+
 		if (action !== `page`) {
 			await interaction.reply({ content: `Unknown Paldeck action.`, flags: MessageFlags.Ephemeral });
 			return;
@@ -898,15 +676,16 @@ module.exports = {
 		const totalPages = getTotalPages(state.results);
 		const page = clampPage(Number(rawPage), totalPages);
 
-		await interaction.update({
+		await replaceInteractionMessage(interaction, {
 			embeds: [buildSearchEmbed(state.criteria, state.results, page)],
-			components: buildSearchComponents(
+			components: buildSearchComponents({
 				searchId,
 				page,
 				totalPages,
-				state.originPalNumber,
-				state.ownerId,
-			),
+				originPalNumber: state.originPalNumber,
+				originItemId: state.originItemId,
+				ownerId: state.ownerId,
+			}),
 		});
 	},
 
@@ -931,7 +710,7 @@ module.exports = {
 			return;
 		}
 
-		await interaction.reply(buildItemResponse(item, pal, ownerId));
+		await replaceInteractionMessage(interaction, buildItemResponse(item, pal, ownerId));
 	},
 
 	buildItemResponse,
@@ -939,5 +718,6 @@ module.exports = {
 	buildMedalMerchantResponse,
 	buildBountyMerchantResponse,
 	buildArenaMerchantResponse,
+	buildSourceDetailsResponse,
 	replyWithDroppingPals,
 };

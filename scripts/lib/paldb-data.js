@@ -196,7 +196,11 @@ async function fetchJson(url) {
 }
 
 function parsePaldbCards(html) {
-	const cardPattern = /<div class="col"\s+data-filters="([^"]*)">([\s\S]*?)(?=<div class="col"\s+data-filters="|<script|\s*<\/div>\s*<\/main>|$)/gi;
+	const cardPattern = new RegExp(
+		String.raw`<div class="col"\s+data-filters="([^"]*)">([\s\S]*?)` +
+		String.raw`(?=<div class="col"\s+data-filters="|<script|\s*<\/div>\s*<\/main>|$)`,
+		`gi`,
+	);
 	const cards = [];
 
 	for (const match of html.matchAll(cardPattern)) {
@@ -295,7 +299,7 @@ function visiblePals(palFile) {
 	return (palFile.Pals || []).filter(row => !row.hidden);
 }
 
-function hasChangedField(changes, field, localValue, currentValue, normalizer = value => String(value || ``), options = {}) {
+function hasChangedField({ changes, field, localValue, currentValue, normalizer = value => String(value || ``), options = {} }) {
 	if (!String(currentValue || ``).trim() && String(localValue || ``).trim()) {
 		options.coverageGaps?.push({
 			field,
@@ -335,9 +339,9 @@ function compareData(currentRows, localPalFile, _localBreedingFile, options = {}
 		const changes = [];
 
 		const fieldOptions = { ...options, coverageGaps: [] };
-		hasChangedField(changes, `number`, localPal.number, current.number, normalizeNumber, fieldOptions);
-		hasChangedField(changes, `element`, localPal.element, current.element, normalizeElement, fieldOptions);
-		hasChangedField(changes, `suitability`, localPal.suitability, current.suitability, normalizeSuitability, fieldOptions);
+		hasChangedField({ changes, field: `number`, localValue: localPal.number, currentValue: current.number, normalizer: normalizeNumber, options: fieldOptions });
+		hasChangedField({ changes, field: `element`, localValue: localPal.element, currentValue: current.element, normalizer: normalizeElement, options: fieldOptions });
+		hasChangedField({ changes, field: `suitability`, localValue: localPal.suitability, currentValue: current.suitability, normalizer: normalizeSuitability, options: fieldOptions });
 		if (fieldOptions.coverageGaps.length) {
 			coverageGaps.push({ fields: fieldOptions.coverageGaps, name: localPal.name });
 		}
@@ -359,7 +363,14 @@ function compareData(currentRows, localPalFile, _localBreedingFile, options = {}
 
 		const changes = [];
 
-		hasChangedField(changes, `breeding.id`, localPal.breeding?.id, current.breedingId, normalizeKey, options);
+		hasChangedField({
+			changes,
+			field: `breeding.id`,
+			localValue: localPal.breeding?.id,
+			currentValue: current.breedingId,
+			normalizer: normalizeKey,
+			options,
+		});
 
 		if (changes.length) {
 			changedBreeding.push({

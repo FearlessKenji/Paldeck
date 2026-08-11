@@ -4,6 +4,23 @@ These notes are written for server owners and moderators. They include changes
 that affect setup, day-to-day use, or visible bot behavior. For the full
 developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/blob/main/CHANGELOG.md).
 
+## Unreleased
+
+## v1.10.0 - 2026-08-11
+
+- Legendary Meowmere now lists **Moon Lord: 22.22%** instead of a generic Pal Drops source and no longer shows an empty **View Dropping Pals** result.
+- Pal cards now include **Learned Moves**, showing each species' moves and unlock levels. Learned Moves and breeding-parent results provide **Back to Pal** and remain in the same message.
+- `/item name:<name>` directly looks up an item, with rarity selecting the matching schematic or equipment variant. Matching item and schematic cards link to each other.
+- `/item source:<source>` browses items from sources such as Gold Chests, Towers, Dungeons, Meteorite Events, and Fishing with deduplicated, paginated results.
+- Item, merchant, Pal-drop, breeding, and related-item controls now replace the current message and provide contextual Back buttons instead of creating a trail of responses.
+- **Source Chances** provides concise, paginated location-specific probabilities and no longer shows unnecessary `Page 1 of 1` labels or an unclear inferred region map.
+- Item cards retain every known acquisition pathway, quantity, and chance without repeating equivalent sources. Broad salvage, Ancient Relics found on the ground, player-built Fishing Ponds, and ordinary Supply Drops remain listed without misleading pins.
+- Item maps now use consistent legends and direct-source markers, including the correct chest tiers, Oil Rigs, towers, camps, dungeons, fishing spots, and Ancient Ruins. Single Ancient Ruins use outlined pins for visibility.
+- Reward-item maps no longer show locations that merely provide a Treasure Map. Treasure Map cards show where the maps are obtained, while reward cards show only their direct physical sources.
+- Normal first-clear Key Sphere rewards and Hard-mode schematic drops now show their exact quantities and chances. Applicable cards include their tower and World Tree locations.
+- Eidrolon's card now includes both its World Tree Alpha encounter and its Skymarch dungeon availability.
+- Bounty Officer and Arena Merchant location views now focus on the relevant map without repeating merchant names already shown by the button.
+
 ## v1.9.2 - 2026-08-04
 
 - Restored Effigies to `/item` search.
