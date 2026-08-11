@@ -152,7 +152,7 @@ function findPaletteKeyForElement(element, colors, preferredElement = ``) {
 		.find(key => elementSignature(key) === signature && isRgbArray(colors[key])) || sourceKey;
 }
 
-function shouldSkipBlank(field, currentValue, options, skippedBlankFields, name) {
+function shouldSkipBlank({ field, currentValue, options, skippedBlankFields, name }) {
 	if (options.allowBlankFields || String(currentValue || ``).trim()) {
 		return false;
 	}
@@ -165,7 +165,7 @@ function shouldSkipBlank(field, currentValue, options, skippedBlankFields, name)
 	return true;
 }
 
-function setField(row, field, currentValue, normalizer, changes, sourceName = row.name) {
+function setField({ row, field, currentValue, normalizer, changes, sourceName = row.name }) {
 	const localValue = row[field];
 
 	if (normalizer(localValue) === normalizer(currentValue)) {
@@ -210,11 +210,12 @@ function updatePalData(palFile, currentByName, options) {
 			continue;
 		}
 
-		if (!shouldSkipBlank(`number`, current.number, options, skippedBlankFields, pal.name)) {
-			setField(pal, `number`, current.number, normalizeNumber, changes);
+		const blankFieldContext = { options, skippedBlankFields, name: pal.name };
+		if (!shouldSkipBlank({ field: `number`, currentValue: current.number, ...blankFieldContext })) {
+			setField({ row: pal, field: `number`, currentValue: current.number, normalizer: normalizeNumber, changes });
 		}
 
-		if (!shouldSkipBlank(`element`, current.element, options, skippedBlankFields, pal.name)) {
+		if (!shouldSkipBlank({ field: `element`, currentValue: current.element, ...blankFieldContext })) {
 			const element = findPaletteKeyForElement(current.element, colors, pal.element);
 
 			ensurePaletteColor(element, colors, paletteAdditions);
@@ -231,8 +232,14 @@ function updatePalData(palFile, currentByName, options) {
 
 		removeColorOverride(pal, changes);
 
-		if (!shouldSkipBlank(`suitability`, current.suitability, options, skippedBlankFields, pal.name)) {
-			setField(pal, `suitability`, current.suitability, normalizeSuitability, changes);
+		if (!shouldSkipBlank({ field: `suitability`, currentValue: current.suitability, ...blankFieldContext })) {
+			setField({
+				row: pal,
+				field: `suitability`,
+				currentValue: current.suitability,
+				normalizer: normalizeSuitability,
+				changes,
+			});
 		}
 	}
 
@@ -244,7 +251,7 @@ function updatePalData(palFile, currentByName, options) {
 	};
 }
 
-function setBreedingField(pal, field, currentValue, normalizer, changes) {
+function setBreedingField({ pal, field, currentValue, normalizer, changes }) {
 	const localValue = pal.breeding?.[field];
 
 	if (normalizer(localValue) === normalizer(currentValue)) {
@@ -276,8 +283,12 @@ function updatePalBreedingMetadata(palFile, currentByName, options) {
 			continue;
 		}
 
-		if (!shouldSkipBlank(`breeding.id`, current.breedingId, options, skippedBlankFields, pal.name)) {
-			setBreedingField(pal, `id`, current.breedingId, normalizeKey, changes);
+		if (!shouldSkipBlank({
+			field: `breeding.id`, currentValue: current.breedingId, options, skippedBlankFields, name: pal.name,
+		})) {
+			setBreedingField({
+				pal, field: `id`, currentValue: current.breedingId, normalizer: normalizeKey, changes,
+			});
 		}
 	}
 

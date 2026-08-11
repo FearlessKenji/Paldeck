@@ -79,6 +79,27 @@ function findBreedingMetadataProblems(pals) {
 	return problems;
 }
 
+function findLevelUpMoveProblems(pals) {
+	const problems = [];
+	for (const pal of pals.filter(entry => !entry.hidden)) {
+		if (!Array.isArray(pal.levelUpMoves) || !pal.levelUpMoves.length) {
+			problems.push(`${pal.number} ${pal.name}: missing level-up moves.`);
+			continue;
+		}
+		let previousLevel = -1;
+		for (const move of pal.levelUpMoves) {
+			if (!Number.isInteger(move.level) || move.level < 1 || !move.name || !move.id) {
+				problems.push(`${pal.number} ${pal.name}: contains an incomplete level-up move.`);
+			}
+			if (move.level < previousLevel) {
+				problems.push(`${pal.number} ${pal.name}: level-up moves are not ordered by level.`);
+			}
+			previousLevel = move.level;
+		}
+	}
+	return problems;
+}
+
 function rowNames(row) {
 	return Array.isArray(row) ? row : [row?.parentA, row?.parentB, row?.child];
 }
@@ -87,6 +108,26 @@ function isSameSpeciesRow(row) {
 	const [parentA, parentB, child] = rowNames(row).map(normalizeName);
 
 	return parentA && parentA === parentB && parentA === child;
+}
+
+function validateBreedingGroup(groupName, rows, palsByName) {
+	if (!Array.isArray(rows)) {
+		return [`${groupName} must be an array.`];
+	}
+	const problems = [];
+	for (const row of rows) {
+		for (const name of rowNames(row)) {
+			if (!palsByName.has(normalizeName(name))) {
+				problems.push(`${groupName} references unknown Pal: ${name || `(blank)`}.`);
+			}
+		}
+		if (groupName === `UniqueCombinations` && isSameSpeciesRow(row)) {
+			problems.push(
+				`${groupName} row ${row?.row || `(unknown)`} is same-species; same-species rows should be omitted.`,
+			);
+		}
+	}
+	return problems;
 }
 
 function findBreedingReferenceProblems(pals, breedingData) {
@@ -117,25 +158,45 @@ function findBreedingReferenceProblems(pals, breedingData) {
 	}
 
 	for (const [groupName, rows] of referenceGroups) {
-		if (!Array.isArray(rows)) {
-			problems.push(`${groupName} must be an array.`);
-			continue;
-		}
-
-		for (const row of rows) {
-			for (const name of rowNames(row)) {
-				if (!palsByName.has(normalizeName(name))) {
-					problems.push(`${groupName} references unknown Pal: ${name || `(blank)`}.`);
-				}
-			}
-
-			if (groupName === `UniqueCombinations` && isSameSpeciesRow(row)) {
-				problems.push(`${groupName} row ${row?.row || `(unknown)`} is same-species; same-species rows should be omitted.`);
-			}
-		}
+		problems.push(...validateBreedingGroup(groupName, rows, palsByName));
 	}
 
 	return problems;
+}
+
+function encounterDropProblems(encounter) {
+	if (!Array.isArray(encounter.drops) || !encounter.drops.length) {
+		return [`${encounter.pal}: encounter must contain at least one drop.`];
+	}
+	const problems = [];
+	for (const drop of encounter.drops) {
+		const complete = String(drop.item || ``).trim() && String(drop.quantity || ``).trim() &&
+			String(drop.probability || ``).trim();
+		if (!complete) {
+			problems.push(`${encounter.pal}: encounter contains an incomplete drop row.`);
+		}
+	}
+	if (!encounter.drops.some(drop => / Egg \(/.test(drop.item) && drop.probability === `100%`)) {
+		problems.push(`${encounter.pal}: encounter is missing its guaranteed egg.`);
+	}
+	return problems;
+}
+
+function encounterProblems(encounter, visibleNames, duplicateKey) {
+	const problems = [];
+	if (!visibleNames.has(normalizeName(encounter.pal))) {
+		problems.push(`Encounter data references unknown or hidden Pal: ${encounter.pal || `(blank)`}.`);
+	}
+	if (duplicateKey) {
+		problems.push(`Encounter data contains duplicate source: ${duplicateKey.replaceAll(`\0`, ` / `)}.`);
+	}
+	if (encounter.source !== `Summoning Altar`) {
+		problems.push(`${encounter.pal}: unsupported encounter source ${encounter.source || `(blank)`}.`);
+	}
+	if (!Number.isInteger(encounter.level) || encounter.level <= 0) {
+		problems.push(`${encounter.pal}: encounter level must be a positive integer.`);
+	}
+	return [...problems, ...encounterDropProblems(encounter)];
 }
 
 function findEncounterDataProblems(pals, encounterData) {
@@ -149,37 +210,7 @@ function findEncounterDataProblems(pals, encounterData) {
 
 	for (const encounter of encounterData.Encounters) {
 		const key = `${normalizeName(encounter.pal)}\0${encounter.source}\0${encounter.level}\0${encounter.variant || ``}`;
-
-		if (!visibleNames.has(normalizeName(encounter.pal))) {
-			problems.push(`Encounter data references unknown or hidden Pal: ${encounter.pal || `(blank)`}.`);
-		}
-
-		if (keys.has(key)) {
-			problems.push(`Encounter data contains duplicate source: ${key.replaceAll(`\0`, ` / `)}.`);
-		}
-
-		if (encounter.source !== `Summoning Altar`) {
-			problems.push(`${encounter.pal}: unsupported encounter source ${encounter.source || `(blank)`}.`);
-		}
-
-		if (!Number.isInteger(encounter.level) || encounter.level <= 0) {
-			problems.push(`${encounter.pal}: encounter level must be a positive integer.`);
-		}
-
-		if (!Array.isArray(encounter.drops) || !encounter.drops.length) {
-			problems.push(`${encounter.pal}: encounter must contain at least one drop.`);
-		} else {
-			for (const drop of encounter.drops) {
-				if (!String(drop.item || ``).trim() || !String(drop.quantity || ``).trim() || !String(drop.probability || ``).trim()) {
-					problems.push(`${encounter.pal}: encounter contains an incomplete drop row.`);
-				}
-			}
-
-			if (!encounter.drops.some(drop => / Egg \(/.test(drop.item) && drop.probability === `100%`)) {
-				problems.push(`${encounter.pal}: encounter is missing its guaranteed egg.`);
-			}
-		}
-
+		problems.push(...encounterProblems(encounter, visibleNames, keys.has(key) ? key : null));
 		keys.add(key);
 	}
 
@@ -191,6 +222,7 @@ const colorProblems = findPalColorProblems(palFile.Pals, colors);
 const partnerTechProblems = findPartnerTechProblems(palFile.Pals);
 const implementedPlaceholderProblems = findImplementedPlaceholderProblems(palFile.Pals);
 const breedingMetadataProblems = findBreedingMetadataProblems(palFile.Pals);
+const levelUpMoveProblems = findLevelUpMoveProblems(palFile.Pals);
 const breedingReferenceProblems = findBreedingReferenceProblems(
 	palFile.Pals,
 	breedingFile,
@@ -241,6 +273,14 @@ if (breedingMetadataProblems.length) {
 		console.error(problem);
 	}
 
+	process.exitCode = 1;
+}
+
+if (levelUpMoveProblems.length) {
+	console.error(`Found ${levelUpMoveProblems.length} level-up move issue(s):`);
+	for (const problem of levelUpMoveProblems) {
+		console.error(problem);
+	}
 	process.exitCode = 1;
 }
 

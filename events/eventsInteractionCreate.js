@@ -53,81 +53,71 @@ async function reportInteractionFailure(interaction, context, userMessage, err) 
 	}
 }
 
+function interactionHandler(interaction) {
+	if (interaction.isChatInputCommand()) {
+		return {
+			commandName: interaction.commandName,
+			handlerName: `execute`,
+			missingMessage: `No command matching ${interaction.commandName} was found.`,
+			errorContext: `There was an error while executing a command.`,
+			userMessage: `There was an error while executing this command!`,
+		};
+	}
+	if (interaction.isButton()) {
+		return {
+			commandName: interaction.customId.split(`:`)[0],
+			handlerName: `handleButton`,
+			missingMessage: `No button handler matching ${interaction.customId} was found.`,
+			errorContext: `There was an error while handling a button.`,
+			userMessage: `There was an error while handling this button!`,
+		};
+	}
+	if (interaction.isStringSelectMenu()) {
+		return {
+			commandName: interaction.customId.split(`:`)[0],
+			handlerName: `handleSelectMenu`,
+			missingMessage: `No select-menu handler matching ${interaction.customId} was found.`,
+			errorContext: `There was an error while handling a select menu.`,
+			userMessage: `There was an error while handling this menu!`,
+		};
+	}
+	if (interaction.isAutocomplete()) {
+		return {
+			commandName: interaction.commandName,
+			handlerName: `autocomplete`,
+			missingMessage: `No command matching ${interaction.commandName} was found.`,
+			errorContext: `There was an error while running autocomplete.`,
+		};
+	}
+	return null;
+}
+
+async function dispatchInteraction(interaction) {
+	const route = interactionHandler(interaction);
+	if (!route) {
+		return;
+	}
+	const command = interaction.client.commands.get(route.commandName);
+	if (!command?.[route.handlerName]) {
+		error(route.missingMessage);
+		return;
+	}
+	try {
+		await command[route.handlerName](interaction);
+	} catch (err) {
+		if (route.handlerName === `autocomplete`) {
+			if (!isUnknownInteraction(err)) {
+				error(route.errorContext, err);
+			}
+			return;
+		}
+		await reportInteractionFailure(interaction, route.errorContext, route.userMessage, err);
+	}
+}
+
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
-		if (interaction.isChatInputCommand()) {
-
-			const command = interaction.client.commands.get(interaction.commandName);
-
-			if (!command) {
-				error(`No command matching ${interaction.commandName} was found.`);
-				return;
-			}
-
-			try {
-				await command.execute(interaction);
-			} catch (err) {
-				await reportInteractionFailure(
-					interaction,
-					`There was an error while executing a command.`,
-					`There was an error while executing this command!`,
-					err,
-				);
-			}
-		} else if (interaction.isButton()) {
-			const [commandName] = interaction.customId.split(`:`);
-			const command = interaction.client.commands.get(commandName);
-
-			if (!command?.handleButton) {
-				error(`No button handler matching ${interaction.customId} was found.`);
-				return;
-			}
-
-			try {
-				await command.handleButton(interaction);
-			} catch (err) {
-				await reportInteractionFailure(
-					interaction,
-					`There was an error while handling a button.`,
-					`There was an error while handling this button!`,
-					err,
-				);
-			}
-		} else if (interaction.isStringSelectMenu()) {
-			const [commandName] = interaction.customId.split(`:`);
-			const command = interaction.client.commands.get(commandName);
-
-			if (!command?.handleSelectMenu) {
-				error(`No select-menu handler matching ${interaction.customId} was found.`);
-				return;
-			}
-
-			try {
-				await command.handleSelectMenu(interaction);
-			} catch (err) {
-				await reportInteractionFailure(
-					interaction,
-					`There was an error while handling a select menu.`,
-					`There was an error while handling this menu!`,
-					err,
-				);
-			}
-		} else if (interaction.isAutocomplete()) {
-			const command = interaction.client.commands.get(interaction.commandName);
-
-			if (!command) {
-				error(`No command matching ${interaction.commandName} was found.`);
-				return;
-			}
-
-			try {
-				await command.autocomplete(interaction);
-			} catch (err) {
-				if (!isUnknownInteraction(err)) {
-					error(`There was an error while running autocomplete.`, err);
-				}
-			}
-		}
+		await dispatchInteraction(interaction);
 	},
 };

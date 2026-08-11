@@ -3,7 +3,6 @@ const { Buffer } = require(`node:buffer`);
 const fs = require(`node:fs`);
 const path = require(`node:path`);
 const { shouldHideItem } = require(`../utils/itemVisibility.js`);
-const crypto = require(`node:crypto`);
 const { URL } = require(`node:url`);
 const { fetchPaldbItemData, fetchPaldbItemDetails, slugify } = require(`./lib/paldb-items.js`);
 const { normalizeItemDescription: normalizeDescription } = require(`../utils/itemDescription.js`);
@@ -100,10 +99,6 @@ function writeJson(filePath, data) {
 	fs.writeFileSync(filePath, `${stringifyJson(data)}\n`);
 }
 
-function shortHash(value) {
-	return crypto.createHash(`sha1`).update(String(value)).digest(`hex`).slice(0, 8);
-}
-
 function toDataPath(...parts) {
 	return parts.join(`/`);
 }
@@ -111,12 +106,16 @@ function toDataPath(...parts) {
 function iconFileNameForUrl(sourceUrl, usedFileNames) {
 	const parsedUrl = new URL(sourceUrl);
 	const rawName = path.basename(parsedUrl.pathname, path.extname(parsedUrl.pathname));
-	const baseName = slugify(rawName) || shortHash(sourceUrl);
+	const baseName = slugify(rawName) || `item-icon`;
 	let fileName = `${baseName}${ITEM_ICON_EXTENSION}`;
 	const previousUrl = usedFileNames.get(fileName.toLowerCase());
 
 	if (previousUrl && previousUrl !== sourceUrl) {
-		fileName = `${baseName}-${shortHash(sourceUrl)}${ITEM_ICON_EXTENSION}`;
+		let variant = 2;
+		do {
+			fileName = `${baseName}-variant-${variant}${ITEM_ICON_EXTENSION}`;
+			variant += 1;
+		} while (usedFileNames.has(fileName.toLowerCase()));
 	}
 
 	usedFileNames.set(fileName.toLowerCase(), sourceUrl);

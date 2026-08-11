@@ -210,6 +210,30 @@ async function fetchGuild(client, guildId) {
 	return client.guilds.cache.get(guildId) || client.guilds.fetch(guildId).catch(() => null);
 }
 
+function missingPermissionResult(cannotView, cannotSend) {
+	if (!cannotView && !cannotSend) {
+		return null;
+	}
+	const missing = [];
+	if (cannotView) {
+		missing.push(`view`);
+	}
+	if (cannotSend) {
+		missing.push(`send`);
+	}
+	let ability = `send messages in`;
+	if (missing.length === 2) {
+		ability = `view or send messages in`;
+	} else if (missing[0] === `view`) {
+		ability = `view`;
+	}
+	return {
+		code: missing.join(`-`),
+		ok: false,
+		message: `Paldeck cannot ${ability} the configured updates channel.`,
+	};
+}
+
 async function checkAnnouncementChannelAccess(guild, channel) {
 	if (!channel?.send || !channel.isTextBased?.()) {
 		return { code: `unavailable`, ok: false, message: `The configured Paldeck Updates channel is unavailable.` };
@@ -220,16 +244,7 @@ async function checkAnnouncementChannelAccess(guild, channel) {
 	const cannotView = !permissions?.has(PermissionFlagsBits.ViewChannel);
 	const cannotSend = !permissions?.has(PermissionFlagsBits.SendMessages);
 
-	if (cannotView || cannotSend) {
-		const ability = cannotView && cannotSend ?
-			`view or send messages in` :
-			cannotView ? `view` : `send messages in`;
-		const code = [cannotView ? `view` : ``, cannotSend ? `send` : ``].filter(Boolean).join(`-`);
-
-		return { code, ok: false, message: `Paldeck cannot ${ability} the configured updates channel.` };
-	}
-
-	return { channel, ok: true };
+	return missingPermissionResult(cannotView, cannotSend) || { channel, ok: true };
 }
 
 async function fetchAnnouncementChannel(guild, channelId) {

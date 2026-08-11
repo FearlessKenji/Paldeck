@@ -70,7 +70,7 @@ async function journalArtwork(marker, itemSlug, refreshArtwork) {
 	return { gameAsset, relativePath };
 }
 
-function journalRecord(regionKey, region, marker, index, artwork) {
+function journalRecord({ regionKey, region, marker, index, artwork }) {
 	const name = displayName(marker.item);
 	const itemSlug = slug(name);
 	const mapName = `journal-${regionKey}-${itemSlug}.png`;
@@ -109,7 +109,7 @@ async function main() {
 		for (const marker of markers) {
 			const itemSlug = slug(displayName(marker.item));
 			const artwork = await journalArtwork(marker, itemSlug, refreshArtwork);
-			records.push(journalRecord(regionKey, region, marker, records.length, artwork));
+			records.push(journalRecord({ regionKey, region, marker, index: records.length, artwork }));
 		}
 		console.log(`${region.label}: ${markers.length} journals`);
 	}

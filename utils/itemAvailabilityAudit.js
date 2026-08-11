@@ -19,29 +19,33 @@ function findAvailabilityManifestProblems(itemData, manifest) {
 	}
 
 	for (const [index, decision] of manifest.items.entries()) {
-		if (!String(decision.id || ``).trim() || seen.has(decision.id)) {
-			problems.push(`Availability decision ${index} has a missing or duplicate item ID.`);
-			continue;
-		}
-		seen.add(decision.id);
-		if (!ALLOWED_STATUSES.has(decision.status)) {
-			problems.push(`${decision.id}: unsupported availability status ${decision.status}.`);
-		}
-		if (!String(decision.reason || ``).trim()) {
-			problems.push(`${decision.id}: availability decisions require a review rationale.`);
-		}
-		if ((decision.allowedEvidence || []).some(evidence => !ALLOWED_EVIDENCE.has(evidence))) {
-			problems.push(`${decision.id}: allowedEvidence contains an unsupported evidence type.`);
-		}
-
-		const item = itemById.get(decision.id);
-		if (!item) {
-			problems.push(`${decision.id}: availability decision references a missing catalog item.`);
-		} else if (HIDDEN_STATUSES.has(decision.status) && item.searchable !== false) {
-			problems.push(`${item.name}: ${decision.status} availability decisions must be hidden from lookup.`);
-		}
+		problems.push(...availabilityDecisionProblems({ decision, index, itemById, seen }));
 	}
 
+	return problems;
+}
+
+function availabilityDecisionProblems({ decision, index, itemById, seen }) {
+	if (!String(decision.id || ``).trim() || seen.has(decision.id)) {
+		return [`Availability decision ${index} has a missing or duplicate item ID.`];
+	}
+	seen.add(decision.id);
+	const problems = [];
+	if (!ALLOWED_STATUSES.has(decision.status)) {
+		problems.push(`${decision.id}: unsupported availability status ${decision.status}.`);
+	}
+	if (!String(decision.reason || ``).trim()) {
+		problems.push(`${decision.id}: availability decisions require a review rationale.`);
+	}
+	if ((decision.allowedEvidence || []).some(evidence => !ALLOWED_EVIDENCE.has(evidence))) {
+		problems.push(`${decision.id}: allowedEvidence contains an unsupported evidence type.`);
+	}
+	const item = itemById.get(decision.id);
+	if (!item) {
+		problems.push(`${decision.id}: availability decision references a missing catalog item.`);
+	} else if (HIDDEN_STATUSES.has(decision.status) && item.searchable !== false) {
+		problems.push(`${item.name}: ${decision.status} availability decisions must be hidden from lookup.`);
+	}
 	return problems;
 }
 

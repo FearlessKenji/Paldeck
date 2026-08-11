@@ -11,6 +11,8 @@ const breedingFile = require(`../../../data/palBreeding.json`);
 const palFile = require(`../../../data/palData.json`);
 const { createBreedingCalculator, normalizeBreedingName } = require(`../../../utils/palBreeding.js`);
 const { getPalColor } = require(`../../../utils/palColors.js`);
+const { replaceInteractionMessage } = require(`../../../utils/interactionNavigation.js`);
+const { buildBackToPalButton } = require(`../../../utils/palDrops.js`);
 
 const PAGE_SIZE = 10;
 const LIST_TTL_MS = 15 * 60 * 1000;
@@ -113,20 +115,18 @@ function buildListEmbed(state, page) {
 		.map((line, index) => `${start + index + 1}. ${line}`)
 		.join(`\n`);
 
+	const footer = totalPages > 1 ? `Page ${currentPage + 1}/${totalPages} | ${state.lines.length} result(s)` : `${state.lines.length} result(s)`;
 	return new EmbedBuilder()
 		.setColor(state.color)
 		.setTitle(state.title)
 		.setDescription(`${state.description}\n\n${list || state.emptyText}`)
-		.setFooter({ text: `Page ${currentPage + 1}/${totalPages} | ${state.lines.length} result(s)` });
+		.setFooter({ text: footer });
 }
 
-function buildListComponents(listId, page, totalPages) {
-	if (totalPages <= 1) {
-		return [];
-	}
-
-	return [
-		new ActionRowBuilder().addComponents(
+function buildListComponents(listId, page, totalPages, state) {
+	const rows = [];
+	if (totalPages > 1) {
+		rows.push(new ActionRowBuilder().addComponents(
 			new ButtonBuilder()
 				.setCustomId(`breed:page:${listId}:${page - 1}`)
 				.setLabel(`<`)
@@ -137,8 +137,14 @@ function buildListComponents(listId, page, totalPages) {
 				.setLabel(`>`)
 				.setStyle(ButtonStyle.Secondary)
 				.setDisabled(page >= totalPages - 1),
-		),
-	];
+		));
+	}
+	if (state.originPalNumber && state.originOwnerId) {
+		rows.push(new ActionRowBuilder().addComponents(
+			buildBackToPalButton(state.originPalNumber, state.originOwnerId),
+		));
+	}
+	return rows;
 }
 
 function storeList(userId, state) {
@@ -164,13 +170,18 @@ async function replyWithList(interaction, state) {
 	const totalPages = getTotalPages(state.lines);
 	const listId = storeList(interaction.user.id, state);
 
-	await interaction.reply({
+	const payload = {
 		embeds: [buildListEmbed(state, page)],
-		components: buildListComponents(listId, page, totalPages),
-	});
+		components: buildListComponents(listId, page, totalPages, state),
+	};
+	if (state.originPalNumber) {
+		await replaceInteractionMessage(interaction, payload);
+		return;
+	}
+	await interaction.reply(payload);
 }
 
-async function replyWithParentPairs(interaction, childName) {
+async function replyWithParentPairs(interaction, childName, origin = {}) {
 	const result = calculator.findParentPairs(childName);
 
 	if (!result) {
@@ -184,6 +195,7 @@ async function replyWithParentPairs(interaction, childName) {
 		emptyText: `No parent pairs found.`,
 		lines: result.pairs.map(formatPairLine),
 		title: `Breeding Parents`,
+		...origin,
 	});
 }
 
@@ -304,10 +316,17 @@ module.exports = {
 	},
 
 	async handleButton(interaction) {
-		const [, action, listId, rawPage] = interaction.customId.split(`:`);
+		const [, action, listId, rawPage, rawPalNumber] = interaction.customId.split(`:`);
 
 		if (action === `parents`) {
-			await replyWithParentPairs(interaction, decodeURIComponent(listId));
+			if (rawPage && rawPage !== interaction.user.id) {
+				await interaction.reply({ content: `I'm not your button, pal!`, flags: MessageFlags.Ephemeral });
+				return;
+			}
+			await replyWithParentPairs(interaction, decodeURIComponent(listId), {
+				originOwnerId: rawPage || null,
+				originPalNumber: rawPalNumber ? decodeURIComponent(rawPalNumber) : null,
+			});
 			return;
 		}
 
@@ -333,7 +352,7 @@ module.exports = {
 
 		await interaction.update({
 			embeds: [buildListEmbed(state, page)],
-			components: buildListComponents(listId, page, totalPages),
+			components: buildListComponents(listId, page, totalPages, state),
 		});
 	},
 };

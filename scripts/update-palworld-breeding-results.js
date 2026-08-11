@@ -324,6 +324,76 @@ function printRows(title, rows, limit, formatter) {
 	}
 }
 
+function collectFetchedPairs(fetched, currentByName) {
+	const pairRowsByKey = new Map();
+	const conflicts = [];
+	const parseProblems = [];
+	const unknownRows = [];
+	for (const result of fetched) {
+		if (result.parseRemainder) {
+			parseProblems.push({ child: result.child.name, remainder: result.parseRemainder });
+		}
+		for (const pair of result.pairs) {
+			const parentA = currentByName.get(normalizeKey(pair.parentA));
+			const parentB = currentByName.get(normalizeKey(pair.parentB));
+			const child = currentByName.get(normalizeKey(pair.child));
+			if (!parentA || !parentB || !child) {
+				unknownRows.push(pair);
+				continue;
+			}
+			const key = pairKey(parentA.name, parentB.name);
+			const next = [parentA.name, parentB.name, child.name];
+			const existing = pairRowsByKey.get(key);
+			if (existing && normalizeKey(existing[2]) !== normalizeKey(child.name)) {
+				conflicts.push({ existing, next });
+				continue;
+			}
+			pairRowsByKey.set(key, next);
+		}
+	}
+	return { conflicts, pairRowsByKey, parseProblems, unknownRows };
+}
+
+function cleanedBreedingFile(breedingFile, sourceOverrides) {
+	const next = { ...breedingFile };
+	if (sourceOverrides.length) {
+		next.SourceOverrides = sourceOverrides;
+	} else {
+		delete next.SourceOverrides;
+	}
+	for (const field of [
+		`FormulaMetadata`, `PairResults`, `PairResultsMetadata`, `Pals`, `SourceOverrideMetadata`,
+		`SourceOnlyPals`, `SourceValidationMetadata`,
+	]) {
+		delete next[field];
+	}
+	return next;
+}
+
+function printReport({ options, currentRows, children, pairRows, expectedPairCount, sourceOverrides, merged, resolvedConflicts,
+	parseProblems, unknownRows, pairCountProblems }) {
+	console.log(`Palworld breeding source-override update against PalDB (${options.write ? `write` : `dry-run`})`);
+	console.log(`Current PalDB rows: ${currentRows.length}`);
+	console.log(`Child endpoints fetched: ${children.length}`);
+	console.log(`Fetched pair rows: ${pairRows.length}`);
+	console.log(`Expected pair rows: ${expectedPairCount}`);
+	console.log(`Source overrides: ${sourceOverrides.length}`);
+	console.log(`PalDB rows missing from palData: ${merged.missingFromPalData.length}`);
+	console.log(`Files ${options.write ? `updated` : `not written`}.`);
+	printRows(`PalDB rows missing from palData`, merged.missingFromPalData, options.limit, row => `#${row.number} ${row.name}`);
+	const reports = [
+		[`Source override sample`, sourceOverrides, row => `${row[0]} + ${row[1]} -> ${row[2]}`],
+		[`Resolved conflicts`, resolvedConflicts.resolved, row => `${row.existing[0]} + ${row.existing[1]} -> ${row.resolved[2]}`],
+		[`Unresolved conflicts`, resolvedConflicts.unresolved, row => `${row.existing[0]} + ${row.existing[1]}: ${row.reason}`],
+		[`Parse problems`, parseProblems, row => `${row.child}: ${row.remainder} extra item name(s)`],
+		[`Unknown Pal rows`, unknownRows, row => `${row.parentA} + ${row.parentB} -> ${row.child}`],
+		[`Pair count problems`, pairCountProblems, row => `expected ${row.expected}, fetched ${row.actual}`],
+	];
+	for (const [title, rows, formatter] of reports) {
+		printRows(title, rows, options.limit, formatter);
+	}
+}
+
 async function main() {
 	const options = parseArgs(process.argv.slice(2));
 	const breedingFile = readJson(PAL_BREEDING_PATH);
@@ -337,43 +407,7 @@ async function main() {
 		options.concurrency,
 		child => fetchParentPairsForChild(child),
 	);
-	const pairRowsByKey = new Map();
-	const conflicts = [];
-	const parseProblems = [];
-	const unknownRows = [];
-
-	for (const result of fetched) {
-		if (result.parseRemainder) {
-			parseProblems.push({
-				child: result.child.name,
-				remainder: result.parseRemainder,
-			});
-		}
-
-		for (const pair of result.pairs) {
-			const parentA = currentByName.get(normalizeKey(pair.parentA));
-			const parentB = currentByName.get(normalizeKey(pair.parentB));
-			const child = currentByName.get(normalizeKey(pair.child));
-
-			if (!parentA || !parentB || !child) {
-				unknownRows.push(pair);
-				continue;
-			}
-
-			const key = pairKey(parentA.name, parentB.name);
-			const existing = pairRowsByKey.get(key);
-
-			if (existing && normalizeKey(existing[2]) !== normalizeKey(child.name)) {
-				conflicts.push({
-					existing,
-					next: [parentA.name, parentB.name, child.name],
-				});
-				continue;
-			}
-
-			pairRowsByKey.set(key, [parentA.name, parentB.name, child.name]);
-		}
-	}
+	const { conflicts, pairRowsByKey, parseProblems, unknownRows } = collectFetchedPairs(fetched, currentByName);
 
 	const resolvedConflicts = await resolveConflicts(conflicts, currentByName, pairRowsByKey);
 	const pairRows = sortPairRows([...pairRowsByKey.values()], currentIndexByName);
@@ -393,23 +427,7 @@ async function main() {
 		...palFile,
 		Pals: merged.pals,
 	};
-	const nextBreedingFile = {
-		...breedingFile,
-	};
-
-	if (sourceOverrides.length) {
-		nextBreedingFile.SourceOverrides = sourceOverrides;
-	} else {
-		delete nextBreedingFile.SourceOverrides;
-	}
-
-	delete nextBreedingFile.FormulaMetadata;
-	delete nextBreedingFile.PairResults;
-	delete nextBreedingFile.PairResultsMetadata;
-	delete nextBreedingFile.Pals;
-	delete nextBreedingFile.SourceOverrideMetadata;
-	delete nextBreedingFile.SourceOnlyPals;
-	delete nextBreedingFile.SourceValidationMetadata;
+	const nextBreedingFile = cleanedBreedingFile(breedingFile, sourceOverrides);
 
 	if (options.write) {
 		if (resolvedConflicts.unresolved.length || parseProblems.length || unknownRows.length || pairCountProblems.length) {
@@ -420,52 +438,8 @@ async function main() {
 		writeJson(PAL_BREEDING_PATH, nextBreedingFile);
 	}
 
-	console.log(`Palworld breeding source-override update against PalDB (${options.write ? `write` : `dry-run`})`);
-	console.log(`Current PalDB rows: ${currentRows.length}`);
-	console.log(`Child endpoints fetched: ${children.length}`);
-	console.log(`Fetched pair rows: ${pairRows.length}`);
-	console.log(`Expected pair rows: ${expectedPairCount}`);
-	console.log(`Source overrides: ${sourceOverrides.length}`);
-	console.log(`PalDB rows missing from palData: ${merged.missingFromPalData.length}`);
-	console.log(`Files ${options.write ? `updated` : `not written`}.`);
-
-	printRows(`PalDB rows missing from palData`, merged.missingFromPalData, options.limit, row => `#${row.number} ${row.name}`);
-	printRows(
-		`Source override sample`,
-		sourceOverrides,
-		options.limit,
-		row => `${row[0]} + ${row[1]} -> ${row[2]}`,
-	);
-	printRows(
-		`Resolved conflicts`,
-		resolvedConflicts.resolved,
-		options.limit,
-		row => `${row.existing[0]} + ${row.existing[1]} -> ${row.resolved[2]}`,
-	);
-	printRows(
-		`Unresolved conflicts`,
-		resolvedConflicts.unresolved,
-		options.limit,
-		row => `${row.existing[0]} + ${row.existing[1]}: ${row.reason}`,
-	);
-	printRows(
-		`Parse problems`,
-		parseProblems,
-		options.limit,
-		row => `${row.child}: ${row.remainder} extra item name(s)`,
-	);
-	printRows(
-		`Unknown Pal rows`,
-		unknownRows,
-		options.limit,
-		row => `${row.parentA} + ${row.parentB} -> ${row.child}`,
-	);
-	printRows(
-		`Pair count problems`,
-		pairCountProblems,
-		options.limit,
-		row => `expected ${row.expected}, fetched ${row.actual}`,
-	);
+	printReport({ options, currentRows, children, pairRows, expectedPairCount, sourceOverrides, merged,
+		resolvedConflicts, parseProblems, unknownRows, pairCountProblems });
 }
 
 main().catch(error => {

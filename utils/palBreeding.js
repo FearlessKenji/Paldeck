@@ -8,7 +8,7 @@ function pairKey(parentA, parentB) {
 		.join(`|`);
 }
 
-function getBreedingValue(breeding, pal, breedingField, legacyField, fallback = null) {
+function getBreedingValue({ breeding, pal }, breedingField, legacyField, fallback = null) {
 	if (Object.hasOwn(breeding, breedingField)) {
 		return breeding[breedingField];
 	}
@@ -22,19 +22,21 @@ function getBreedingValue(breeding, pal, breedingField, legacyField, fallback = 
 
 function withBreedingMetadata(pal, index, sourceOnly = false) {
 	const breeding = pal.breeding || {};
+	const value = (breedingField, legacyField, fallback) =>
+		getBreedingValue({ breeding, pal }, breedingField, legacyField, fallback);
 
 	return {
 		...pal,
-		breedingId: getBreedingValue(breeding, pal, `id`, `breedingId`, ``),
-		breedingIndex: getBreedingValue(breeding, pal, `index`, `breedingIndex`, index),
-		breedingPriority: getBreedingValue(breeding, pal, `priority`, `breedingPriority`, null),
-		breedingRank: getBreedingValue(breeding, pal, `rank`, `breedingRank`, null),
-		canBeChild: getBreedingValue(breeding, pal, `canBeChild`, `canBeChild`, false),
-		canBeParent: getBreedingValue(breeding, pal, `canBeParent`, `canBeParent`, false),
-		canBeStandardChild: getBreedingValue(breeding, pal, `canBeStandardChild`, `canBeStandardChild`, false),
+		breedingId: value(`id`, `breedingId`, ``),
+		breedingIndex: value(`index`, `breedingIndex`, index),
+		breedingPriority: value(`priority`, `breedingPriority`, null),
+		breedingRank: value(`rank`, `breedingRank`, null),
+		canBeChild: value(`canBeChild`, `canBeChild`, false),
+		canBeParent: value(`canBeParent`, `canBeParent`, false),
+		canBeStandardChild: value(`canBeStandardChild`, `canBeStandardChild`, false),
 		hidden: Boolean(pal.hidden),
 		index,
-		isBreedingVariant: getBreedingValue(breeding, pal, `variant`, `isBreedingVariant`, false),
+		isBreedingVariant: value(`variant`, `isBreedingVariant`, false),
 		placeholder: Boolean(pal.placeholder),
 		sourceOnly,
 	};
@@ -60,81 +62,66 @@ function formatBreedingMethod(method) {
 	return `Standard rank`;
 }
 
-function createBreedingCalculator(palFile, breedingFile = palFile) {
+function createBreedingState(palFile, breedingFile) {
 	const localPals = (palFile.Pals || []).map((pal, index) => withBreedingMetadata(pal, index));
 	const sourceOnlyPals = (breedingFile.SourceOnlyPals || [])
 		.map((pal, index) => withBreedingMetadata(pal, localPals.length + index, true));
 	const pals = [...localPals, ...sourceOnlyPals];
-	const parentPals = pals.filter(pal => pal.canBeParent && !pal.hidden);
-	const childPals = pals.filter(pal => pal.canBeChild && !pal.hidden);
-	const standardChildren = pals.filter(pal => pal.canBeStandardChild && !pal.hidden);
-	const palsByName = new Map(pals.map(pal => [normalizeBreedingName(pal.name), pal]));
-	const genderedPairResults = new Map();
-	const sourceOverrides = new Map();
-	const uniqueCombinations = new Map();
-	const resultCache = new Map();
+	return {
+		pals,
+		parentPals: pals.filter(pal => pal.canBeParent && !pal.hidden),
+		childPals: pals.filter(pal => pal.canBeChild && !pal.hidden),
+		standardChildren: pals.filter(pal => pal.canBeStandardChild && !pal.hidden),
+		palsByName: new Map(pals.map(pal => [normalizeBreedingName(pal.name), pal])),
+		genderedPairResults: new Map(), sourceOverrides: new Map(), uniqueCombinations: new Map(), resultCache: new Map(),
+	};
+}
 
-	function addCombination(target, row) {
-		const [parentAName, parentBName, childName] = Array.isArray(row) ?
-			row :
-			[row.parentA, row.parentB, row.child];
-		const parentA = palsByName.get(normalizeBreedingName(parentAName));
-		const parentB = palsByName.get(normalizeBreedingName(parentBName));
-		const child = palsByName.get(normalizeBreedingName(childName));
-
-		if (!parentA || !parentB || !child) {
-			return;
-		}
-
-		target.set(pairKey(parentA.name, parentB.name), {
-			child,
-			parentA,
-			parentB,
-		});
+function addCombination(state, target, row) {
+	const [parentAName, parentBName, childName] = Array.isArray(row) ? row : [row.parentA, row.parentB, row.child];
+	const parentA = state.palsByName.get(normalizeBreedingName(parentAName));
+	const parentB = state.palsByName.get(normalizeBreedingName(parentBName));
+	const child = state.palsByName.get(normalizeBreedingName(childName));
+	if (!parentA || !parentB || !child) {
+		return;
 	}
+	target.set(pairKey(parentA.name, parentB.name), { child, parentA, parentB });
+}
 
-	function addGenderedPairResult(row) {
-		const parentA = palsByName.get(normalizeBreedingName(row.parentA));
-		const parentB = palsByName.get(normalizeBreedingName(row.parentB));
-		const child = palsByName.get(normalizeBreedingName(row.child));
-
-		if (!parentA || !parentB || !child) {
-			return;
-		}
-
-		const key = pairKey(parentA.name, parentB.name);
-		const entries = genderedPairResults.get(key) || [];
-
-		entries.push({
-			child,
-			parentA,
-			parentAGender: row.parentAGender || null,
-			parentB,
-			parentBGender: row.parentBGender || null,
-		});
-		genderedPairResults.set(key, entries);
+function addGenderedPairResult(state, row) {
+	const parentA = state.palsByName.get(normalizeBreedingName(row.parentA));
+	const parentB = state.palsByName.get(normalizeBreedingName(row.parentB));
+	const child = state.palsByName.get(normalizeBreedingName(row.child));
+	if (!parentA || !parentB || !child) {
+		return;
 	}
+	const key = pairKey(parentA.name, parentB.name);
+	const entries = state.genderedPairResults.get(key) || [];
+	entries.push({
+		child, parentA, parentAGender: row.parentAGender || null,
+		parentB, parentBGender: row.parentBGender || null,
+	});
+	state.genderedPairResults.set(key, entries);
+}
 
-	function hasGenderRequirement(row) {
-		return Boolean(row?.parentAGender || row?.parentBGender);
+function loadBreedingCombinations(state, breedingFile) {
+	for (const row of breedingFile.SourceOverrides || []) {
+		addCombination(state, state.sourceOverrides, row);
 	}
-
-	for (const sourceOverride of breedingFile.SourceOverrides || []) {
-		addCombination(sourceOverrides, sourceOverride);
+	for (const row of breedingFile.GenderedPairResults || []) {
+		addGenderedPairResult(state, row);
 	}
-
-	for (const genderedPairResult of breedingFile.GenderedPairResults || []) {
-		addGenderedPairResult(genderedPairResult);
-	}
-
-	for (const combination of breedingFile.UniqueCombinations || []) {
-		if (hasGenderRequirement(combination)) {
-			addGenderedPairResult(combination);
+	for (const row of breedingFile.UniqueCombinations || []) {
+		if (row?.parentAGender || row?.parentBGender) {
+			addGenderedPairResult(state, row);
 		} else {
-			addCombination(uniqueCombinations, combination);
+			addCombination(state, state.uniqueCombinations, row);
 		}
 	}
+}
 
+function createBreedingHelpers(state) {
+	const { palsByName, standardChildren } = state;
 	function getPal(name) {
 		return palsByName.get(normalizeBreedingName(name)) || null;
 	}
@@ -229,7 +216,24 @@ function createBreedingCalculator(palFile, breedingFile = palFile) {
 			children,
 		};
 	}
+	return { findClosestStandardChild, focusResultChild, getPal, orientGenderedResult, resultHasChild };
+}
 
+function standardBreedingResult(parentA, parentB, findClosestStandardChild) {
+	const targetRank = Number.isFinite(parentA.breedingRank) && Number.isFinite(parentB.breedingRank) ?
+		Math.floor((parentA.breedingRank + parentB.breedingRank + 1) / 2) :
+		null;
+	const child = findClosestStandardChild(targetRank);
+	return {
+		parentA, parentB, child,
+		children: [{ child, parentA, parentAGender: null, parentB, parentBGender: null }],
+		method: `standard`, targetRank, specialCombination: null,
+	};
+}
+
+function createPairCalculator(state, helpers) {
+	const { genderedPairResults, resultCache, sourceOverrides, uniqueCombinations } = state;
+	const { findClosestStandardChild, orientGenderedResult } = helpers;
 	function calculateForPals(parentA, parentB) {
 		const cacheKey = pairKey(parentA.name, parentB.name);
 		const cachedResult = resultCache.get(cacheKey);
@@ -323,30 +327,17 @@ function createBreedingCalculator(palFile, breedingFile = palFile) {
 			return result;
 		}
 
-		const targetRank = Number.isFinite(parentA.breedingRank) && Number.isFinite(parentB.breedingRank) ?
-			Math.floor((parentA.breedingRank + parentB.breedingRank + 1) / 2) :
-			null;
-		const child = findClosestStandardChild(targetRank);
-		const result = {
-			parentA,
-			parentB,
-			child,
-			children: [{
-				child,
-				parentA,
-				parentAGender: null,
-				parentB,
-				parentBGender: null,
-			}],
-			method: `standard`,
-			targetRank,
-			specialCombination: null,
-		};
+		const result = standardBreedingResult(parentA, parentB, findClosestStandardChild);
 
 		resultCache.set(cacheKey, result);
 		return result;
 	}
+	return calculateForPals;
+}
 
+function createBreedingQueries(state, helpers, calculateForPals) {
+	const { childPals, pals, parentPals } = state;
+	const { focusResultChild, getPal, resultHasChild } = helpers;
 	function calculateChild(parentAName, parentBName) {
 		const parentA = getPal(parentAName);
 		const parentB = getPal(parentBName);
@@ -431,6 +422,14 @@ function createBreedingCalculator(palFile, breedingFile = palFile) {
 		pals,
 		parentPals,
 	};
+}
+
+function createBreedingCalculator(palFile, breedingFile = palFile) {
+	const state = createBreedingState(palFile, breedingFile);
+	loadBreedingCombinations(state, breedingFile);
+	const helpers = createBreedingHelpers(state);
+	const calculateForPals = createPairCalculator(state, helpers);
+	return createBreedingQueries(state, helpers, calculateForPals);
 }
 
 module.exports = {

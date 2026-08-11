@@ -1,6 +1,5 @@
 // Losslessly optimizes PNG item maps and replaces byte-identical assets with shared files.
 /* eslint-disable max-statements-per-line -- compact recursive guards keep the data walk easy to follow. */
-const crypto = require(`node:crypto`);
 const fs = require(`node:fs`);
 const os = require(`node:os`);
 const path = require(`node:path`);
@@ -29,15 +28,18 @@ async function optimizePng(file) {
 }
 
 function deduplicate(files) {
-	const canonicalByHash = new Map();
+	const canonicalFilesBySize = new Map();
 	const replacements = new Map();
 	for (const file of files) {
-		const hash = crypto.createHash(`sha256`).update(fs.readFileSync(file)).digest(`hex`);
-		const canonical = canonicalByHash.get(hash);
+		const contents = fs.readFileSync(file);
+		const sameSizeFiles = canonicalFilesBySize.get(contents.length) || [];
+		// File size narrows the candidates; byte comparison is the final and only equality test.
+		const canonical = sameSizeFiles.find(candidate => contents.equals(candidate.contents));
 		if (canonical) {
-			replacements.set(path.relative(ROOT, file).replaceAll(`\\`, `/`), path.relative(ROOT, canonical).replaceAll(`\\`, `/`));
+			replacements.set(path.relative(ROOT, file).replaceAll(`\\`, `/`), path.relative(ROOT, canonical.file).replaceAll(`\\`, `/`));
 		} else {
-			canonicalByHash.set(hash, file);
+			sameSizeFiles.push({ contents, file });
+			canonicalFilesBySize.set(contents.length, sameSizeFiles);
 		}
 	}
 	if (replacements.size) {
@@ -47,7 +49,9 @@ function deduplicate(files) {
 		fs.copyFileSync(temporary, ITEM_DATA_PATH);
 		fs.rmSync(temporary);
 		for (const duplicate of replacements.keys()) {
-			const target = process.env.PALDECK_MAP_OUTPUT_DIR ? path.join(MAP_DIRECTORY, path.basename(duplicate)) : path.join(ROOT, duplicate);
+			const target = process.env.PALDECK_MAP_OUTPUT_DIR ?
+				path.join(MAP_DIRECTORY, path.basename(duplicate)) :
+				path.join(ROOT, duplicate);
 			fs.rmSync(target);
 		}
 	}
@@ -63,7 +67,11 @@ async function main() {
 	console.log(`Saved ${(saved / 1024 / 1024).toFixed(2)} MiB and removed ${removed} duplicate PNG map(s).`);
 }
 
-main().catch(error => {
-	console.error(error);
-	process.exitCode = 1;
-});
+if (require.main === module) {
+	main().catch(error => {
+		console.error(error);
+		process.exitCode = 1;
+	});
+}
+
+module.exports = { deduplicate, replacePaths };

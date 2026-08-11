@@ -1,5 +1,13 @@
 {
 	"fixedLocationSets": {
+		"teafantSprings": {
+			"sourceAsset": "WorldTree_Drop_HolyWater / verified World Tree spring coordinates",
+			"map": "worldtree",
+			"markers": [
+				[-1536, 1368, 0], [-1725, 1395, 0], [-1897, 1363, 0]
+			],
+			"coordinateTransform": "worldTreeMap"
+		},
 		"worldTreeTreasureChests": {
 			"sourceAsset": "Pal/Content/Pal/Blueprint/MapObject/Spawner/BP_PalMapObjectSpawner_Treasure_WorldTree",
 			"map": "worldtree",

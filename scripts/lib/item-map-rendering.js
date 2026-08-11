@@ -128,7 +128,7 @@ const CHEST_GRADE_PRESENTATION = {
 };
 
 const ITEM_SOURCE_PRESENTATION = {
-	'Ancient Ruin': { color: `#ef4444`, style: `normal` },
+	'Ancient Ruin': { color: `#ef4444`, style: `outlined` },
 	'Enemy Camp': { color: `#ef4444`, style: `normal` },
 	Treasure: { color: `#8b5a2b`, style: `normal` },
 	'Treasure Element': { color: `#facc15`, style: `normal` },
@@ -138,6 +138,8 @@ const ITEM_SOURCE_PRESENTATION = {
 	'Treasure Map': { color: `#d4af37`, style: `normal` },
 	Junk: { color: `#ec4899`, style: `normal` },
 	Dungeon: { color: `#ff9600`, style: `diamond` },
+	'Tower Boss': { color: `#ef4444`, style: `special` },
+	'Teafant Springs': { color: `#ef4444`, style: `special` },
 	'Wandering Merchant': { color: `#ef4444`, style: `normal` },
 	'Weapons Merchant': { color: `#22c55e`, style: `normal` },
 	'Lifmunk Effigy': { color: `#4ade80`, style: `normal` },
@@ -200,4 +202,7 @@ async function renderMap(map, groups, target, bottomRight = false) {
 	writeOutput(target, output);
 }
 
-module.exports = { CHEST_GRADE_PRESENTATION, fetchCached, fixedLocationMarkers, itemSourcePresentation, legendLabel, loadMap, parseJsonVariable, renderMap, selectMarkers, toPixel, writeOutput };
+module.exports = {
+	CHEST_GRADE_PRESENTATION, fetchCached, fixedLocationMarkers, itemSourcePresentation,
+	legendLabel, loadMap, parseJsonVariable, renderMap, selectMarkers, toPixel, writeOutput,
+};

@@ -1,5 +1,4 @@
 // Resolves compact item-data presets at runtime and regenerates deterministic, readable preset references.
-const crypto = require(`node:crypto`);
 const rawItemData = require(`../data/itemData.json`);
 
 const REGIONAL_CHEST_RULES = [
@@ -17,12 +16,27 @@ function sameMarker(left, right) {
 	return Object.entries(right).every(([key, value]) => left?.[key] === value);
 }
 
-function regionalChestMapPath(mapPath, mapSources) {
-	if (mapPath.endsWith(`/ancient-sphere-sources.png`)) {
-		return mapPath;
+function regionalChestMapPath(mapPath) {
+	// The readable map name identifies one complete source definition, including derived regional chest panels.
+	return mapPath;
+}
+
+function addMarkerToPanel(panel, marker) {
+	panel.markers ||= [];
+	if (panel.markers.some(existing => sameMarker(existing, marker))) {
+		return false;
 	}
-	const hash = crypto.createHash(`sha256`).update(JSON.stringify(mapSources)).digest(`hex`).slice(0, 8);
-	return mapPath.replace(/\.png$/u, `-regional-chests-${hash}.png`);
+	panel.markers.push({ ...marker });
+	return true;
+}
+
+function regionalChestPanel(mapSources, rule) {
+	let panel = mapSources.maps.find(entry => entry.map === rule.map);
+	if (!panel) {
+		panel = { map: rule.map, markers: [] };
+		mapSources.maps.push(panel);
+	}
+	return panel;
 }
 
 function addRegionalChest(acquisition, rule) {
@@ -43,26 +57,11 @@ function addRegionalChest(acquisition, rule) {
 	}
 
 	if (acquisition.mapSources.maps) {
-		let panel = acquisition.mapSources.maps.find(entry => entry.map === rule.map);
-		if (!panel) {
-			panel = { map: rule.map, markers: [] };
-			acquisition.mapSources.maps.push(panel);
-		}
-		panel.markers ||= [];
-		if (!panel.markers.some(marker => sameMarker(marker, rule.marker))) {
-			panel.markers.push({ ...rule.marker });
-			return true;
-		}
-		return false;
+		return addMarkerToPanel(regionalChestPanel(acquisition.mapSources, rule), rule.marker);
 	}
 
 	if (acquisition.mapSources.map === rule.map) {
-		acquisition.mapSources.markers ||= [];
-		if (!acquisition.mapSources.markers.some(marker => sameMarker(marker, rule.marker))) {
-			acquisition.mapSources.markers.push({ ...rule.marker });
-			return true;
-		}
-		return false;
+		return addMarkerToPanel(acquisition.mapSources, rule.marker);
 	}
 	acquisition.mapSources = { maps: [acquisition.mapSources, { map: rule.map, markers: [{ ...rule.marker }] }] };
 	return true;
@@ -116,7 +115,8 @@ function stripDerivedRegionalChests(acquisition) {
 		return acquisition;
 	}
 	const stripped = JSON.parse(JSON.stringify(acquisition));
-	stripped.map = stripped.map?.replace(/-regional-chests-[a-f0-9]{8}(?=\.png$)/u, ``);
+	stripped.map = stripped.map?.replace(/-with-(?:palpagos|worldtree|palpagos-and-worldtree|regional)-chests(?=\.png$)/u, ``)
+		.replace(/-regional-chests-[a-f0-9]{8}(?=\.png$)/u, ``);
 	for (const rule of REGIONAL_CHEST_RULES) {
 		const treasure = stripped.sources?.find(source => source.type === `Treasure`);
 		if (treasure) {
@@ -196,7 +196,7 @@ function slug(value) {
 }
 
 function acquisitionLabel(value) {
-	// Scope and source names make references reviewable; the hash below separates similar pools.
+	// Scope and source names make references reviewable at every call site.
 	const mapSources = value.mapSources || {};
 	const scope = mapSources.maps?.length ? `combined` : slug(mapSources.map || `text-only`);
 	const types = [...new Set((value.sources || []).map(source => {
@@ -223,15 +223,32 @@ function merchantLabel(value) {
 	return [...new Set(names)].join(`-`) || `locations`;
 }
 
-function presetId(prefix, value) {
+function presetBaseId(prefix, value) {
 	const label = prefix === `acquisition` ? acquisitionLabel(value) : merchantLabel(value);
-	const hash = crypto.createHash(`sha256`).update(JSON.stringify(value)).digest(`hex`).slice(0, 6);
-	return `${prefix === `acquisition` ? `acq` : `merchants`}-${label}-${hash}`;
+	return `${prefix === `acquisition` ? `acq` : `merchants`}-${label}`;
+}
+
+function readablePresetId(prefix, value, records, idsByValue) {
+	const encoded = JSON.stringify(value);
+	if (idsByValue.has(encoded)) {
+		return idsByValue.get(encoded);
+	}
+	const baseId = presetBaseId(prefix, value);
+	let id = baseId;
+	let variant = 2;
+	while (records[id] && JSON.stringify(records[id]) !== encoded) {
+		id = `${baseId}-variant-${variant}`;
+		variant += 1;
+	}
+	idsByValue.set(encoded, id);
+	return id;
 }
 
 function compactItemData(itemData) {
 	const acquisitions = {};
 	const merchants = {};
+	const acquisitionIdsByValue = new Map();
+	const merchantIdsByValue = new Map();
 	const lootPools = {};
 	const acquisitionCounts = new Map();
 	for (const item of itemData.Items) {
@@ -268,7 +285,7 @@ function compactItemData(itemData) {
 			delete compact.acquisition.lootPools;
 			const encoded = JSON.stringify(compact.acquisition);
 			if (acquisitionCounts.get(encoded) > 1) {
-				const id = presetId(`acquisition`, compact.acquisition);
+				const id = readablePresetId(`acquisition`, compact.acquisition, acquisitions, acquisitionIdsByValue);
 				acquisitions[id] = compact.acquisition;
 				compact.acquisitionRef = id;
 				delete compact.acquisition;
@@ -280,7 +297,7 @@ function compactItemData(itemData) {
 			delete compact.acquisitionRef;
 		}
 		if (compact.merchantLocations) {
-			const id = presetId(`merchants`, compact.merchantLocations);
+			const id = readablePresetId(`merchants`, compact.merchantLocations, merchants, merchantIdsByValue);
 			merchants[id] = compact.merchantLocations;
 			compact.merchantLocationsRef = id;
 			delete compact.merchantLocations;

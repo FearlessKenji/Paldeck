@@ -5,7 +5,9 @@ const os = require(`node:os`);
 const path = require(`node:path`);
 const sharp = require(`sharp`);
 const { compactItemData, resolvedItemData } = require(`../utils/itemData.js`);
-const { fixedLocationMarkers, itemSourcePresentation, loadMap, renderMap, selectMarkers, writeOutput } = require(`./lib/item-map-rendering.js`);
+const {
+	fixedLocationMarkers, itemSourcePresentation, loadMap, renderMap, selectMarkers, writeOutput,
+} = require(`./lib/item-map-rendering.js`);
 
 const ROOT = path.resolve(__dirname, `..`);
 const CACHE = path.join(ROOT, `tmp`, `paldb-map-cache`);
@@ -77,33 +79,66 @@ async function renderRecord(maps, mapPath, mapSources) {
 	if (map) {await renderMap(map, groupsFor(map, mapSources.markers || []), target, map.key === `worldtree`);}
 }
 
-async function main() {
-	const requestedIndex = process.argv.indexOf(`--map`);
-	const fromIndex = process.argv.indexOf(`--from`);
-	const regionalChestsOnly = process.argv.includes(`--regional-chests`);
+function commandOptions() {
+	const indexOf = option => process.argv.indexOf(option);
+	const requestedIndex = indexOf(`--map`);
+	const sourceTypeIndex = indexOf(`--source-type`);
+	const fromIndex = indexOf(`--from`);
 	const positional = process.argv.slice(2).filter(value => !value.startsWith(`--`) && value !== `write`);
-	const requestedMap = requestedIndex >= 0 ? process.argv[requestedIndex + 1] : positional[0] || null;
-	const requestedFrom = fromIndex >= 0 ? process.argv[fromIndex + 1] : null;
-	const writeData = process.argv.includes(`--write-data`) || process.argv.includes(`write`);
-	const sourceData = JSON.parse(fs.readFileSync(ITEM_DATA_PATH, `utf8`));
-	const itemData = resolvedItemData(sourceData);
-	const maps = Object.fromEntries(await Promise.all(Object.entries(MAPS).map(async ([key, settings]) => [key, await loadMap(settings, CACHE)])));
+	return {
+		regionalChestsOnly: process.argv.includes(`--regional-chests`),
+		missingOnly: process.argv.includes(`--missing`),
+		requestedMap: requestedIndex >= 0 ? process.argv[requestedIndex + 1] : sourceTypeIndex < 0 ? positional[0] || null : null,
+		requestedSourceType: sourceTypeIndex >= 0 ? process.argv[sourceTypeIndex + 1] : null,
+		requestedFrom: fromIndex >= 0 ? process.argv[fromIndex + 1] : null,
+		writeData: process.argv.includes(`--write-data`) || process.argv.includes(`write`),
+	};
+}
+
+function shouldCollectRecord(value, regionalChestsOnly) {
+	if (!value?.map || !value.mapSources || value.mapSources.chestPools) {return false;}
+	const regionalChest = value.lootPools?.some(pool =>
+		[`SkyIsland_Treasure`, `WorldTree_Treasure`].includes(pool.pool));
+	return !regionalChestsOnly || regionalChest;
+}
+
+function collectRecords(itemData, sourceData, regionalChestsOnly) {
 	const records = new Map();
 	for (const item of itemData.Items) {
 		for (const value of [item.acquisition, item.merchantLocations, item.medalMerchants, item.bountyMerchants, item.arenaMerchant]) {
-			const regionalChest = value?.lootPools?.some(pool => [`SkyIsland_Treasure`, `WorldTree_Treasure`].includes(pool.pool));
-			if (value?.map && value.mapSources && !value.mapSources.chestPools && (!regionalChestsOnly || regionalChest)) {records.set(value.map, value.mapSources);}
+			if (shouldCollectRecord(value, regionalChestsOnly)) {
+				records.set(value.map, value.mapSources);
+			}
 		}
 	}
-	for (const value of regionalChestsOnly ? [] : Object.values(sourceData.MerchantLocationSets || {})) {
-		if (value.map && value.mapSources) {records.set(value.map, value.mapSources);}
+	if (!regionalChestsOnly) {
+		for (const value of Object.values(sourceData.MerchantLocationSets || {})) {
+			if (value.map && value.mapSources) {records.set(value.map, value.mapSources);}
+		}
 	}
+	return records;
+}
+
+function recordMatches(mapPath, sources, options, reachedStart) {
+	if (!reachedStart) {return false;}
+	if (options.requestedMap && mapPath !== options.requestedMap && path.basename(mapPath) !== options.requestedMap) {
+		return false;
+	}
+	const panels = sources.maps?.length ? sources.maps : [sources];
+	const includesSource = panels.some(panel =>
+		panel.markers?.some(marker => (marker.legendType || marker.type) === options.requestedSourceType));
+	if (options.requestedSourceType && !includesSource) {return false;}
+	return !options.missingOnly || !fs.existsSync(path.join(ROOT, mapPath));
+}
+
+async function renderRecords(records, maps, options) {
 	const failures = [];
-	let reachedStart = !requestedFrom;
+	let reachedStart = !options.requestedFrom;
 	for (const [mapPath, sources] of records) {
-		if (!reachedStart && (mapPath === requestedFrom || path.basename(mapPath) === requestedFrom)) {reachedStart = true;}
-		if (!reachedStart) {continue;}
-		if (requestedMap && mapPath !== requestedMap && path.basename(mapPath) !== requestedMap) {continue;}
+		if (!reachedStart && (mapPath === options.requestedFrom || path.basename(mapPath) === options.requestedFrom)) {
+			reachedStart = true;
+		}
+		if (!recordMatches(mapPath, sources, options, reachedStart)) {continue;}
 		try {
 			await renderRecord(maps, mapPath, sources);
 			console.log(`Rendered ${mapPath}`);
@@ -112,7 +147,13 @@ async function main() {
 			console.warn(`Deferred ${mapPath}: ${error.message || error}`);
 		}
 	}
-	if (requestedFrom && !reachedStart) {throw new Error(`Unknown starting item map: ${requestedFrom}`);}
+	if (options.requestedFrom && !reachedStart) {
+		throw new Error(`Unknown starting item map: ${options.requestedFrom}`);
+	}
+	return failures;
+}
+
+async function retryFailures(failures, maps) {
 	let pending = failures;
 	for (let round = 1; pending.length && round <= 5; round += 1) {
 		const next = [];
@@ -129,10 +170,32 @@ async function main() {
 	if (pending.length) {
 		throw new Error(`Could not write ${pending.length} item map(s) after deferred retries: ${pending.map(value => value.mapPath).join(`, `)}`);
 	}
-	if (requestedMap && ![...records.keys()].some(mapPath => mapPath === requestedMap || path.basename(mapPath) === requestedMap)) {
+}
+
+function validateRequests(records, { requestedMap, requestedSourceType }) {
+	if (requestedMap && ![...records.keys()].some(mapPath =>
+		mapPath === requestedMap || path.basename(mapPath) === requestedMap)) {
 		throw new Error(`Unknown item map: ${requestedMap}`);
 	}
-	if (writeData) {
+	const includesSource = [...records.values()].some(sources => (sources.maps?.length ? sources.maps : [sources])
+		.some(panel => panel.markers?.some(marker => (marker.legendType || marker.type) === requestedSourceType)));
+	if (requestedSourceType && !includesSource) {
+		throw new Error(`Unknown item-map source type: ${requestedSourceType}`);
+	}
+}
+
+async function main() {
+	const options = commandOptions();
+	const sourceData = JSON.parse(fs.readFileSync(ITEM_DATA_PATH, `utf8`));
+	const itemData = resolvedItemData(sourceData);
+	const loadedMaps = await Promise.all(
+		Object.entries(MAPS).map(async ([key, settings]) => [key, await loadMap(settings, CACHE)]),
+	);
+	const maps = Object.fromEntries(loadedMaps);
+	const records = collectRecords(itemData, sourceData, options.regionalChestsOnly);
+	await retryFailures(await renderRecords(records, maps, options), maps);
+	validateRequests(records, options);
+	if (options.writeData) {
 		// Recompact through the shared resolver so generator writes preserve readable, reusable preset references.
 		fs.writeFileSync(ITEM_DATA_PATH, `${JSON.stringify(compactItemData(itemData), null, `\t`)}\n`);
 		console.log(`Updated ${path.relative(ROOT, ITEM_DATA_PATH)}.`);

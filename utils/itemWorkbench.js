@@ -79,6 +79,19 @@ const COOKING_PROGRESSION = [
 	{ maxRank: Number.POSITIVE_INFINITY, name: `Advanced Cooking Station` },
 ];
 
+const STATION_RULES = [
+	{ matches: ({ typeB }) => typeB === `Essential_PalGear`, station: () => `Pal Gear Workbench` },
+	{ matches: ({ typeA }) => typeA === `Weapon` || typeA === `Ammo`, station: rank => stationForRank(rank, WEAPON_PROGRESSION) },
+	{ matches: ({ typeB }) => typeB === `SPWeaponCaptureBall`, station: rank => stationForRank(rank, SPHERE_PROGRESSION) },
+	{
+		matches: ({ typeB }) => [`Drug`, `ConsumePalRevive`, `ConsumePalAwakening`].includes(typeB),
+		station: rank => stationForRank(rank, MEDICINE_PROGRESSION),
+	},
+	{ matches: ({ typeA, typeB }) => typeA === `Food` && /^FoodDish/.test(typeB || ``), station: rank => stationForRank(rank, COOKING_PROGRESSION) },
+	{ matches: ({ typeB }) => typeB === `FoodVegetable`, station: () => `Mill` },
+	{ matches: ({ typeB }) => typeB === `MaterialIngot`, station: rank => rank >= 7 ? `Ancient Furnace` : `Gigantic Furnace` },
+];
+
 function itemWorkbench(item) {
 	// Card rendering separately confirms that a schematic has a real or inferred combination recipe.
 	if (item?.category === `Schematic`) {
@@ -98,29 +111,8 @@ function itemWorkbench(item) {
 	const typeB = item.properties?.typeB;
 
 	// Rank is the product tier; the item types select the compatible production family.
-	if (typeB === `Essential_PalGear`) {
-		return `Pal Gear Workbench`;
-	}
-	if (typeA === `Weapon` || typeA === `Ammo`) {
-		return stationForRank(rank, WEAPON_PROGRESSION);
-	}
-	if (typeB === `SPWeaponCaptureBall`) {
-		return stationForRank(rank, SPHERE_PROGRESSION);
-	}
-	if (typeB === `Drug` || typeB === `ConsumePalRevive` || typeB === `ConsumePalAwakening`) {
-		return stationForRank(rank, MEDICINE_PROGRESSION);
-	}
-	if (typeA === `Food` && /^FoodDish/.test(typeB || ``)) {
-		return stationForRank(rank, COOKING_PROGRESSION);
-	}
-	if (typeB === `FoodVegetable`) {
-		return `Mill`;
-	}
-	if (typeB === `MaterialIngot`) {
-		return rank >= 7 ? `Ancient Furnace` : `Gigantic Furnace`;
-	}
-
-	return stationForRank(rank, GENERAL_PROGRESSION);
+	const rule = STATION_RULES.find(candidate => candidate.matches({ typeA, typeB }));
+	return rule ? rule.station(rank) : stationForRank(rank, GENERAL_PROGRESSION);
 }
 
 module.exports = { itemWorkbench };

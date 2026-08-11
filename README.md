@@ -26,7 +26,8 @@ The bot uses SQLite through Sequelize for local operational data such as joined 
 | `/paldeck name` | Look up a pal by name. |
 | `/paldeck number` | Look up a pal by paldeck number. |
 | `/paldeck search` | Search pals by element, suitability, rarity, drops, and/or farmed materials. |
-| `/item name:<name> rarity:<rarity>` | Look up an item with an optional preferred rarity and view Pals known to drop it. |
+| `/item name:<name> rarity:<rarity>` | Look up an item; rarity selects the exact schematic or equipment variant. |
+| `/item source:<source>` | Browse deduplicated, paginated items from a normalized source such as Gold Chests, Towers, or Fishing. |
 | `/breed` | Calculate breeding children, parent pairs, and partner options. |
 | `/help` | Show Paldeck command usage help. |
 | `/suggest` | Send a feature suggestion to the configured suggestions channel. Do not submit sensitive data. |
