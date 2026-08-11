@@ -6,7 +6,7 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
-## v1.10.0 - 2026-08-11
+## v1.10.0 - 2026-08-11 - Learned Moves and Item Source Improvements
 
 - Legendary Meowmere now lists **Moon Lord: 22.22%** instead of a generic Pal Drops source and no longer shows an empty **View Dropping Pals** result.
 - Pal cards now include **Learned Moves**, showing each species' moves and unlock levels. Learned Moves and breeding-parent results provide **Back to Pal** and remain in the same message.
