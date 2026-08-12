@@ -28,6 +28,19 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: true,
 		},
+		paldeck_announcement_warning_count: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			defaultValue: 0,
+		},
+		paldeck_announcement_warning_window_started_at: {
+			type: DataTypes.DATE,
+			allowNull: true,
+		},
+		paldeck_announcement_warning_last_sent_at: {
+			type: DataTypes.DATE,
+			allowNull: true,
+		},
 	}, {
 		timestamps: false,
 	});

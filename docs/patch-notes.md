@@ -6,6 +6,11 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+## v1.10.1 - 2026-08-12 - Palworld v1.0.3 Data Update
+
+- Paldeck's item and journal catalogs now match Palworld v1.0.3, including the lighter World Tree Holy Water, its increased Pal drops, fishing, Large Fishing Pond and expedition rewards, and a fixed reward of **30 Holy Water per Teafant Spring**; revised Jetragon and Aquatic Construction Kit recipes and unlock levels; corrected Moon Lord rewards; and searchable **Dark Skill Fruit: Psycho Gravity**.
+- When patch notes cannot reach a configured updates channel, Paldeck now shows a clearly labeled private reminder to members with **Manage Server** permission during later command use instead of directly messaging the server owner. Reminders name missing permissions and are limited to three per server per 24-hour period.
+
 ## v1.10.0 - 2026-08-11 - Learned Moves and Item Source Improvements
 
 - Legendary Meowmere now lists **Moon Lord: 22.22%** instead of a generic Pal Drops source and no longer shows an empty **View Dropping Pals** result.

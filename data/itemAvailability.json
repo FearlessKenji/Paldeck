@@ -2,10 +2,10 @@
 	"schemaVersion": 1,
 	"game": {
 		"appId": 1623730,
-		"buildId": "24467282",
+		"buildId": "24575825",
 		"depotManifest": "5448381803282981635"
 	},
-	"verifiedAt": "2026-08-04",
+	"verifiedAt": "2026-08-12",
 	"methodology": [
 		"Cross-reference item legality with reachable recipe, loot, merchant, world-spawn, technology, event, and reward paths.",
 		"A definition or dormant recipe row alone does not establish normal-play availability.",
@@ -30,19 +30,19 @@
 		{
 			"id": "blueprint-accessory-avoid-1",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-bow-gun-fire-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-bow-gun-fire-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": [
 				"recipe"
 			]
@@ -50,7 +50,7 @@
 		{
 			"id": "blueprint-bow-gun-fire-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": [
 				"recipe"
 			]
@@ -58,7 +58,7 @@
 		{
 			"id": "blueprint-bow-gun-fire-5",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": [
 				"recipe"
 			]
@@ -66,13 +66,13 @@
 		{
 			"id": "blueprint-bow-gun-poison-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-bow-gun-poison-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": [
 				"recipe"
 			]
@@ -80,7 +80,7 @@
 		{
 			"id": "blueprint-bow-gun-poison-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": [
 				"recipe"
 			]
@@ -88,7 +88,7 @@
 		{
 			"id": "blueprint-bow-gun-poison-5",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": [
 				"recipe"
 			]
@@ -96,139 +96,139 @@
 		{
 			"id": "blueprint-head-equip025-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip025-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip025-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip025-5",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip026-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip026-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip026-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip026-5",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip028-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip028-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip028-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip028-5",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip031-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip031-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip031-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip031-5",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip032-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip032-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip032-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head-equip032-5",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head001-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head001-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head001-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -239,19 +239,19 @@
 		{
 			"id": "blueprint-head002-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head002-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head002-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -262,19 +262,19 @@
 		{
 			"id": "blueprint-head003-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head003-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head003-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -288,19 +288,19 @@
 		{
 			"id": "blueprint-head004-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head004-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head004-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -311,19 +311,19 @@
 		{
 			"id": "blueprint-head005-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head005-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head005-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -334,19 +334,19 @@
 		{
 			"id": "blueprint-head006-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head006-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head006-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -357,19 +357,19 @@
 		{
 			"id": "blueprint-head007-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head007-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head007-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -380,19 +380,19 @@
 		{
 			"id": "blueprint-head008-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head008-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head008-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -406,19 +406,19 @@
 		{
 			"id": "blueprint-head009-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head009-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head009-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -429,19 +429,19 @@
 		{
 			"id": "blueprint-head010-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head010-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head010-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -452,19 +452,19 @@
 		{
 			"id": "blueprint-head011-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head011-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head011-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -475,19 +475,19 @@
 		{
 			"id": "blueprint-head012-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head012-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head012-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -498,19 +498,19 @@
 		{
 			"id": "blueprint-head013-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head013-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head013-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -524,19 +524,19 @@
 		{
 			"id": "blueprint-head014-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head014-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head014-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -547,19 +547,19 @@
 		{
 			"id": "blueprint-head015-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head015-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head015-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -570,19 +570,19 @@
 		{
 			"id": "blueprint-head016-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head016-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head016-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -593,19 +593,19 @@
 		{
 			"id": "blueprint-head017-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head017-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-head017-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
@@ -616,91 +616,91 @@
 		{
 			"id": "blueprint-launcher-meteor-5",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-octavia-revolver-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-octavia-revolver-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-octavia-revolver-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-octavia-shotgun-2",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-octavia-shotgun-3",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-octavia-shotgun-4",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-otomo-pal-confidence-increase-1",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-salvage-fishing-bait-1-a",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-salvage-fishing-bait-1-b",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-salvage-fishing-bait-2-a",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-salvage-fishing-bait-2-b",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-salvage-fishing-bait-3-b",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-salvage-treasure-box-key01",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{
 			"id": "blueprint-zoe-halloweenskin-1",
 			"status": "unused",
-			"reason": "Game-disabled schematic definition in installed build 24467282.",
+			"reason": "Game-disabled schematic definition in installed build 24575825.",
 			"allowedEvidence": []
 		},
 		{

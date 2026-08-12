@@ -315,6 +315,30 @@ async function migratePaldeckAnnouncementWarnings() {
 	}
 }
 
+async function migratePaldeckAnnouncementManagerWarnings() {
+	if (!await tableExists(`JoinedServers`)) {
+		return;
+	}
+
+	const columns = await getTableColumns(`JoinedServers`);
+	const addedColumns = [];
+	const columnDefinitions = [
+		[`paldeck_announcement_warning_count`, `INTEGER NOT NULL DEFAULT 0`],
+		[`paldeck_announcement_warning_window_started_at`, `DATETIME`],
+		[`paldeck_announcement_warning_last_sent_at`, `DATETIME`],
+	];
+
+	for (const [columnName, definition] of columnDefinitions) {
+		if (await addColumnIfMissing(`JoinedServers`, columns, columnName, definition)) {
+			addedColumns.push(columnName);
+		}
+	}
+
+	if (addedColumns.length) {
+		info(`Added Paldeck announcement manager warning column(s): ${addedColumns.join(`, `)}`);
+	}
+}
+
 const migrations = [
 	{
 		description: `Repair suggestion storage for longer text and required fields.`,
@@ -345,6 +369,11 @@ const migrations = [
 		description: `Track owner warnings for inaccessible Paldeck update channels.`,
 		id: `20260727_paldeck_announcement_warnings`,
 		run: migratePaldeckAnnouncementWarnings,
+	},
+	{
+		description: `Rate-limit ephemeral update-channel warnings for server managers.`,
+		id: `20260811_paldeck_announcement_manager_warnings`,
+		run: migratePaldeckAnnouncementManagerWarnings,
 	},
 ];
 

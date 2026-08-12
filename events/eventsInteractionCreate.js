@@ -1,6 +1,7 @@
 // Routes Discord interactions while treating expired acknowledgements as expected timing failures.
 const { Events, MessageFlags } = require(`discord.js`);
 const { error, warn } = require(`../utils/writeLog.js`);
+const { sendAnnouncementWarningToManager } = require(`../utils/announcements.js`);
 
 const UNKNOWN_INTERACTION = 10062;
 
@@ -104,6 +105,14 @@ async function dispatchInteraction(interaction) {
 	}
 	try {
 		await command[route.handlerName](interaction);
+		if (route.handlerName === `execute`) {
+			// Administrative delivery warnings remain private and only follow completed slash commands.
+			try {
+				await sendAnnouncementWarningToManager(interaction);
+			} catch (warningError) {
+				warn(`Could not send an update-channel warning after ${interactionDescription(interaction)}.`, warningError);
+			}
+		}
 	} catch (err) {
 		if (route.handlerName === `autocomplete`) {
 			if (!isUnknownInteraction(err)) {

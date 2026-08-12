@@ -345,6 +345,8 @@ function validateWorkbenchAndFixedSources(context, fixtures) {
 	validateFixedSourcePresentation(context, fixtures);
 }
 
+// This integration-style assertion intentionally covers the interacting source compaction branches.
+// eslint-disable-next-line complexity
 function validateItemSourceSummaries(context, fixtures) {
 	const { itemData } = context;
 	assert(fixtures.ancientSphereResponse.files.length === 2, `Ancient Sphere should attach its combined Sunreach and World Tree source map.`);
@@ -368,14 +370,28 @@ function validateItemSourceSummaries(context, fixtures) {
 	assert(oreSources.split(`\n`).length === 3, `Ore should render one line per acquisition method.`);
 
 	const holyWater = itemData.Items.find(item => item.name === `World Tree Holy Water`);
+	const aquaticKit = itemData.Items.find(item => item.name === `Aquatic Construction Kit`);
+	const jetragonGear = itemData.Items.find(item => item.name === `Jetragon's Missile Launcher`);
+	const psychoGravity = itemData.Items.find(item => item.name === `Dark Skill Fruit: Psycho Gravity`);
+	assert(holyWater.stats.weight === 0.1, `World Tree Holy Water should use its v1.0.3 weight.`);
+	assert(aquaticKit.stats.rank === 2 && aquaticKit.recipes.some(recipe => recipe.requirement === `Technology Lv. 23`),
+		`Aquatic Construction Kit should use its v1.0.3 rank and technology recipe.`);
+	assert(jetragonGear.recipes.some(recipe => recipe.requirement === `Technology Lv. 70`),
+		`Jetragon's Missile Launcher should unlock at its v1.0.3 technology level.`);
+	assert(psychoGravity.properties.bLegalInGame === 1 && psychoGravity.searchable !== false,
+		`Dark Skill Fruit: Psycho Gravity should remain searchable after its v1.0.3 legality fix.`);
 
 	const holyWaterSources = sourceText(holyWater.acquisition, holyWater.merchantLocations, holyWater.droppedBy);
 
 	assert(
 		holyWaterSources.split(`\n`).filter(line => line.startsWith(`Pal Drops`)).length === 1 &&
-		holyWaterSources.includes(`Pal Drops ×1–3: 50%`) && holyWaterSources.includes(`Teafant Springs ×5–10: 100%`) &&
+		holyWaterSources.includes(`Pal Drops ×2–30: up to 100%`) &&
+		holyWaterSources.includes(`Expeditions ×12–38: 100%`) &&
+		holyWaterSources.includes(`Fishing ×9–71: 100%`) &&
+		holyWaterSources.includes(`Fishing Ponds ×10–15: 100%`) &&
+		holyWaterSources.includes(`Teafant Springs ×30: 100%`) &&
 		!holyWaterSources.includes(`Ground Spawns`),
-		`World Tree Holy Water should show its Pal and Teafant Spring pathways once each.`,
+		`World Tree Holy Water should show every v1.0.3 acquisition pathway once.`,
 	);
 
 	assert(

@@ -145,8 +145,49 @@ async function validateEventsLoad() {
 	});
 }
 
+function validateBroadcastSummary(announceCommand) {
+	const broadcastSummary = announceCommand.summarizeResults([
+		...Array.from({ length: 12 }, (_, index) => ({ guildId: `sent-${index}`, message: `Sent.`, ok: true, skipped: false })),
+		{ guildId: `skipped-guild`, message: `No updates channel is configured.`, ok: true, skipped: true },
+		{ guildId: `failed-guild`, message: `Missing Send Messages permission.`, ok: false, skipped: false },
+		{ guildId: `long-failure`, message: `x`.repeat(2000), ok: false, skipped: false },
+	]);
+	const completeBroadcastSummary = broadcastSummary.join(`\n`);
+
+	assert(broadcastSummary.every(message => message.length <= 1900), `Broadcast result summaries should stay within Discord's safe message length.`);
+	assert(completeBroadcastSummary.includes(`Sent: 12`), `Broadcast result summaries should condense successful deliveries into the sent total.`);
+	assert(completeBroadcastSummary.includes(`skipped-guild`) && completeBroadcastSummary.includes(`failed-guild`) && completeBroadcastSummary.includes(`long-failure`),
+		`Broadcast result summaries should include every skipped and failed result.`);
+	assert(!completeBroadcastSummary.includes(`more result`), `Broadcast result summaries should never replace results with an overflow count.`);
+}
+
+async function validateManagerAnnouncementWarnings(announcements, guildId, PermissionFlagsBits) {
+	let managerWarnings = 0;
+	const managerInteraction = {
+		deferred: true,
+		followUp: async payload => {
+			assert(payload.flags === 64 && payload.content.startsWith(`**Paldeck updates need attention**`), `Manager warning should be ephemeral and immediately identifiable.`);
+			assert(payload.content.includes(`**Missing permissions:** Send Messages`), `Manager warning should name missing permissions.`);
+			managerWarnings += 1;
+		},
+		guildId,
+		isChatInputCommand: () => true,
+		memberPermissions: { has: permission => permission === PermissionFlagsBits.ManageGuild },
+	};
+	const warningStart = new Date(`2026-08-11T12:00:00.000Z`);
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, warningStart);
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, new Date(warningStart.getTime() + 5 * 60 * 1000));
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, new Date(warningStart.getTime() + 15 * 60 * 1000));
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, new Date(warningStart.getTime() + 30 * 60 * 1000));
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, new Date(warningStart.getTime() + 45 * 60 * 1000));
+	assert(managerWarnings === 3, `Manager warnings should allow three messages with a minimum interval before the 24-hour cooldown.`);
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, new Date(warningStart.getTime() + 24 * 60 * 60 * 1000));
+	assert(managerWarnings === 4, `Manager warning budget should refresh after 24 hours.`);
+}
+
 async function validateAnnouncementHelpers() {
 	const announcements = requireFresh(`utils`, `announcements.js`);
+	const announceCommand = requireFresh(`commands`, `globalCommands`, `admin`, `announce.js`);
 	const { PermissionFlagsBits } = require(`discord.js`);
 	const sample = `## Unreleased
 
@@ -172,6 +213,7 @@ async function validateAnnouncementHelpers() {
 	assert(!splitMessages.some(message => /_Part \d+\/\d+_/u.test(message)), `Split patch-note announcements should not add Part X/Y labels.`);
 	assert(announcements.normalizeAnnouncementId({ id: 123456789n }) === `123456789`, `Announcement ID normalization did not handle bigint IDs.`);
 	assert(announcements.splitAnnouncementText(`a`.repeat(3900)).every(chunk => chunk.length <= 1900), `Announcement splitter exceeded Discord-safe chunk size.`);
+	validateBroadcastSummary(announceCommand);
 
 	const realLatest = announcements.getLatestPatchNotes();
 	const expectedLatestPatchNoteId = `v${readJson(`package.json`).version}`;
@@ -194,12 +236,8 @@ async function validateAnnouncementHelpers() {
 
 	const { JoinedServers } = require(resolveProject(`database`, `dbObjects.js`));
 	const guildId = `999999999999999999`;
-	let ownerDms = 0;
 	const owner = {
 		id: `888888888888888888`,
-		send: async () => {
-			ownerDms += 1;
-		},
 		user: { username: `SmokeOwner` },
 	};
 	const guild = {
@@ -221,8 +259,8 @@ async function validateAnnouncementHelpers() {
 	const firstFailure = await announcements.sendLatestPatchNotesToGuild(client, guildId, { force: true });
 	await announcements.sendLatestPatchNotesToGuild(client, guildId, { force: true });
 
-	assert(firstFailure.message.includes(`server owner was notified`), `Failed announcement delivery should report a successful owner notification.`);
-	assert(ownerDms === 1, `The same unresolved announcement-channel failure should notify the owner only once.`);
+	assert(!firstFailure.message.includes(`server owner was notified`), `Failed announcement delivery should not directly message the server owner.`);
+	await validateManagerAnnouncementWarnings(announcements, guildId, PermissionFlagsBits);
 	await JoinedServers.destroy({ where: { guild_id: guildId } });
 }
 
@@ -323,6 +361,9 @@ function validateDatabaseModels() {
 	assert(joinedServerColumns.paldeck_announcement_channel_id, `JoinedServers is missing paldeck_announcement_channel_id.`);
 	assert(joinedServerColumns.paldeck_announcement_last_id, `JoinedServers is missing paldeck_announcement_last_id.`);
 	assert(joinedServerColumns.paldeck_announcement_warning_key, `JoinedServers is missing paldeck_announcement_warning_key.`);
+	assert(joinedServerColumns.paldeck_announcement_warning_count, `JoinedServers is missing paldeck_announcement_warning_count.`);
+	assert(joinedServerColumns.paldeck_announcement_warning_window_started_at, `JoinedServers is missing paldeck_announcement_warning_window_started_at.`);
+	assert(joinedServerColumns.paldeck_announcement_warning_last_sent_at, `JoinedServers is missing paldeck_announcement_warning_last_sent_at.`);
 	assert(dbObjects.BotSettings.rawAttributes.key && dbObjects.BotSettings.rawAttributes.value, `BotSettings is missing key/value storage.`);
 }
 

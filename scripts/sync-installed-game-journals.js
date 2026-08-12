@@ -44,6 +44,12 @@ function normalized(value) {
 
 async function main() {
 	const snapshot = installedSnapshot();
+	const existing = fs.existsSync(OUTPUT) ? JSON.parse(fs.readFileSync(OUTPUT, `utf8`)).Journals || [] : [];
+	const existingById = new Map(existing.map(journal => [journal.id, journal]));
+	const existingMap = id => {
+		const map = existingById.get(id)?.map;
+		return map && fs.existsSync(path.join(ROOT, map)) ? map : null;
+	};
 	const master = decodedTable(snapshot, `/DT_NoteMasterDataTable`);
 	const text = decodedTable(snapshot, `/L10N/en/Pal/DataTable/Text/DT_NoteDescText`);
 	const journalItems = resolvedItemData().Items.filter(item => item.journalEntry);
@@ -54,6 +60,8 @@ async function main() {
 			markers.push({ map: definition.map, mapKey: definition.key, marker });
 		}
 	}
+	// Journal matching combines localized text, item metadata, placed markers, and stable existing maps.
+	// eslint-disable-next-line complexity
 	const journals = Object.entries(master).map(([id, row]) => {
 		const raw = text[row.TextId_Description]?.TextData?.LocalizedString || text[id]?.TextData?.LocalizedString || ``;
 		const [title, ...body] = raw.replaceAll(`\r`, ``).split(`\n`);
@@ -61,7 +69,9 @@ async function main() {
 		const journalItem = journalItems.find(item => normalized(item.journalEntry?.sourceName || item.name) === normalized(title));
 		return {
 			id, title: title.trim(), description: body.join(`\n`).trim(),
-			map: journalItem?.acquisition?.map || placed?.map || null, mapKey: placed?.mapKey || null,
+			// Localized title corrections must not disconnect an existing journal from its generated location map.
+			map: journalItem?.acquisition?.map || existingMap(id) || placed?.map || null,
+			mapKey: placed?.mapKey || existingById.get(id)?.mapKey || null,
 			placed: Boolean(placed),
 		};
 	}).sort((left, right) => left.title.localeCompare(right.title));

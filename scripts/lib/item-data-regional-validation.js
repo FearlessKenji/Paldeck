@@ -18,8 +18,8 @@ function collectMappedRegionalItems(itemData, problems) {
 	const mappedRegionalItems = itemData.Items.filter(item => item.acquisition?.sources?.some(source =>
 		[`Treasure`, `Treasure Element`, `Supply`, `Junk`, `Salvage Rank1`, `Salvage Rank2`].includes(source.type),
 	));
-	if (mappedRegionalItems.length !== 568) {
-		problems.push(`Expected all 568 current decoded regional loot-pool records, found ${mappedRegionalItems.length}.`);
+	if (mappedRegionalItems.length !== 572) {
+		problems.push(`Expected all 572 current decoded regional loot-pool records, found ${mappedRegionalItems.length}.`);
 	}
 	const solSphere = itemData.Items.find(item => item.name === `Sol Sphere`);
 	if (!solSphere?.acquisition?.map || !solSphere.acquisition.sources?.some(source => source.type === `Junk`) ||
@@ -143,8 +143,9 @@ function validateJournalData(itemData, problems) {
 		problems.push(`Every journal item must include its game ID, title, text, placed marker, and individual map.`);
 	}
 	if (journalData.Journals?.length !== 64 || journalData.Journals.some(journal =>
-		!journal.description || !/^data\/item-maps\/journal-(?:palpagos|worldtree)-.+\.png$/u.test(journal.map || ``))) {
-		problems.push(`The /journal catalog must contain all 64 localized texts with individual journal maps.`);
+		!journal.description || !/^data\/item-maps\/(?:(?:journal-)?(?:palpagos|worldtree)(?:-journals)?-.+|(?:palpagos|worldtree)-journals)\.png$/u.test(journal.map || ``) ||
+		!fs.existsSync(path.join(PROJECT_ROOT, journal.map)))) {
+		problems.push(`The /journal catalog must contain all 64 localized texts with valid journal maps.`);
 	}
 	for (const title of [`Suppression Operation Comms Log`, `Ancient Recorder`, `(A scorched piece of paper)`]) {
 		if (!journals.some(journal => journal.name === title)) {
