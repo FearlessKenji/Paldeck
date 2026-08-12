@@ -1,7 +1,15 @@
 {
 	"fixedLocationSets": {
 		"teafantSprings": {
-			"sourceAsset": "WorldTree_Drop_HolyWater / verified World Tree spring coordinates",
+			"sourceAsset": "Pal/Content/Pal/Blueprint/MapObject/Object/LevelObject/BP_LevelObject_HealSpring",
+			"nativeClass": "PalLevelObjectRecoverParty",
+			"reward": {
+				"itemId": "WorldTreeHolyWater",
+				"quantity": "30",
+				"probability": "100%",
+				"underlyingLottery": "WorldTree_Drop_HolyWater (5–10; not the effective spring payout)",
+				"scope": "All three HealSpring placements in MainWorld_5"
+			},
 			"map": "worldtree",
 			"markers": [
 				[-1536, 1368, 0], [-1725, 1395, 0], [-1897, 1363, 0]

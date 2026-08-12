@@ -161,6 +161,30 @@ function validateBroadcastSummary(announceCommand) {
 	assert(!completeBroadcastSummary.includes(`more result`), `Broadcast result summaries should never replace results with an overflow count.`);
 }
 
+async function validateManagerAnnouncementWarnings(announcements, guildId, PermissionFlagsBits) {
+	let managerWarnings = 0;
+	const managerInteraction = {
+		deferred: true,
+		followUp: async payload => {
+			assert(payload.flags === 64 && payload.content.startsWith(`**Paldeck updates need attention**`), `Manager warning should be ephemeral and immediately identifiable.`);
+			assert(payload.content.includes(`**Missing permissions:** Send Messages`), `Manager warning should name missing permissions.`);
+			managerWarnings += 1;
+		},
+		guildId,
+		isChatInputCommand: () => true,
+		memberPermissions: { has: permission => permission === PermissionFlagsBits.ManageGuild },
+	};
+	const warningStart = new Date(`2026-08-11T12:00:00.000Z`);
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, warningStart);
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, new Date(warningStart.getTime() + 5 * 60 * 1000));
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, new Date(warningStart.getTime() + 15 * 60 * 1000));
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, new Date(warningStart.getTime() + 30 * 60 * 1000));
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, new Date(warningStart.getTime() + 45 * 60 * 1000));
+	assert(managerWarnings === 3, `Manager warnings should allow three messages with a minimum interval before the 24-hour cooldown.`);
+	await announcements.sendAnnouncementWarningToManager(managerInteraction, new Date(warningStart.getTime() + 24 * 60 * 60 * 1000));
+	assert(managerWarnings === 4, `Manager warning budget should refresh after 24 hours.`);
+}
+
 async function validateAnnouncementHelpers() {
 	const announcements = requireFresh(`utils`, `announcements.js`);
 	const announceCommand = requireFresh(`commands`, `globalCommands`, `admin`, `announce.js`);
@@ -212,12 +236,8 @@ async function validateAnnouncementHelpers() {
 
 	const { JoinedServers } = require(resolveProject(`database`, `dbObjects.js`));
 	const guildId = `999999999999999999`;
-	let ownerDms = 0;
 	const owner = {
 		id: `888888888888888888`,
-		send: async () => {
-			ownerDms += 1;
-		},
 		user: { username: `SmokeOwner` },
 	};
 	const guild = {
@@ -239,8 +259,8 @@ async function validateAnnouncementHelpers() {
 	const firstFailure = await announcements.sendLatestPatchNotesToGuild(client, guildId, { force: true });
 	await announcements.sendLatestPatchNotesToGuild(client, guildId, { force: true });
 
-	assert(firstFailure.message.includes(`server owner was notified`), `Failed announcement delivery should report a successful owner notification.`);
-	assert(ownerDms === 1, `The same unresolved announcement-channel failure should notify the owner only once.`);
+	assert(!firstFailure.message.includes(`server owner was notified`), `Failed announcement delivery should not directly message the server owner.`);
+	await validateManagerAnnouncementWarnings(announcements, guildId, PermissionFlagsBits);
 	await JoinedServers.destroy({ where: { guild_id: guildId } });
 }
 
@@ -341,6 +361,9 @@ function validateDatabaseModels() {
 	assert(joinedServerColumns.paldeck_announcement_channel_id, `JoinedServers is missing paldeck_announcement_channel_id.`);
 	assert(joinedServerColumns.paldeck_announcement_last_id, `JoinedServers is missing paldeck_announcement_last_id.`);
 	assert(joinedServerColumns.paldeck_announcement_warning_key, `JoinedServers is missing paldeck_announcement_warning_key.`);
+	assert(joinedServerColumns.paldeck_announcement_warning_count, `JoinedServers is missing paldeck_announcement_warning_count.`);
+	assert(joinedServerColumns.paldeck_announcement_warning_window_started_at, `JoinedServers is missing paldeck_announcement_warning_window_started_at.`);
+	assert(joinedServerColumns.paldeck_announcement_warning_last_sent_at, `JoinedServers is missing paldeck_announcement_warning_last_sent_at.`);
 	assert(dbObjects.BotSettings.rawAttributes.key && dbObjects.BotSettings.rawAttributes.value, `BotSettings is missing key/value storage.`);
 }
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // Applies only deterministic item-master and recipe-table corrections from a decoded installed-game snapshot.
-/* eslint-disable max-statements-per-line -- fixed game-table fields and CLI guards are intentionally compact. */
+/* eslint-disable max-lines, max-statements-per-line -- installed-table synchronization remains together for auditability. */
 const fs = require(`node:fs`);
 const os = require(`node:os`);
 const path = require(`node:path`);
@@ -9,6 +9,7 @@ const availabilityManifest = require(`../data/itemAvailability.json`);
 const curatedTreasureMapSources = require(`../data/curatedTreasureMapSources.json`);
 const curatedSlabFragmentSources = require(`../data/curatedSlabFragmentSources.json`);
 const curatedSchematicSources = require(`../data/curatedSchematicSources.json`);
+const gameSourceData = require(`../data/gameSourceData.json`);
 const { compactItemData, resolvedItemData } = require(`../utils/itemData.js`);
 const { applyTowerBossSources } = require(`../utils/towerBossSources.js`);
 const { removeIndirectTreasureMapMarkers } = require(`../utils/itemMapSources.js`);
@@ -423,7 +424,11 @@ function applyTreasureMapLoot(itemData, lootByItem) {
 function applyCuratedAcquisitionSources(itemData) {
 	for (const item of itemData.Items) {
 		const acquisition = curatedTreasureMapSources[item.id] || curatedSlabFragmentSources[item.id] || curatedSchematicSources[item.id];
-		if (acquisition) {item.acquisition = JSON.parse(JSON.stringify(acquisition));}
+		if (acquisition) {
+			const lootPools = item.acquisition?.lootPools;
+			item.acquisition = JSON.parse(JSON.stringify(acquisition));
+			if (lootPools?.length) {item.acquisition.lootPools = lootPools;}
+		}
 	}
 }
 
@@ -580,12 +585,26 @@ function mergeInstalledSources(item, sources, onlyRelics) {
 	return changed;
 }
 
-function synchronizeLegalityAndRecipe(item, id, context, changes) {
+// Each field is intentionally compared independently so dry runs report every kind of authoritative drift.
+// eslint-disable-next-line complexity
+function synchronizeItemMaster(item, id, context, changes) {
 	const gameItem = context.gameItemRows.get(id);
 	if (gameItem?.bLegalInGame !== undefined) {
 		const legal = gameItem.bLegalInGame ? 1 : 0;
 		if (Number(item.properties?.bLegalInGame ?? 0) !== legal) {changes.legality = 1;}
 		item.properties.bLegalInGame = legal;
+	}
+	// Rank and weight are direct item-master values and can change independently of recipes or legality.
+	for (const [gameField, localField] of [[`Rank`, `rank`], [`Weight`, `weight`]]) {
+		if (gameItem?.[gameField] === undefined) {continue;}
+		const value = Number(gameItem[gameField]);
+		if (value === 0) {
+			if (Object.hasOwn(item.stats || {}, localField)) {changes.itemMaster = 1;}
+			delete item.stats[localField];
+			continue;
+		}
+		if (Number(item.stats?.[localField]) !== value) {changes.itemMaster = 1;}
+		item.stats[localField] = value;
 	}
 	const recipes = context.gameRecipes.recipes.get(id) || [];
 	if (JSON.stringify(item.recipes || []) !== JSON.stringify(recipes)) {changes.recipe = 1;}
@@ -594,8 +613,8 @@ function synchronizeLegalityAndRecipe(item, id, context, changes) {
 
 function synchronizeItem(item, context) {
 	const id = normalizedId(rawGameId(item));
-	const changes = { acquisition: 0, legality: 0, merchant: 0, recipe: 0 };
-	synchronizeLegalityAndRecipe(item, id, context, changes);
+	const changes = { acquisition: 0, itemMaster: 0, legality: 0, merchant: 0, recipe: 0 };
+	synchronizeItemMaster(item, id, context, changes);
 	if (item.merchantLocations && !context.shopItemIds.has(id)) {
 		delete item.merchantLocations;
 		delete item.merchantLocationsRef;
@@ -611,6 +630,72 @@ function synchronizeItem(item, context) {
 	return changes;
 }
 
+function applyV103HolyWater(itemData) {
+	const item = itemData.Items.find(value => rawGameId(value) === `WorldTreeHolyWater`);
+	if (!item) {throw new Error(`World Tree Holy Water is missing from the local catalog.`);}
+	const springReward = gameSourceData.fixedLocationSets.teafantSprings.reward;
+	if (springReward.itemId !== `WorldTreeHolyWater`) {throw new Error(`Teafant Spring reward metadata is invalid.`);}
+	for (const drop of item.droppedBy || []) {
+		const alpha = drop.variant === `Alpha`;
+		drop.quantity = alpha ? `20–30` : `2–4`;
+		drop.probability = alpha ? `100%` : `75%`;
+	}
+	item.acquisition = {
+		sources: [{ type: `Teafant Springs`, entries: [
+			// v1.0.3 applies the spring increase at runtime; the underlying lottery row remains the stale 5–10 range.
+			{ location: `3 World Tree locations`, quantity: springReward.quantity, probability: springReward.probability },
+		] }],
+		map: `data/item-maps/worldtree-teafant-springs.png`,
+		mapSources: { map: `worldtree`, markers: [{ type: `Teafant Springs`, locationSet: `teafantSprings` }] },
+		lootPools: [
+			{ pool: `WorldTree_Treasure_Fishing`, category: `Fishing`, quantity: `9–18`, probability: `100%` },
+			{ pool: `WorldTree02_Fishing`, category: `Fishing`, quantity: `43–71`, probability: `100%` },
+			{ pool: `WorldTree_Treasure_Fishpond`, category: `Fishing Ponds`, quantity: `10–15`, probability: `100%` },
+			{ pool: `Expedition_WorldTree`, category: `Expeditions`, quantity: `12–16`, probability: `100%` },
+			{ pool: `Expedition_WorldTree_Hard`, category: `Expeditions`, quantity: `32–38`, probability: `100%` },
+		],
+	};
+}
+
+function applyV103Descriptions(itemData) {
+	const descriptions = new Map([
+		[`Fiber`, `Fiber collected from trees. A material used when creating bows, etc. Can also be obtained by breaking down Wood at a Crusher.`],
+		[`Wood`, `Material for structures and items. Obtained by chopping down trees. Can be broken down at a Crusher to obtain Fiber.`],
+	]);
+	for (const item of itemData.Items) {
+		const description = descriptions.get(rawGameId(item));
+		if (description) {item.description = description;}
+	}
+}
+
+function applyV103MoonLordRewards(itemData, snapshot) {
+	const itemById = new Map(itemData.Items.map(item => [normalizedId(rawGameId(item)), item]));
+	const bosses = new Map([
+		[`PalSummon_YakushimaBoss002`, `Moon Lord: Lvl 50`],
+		[`PalSummon_YakushimaBoss002_2`, `[Master] Moon Lord: Lvl 80`],
+	]);
+	for (const item of itemData.Items) {
+		if (!item.acquisition?.sources) {continue;}
+		for (const source of item.acquisition.sources.filter(value => value.type === `Summoning Altar`)) {
+			source.entries = source.entries.filter(entry => ![...bosses.values()].includes(entry.location));
+		}
+		item.acquisition.sources = item.acquisition.sources.filter(source => source.type !== `Summoning Altar` || source.entries.length);
+	}
+	for (const entry of tableEntries(snapshot, `raidBoss`).filter(value => bosses.has(value.Key))) {
+		const location = bosses.get(entry.Key);
+		for (const reward of entry.Value.SuccessItemList || []) {
+			const item = itemById.get(normalizedId(reward.ItemName?.Key));
+			if (!item) {continue;}
+			item.acquisition ||= { sources: [] };
+			let source = item.acquisition.sources.find(value => value.type === `Summoning Altar`);
+			if (!source) {source = { type: `Summoning Altar`, entries: [] }; item.acquisition.sources.push(source);}
+			source.entries.push({ location,
+				quantity: Number(reward.Min) === Number(reward.Max) ? String(reward.Min) : `${reward.Min}–${reward.Max}`,
+				probability: `${reward.Rate}%` });
+		}
+	}
+}
+
 function main() {
 	const snapshot = loadSnapshot();
 	// Clone each resolved row separately so shared acquisition presets cannot leak mutations between otherwise unrelated items.
@@ -621,12 +706,15 @@ function main() {
 	const shopItemIds = gameShopItemIds(snapshot);
 	const installedSources = installedAcquisitionSources(snapshot);
 	const treasureLoot = treasureMapLoot(snapshot);
-	const changes = { acquisition: 0, legality: 0, merchant: 0, recipe: 0 };
+	const changes = { acquisition: 0, itemMaster: 0, legality: 0, merchant: 0, recipe: 0 };
 	const context = { gameItemRows, gameRecipes, shopItemIds, installedSources };
 	for (const item of itemData.Items) {
 		const itemChanges = synchronizeItem(item, context);
 		for (const [type, count] of Object.entries(itemChanges)) {changes[type] += count;}
 	}
+	applyV103HolyWater(itemData);
+	applyV103Descriptions(itemData);
+	applyV103MoonLordRewards(itemData, snapshot);
 	changes.treasureMap = applyTreasureMapLoot(itemData, treasureLoot);
 	// Treasure Map items need the physical game-backed sources of the maps themselves, not their possible destinations.
 	applyCuratedAcquisitionSources(itemData);

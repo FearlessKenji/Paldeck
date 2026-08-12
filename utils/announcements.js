@@ -1,13 +1,23 @@
 const fs = require(`node:fs`);
 const path = require(`node:path`);
 const { Op } = require(`sequelize`);
-const { PermissionFlagsBits } = require(`discord.js`);
+const { MessageFlags, PermissionFlagsBits } = require(`discord.js`);
 const { JoinedServers } = require(`../database/dbObjects.js`);
 const { error, warn } = require(`./writeLog.js`);
 
 const PATCH_NOTES_PATH = path.resolve(__dirname, `..`, `docs`, `patch-notes.md`);
 const ANNOUNCEMENT_MESSAGE_LIMIT = 1900;
+const MANAGER_WARNING_LIMIT = 3;
+const MANAGER_WARNING_INTERVAL_MS = 15 * 60 * 1000;
+const MANAGER_WARNING_WINDOW_MS = 24 * 60 * 60 * 1000;
 const RELEASE_HEADING_PATTERN = /^##\s+(v?\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?)(?:\s|$)/u;
+
+const CLEARED_WARNING_STATE = {
+	paldeck_announcement_warning_count: 0,
+	paldeck_announcement_warning_key: null,
+	paldeck_announcement_warning_last_sent_at: null,
+	paldeck_announcement_warning_window_started_at: null,
+};
 
 function normalizeNewlines(text) {
 	return String(text || ``).replace(/\r\n?/gu, `\n`).trim();
@@ -195,14 +205,14 @@ async function updateAnnouncementSettings(guild, values) {
 async function saveAnnouncementChannel(guild, channelId) {
 	return updateAnnouncementSettings(guild, {
 		paldeck_announcement_channel_id: normalizeAnnouncementId(channelId),
-		paldeck_announcement_warning_key: null,
+		...CLEARED_WARNING_STATE,
 	});
 }
 
 async function clearAnnouncementChannel(guild) {
 	return updateAnnouncementSettings(guild, {
 		paldeck_announcement_channel_id: null,
-		paldeck_announcement_warning_key: null,
+		...CLEARED_WARNING_STATE,
 	});
 }
 
@@ -256,40 +266,90 @@ async function fetchAnnouncementChannel(guild, channelId) {
 	return checkAnnouncementChannelAccess(guild, channel);
 }
 
-async function notifyGuildOwnerOfAnnouncementFailure(guild, channelId, channelResult) {
+async function recordAnnouncementFailure(guild, channelId, channelResult) {
 	const server = await JoinedServers.findByPk(guild.id);
 	const warningKey = `${channelId || `none`}:${channelResult.code || `unknown`}`;
 
-	if (!server || server.paldeck_announcement_warning_key === warningKey) {
-		return false;
-	}
-
-	const ownerMember = await guild.fetchOwner().catch(() => null);
-	const owner = ownerMember || await guild.client?.users.fetch(server.owner_id).catch(() => null);
-
-	if (!owner?.send) {
-		return false;
-	}
-
-	const content = [
-		`## Paldeck updates need attention`,
-		`Paldeck could not post an update in **${guild.name || server.guild_name}** (${guild.id}).`,
-		channelResult.message,
-		`Run \`/updates channel\` in that server to select an accessible channel, or grant Paldeck the missing channel permissions.`,
-	].join(`\n\n`);
-
-	try {
-		await owner.send({ content });
+	if (server && server.paldeck_announcement_warning_key !== warningKey) {
+		// A materially different failure receives a fresh warning budget immediately.
 		await server.update({
-			owner_id: owner.id || server.owner_id,
-			owner_username: owner.user?.username || owner.username || server.owner_username,
+			...CLEARED_WARNING_STATE,
 			paldeck_announcement_warning_key: warningKey,
 		});
-		return true;
-	} catch (err) {
-		warn(`Could not notify the owner of guild ${guild.id} about its Paldeck Updates channel: ${err.message}`);
+	}
+}
+
+function managerWarningContent(warningKey) {
+	const failureCode = String(warningKey || ``).split(`:`).at(-1);
+	const heading = `**Paldeck updates need attention**`;
+
+	if (failureCode === `unavailable`) {
+		return `${heading}\n\nYou are seeing this message because Paldeck has patch note updates enabled on this server, but the configured channel is no longer available. Use \`/updates channel\` to select another channel or \`/updates clear\` to disable announcements.`;
+	}
+
+	const permissionNames = [];
+	if (failureCode.split(`-`).includes(`view`)) {
+		permissionNames.push(`View Channel`);
+	}
+	if (failureCode.split(`-`).includes(`send`)) {
+		permissionNames.push(`Send Messages`);
+	}
+	const missingPermissions = permissionNames.length ? permissionNames.join(`, `) : `Unknown`;
+
+	return `${heading}\n\nYou are seeing this message because Paldeck has patch note updates enabled on this server, but it cannot post to the configured channel due to current permissions. Use \`/updates channel\` or modify the destination channel's permissions to repair it, or \`/updates clear\` to disable announcements.\n\n**Missing permissions:** ${missingPermissions}`;
+}
+
+function isEligibleManagerInteraction(interaction) {
+	return interaction.isChatInputCommand?.() && interaction.guildId &&
+		interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild);
+}
+
+function availableManagerWarningBudget(server, now) {
+	const windowStartedAt = server.paldeck_announcement_warning_window_started_at;
+	const lastSentAt = server.paldeck_announcement_warning_last_sent_at;
+	const windowExpired = !windowStartedAt || now - new Date(windowStartedAt) >= MANAGER_WARNING_WINDOW_MS;
+	const warningCount = windowExpired ? 0 : server.paldeck_announcement_warning_count;
+	const intervalActive = lastSentAt && now - new Date(lastSentAt) < MANAGER_WARNING_INTERVAL_MS;
+
+	if (warningCount >= MANAGER_WARNING_LIMIT || intervalActive) {
+		return null;
+	}
+
+	return { warningCount, windowExpired, windowStartedAt };
+}
+
+async function sendAnnouncementWarningToManager(interaction, now = new Date()) {
+	if (!isEligibleManagerInteraction(interaction)) {
 		return false;
 	}
+
+	const server = await JoinedServers.findByPk(interaction.guildId);
+	if (!server?.paldeck_announcement_channel_id || !server.paldeck_announcement_warning_key) {
+		return false;
+	}
+
+	const budget = availableManagerWarningBudget(server, now);
+	if (!budget) {
+		return false;
+	}
+
+	const payload = {
+		content: managerWarningContent(server.paldeck_announcement_warning_key),
+		flags: MessageFlags.Ephemeral,
+	};
+
+	if (interaction.replied || interaction.deferred) {
+		await interaction.followUp(payload);
+	} else {
+		await interaction.reply(payload);
+	}
+
+	await server.update({
+		paldeck_announcement_warning_count: budget.warningCount + 1,
+		paldeck_announcement_warning_last_sent_at: now,
+		paldeck_announcement_warning_window_started_at: budget.windowExpired ? now : budget.windowStartedAt,
+	});
+	return true;
 }
 
 async function markPatchNotesSent(guildId, noteId) {
@@ -301,7 +361,7 @@ async function markPatchNotesSent(guildId, noteId) {
 
 	await server.update({
 		paldeck_announcement_last_id: noteId,
-		paldeck_announcement_warning_key: null,
+		...CLEARED_WARNING_STATE,
 	});
 }
 
@@ -327,12 +387,7 @@ async function sendLatestPatchNotesToGuild(client, guildId, { force = false } = 
 	const channelResult = await fetchAnnouncementChannel(guild, settings.paldeckAnnouncementChannelId);
 
 	if (!channelResult.ok) {
-		const ownerNotified = await notifyGuildOwnerOfAnnouncementFailure(
-			guild,
-			settings.paldeckAnnouncementChannelId,
-			channelResult,
-		);
-		const notification = ownerNotified ? ` The server owner was notified.` : ``;
+		await recordAnnouncementFailure(guild, settings.paldeckAnnouncementChannelId, channelResult);
 
 		return {
 			guildId: normalizedGuildId,
@@ -340,7 +395,7 @@ async function sendLatestPatchNotesToGuild(client, guildId, { force = false } = 
 			patchNoteId: note.id,
 			sent: 0,
 			skipped: true,
-			message: `${channelResult.message}${notification}`,
+			message: channelResult.message,
 		};
 	}
 
@@ -404,6 +459,7 @@ module.exports = {
 	normalizeAnnouncementId,
 	parseLatestPatchNotes,
 	saveAnnouncementChannel,
+	sendAnnouncementWarningToManager,
 	sendLatestPatchNotesToGuild,
 	splitAnnouncementText,
 };

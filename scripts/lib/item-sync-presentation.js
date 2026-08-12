@@ -79,6 +79,7 @@ function restoreReviewedVisibility(items, manifest) {
 function printSyncReport(snapshot, changes, malformedCount) {
 	console.log(`Installed-game sync for build ${snapshot.buildId}:`);
 	console.log(`- Recipe records changed: ${changes.recipe}`);
+	console.log(`- Item-master records changed: ${changes.itemMaster}`);
 	console.log(`- Legality flags changed: ${changes.legality}`);
 	console.log(`- Acquisition records changed: ${changes.acquisition}`);
 	console.log(`- Treasure Map loot records synchronized: ${changes.treasureMap}`);

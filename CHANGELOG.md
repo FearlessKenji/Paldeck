@@ -4,7 +4,15 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+## v1.10.1 - 2026-08-12
+
+- Updated Paldeck's package and release metadata to v1.10.1.
+
+- Synchronized the item catalog, availability manifest, journal text, recipes, technology levels, item-master rank and weight fields, World Tree Holy Water drops and reward sources—including the runtime-adjusted 30 Holy Water per Teafant Spring—and Moon Lord rewards with installed Palworld v1.0.3 build 24575825; restored Dark Skill Fruit: Psycho Gravity search visibility and added focused regression coverage.
+- Preserved exact loot-pool probabilities when installed-game synchronization reapplies curated acquisition maps, preventing source-chance data from being discarded during future game-data refreshes.
+- Replaced the blanket patch-note update requirement with an evidence-based release audit policy that excludes intermediate, reverted, duplicate, and non-user-facing changes.
 - Changed manual patch-note broadcast summaries to condense successful deliveries while retaining every skipped and failed result across Discord-safe follow-up messages.
+- Replaced unsolicited update-failure owner DMs with clearly titled, permission-gated ephemeral manager reminders, limited to three per server per 24-hour window with at least 15 minutes between reminders.
 
 ## v1.10.0 - 2026-08-11
 
