@@ -246,7 +246,18 @@ The current formula model expects this override set to stay empty. Only write ge
 $ npm run update:palworld-breeding-results:write
 ```
 
-Breeding autocomplete, ranks, and standard-child flags come from `data/palData.json`. `data/palBreeding.json` keeps source notes and compact non-same-species `DT_PalCombiUnique` fixed-combination rows decoded from the local game files. Optional `SourceOverrides` rows are only written when verified corrections cannot be represented by rank fallback.
+Breeding autocomplete, ranks, priorities, `IgnoreCombi`, and native-derived standard-child flags come from `data/palData.json`. `data/palBreeding.json` keeps source notes and compact non-same-species `DT_PalCombiUnique` rows—including parent-gender requirements—decoded from the installed game. `/breed result` accepts the active breeding item's `CombiRankBonus`; every breeding-result view provides mutation outcomes with the percentage for each possible child. Optional `SourceOverrides` rows are only written when verified corrections cannot be represented by game data and native rules.
+
+Same-species mutation-child pools are stored as readable `breeding.mutatedChildren` arrays. They apply the native parent-rank formula and resolve each target to the nearest non-boss Pal whose extracted `IgnoreCombi` flag is false. `/breed result` calculates the pool from both selected parents. Refresh the installed-game breeding flags before regenerating the pools after a game update:
+
+```console
+$ npm run sync:pal-breeding-flags:write
+$ npm run sync:pal-mutations:write
+$ npm run sync:pal-breeding-flags
+$ npm run sync:pal-mutations
+```
+
+The coefficients, candidate flags, sampling loop, and tie resolution were traced from the installed shipping executable and Pal parameter table. `data/palBreeding.json` records the formula and the observed Aegidron, Whalaska, and Ophydia hatch checks used to validate it.
 
 Convenience commands are also available:
 

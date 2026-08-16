@@ -16,12 +16,12 @@ const CURATED_PAL_HABITATS = {
 		file: `190-selyne.png`, map: `palpagos`, supplyPools: [`Sakurajima_Supply`], appendExistingPanel: true,
 		label: `Meteorite Event`, style: `diamond`, color: `#d946ef`,
 	},
-	Silvance: { file: `193-silvance.png`, map: `worldtree`, href: `Immortal_Shade_Silvance`, label: `Alpha`, style: `cluster` },
-	Dandilord: { file: `194-dandilord.png`, map: `worldtree`, href: `Bewitching_Lurker_Dandilord`, label: `Alpha`, style: `cluster` },
-	Panthalus: { file: `203-panthalus.png`, map: `palpagos`, items: [`Deserted Islet`], label: `Alpha`, style: `cluster` },
-	Astralym: { file: `204-astralym.png`, map: `worldtree`, href: `Nullstar_Calamity_Zenara_%26_Astralym`, label: `Alpha`, style: `cluster` },
+	Silvance: { file: `193-silvance.png`, map: `worldtree`, href: `Immortal_Shade_Silvance`, label: `Alpha`, style: `special` },
+	Dandilord: { file: `194-dandilord.png`, map: `worldtree`, href: `Bewitching_Lurker_Dandilord`, label: `Alpha`, style: `special` },
+	Panthalus: { file: `203-panthalus.png`, map: `palpagos`, items: [`Deserted Islet`], label: `Alpha`, style: `special` },
+	Astralym: { file: `204-astralym.png`, map: `worldtree`, href: `Nullstar_Calamity_Zenara_%26_Astralym`, label: `Alpha`, style: `special` },
 	Eidrolon: {
-		file: `171-eidrolon.png`, map: `palpagos`, href: `Wings_of_Freedom_Eidrolon`, label: `Alpha`, style: `cluster`,
+		file: `171-eidrolon.png`, map: `palpagos`, href: `Wings_of_Freedom_Eidrolon`, label: `Alpha`, style: `special`,
 		extraGroups: [{ href: `Sunreach_Skies`, label: `Dungeon`, style: `diamond`, color: `#ff9600` }],
 	},
 };
@@ -32,7 +32,7 @@ function curatedPalHabitats(pals) {
 	for (const pal of pals.filter(value => value.spawnTime === `Sealed Realm of Terraria`)) {
 		definitions[pal.name] = {
 			file: `terraria-sealed-realm.png`, map: `palpagos`, items: [`Sealed Realm of Terraria`],
-			label: `Sealed Realm of Terraria`, style: `cluster`,
+			label: `Sealed Realm of Terraria`, style: `special`,
 		};
 	}
 	return definitions;

@@ -4,6 +4,16 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+## v1.10.2 - 2026-08-16
+
+- Updated Paldeck's package and release metadata to v1.10.2.
+- Rebuilt breeding from current game tables and native rules, including gender-dependent Katress/Wixen combinations, fixed-combination precedence, extracted rank/priority/eligibility metadata, breeding-item rank bonuses, probability-sorted mutation outcomes, same-species mutation metadata, pair-specific titles, and contextual mutation navigation with return controls from every breeding-result view.
+- Validated every positive Ancient Relic recycler loot row against its final catalog item and added regression coverage distinguishing relic-awarded Disposable Implant: Eternal Engine from Arena-exclusive Implant: Infinite Stamina.
+- Required all local game-data extraction snapshots to be regenerated and build-ID verified whenever the installed Palworld build changes.
+- Corrected Pal Partner Skill titles against the installed v1.0.3 English data while retaining grammatically corrected descriptions and a readable Astralym ability placeholder.
+- Prefixed Pal names with Alpha, Rampaging, World Tree, and other recorded variants throughout View Dropping Pals results while leaving normal drops unprefixed.
+- Centralized map-generation presentation and naming policy in validated JSON, consolidated the duplicate cluster style into special, and enlarged Ancient Ruin pins across affected item maps.
+
 ## v1.10.1 - 2026-08-12
 
 - Updated Paldeck's package and release metadata to v1.10.1.

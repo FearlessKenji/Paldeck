@@ -4,6 +4,7 @@
 /* eslint-disable max-statements-per-line -- concise pool-to-marker guards keep the mapping table auditable. */
 const fs = require(`node:fs`);
 const path = require(`node:path`);
+const mapGenerationRules = require(`../data/mapGenerationRules.json`);
 const { compactItemData, resolvedItemData } = require(`../utils/itemData.js`);
 
 const ROOT = path.resolve(__dirname, `..`);
@@ -140,24 +141,57 @@ function slug(value) {
 	return String(value || ``).toLowerCase().replace(/[^a-z0-9]+/gu, `-`).replace(/^-|-$/gu, ``);
 }
 
+function sourceQualifier(type) {
+	return mapGenerationRules.naming.sourceQualifiers[type] || slug(type);
+}
+
 function mapLabel(definition) {
 	const panels = definition.maps || [definition];
 	const regions = unique(panels.map(panel => panel.map).filter(Boolean));
 	const sources = unique(panels.flatMap(panel => panel.markers || [])
-		.map(marker => slug(marker.legendType || marker.type || `locations`)));
+		.map(marker => sourceQualifier(marker.legendType || marker.type || `locations`)));
 	return [...regions, ...sources].join(`-`) || `physical-sources`;
 }
 
-function readableMapPaths(definitions) {
+function commonItemFamily(items) {
+	const words = items.map(item => slug(item.name).split(`-`).filter(word => !/^\d+$/u.test(word)));
+	const common = words[0]?.filter(word => words.every(parts => parts.includes(word))) || [];
+	return common.join(`-`);
+}
+
+function definitionQualifier(definition) {
+	const panels = definition.maps || [definition];
+	const values = panels.flatMap(panel => (panel.markers || []).flatMap(marker =>
+		Object.entries(marker)
+			.filter(([key, value]) => ![`type`, `legendType`, `style`, `color`, `bounds`].includes(key) &&
+				[`string`, `number`].includes(typeof value))
+			.map(([, value]) => slug(value)),
+	));
+	return unique(values.filter(Boolean)).slice(0, 4).join(`-`);
+}
+
+function readableMapPaths(definitions, assignments) {
 	const paths = new Map();
-	const variantsByLabel = new Map();
+	const claimed = new Map();
 	for (const encoded of [...definitions].sort()) {
 		const definition = JSON.parse(encoded);
-		const label = mapLabel(definition);
-		const variant = (variantsByLabel.get(label) || 0) + 1;
-		variantsByLabel.set(label, variant);
-		const suffix = variant === 1 ? `` : `-variant-${variant}`;
-		paths.set(encoded, `data/item-maps/${label}${suffix}.png`);
+		const items = assignments.filter(value => value.encoded === encoded).map(value => value.item);
+		const family = items.length === 1 ? slug(items[0].name) : commonItemFamily(items);
+		const suffix = items.length === 1 ? mapGenerationRules.naming.singleItemSuffix : mapGenerationRules.naming.sharedMapSuffix;
+		const label = family || mapLabel(definition);
+		let mapPath = `${mapGenerationRules.naming.directory}/${label}-${suffix}.png`;
+		if (claimed.has(mapPath) && items.length > 1 && family) {
+			mapPath = `${mapGenerationRules.naming.directory}/${mapLabel(definition)}-${family}-${suffix}.png`;
+		}
+		if (claimed.has(mapPath)) {
+			const qualifier = definitionQualifier(definition);
+			mapPath = `${mapGenerationRules.naming.directory}/${mapLabel(definition)}${qualifier ? `-${qualifier}` : ``}-${suffix}.png`;
+		}
+		if (claimed.has(mapPath)) {
+			throw new Error(`Map filename collision for ${mapPath}; add a descriptive family naming rule.`);
+		}
+		claimed.set(mapPath, encoded);
+		paths.set(encoded, mapPath);
 	}
 	return paths;
 }
@@ -237,7 +271,7 @@ function main() {
 	const rebuildAll = process.argv.includes(`--all`);
 	migrateMerchantMaps(itemData.Items, write);
 	const { assignments, definitions } = mapAssignments(itemData.Items, rebuildAll);
-	const mapPaths = readableMapPaths(definitions);
+	const mapPaths = readableMapPaths(definitions, assignments);
 	const changed = applyMapAssignments(assignments, mapPaths, write);
 	console.log(changed.join(`\n`));
 	console.log(`Prepared ${changed.length} item map assignment(s).`);

@@ -1,6 +1,6 @@
 {
   "name": "paldeck",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "private": true,
   "license": "GPL-3.0-only",
   "scripts": {
@@ -45,6 +45,10 @@
     "sync:installed-game-journals:write": "node scripts/sync-installed-game-journals.js --write",
     "sync:installed-pal-moves": "node scripts/sync-installed-pal-moves.js",
     "sync:installed-pal-moves:write": "node scripts/sync-installed-pal-moves.js --write",
+    "sync:pal-mutations": "node scripts/sync-pal-mutation-children.js",
+    "sync:pal-mutations:write": "node scripts/sync-pal-mutation-children.js --write",
+    "sync:pal-breeding-flags": "node scripts/sync-pal-breeding-flags.js",
+    "sync:pal-breeding-flags:write": "node scripts/sync-pal-breeding-flags.js --write",
     "validate:item-availability": "node scripts/audit-item-availability.js",
     "maps:items": "node scripts/generate-limited-item-maps.js",
     "maps:items:write": "node scripts/generate-limited-item-maps.js --write-data",

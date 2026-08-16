@@ -51,7 +51,7 @@ function locationGroups(row, code, map) {
 		{ label: `Day/Night`, color: `#ff0000`, style: `normal`, markers: groups.both },
 		{ label: `Day`, color: `#ff7800`, style: `normal`, markers: groups.day },
 		{ label: `Night`, color: `#593cf2`, style: `normal`, markers: groups.night },
-		{ label: `Alpha`, color: `#ff0000`, style: `cluster`, markers: fixed },
+		{ label: `Alpha`, color: `#ff0000`, style: `special`, markers: fixed },
 	].filter(group => group.markers.length);
 }
 

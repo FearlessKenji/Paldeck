@@ -2,17 +2,36 @@ const palFile = require(`../data/palData.json`);
 const breedingFile = require(`../data/palBreeding.json`);
 const encounterFile = require(`../data/palEncounterData.json`);
 const { findPalColorProblems } = require(`../utils/palColors.js`);
+const { eligibleMutationChildren, mutationChildrenForParents } = require(`../utils/palMutations.js`);
 
 const TRAILING_PARTNER_TECH_PATTERN = /\s+Technology\s+\d+\s*$/i;
+const EXPECTED_PARTNER_SKILL_TITLES = {
+	Astralym: `This Pal's abilities are a mystery...`,
+	Gorirat: `Full-Power Gorilla Mode`,
+	[`Kitsun Noct`]: `Gloomhowl`,
+	Leezpunk: `Too Cool to be Seen`,
+	[`Mossanda Lux`]: `Grenadier Panda`,
+	[`Reptyro Cryst`]: `Ice-Loving Beast`,
+	Xenogard: `Unknown Intruder`,
+	Xenovader: `Unknown Invader`,
+};
 
 function findPartnerTechProblems(pals) {
-	return pals
+	const problems = pals
 		.filter(pal => TRAILING_PARTNER_TECH_PATTERN.test(pal.partner || ``))
 		.map(pal => ({
 			name: pal.name,
 			number: pal.number,
 			partner: pal.partner,
 		}));
+	for (const [name, title] of Object.entries(EXPECTED_PARTNER_SKILL_TITLES)) {
+		const pal = pals.find(value => value.name === name);
+		const actualTitle = String(pal?.partner || ``).split(` - `)[0];
+		if (actualTitle !== title) {
+			problems.push({ name, number: pal?.number || `?`, partner: pal?.partner || `(missing)` });
+		}
+	}
+	return problems;
 }
 
 function findImplementedPlaceholderProblems(pals) {
@@ -56,6 +75,9 @@ function findBreedingMetadataProblems(pals) {
 				problems.push(`${pal.number} ${pal.name}: breeding.${field} must be a boolean.`);
 			}
 		}
+		if (typeof pal.breeding.ignoreCombi !== `boolean`) {
+			problems.push(`${pal.number} ${pal.name}: breeding.ignoreCombi must be a boolean.`);
+		}
 
 		for (const field of [`rank`, `priority`, `index`]) {
 			if (hasOwn(breeding, field) && breeding[field] !== null && !Number.isFinite(breeding[field])) {
@@ -76,6 +98,29 @@ function findBreedingMetadataProblems(pals) {
 		}
 	}
 
+	return problems;
+}
+
+function findMutationMetadataProblems(pals) {
+	const problems = [];
+	const visibleByName = new Map(pals.filter(pal => !pal.hidden).map(pal => [pal.name, pal]));
+	const eligible = eligibleMutationChildren(pals);
+	for (const pal of pals) {
+		const children = pal.breeding?.mutatedChildren;
+		if (!Array.isArray(children)) {
+			problems.push(`${pal.number} ${pal.name}: breeding.mutatedChildren must be an array.`);
+			continue;
+		}
+		const expected = mutationChildrenForParents(pal.breeding?.rank, pal.breeding?.rank, eligible);
+		if (JSON.stringify(children) !== JSON.stringify(expected)) {
+			problems.push(`${pal.number} ${pal.name}: breeding.mutatedChildren is stale or out of order.`);
+		}
+		for (const childName of children) {
+			if (!visibleByName.has(childName)) {
+				problems.push(`${pal.number} ${pal.name}: mutation references unknown or hidden Pal ${childName}.`);
+			}
+		}
+	}
 	return problems;
 }
 
@@ -130,6 +175,27 @@ function validateBreedingGroup(groupName, rows, palsByName) {
 	return problems;
 }
 
+function findStandardEligibilityProblems(pals, uniqueCombinations) {
+	const uniqueChildren = new Set(uniqueCombinations.map(row => row.child));
+	return pals.filter(pal => {
+		const expected = Number.isFinite(pal.breeding?.rank) &&
+			pal.breeding.ignoreCombi === false && !uniqueChildren.has(pal.name);
+		return pal.breeding?.canBeStandardChild !== expected;
+	}).map(pal => `${pal.name}: canBeStandardChild does not match native IgnoreCombi/fixed-child eligibility.`);
+}
+
+function findCombinationGenderProblems(uniqueCombinations) {
+	const problems = [];
+	for (const row of uniqueCombinations) {
+		for (const field of [`parentAGender`, `parentBGender`]) {
+			if (Object.hasOwn(row, field) && ![`male`, `female`].includes(row[field])) {
+				problems.push(`UniqueCombinations row ${row.row}: ${field} must be male or female.`);
+			}
+		}
+	}
+	return problems;
+}
+
 function findBreedingReferenceProblems(pals, breedingData) {
 	const problems = [];
 	const palsByName = new Map(pals.map(pal => [normalizeName(pal.name), pal]));
@@ -160,6 +226,8 @@ function findBreedingReferenceProblems(pals, breedingData) {
 	for (const [groupName, rows] of referenceGroups) {
 		problems.push(...validateBreedingGroup(groupName, rows, palsByName));
 	}
+	problems.push(...findStandardEligibilityProblems(pals, breedingData.UniqueCombinations || []));
+	problems.push(...findCombinationGenderProblems(breedingData.UniqueCombinations || []));
 
 	return problems;
 }
@@ -222,6 +290,7 @@ const colorProblems = findPalColorProblems(palFile.Pals, colors);
 const partnerTechProblems = findPartnerTechProblems(palFile.Pals);
 const implementedPlaceholderProblems = findImplementedPlaceholderProblems(palFile.Pals);
 const breedingMetadataProblems = findBreedingMetadataProblems(palFile.Pals);
+const mutationMetadataProblems = findMutationMetadataProblems(palFile.Pals);
 const levelUpMoveProblems = findLevelUpMoveProblems(palFile.Pals);
 const breedingReferenceProblems = findBreedingReferenceProblems(
 	palFile.Pals,
@@ -276,6 +345,14 @@ if (breedingMetadataProblems.length) {
 	process.exitCode = 1;
 }
 
+if (mutationMetadataProblems.length) {
+	console.error(`Found ${mutationMetadataProblems.length} mutation metadata issue(s):`);
+	for (const problem of mutationMetadataProblems.slice(0, 50)) {
+		console.error(problem);
+	}
+	process.exitCode = 1;
+}
+
 if (levelUpMoveProblems.length) {
 	console.error(`Found ${levelUpMoveProblems.length} level-up move issue(s):`);
 	for (const problem of levelUpMoveProblems) {
@@ -313,6 +390,7 @@ if (
 	!partnerTechProblems.length &&
 	!implementedPlaceholderProblems.length &&
 	!breedingMetadataProblems.length &&
+	!mutationMetadataProblems.length &&
 	!breedingReferenceProblems.length &&
 	!encounterDataProblems.length
 ) {

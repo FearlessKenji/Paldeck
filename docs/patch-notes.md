@@ -6,6 +6,13 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+## v1.10.2 - 2026-08-16 - Breeding and Map Improvements
+
+- Breeding results now use current game-file combinations and eligibility, including gender-dependent Katress/Wixen children and breeding-item bonuses. Mutation views identify the parent pair, sort children by chance, and provide contextual navigation back to direct results, parent pairs, or partners.
+- Pal descriptions retain corrected grammar, and Partner Skill names now match the game, including **Too Cool to be Seen**, **Grenadier Panda**, **Gloomhowl**, **Unknown Invader**, and **Unknown Intruder**.
+- **View Dropping Pals** now prefixes special drop results with their variant, such as **Rampaging Gorirat**, **Alpha Smokie Cryst**, or **World Tree Aegidron**; regular drops retain the plain Pal name.
+- Ancient Ruin locations now use larger, emphasized map pins for easier identification.
+
 ## v1.10.1 - 2026-08-12 - Palworld v1.0.3 Data Update
 
 - Paldeck's item and journal catalogs now match Palworld v1.0.3, including the lighter World Tree Holy Water, its increased Pal drops, fishing, Large Fishing Pond and expedition rewards, and a fixed reward of **30 Holy Water per Teafant Spring**; revised Jetragon and Aquatic Construction Kit recipes and unlock levels; corrected Moon Lord rewards; and searchable **Dark Skill Fruit: Psycho Gravity**.

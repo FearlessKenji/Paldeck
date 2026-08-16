@@ -276,6 +276,32 @@ function installedAcquisitionSources(snapshot) {
 	return byItem;
 }
 
+function validateAncientRelicCatalog(itemData, snapshot) {
+	const fieldRows = new Map(decodedTableEntries(snapshot, `/DT_FieldLotteryNameDataTable`)
+		.map(entry => [entry.Key, entry.Value]));
+	const relicRows = tableEntries(snapshot, `itemLottery`).filter(entry => {
+		const row = entry.Value;
+		return /^AncientRelicRecycler_WorldTreeRelic_0[1-5]$/u.test(row.FieldName) &&
+			Number(fieldRows.get(row.FieldName)?.[`ItemSlot${row.SlotNo}_ProbabilityPercent`] || 0) > 0;
+	});
+	const itemsById = new Map(itemData.Items.map(item => [normalizedId(rawGameId(item)), item]));
+	const problems = [];
+	for (const entry of relicRows) {
+		const row = entry.Value;
+		const item = itemsById.get(normalizedId(row.StaticItemId));
+		const relicId = /^AncientRelicRecycler_(WorldTreeRelic_0[1-5])$/u.exec(row.FieldName)?.[1];
+		const relicName = RELIC_NAMES[relicId];
+		const source = item?.acquisition?.sources?.find(value => value.type === `Ancient Relics`);
+		if (!item) {
+			problems.push(`${row.StaticItemId}: relic pool ${row.FieldName} has no catalog item.`);
+		} else if (!source?.entries?.some(value => value.location === relicName)) {
+			problems.push(`${item.name}: missing ${relicName} source from ${row.FieldName}.`);
+		}
+	}
+	if (problems.length) {throw new Error(`${problems.length} Ancient Relic catalog problem(s):\n${problems.join(`\n`)}`);}
+	console.log(`Validated ${relicRows.length} positive Ancient Relic loot rows across ${new Set(relicRows.map(entry => normalizedId(entry.Value.StaticItemId))).size} catalog items.`);
+}
+
 function applyFixedSpecialShopLocations(item, sources) {
 	for (const [shopId, shop] of Object.entries(SPECIAL_SHOPS)) {
 		if (!sources?.has(shop.type)) {continue;}
@@ -724,6 +750,7 @@ function main() {
 	removeIndirectTreasureMapMarkers(itemData);
 	normalizeItemMapPresentation(itemData);
 	applyTreasureChestGrades(itemData, snapshot);
+	validateAncientRelicCatalog(itemData, snapshot);
 
 	const manifest = installedAvailabilityManifest(availabilityManifest, itemData.Items, snapshot);
 	restoreReviewedVisibility(itemData.Items, manifest);

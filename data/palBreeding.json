@@ -1,8 +1,12 @@
 {
 	"Rules": [
 		{
+			"name": "Mutated child candidates",
+			"description": "Use both parents' breeding ranks. Round 0.5 times the lower rank, add rounded 0.4 times the rank difference, add a uniform integer from 1 through max(1, rounded 0.1 times the lower rank), then select the nearest non-boss Pal whose IgnoreCombi flag is false. Deduplicate the resolved children across the target range; rank ties use the higher CombiDuplicatePriority."
+		},
+		{
 			"name": "Same parent species",
-			"description": "Two parents with the same breeding id produce that same Pal before standard rank fallback; redundant same-species DT_PalCombiUnique rows are omitted from the data file."
+			"description": "After checking DT_PalCombiUnique, two parents with the same breeding id produce that same Pal before standard rank fallback; redundant same-species fixed rows are omitted from this data file."
 		},
 		{
 			"name": "Game fixed combination",
@@ -10,19 +14,34 @@
 		},
 		{
 			"name": "Standard rank fallback",
-			"description": "For normal fallback combinations, calculate floor((parentA.breeding.rank + parentB.breeding.rank + 1) / 2), choose the standard-child Pal with the closest breeding rank, then break ties by higher breeding priority and then non-variant status."
+			"description": "For normal fallback combinations, calculate floor((parentA.breeding.rank + parentB.breeding.rank + 1) / 2), add the breeding item's CombiRankBonus clamped to 0-10, choose the eligible Pal with the closest breeding rank, then break ties by higher CombiDuplicatePriority and game-table order. A normal candidate must have IgnoreCombi false and must not be a DT_PalCombiUnique child."
 		},
 		{
 			"name": "Source override",
 			"description": "Optional SourceOverrides rows are only written when verified external corrections cannot be represented by local game-file ranks, standard-child flags, and fixed combinations."
 		}
 	],
+	"MutationFormula": {
+		"mutationRate": 0.01,
+		"mutationRateBonusModel": "Add MutationRateBonusPercent / 100 to the base rate, then clamp to 0 through 1.",
+		"rankCoefficient": 0.5,
+		"rankDifferencePenalty": 0.4,
+		"randomCoefficient": 0.1,
+		"minimumTalent": 90,
+		"initialRank": 3,
+		"samplingModel": "Enumerate the native integer target range from base + penalty + 1 through base + penalty + random span, then resolve each to the nearest eligible mutation child.",
+		"verification": [
+			"Aegidron produced Alpha Aegidron.",
+			"Whalaska produced Alpha Flaracle, Blazamut, and Azurmane across four mutated hatches.",
+			"Ophydia produced Alpha Eidrolon Ignis."
+		]
+	},
 	"Sources": [
 		{
 			"name": "Local Palworld game files",
-			"version": "1.0",
-			"retrievedAt": "2026-07-20",
-			"usage": "Primary source for DT_PalCombiUnique fixed rows, the EPalTribeID enum order, and Astralym/WorldTreeDragon breeding rank evidence.",
+			"version": "Steam build 24575825",
+			"retrievedAt": "2026-08-15",
+			"usage": "Authoritative source for Pal ranks, priorities, IgnoreCombi flags, table order, gender-qualified DT_PalCombiUnique rows, mutation defaults, and native selection behavior.",
 			"assets": [
 				"Pal/Content/Pal/DataTable/Character/DT_PalCombiUnique",
 				"Pal/Content/Pal/DataTable/Character/DT_PalMonsterParameter",
@@ -34,7 +53,7 @@
 			"url": "https://github.com/tylercamp/palcalc",
 			"version": "v1.17.7",
 			"retrievedAt": "2026-07-20",
-			"usage": "Source for Palworld 1.0 breeding ranks, priorities, expanded pair-result validation, and CUE4Parse extraction paths."
+			"usage": "Historical cross-check for expanded pair results and CUE4Parse extraction paths; released ranks and selection flags come from the installed game."
 		},
 		{
 			"name": "PalDB Breed",
@@ -210,18 +229,18 @@
 		{
 			"row": "80",
 			"parentA": "Katress",
-			"parentB": "Wixen",
-			"child": "Wixen Noct",
 			"parentAGender": "male",
-			"parentBGender": "female"
+			"parentB": "Wixen",
+			"parentBGender": "female",
+			"child": "Wixen Noct"
 		},
 		{
 			"row": "81",
 			"parentA": "Katress",
-			"parentB": "Wixen",
-			"child": "Katress Ignis",
 			"parentAGender": "female",
-			"parentBGender": "male"
+			"parentB": "Wixen",
+			"parentBGender": "male",
+			"child": "Katress Ignis"
 		},
 		{
 			"row": "82",

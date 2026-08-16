@@ -92,6 +92,8 @@ async function runBreedCommand(breed, subcommand, values) {
 
 	await breed.execute({
 		options: {
+			getInteger: name => values[name],
+			getNumber: name => values[name],
 			getString: name => values[name],
 			getSubcommand: () => subcommand,
 		},
@@ -128,6 +130,20 @@ async function validateBreedResultsUsePlainNames() {
 		parent1: `Relaxaurus`,
 		parent2: `Sparkit`,
 	});
+	const hartalisResultPayload = await runBreedCommand(breed, `result`, {
+		parent1: `Hartalis`,
+		parent2: `Hartalis`,
+	});
+	const genderedResultPayload = await runBreedCommand(breed, `result`, {
+		parent1: `Katress`,
+		parent2: `Wixen`,
+	});
+	const modifiedResultPayload = await runBreedCommand(breed, `result`, {
+		combi_rank_bonus: 10,
+		parent1: `Lamball`,
+		parent2: `Cattiva`,
+	});
+	await validateMutationButton(breed, hartalisResultPayload);
 	const parentsPayload = await runBreedCommand(breed, `parents`, {
 		child: `Lamball`,
 	});
@@ -142,6 +158,8 @@ async function validateBreedResultsUsePlainNames() {
 		child: `Relaxaurus Lux`,
 		parent: `Relaxaurus`,
 	});
+	await validateMutationListNavigation(breed, parentsPayload, `Back to Parent Pairs`);
+	await validateMutationListNavigation(breed, partnerPayload, `Back to Partners`);
 	const serializedOutput = [
 		serializeDiscordPayload(resultPayload),
 		serializeDiscordPayload(uniqueResultPayload),
@@ -149,6 +167,8 @@ async function validateBreedResultsUsePlainNames() {
 		serializeDiscordPayload(uniqueParentsPayload),
 		serializeDiscordPayload(partnerPayload),
 		serializeDiscordPayload(uniquePartnerPayload),
+		serializeDiscordPayload(genderedResultPayload),
+		serializeDiscordPayload(modifiedResultPayload),
 	].join(`\n`);
 
 	assert(resultPayload?.embeds?.length, `/breed result did not produce an embed.`);
@@ -157,11 +177,96 @@ async function validateBreedResultsUsePlainNames() {
 	assert(uniqueParentsPayload?.embeds?.length, `/breed parents did not produce a unique-combination embed.`);
 	assert(partnerPayload?.embeds?.length, `/breed partner did not produce an embed.`);
 	assert(uniquePartnerPayload?.embeds?.length, `/breed partner did not produce a unique-combination embed.`);
+	assert(serializedOutput.includes(`breed:mutation-select:`), `Breeding lists should provide mutation selectors.`);
+	assert(serializedOutput.includes(`View Mutation Chances`), `Breeding-list mutation selectors should describe their action.`);
+	assert(serializedOutput.includes(`Katress (female) + Wixen (male) -> Katress Ignis`), `Gendered Katress/Wixen breeding result is missing.`);
+	assert(serializedOutput.includes(`Katress (male) + Wixen (female) -> Wixen Noct`), `Reverse-gender Katress/Wixen breeding result is missing.`);
+	assert(serializedOutput.includes(`Nox`), `CombiRankBonus should change the Lamball/Cattiva fallback child to Nox.`);
+	assert(serializedOutput.includes(`CombiRankBonus +10`), `Modified breeding result should identify the applied CombiRankBonus.`);
 	assert(serializedOutput.includes(`Lamball`), `/breed command smoke output should include the test Pal name.`);
 	assert(!numberPrefixedPalPattern.test(serializedOutput), `/breed results should show plain Pal names without number prefixes.`);
 	for (const label of formulaDetailLabels) {
 		assert(!serializedOutput.includes(label), `/breed results should not show formula detail label: ${label}.`);
 	}
+}
+
+async function validateMutationListNavigation(breed, listPayload, expectedBackLabel) {
+	const menu = listPayload?.components?.flatMap(row => row.components || [])
+		.find(component => component.data?.custom_id?.startsWith(`breed:mutation-select:`));
+	let mutationPayload = null;
+	await breed.handleSelectMenu({
+		customId: menu?.data?.custom_id,
+		update: payload => {
+			mutationPayload = payload;
+		},
+		user: { id: `smoke-test-user` },
+		values: [menu?.options?.[0]?.data?.value],
+	});
+	const backButton = mutationPayload?.components?.flatMap(row => row.components || [])
+		.find(component => component.data?.label === expectedBackLabel);
+	assert(backButton, `Mutation lists should provide ${expectedBackLabel}.`);
+	let returnedPayload = null;
+	await breed.handleButton({
+		customId: backButton.data.custom_id,
+		update: payload => {
+			returnedPayload = payload;
+		},
+		user: { id: `smoke-test-user` },
+	});
+	const expectedTitle = expectedBackLabel === `Back to Parent Pairs` ? `Breeding Parents` : `Breeding Partners`;
+	assert(serializeDiscordPayload(returnedPayload).includes(expectedTitle),
+		`${expectedBackLabel} should restore its originating breeding list.`);
+}
+
+async function validateMutationButton(breed, resultPayload) {
+	const pals = requireFresh(`data`, `palData.json`).Pals;
+	const { mutationRateForBonus } = requireFresh(`utils`, `palMutations.js`);
+	let mutationPayload = null;
+	const mutationButton = resultPayload?.components?.[0]?.components?.[0];
+	await breed.handleButton({
+		customId: mutationButton?.data?.custom_id,
+		update: payload => {
+			mutationPayload = payload;
+		},
+		user: { id: `smoke-test-user` },
+	});
+	const serializedMutation = serializeDiscordPayload(mutationPayload);
+	const backButton = mutationPayload?.components?.flatMap(row => row.components || [])
+		.find(component => component.data?.label === `Back to Result`);
+	assert(mutationButton?.data?.label === `View Mutated Children`, `/breed result should identify the mutated-child view.`);
+	assert(serializedMutation.includes(`Aegidron`), `Hartalis mutation results should resolve to Aegidron.`);
+	assert(serializedMutation.includes(`Mutated Child`), `A single mutation result should be labeled deterministically.`);
+	assert(serializedMutation.includes(`Aegidron (100%)`), `Mutation results should show the weighted percentage in parentheses.`);
+	assert(!serializedMutation.includes(`rolls)`), `Mutation results should omit internal roll fractions.`);
+	assert(!serializedMutation.includes(`Mutation chance:`), `Mutation results should omit the egg mutation rate.`);
+	assert(!serializedMutation.includes(`target-rank range`), `Mutation results should omit the native target-rank range.`);
+	assert(backButton?.data?.custom_id?.startsWith(`breed:mutation-back-result:`), `Mutation results should return to the originating pair result.`);
+	assert(serializedMutation.includes(`Hartalis + Hartalis — Mutated Child`), `Mutation titles should identify the parent pair.`);
+	let returnedPayload = null;
+	await breed.handleButton({
+		customId: backButton.data.custom_id,
+		update: payload => {
+			returnedPayload = payload;
+		},
+		user: { id: `smoke-test-user` },
+	});
+	assert(serializeDiscordPayload(returnedPayload).includes(`Hartalis + Hartalis`), `Back to Result should restore the originating pair result.`);
+	assert(mutationRateForBonus(25) === 0.26, `MutationRateBonusPercent should add percentage points to the base rate.`);
+	assert(
+		JSON.stringify(pals.find(pal => pal.name === `Whalaska`).breeding.mutatedChildren) ===
+			JSON.stringify([`Whalaska Ignis`, `Moldron Cryst`, `Flaracle`, `Blazamut`, `Azurmane`, `Starryon Primo`]),
+		`Whalaska should use the complete native candidate pool.`,
+	);
+	assert(
+		JSON.stringify(pals.filter(pal => pal.breeding.mutatedChildren.includes(pal.name)).map(pal => pal.name)) ===
+			JSON.stringify([`Aegidron`]),
+		`Only Aegidron should currently include itself as a same-species mutation child.`,
+	);
+	assert(
+		JSON.stringify(pals.find(pal => pal.name === `Ophydia`).breeding.mutatedChildren) ===
+			JSON.stringify([`Eidrolon Ignis`]),
+		`Ophydia should mutate into Eidrolon Ignis.`,
+	);
 }
 
 async function validatePaldeckBreedingButton() {

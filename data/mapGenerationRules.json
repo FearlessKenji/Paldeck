@@ -1,0 +1,88 @@
+{
+	"schemaVersion": 1,
+	"styles": {
+		"normal": {
+			"shape": "circle",
+			"radius": 3,
+			"outlineColor": "source",
+			"outlineWidth": 1
+		},
+		"outlined": {
+			"shape": "circle",
+			"radius": 3,
+			"outlineColor": "#ffffff",
+			"outlineWidth": 1
+		},
+		"special": {
+			"shape": "circle",
+			"radius": 5,
+			"outlineColor": "#ffffff",
+			"outlineWidth": 2
+		},
+		"diamond": {
+			"shape": "diamond",
+			"radius": 4,
+			"outlineColor": "#ffffff",
+			"outlineWidth": 2
+		}
+	},
+	"chestGrades": {
+		"1": { "label": "Regular Chests", "color": "#8b5a2b" },
+		"2": { "label": "Bronze Key Chests", "color": "#a64b32" },
+		"3": { "label": "Purple Chests", "color": "#8b5cf6" },
+		"4": { "label": "Silver Chests", "color": "#c0c0c0" },
+		"5": { "label": "Gold Chests", "color": "#d4af37" },
+		"6": { "label": "Gold Key Chests", "color": "#ffd700" }
+	},
+	"sources": {
+		"Ancient Ruin": { "label": "Ancient Ruins", "color": "#ef4444", "style": "special" },
+		"Enemy Camp": { "label": "Enemy Camps", "color": "#ef4444", "style": "normal" },
+		"Treasure": { "label": "Treasure Chests", "color": "#8b5a2b", "style": "normal" },
+		"Treasure Element": { "label": "Elemental Treasure Chests", "color": "#facc15", "style": "normal" },
+		"Oilrig Treasure Goal": { "label": "Oil Rig", "color": "#000000", "style": "outlined" },
+		"Fishing Spot": { "label": "Fishing Spots", "color": "#0ea5e9", "style": "normal" },
+		"Rare Fishing Spot": { "label": "Rare Fishing Spots", "color": "#22d3ee", "style": "special" },
+		"Treasure Map": { "label": "Treasure Maps", "color": "#d4af37", "style": "normal" },
+		"Junk": { "label": "Junk", "color": "#ec4899", "style": "normal" },
+		"Dungeon": { "label": "Dungeon", "color": "#ff9600", "style": "diamond" },
+		"Tower Boss": { "label": "Tower Boss", "color": "#ef4444", "style": "special" },
+		"Teafant Springs": { "label": "Teafant Springs", "color": "#ef4444", "style": "special" },
+		"Wandering Merchant": { "label": "Wandering Merchant", "color": "#ef4444", "style": "normal" },
+		"Weapons Merchant": { "label": "Weapons Merchant", "color": "#22c55e", "style": "normal" },
+		"Lifmunk Effigy": { "label": "Lifmunk Effigy", "color": "#4ade80", "style": "normal" },
+		"Lamball Effigy": { "label": "Lamball Effigy", "color": "#f5f5f5", "style": "normal" },
+		"Pengullet Effigy": { "label": "Pengullet Effigy", "color": "#38bdf8", "style": "normal" },
+		"Munchill Effigy": { "label": "Munchill Effigy", "color": "#2dd4bf", "style": "normal" },
+		"Rooby Effigy": { "label": "Rooby Effigy", "color": "#f87171", "style": "normal" },
+		"Herbil Effigy": { "label": "Herbil Effigy", "color": "#f59e0b", "style": "normal" },
+		"Tanzee Effigy": { "label": "Tanzee Effigy", "color": "#22c55e", "style": "normal" },
+		"Depresso Effigy": { "label": "Depresso Effigy", "color": "#6366f1", "style": "normal" },
+		"Cattiva Effigy": { "label": "Cattiva Effigy", "color": "#f472b6", "style": "normal" },
+		"Lunaris Effigy": { "label": "Lunaris Effigy", "color": "#ff5eea", "style": "normal" },
+		"Relaxaurus Effigy": { "label": "Relaxaurus Effigy", "color": "#ff5eea", "style": "normal" },
+		"Yakumo Effigy": { "label": "Yakumo Effigy", "color": "#ff5eea", "style": "normal" }
+	},
+	"naming": {
+		"directory": "data/item-maps",
+		"singleItemSuffix": "locations",
+		"sharedMapSuffix": "sources",
+		"forbiddenPatterns": ["-variant-[0-9]+$", "-[a-f0-9]{10,}$"],
+		"explicitNames": {
+			"arenaMerchant": "arena-merchant-locations",
+			"bountyMerchants": "bounty-merchant-locations",
+			"medalMerchants": "medal-merchant-locations"
+		},
+		"sourceQualifiers": {
+			"Ancient Ruin": "ancient-ruins",
+			"Enemy Camp": "enemy-camps",
+			"Fishing Spot": "fishing",
+			"Rare Fishing Spot": "rare-fishing",
+			"Oilrig Treasure Goal": "oil-rigs",
+			"Treasure": "treasure",
+			"Treasure Element": "elemental-treasure",
+			"Tower Boss": "tower-bosses",
+			"Teafant Springs": "teafant-springs"
+		},
+		"families": []
+	}
+}
