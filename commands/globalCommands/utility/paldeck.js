@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- Pal lookup, search pagination, and interaction restoration share one command state boundary. */
 const {
 	ActionRowBuilder,
 	AttachmentBuilder,
@@ -322,16 +323,25 @@ function findSearchResults(criteria) {
 }
 
 function droppingPalResults(item) {
-	const names = new Set((item.droppedBy || []).map(drop => normalizeText(drop.pal)));
-
-	return PALS
-		.filter(pal => names.has(normalizeText(pal.name)))
-		.map(pal => ({
+	const palsByName = new Map(PALS.map(pal => [normalizeText(pal.name), pal]));
+	const seen = new Set();
+	const results = [];
+	for (const drop of item.droppedBy || []) {
+		const pal = palsByName.get(normalizeText(drop.pal));
+		const variant = String(drop.variant || ``).trim();
+		const key = `${normalizeText(drop.pal)}\0${normalizeText(variant)}`;
+		if (!pal || seen.has(key)) {
+			continue;
+		}
+		seen.add(key);
+		results.push({
 			element: pal.element,
-			name: pal.name,
+			name: variant ? `${variant} ${pal.name}` : pal.name,
 			number: pal.number,
 			rarity: getRarity(pal),
-		}));
+		});
+	}
+	return results;
 }
 
 async function replyWithDroppingPals(interaction, item, originPalNumber = null, ownerId = null) {

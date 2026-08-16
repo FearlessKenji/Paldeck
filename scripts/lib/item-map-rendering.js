@@ -4,6 +4,37 @@ const { Buffer } = require(`node:buffer`);
 const fs = require(`node:fs`);
 const path = require(`node:path`);
 const sharp = require(`sharp`);
+const markerPresentation = require(`../../data/mapGenerationRules.json`);
+
+const CHEST_GRADE_PRESENTATION = markerPresentation.chestGrades;
+const ITEM_SOURCE_PRESENTATION = markerPresentation.sources;
+const MARKER_STYLES = markerPresentation.styles;
+
+function validateMarkerPresentation() {
+	if (markerPresentation.schemaVersion !== 1 || !markerPresentation.naming?.directory) {
+		throw new Error(`Map generation rules require schemaVersion 1 and a naming policy.`);
+	}
+	const signatures = new Map();
+	for (const [name, definition] of Object.entries(MARKER_STYLES)) {
+		const signature = JSON.stringify(definition);
+		if (signatures.has(signature)) {
+			throw new Error(`Map marker styles ${signatures.get(signature)} and ${name} have duplicate rendering rules.`);
+		}
+		signatures.set(signature, name);
+	}
+	for (const [type, presentation] of Object.entries(ITEM_SOURCE_PRESENTATION)) {
+		if (!MARKER_STYLES[presentation.style]) {
+			throw new Error(`${type} references unknown map marker style ${presentation.style}.`);
+		}
+	}
+	for (const [type, qualifier] of Object.entries(markerPresentation.naming.sourceQualifiers || {})) {
+		if (!ITEM_SOURCE_PRESENTATION[type] || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(qualifier)) {
+			throw new Error(`${type} has an invalid map filename qualifier.`);
+		}
+	}
+}
+
+validateMarkerPresentation();
 
 function cachePath(directory, url) {
 	return path.join(directory, url.replace(/^https?:\/\//u, ``).replace(/[^a-zA-Z0-9_.-]+/gu, `_`));
@@ -81,14 +112,19 @@ function fixedLocationMarkers(locationSet) {
 }
 
 function markerSvg(x, y, color, style) {
-	if (style === `diamond`) {
-		return `<polygon points="${x},${y - 4} ${x + 4},${y} ${x},${y + 4} ${x - 4},${y}" fill="${color}" stroke="white" stroke-width="2"/>`;
+	const definition = MARKER_STYLES[style];
+	if (!definition) {
+		throw new Error(`Unknown map marker style: ${style}`);
 	}
-	const emphasized = [`cluster`, `special`].includes(style);
-	const outlined = emphasized || style === `outlined`;
-	// Ordinary locations use the compact Lamball-scale dot so dense habitats and source maps remain readable.
-	const radius = emphasized ? 5 : 3;
-	return `<circle cx="${x}" cy="${y}" r="${radius}" fill="${color}" fill-opacity=".9" stroke="${outlined ? `white` : color}" stroke-width="${emphasized ? 2 : outlined ? 1 : 1}"/>`;
+	const radius = definition.radius;
+	const stroke = definition.outlineColor === `source` ? color : definition.outlineColor;
+	if (definition.shape === `diamond`) {
+		return `<polygon points="${x},${y - radius} ${x + radius},${y} ${x},${y + radius} ${x - radius},${y}" fill="${color}" stroke="${stroke}" stroke-width="${definition.outlineWidth}"/>`;
+	}
+	if (definition.shape !== `circle`) {
+		throw new Error(`Unsupported map marker shape: ${definition.shape}`);
+	}
+	return `<circle cx="${x}" cy="${y}" r="${radius}" fill="${color}" fill-opacity=".9" stroke="${stroke}" stroke-width="${definition.outlineWidth}"/>`;
 }
 
 function escapeXml(value) {
@@ -109,52 +145,8 @@ function writeOutput(target, output) {
 }
 
 function legendLabel(type, label) {
-	const canonical = {
-		'Ancient Ruin': `Ancient Ruins`, 'Enemy Camp': `Enemy Camps`, Treasure: `Treasure Chests`,
-		'Treasure Element': `Elemental Treasure Chests`, 'Oilrig Treasure Goal': `Oil Rig`,
-		'Fishing Spot': `Fishing Spots`, 'Rare Fishing Spot': `Rare Fishing Spots`,
-		'Treasure Map': `Treasure Maps`, Junk: `Junk`, Dungeon: `Dungeon`,
-	};
-	return canonical[type] || label || type;
+	return ITEM_SOURCE_PRESENTATION[type]?.label || label || type;
 }
-
-const CHEST_GRADE_PRESENTATION = {
-	1: { label: `Regular Chests`, color: `#8b5a2b` },
-	2: { label: `Bronze Key Chests`, color: `#a64b32` },
-	3: { label: `Purple Chests`, color: `#8b5cf6` },
-	4: { label: `Silver Chests`, color: `#c0c0c0` },
-	5: { label: `Gold Chests`, color: `#d4af37` },
-	6: { label: `Gold Key Chests`, color: `#ffd700` },
-};
-
-const ITEM_SOURCE_PRESENTATION = {
-	'Ancient Ruin': { color: `#ef4444`, style: `outlined` },
-	'Enemy Camp': { color: `#ef4444`, style: `normal` },
-	Treasure: { color: `#8b5a2b`, style: `normal` },
-	'Treasure Element': { color: `#facc15`, style: `normal` },
-	'Oilrig Treasure Goal': { color: `#000000`, style: `outlined` },
-	'Fishing Spot': { color: `#0ea5e9`, style: `normal` },
-	'Rare Fishing Spot': { color: `#22d3ee`, style: `special` },
-	'Treasure Map': { color: `#d4af37`, style: `normal` },
-	Junk: { color: `#ec4899`, style: `normal` },
-	Dungeon: { color: `#ff9600`, style: `diamond` },
-	'Tower Boss': { color: `#ef4444`, style: `special` },
-	'Teafant Springs': { color: `#ef4444`, style: `special` },
-	'Wandering Merchant': { color: `#ef4444`, style: `normal` },
-	'Weapons Merchant': { color: `#22c55e`, style: `normal` },
-	'Lifmunk Effigy': { color: `#4ade80`, style: `normal` },
-	'Lamball Effigy': { color: `#f5f5f5`, style: `normal` },
-	'Pengullet Effigy': { color: `#38bdf8`, style: `normal` },
-	'Munchill Effigy': { color: `#2dd4bf`, style: `normal` },
-	'Rooby Effigy': { color: `#f87171`, style: `normal` },
-	'Herbil Effigy': { color: `#f59e0b`, style: `normal` },
-	'Tanzee Effigy': { color: `#22c55e`, style: `normal` },
-	'Depresso Effigy': { color: `#6366f1`, style: `normal` },
-	'Cattiva Effigy': { color: `#f472b6`, style: `normal` },
-	'Lunaris Effigy': { color: `#ff5eea`, style: `normal` },
-	'Relaxaurus Effigy': { color: `#ff5eea`, style: `normal` },
-	'Yakumo Effigy': { color: `#ff5eea`, style: `normal` },
-};
 
 function itemSourcePresentation(filter) {
 	const type = filter.legendType || filter.type || `Location`;
@@ -162,9 +154,8 @@ function itemSourcePresentation(filter) {
 	if (type === `Treasure` && CHEST_GRADE_PRESENTATION[chestGrade]) {
 		return { ...CHEST_GRADE_PRESENTATION[chestGrade], style: `normal` };
 	}
-	const cluster = /cluster/iu.test(type);
 	const canonical = ITEM_SOURCE_PRESENTATION[type];
-	const defaults = canonical || { color: `#ef4444`, style: cluster ? `cluster` : `normal` };
+	const defaults = canonical || { color: `#ef4444`, style: /cluster/iu.test(type) ? `special` : `normal` };
 	return {
 		label: legendLabel(type, filter.label),
 		// Known source types always use the shared legend system; custom presentation remains available for resources and effigies.
@@ -204,5 +195,5 @@ async function renderMap(map, groups, target, bottomRight = false) {
 
 module.exports = {
 	CHEST_GRADE_PRESENTATION, fetchCached, fixedLocationMarkers, itemSourcePresentation,
-	legendLabel, loadMap, parseJsonVariable, renderMap, selectMarkers, toPixel, writeOutput,
+	legendLabel, loadMap, MARKER_STYLES, parseJsonVariable, renderMap, selectMarkers, toPixel, writeOutput,
 };

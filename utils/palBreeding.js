@@ -1,3 +1,5 @@
+const { eligibleMutationChildren, mutationOutcomesForParents, mutationTargetRange } = require(`./palMutations.js`);
+
 function normalizeBreedingName(value) {
 	return String(value || ``).trim().toLowerCase();
 }
@@ -134,10 +136,6 @@ function createBreedingHelpers(state) {
 			return secondPriority - firstPriority;
 		}
 
-		if (first.isBreedingVariant !== second.isBreedingVariant) {
-			return first.isBreedingVariant ? 1 : -1;
-		}
-
 		return first.index - second.index;
 	}
 
@@ -219,9 +217,9 @@ function createBreedingHelpers(state) {
 	return { findClosestStandardChild, focusResultChild, getPal, orientGenderedResult, resultHasChild };
 }
 
-function standardBreedingResult(parentA, parentB, findClosestStandardChild) {
+function standardBreedingResult(parentA, parentB, findClosestStandardChild, rankModifier = 0) {
 	const targetRank = Number.isFinite(parentA.breedingRank) && Number.isFinite(parentB.breedingRank) ?
-		Math.floor((parentA.breedingRank + parentB.breedingRank + 1) / 2) :
+		Math.floor((parentA.breedingRank + parentB.breedingRank + 1) / 2) + rankModifier :
 		null;
 	const child = findClosestStandardChild(targetRank);
 	return {
@@ -234,12 +232,78 @@ function standardBreedingResult(parentA, parentB, findClosestStandardChild) {
 function createPairCalculator(state, helpers) {
 	const { genderedPairResults, resultCache, sourceOverrides, uniqueCombinations } = state;
 	const { findClosestStandardChild, orientGenderedResult } = helpers;
-	function calculateForPals(parentA, parentB) {
-		const cacheKey = pairKey(parentA.name, parentB.name);
+	function calculateForPals(parentA, parentB, rankModifier = 0) {
+		const normalizedModifier = Math.min(10, Math.max(0, Number.isInteger(rankModifier) ? rankModifier : 0));
+		const parentsKey = pairKey(parentA.name, parentB.name);
+		const cacheKey = `${parentsKey}|${normalizedModifier}`;
 		const cachedResult = resultCache.get(cacheKey);
 
 		if (cachedResult) {
 			return cachedResult;
+		}
+
+		const genderedResults = genderedPairResults.get(parentsKey);
+
+		if (genderedResults?.length) {
+			const children = genderedResults.map(entry => orientGenderedResult(entry, parentA, parentB));
+			const result = {
+				parentA,
+				parentB,
+				child: children[0]?.child || null,
+				children,
+				method: `gendered-pair-result`,
+				targetRank: null,
+				specialCombination: null,
+			};
+
+			resultCache.set(cacheKey, result);
+			return result;
+		}
+
+		const sourceOverride = sourceOverrides.get(parentsKey);
+
+		if (sourceOverride) {
+			const result = {
+				parentA,
+				parentB,
+				child: sourceOverride.child,
+				children: [{
+					child: sourceOverride.child,
+					parentA,
+					parentAGender: null,
+					parentB,
+					parentBGender: null,
+				}],
+				method: `source-override`,
+				targetRank: null,
+				specialCombination: null,
+			};
+
+			resultCache.set(cacheKey, result);
+			return result;
+		}
+
+		const uniqueCombination = uniqueCombinations.get(parentsKey);
+
+		if (uniqueCombination) {
+			const result = {
+				parentA,
+				parentB,
+				child: uniqueCombination.child,
+				children: [{
+					child: uniqueCombination.child,
+					parentA,
+					parentAGender: null,
+					parentB,
+					parentBGender: null,
+				}],
+				method: `unique-combination`,
+				targetRank: null,
+				specialCombination: uniqueCombination,
+			};
+
+			resultCache.set(cacheKey, result);
+			return result;
 		}
 
 		if (parentA.breedingId === parentB.breedingId) {
@@ -263,71 +327,8 @@ function createPairCalculator(state, helpers) {
 			return result;
 		}
 
-		const genderedResults = genderedPairResults.get(cacheKey);
-
-		if (genderedResults?.length) {
-			const children = genderedResults.map(entry => orientGenderedResult(entry, parentA, parentB));
-			const result = {
-				parentA,
-				parentB,
-				child: children[0]?.child || null,
-				children,
-				method: `gendered-pair-result`,
-				targetRank: null,
-				specialCombination: null,
-			};
-
-			resultCache.set(cacheKey, result);
-			return result;
-		}
-
-		const sourceOverride = sourceOverrides.get(cacheKey);
-
-		if (sourceOverride) {
-			const result = {
-				parentA,
-				parentB,
-				child: sourceOverride.child,
-				children: [{
-					child: sourceOverride.child,
-					parentA,
-					parentAGender: null,
-					parentB,
-					parentBGender: null,
-				}],
-				method: `source-override`,
-				targetRank: null,
-				specialCombination: null,
-			};
-
-			resultCache.set(cacheKey, result);
-			return result;
-		}
-
-		const uniqueCombination = uniqueCombinations.get(cacheKey);
-
-		if (uniqueCombination) {
-			const result = {
-				parentA,
-				parentB,
-				child: uniqueCombination.child,
-				children: [{
-					child: uniqueCombination.child,
-					parentA,
-					parentAGender: null,
-					parentB,
-					parentBGender: null,
-				}],
-				method: `unique-combination`,
-				targetRank: null,
-				specialCombination: uniqueCombination,
-			};
-
-			resultCache.set(cacheKey, result);
-			return result;
-		}
-
-		const result = standardBreedingResult(parentA, parentB, findClosestStandardChild);
+		const result = standardBreedingResult(parentA, parentB, findClosestStandardChild, normalizedModifier);
+		result.rankModifier = normalizedModifier;
 
 		resultCache.set(cacheKey, result);
 		return result;
@@ -338,7 +339,27 @@ function createPairCalculator(state, helpers) {
 function createBreedingQueries(state, helpers, calculateForPals) {
 	const { childPals, pals, parentPals } = state;
 	const { focusResultChild, getPal, resultHasChild } = helpers;
-	function calculateChild(parentAName, parentBName) {
+	function getMutatedChildrenForParents(parentAName, parentBName) {
+		const parentA = getPal(parentAName);
+		const parentB = getPal(parentBName);
+		if (!parentA || !parentB || parentA.hidden || parentB.hidden) {
+			return null;
+		}
+		const outcomes = mutationOutcomesForParents(
+			parentA.breedingRank,
+			parentB.breedingRank,
+			eligibleMutationChildren(pals),
+		);
+		return {
+			children: outcomes.map(outcome => getPal(outcome.name)).filter(Boolean),
+			outcomes,
+			parentA,
+			parentB,
+			targetRange: mutationTargetRange(parentA.breedingRank, parentB.breedingRank),
+		};
+	}
+
+	function calculateChild(parentAName, parentBName, options = {}) {
 		const parentA = getPal(parentAName);
 		const parentB = getPal(parentBName);
 
@@ -350,7 +371,7 @@ function createBreedingQueries(state, helpers, calculateForPals) {
 			return null;
 		}
 
-		return calculateForPals(parentA, parentB);
+		return calculateForPals(parentA, parentB, options.rankModifier);
 	}
 
 	function findParentPairs(childName) {
@@ -419,6 +440,7 @@ function createBreedingQueries(state, helpers, calculateForPals) {
 		findPartners,
 		formatBreedingMethod,
 		getPal,
+		getMutatedChildrenForParents,
 		pals,
 		parentPals,
 	};

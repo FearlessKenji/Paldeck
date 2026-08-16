@@ -147,6 +147,19 @@ function validateAncientRelicSources(context) {
 		`Every visible item backed by a decoded Ancient Relic recycler pool should identify that source.`,
 	);
 
+	const disposableEternalEngine = itemData.Items.find(item => item.code === `Items/PalPassiveSkillChange_Consumable_Stamina_Up_3`);
+	const infiniteStamina = itemData.Items.find(item => item.code === `Items/PalPassiveSkillChange_Stamina_Up_1`);
+	assert(
+		disposableEternalEngine?.acquisition?.sources?.some(source => source.type === `Ancient Relics`) &&
+		disposableEternalEngine.acquisition.lootPools?.length === 5,
+		`Disposable Implant: Eternal Engine should retain all five decoded Ancient Relic pools.`,
+	);
+	assert(
+		infiniteStamina?.acquisition?.sources?.some(source => source.type === `Arena Merchant`) &&
+		!infiniteStamina.acquisition.sources.some(source => source.type === `Ancient Relics`),
+		`Implant: Infinite Stamina should not inherit the similarly named disposable relic reward.`,
+	);
+
 	const ancientManual = itemData.Items.find(item => item.name === `Ancient Technical Manual`);
 
 	const ancientManualSources = paldeck.buildItemResponse(ancientManual, null, `relic-probability-owner`)

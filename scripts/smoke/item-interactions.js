@@ -151,6 +151,30 @@ async function validateDroppingPalLookup(itemCommand, dropButton) {
 	assert(resultsPayload?.embeds?.length, `View Dropping Pals should send a Paldeck search embed.`);
 	assert(serializedResults.includes(`Lamball`), `Wool's dropping-Pal results should include Lamball.`);
 	assert(/Drops:\s+Wool/.test(serializedResults), `Dropping-Pal results should identify the selected item filter.`);
+	for (const test of [
+		{ item: `Predator Core`, expected: [`Rampaging Gorirat`], absent: [`Normal Gorirat`] },
+		{ item: `Ore`, expected: [`Digtoise`, `Alpha Surfent Terra`, `World Tree Knocklem`], absent: [`Normal Digtoise`] },
+	]) {
+		let itemPayload = null;
+		await itemCommand.execute({
+			options: { getString: name => name === `name` ? test.item : null },
+			reply: payload => {itemPayload = payload;},
+			deferReply: () => undefined,
+			editReply: payload => {itemPayload = payload;},
+			user: { id: `item-owner` },
+		});
+		const button = itemPayload.components.flatMap(row => row.components)
+			.find(component => component.data.label === `View Dropping Pals`);
+		let variantResults = null;
+		await itemCommand.handleButton({
+			customId: button.data.custom_id,
+			update: payload => {variantResults = payload;},
+			user: { id: `item-owner` },
+		});
+		const serializedVariants = serializeDiscordPayload(variantResults);
+		assert(test.expected.every(value => serializedVariants.includes(value)), `${test.item} should prefix every special drop variant.`);
+		assert((test.absent || []).every(value => !serializedVariants.includes(value)), `${test.item} should leave ordinary Pal names unprefixed.`);
+	}
 
 	await itemCommand.handleButton({
 		customId: dropButton.data.custom_id,

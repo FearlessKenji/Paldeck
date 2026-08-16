@@ -5,6 +5,7 @@ const {
 	EmbedBuilder,
 	MessageFlags,
 	SlashCommandBuilder,
+	StringSelectMenuBuilder,
 } = require(`discord.js`);
 const crypto = require(`node:crypto`);
 const breedingFile = require(`../../../data/palBreeding.json`);
@@ -90,12 +91,39 @@ function buildResultEmbed(result) {
 	const fields = [
 		{ name: result.method === `gendered-pair-result` ? `Children` : `Child`, value: formatChildField(result), inline: false },
 	];
+	if (result.method === `standard`) {
+		fields.push({ name: `Target Rank`, value: `${result.targetRank}${result.rankModifier ? ` (CombiRankBonus +${result.rankModifier})` : ``}`, inline: false });
+	}
 
 	return new EmbedBuilder()
 		.setColor(getResultColor(result.child))
 		.setTitle(`${result.parentA.name} + ${result.parentB.name}`)
 		.setDescription(`Breeding result`)
 		.addFields(fields);
+}
+
+function buildMutationButton(parentA, parentB, userId, rankModifier = 0) {
+	return new ButtonBuilder()
+		.setCustomId(`breed:mutations:${encodeURIComponent(parentA.name)}:${encodeURIComponent(parentB.name)}:${userId}:${rankModifier}`)
+		.setLabel(`View Mutated Children`)
+		.setStyle(ButtonStyle.Primary);
+}
+
+function buildResultComponents(result, userId) {
+	return [new ActionRowBuilder().addComponents(buildMutationButton(result.parentA, result.parentB, userId, result.rankModifier))];
+}
+
+function buildMutationBackButton(backTarget) {
+	if (backTarget.type === `list`) {
+		return new ButtonBuilder()
+			.setCustomId(`breed:mutation-back-list:${backTarget.listId}:${backTarget.page}:${backTarget.userId}`)
+			.setLabel(backTarget.label)
+			.setStyle(ButtonStyle.Secondary);
+	}
+	return new ButtonBuilder()
+		.setCustomId(`breed:mutation-back-result:${encodeURIComponent(backTarget.parentA)}:${encodeURIComponent(backTarget.parentB)}:${backTarget.userId}:${backTarget.rankModifier || 0}`)
+		.setLabel(`Back to Result`)
+		.setStyle(ButtonStyle.Secondary);
 }
 
 function getTotalPages(lines) {
@@ -139,10 +167,25 @@ function buildListComponents(listId, page, totalPages, state) {
 				.setDisabled(page >= totalPages - 1),
 		));
 	}
+	const mutationPairs = state.mutationPairs?.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE) || [];
+	if (mutationPairs.length) {
+		rows.push(new ActionRowBuilder().addComponents(
+			new StringSelectMenuBuilder()
+				.setCustomId(`breed:mutation-select:${listId}`)
+				.setPlaceholder(`View Mutation Chances`)
+				.addOptions(mutationPairs.map((pair, index) => ({
+					label: `${pair.parentA} + ${pair.parentB}`.slice(0, 100),
+					value: `${page * PAGE_SIZE + index}`,
+				}))),
+		));
+	}
 	if (state.originPalNumber && state.originOwnerId) {
 		rows.push(new ActionRowBuilder().addComponents(
 			buildBackToPalButton(state.originPalNumber, state.originOwnerId),
 		));
+	}
+	if (state.mutationBackTarget) {
+		rows.push(new ActionRowBuilder().addComponents(buildMutationBackButton(state.mutationBackTarget)));
 	}
 	return rows;
 }
@@ -167,18 +210,45 @@ function storeList(userId, state) {
 
 async function replyWithList(interaction, state) {
 	const page = 0;
-	const totalPages = getTotalPages(state.lines);
-	const listId = storeList(interaction.user.id, state);
+	const renderedState = { ...state, userId: interaction.user.id };
+	const totalPages = getTotalPages(renderedState.lines);
+	const listId = storeList(interaction.user.id, renderedState);
 
 	const payload = {
-		embeds: [buildListEmbed(state, page)],
-		components: buildListComponents(listId, page, totalPages, state),
+		embeds: [buildListEmbed(renderedState, page)],
+		components: buildListComponents(listId, page, totalPages, renderedState),
 	};
-	if (state.originPalNumber) {
+	if (state.replaceCurrent || state.originPalNumber) {
 		await replaceInteractionMessage(interaction, payload);
 		return;
 	}
 	await interaction.reply(payload);
+}
+
+function formatProbability(outcome) {
+	const percent = (outcome.probability * 100).toFixed(2).replace(/\.00$/, ``);
+	return `${outcome.name} (${percent}%)`;
+}
+
+function sortMutationOutcomes(first, second) {
+	return second.probability - first.probability || first.name.localeCompare(second.name);
+}
+
+async function replyWithPairMutationChildren(interaction, parentAName, parentBName, mutationBackTarget) {
+	const result = calculator.getMutatedChildrenForParents(parentAName, parentBName);
+	if (!result) {
+		await interaction.reply({ content: `I couldn't find mutation data for those parents.`, flags: MessageFlags.Ephemeral });
+		return;
+	}
+	await replyWithList(interaction, {
+		color: getResultColor(result.children[0] || result.parentA),
+		description: `Possible Alpha children from a mutated egg.`,
+		emptyText: `No mutated children found.`,
+		lines: [...result.outcomes].sort(sortMutationOutcomes).map(formatProbability),
+		mutationBackTarget,
+		replaceCurrent: true,
+		title: `${result.parentA.name} + ${result.parentB.name} — ${result.children.length === 1 ? `Mutated Child` : `Mutated Children`}`,
+	});
 }
 
 async function replyWithParentPairs(interaction, childName, origin = {}) {
@@ -194,6 +264,8 @@ async function replyWithParentPairs(interaction, childName, origin = {}) {
 		description: `Parent pairs that produce ${formatPalLabel(result.child)}.`,
 		emptyText: `No parent pairs found.`,
 		lines: result.pairs.map(formatPairLine),
+		mutationBackLabel: `Back to Parent Pairs`,
+		mutationPairs: result.pairs.map(pair => ({ parentA: pair.parentA.name, parentB: pair.parentB.name })),
 		title: `Breeding Parents`,
 		...origin,
 	});
@@ -212,6 +284,36 @@ function getList(listId) {
 	}
 
 	return state;
+}
+
+async function handleMutationResultBack(interaction) {
+	const [, , rawParentA, rawParentB, ownerId, rawRankModifier] = interaction.customId.split(`:`);
+	if (ownerId !== interaction.user.id) {
+		await interaction.reply({ content: `I'm not your button, pal!`, flags: MessageFlags.Ephemeral });
+		return;
+	}
+	const result = calculator.calculateChild(decodeURIComponent(rawParentA), decodeURIComponent(rawParentB), {
+		rankModifier: Number(rawRankModifier) || 0,
+	});
+	await interaction.update({
+		components: buildResultComponents(result, interaction.user.id),
+		embeds: [buildResultEmbed(result)],
+	});
+}
+
+async function handleMutationListBack(interaction) {
+	const [, , originalListId, originalPage, ownerId] = interaction.customId.split(`:`);
+	const originalState = getList(originalListId);
+	if (!originalState || ownerId !== interaction.user.id || originalState.userId !== interaction.user.id) {
+		await interaction.reply({ content: `This breeding list has expired. Run the command again.`, flags: MessageFlags.Ephemeral });
+		return;
+	}
+	const totalPages = getTotalPages(originalState.lines);
+	const page = clampPage(Number(originalPage), totalPages);
+	await interaction.update({
+		components: buildListComponents(originalListId, page, totalPages, originalState),
+		embeds: [buildListEmbed(originalState, page)],
+	});
 }
 
 module.exports = {
@@ -233,7 +335,14 @@ module.exports = {
 						.setName(`parent2`)
 						.setDescription(`Second parent Pal.`)
 						.setAutocomplete(true)
-						.setRequired(true)))
+						.setRequired(true))
+				.addIntegerOption(option =>
+					option
+						.setName(`combi_rank_bonus`)
+						.setDescription(`Breeding item's CombiRankBonus (0-10).`)
+						.setMinValue(0)
+						.setMaxValue(10)),
+		)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName(`parents`)
@@ -275,9 +384,11 @@ module.exports = {
 		const subcommand = interaction.options.getSubcommand();
 
 		if (subcommand === `result`) {
+			const rankModifier = interaction.options.getInteger?.(`combi_rank_bonus`) ?? 0;
 			const result = calculator.calculateChild(
 				interaction.options.getString(`parent1`),
 				interaction.options.getString(`parent2`),
+				{ rankModifier },
 			);
 
 			if (!result?.child) {
@@ -285,7 +396,10 @@ module.exports = {
 				return;
 			}
 
-			await interaction.reply({ embeds: [buildResultEmbed(result)] });
+			await interaction.reply({
+				components: buildResultComponents(result, interaction.user.id),
+				embeds: [buildResultEmbed(result)],
+			});
 			return;
 		}
 
@@ -310,13 +424,15 @@ module.exports = {
 				description: `Partners for ${formatPalLabel(result.parent)} to produce ${formatPalLabel(result.child)}.`,
 				emptyText: `No partners found.`,
 				lines: result.partners.map(formatPartnerLine),
+				mutationBackLabel: `Back to Partners`,
+				mutationPairs: result.partners.map(entry => ({ parentA: entry.result.parentA.name, parentB: entry.result.parentB.name })),
 				title: `Breeding Partners`,
 			});
 		}
 	},
 
 	async handleButton(interaction) {
-		const [, action, listId, rawPage, rawPalNumber] = interaction.customId.split(`:`);
+		const [, action, listId, rawPage, rawPalNumber, rawRankModifier] = interaction.customId.split(`:`);
 
 		if (action === `parents`) {
 			if (rawPage && rawPage !== interaction.user.id) {
@@ -327,6 +443,36 @@ module.exports = {
 				originOwnerId: rawPage || null,
 				originPalNumber: rawPalNumber ? decodeURIComponent(rawPalNumber) : null,
 			});
+			return;
+		}
+
+		if (action === `mutations`) {
+			if (rawPalNumber !== interaction.user.id) {
+				await interaction.reply({ content: `I'm not your button, pal!`, flags: MessageFlags.Ephemeral });
+				return;
+			}
+			await replyWithPairMutationChildren(
+				interaction,
+				decodeURIComponent(listId),
+				decodeURIComponent(rawPage),
+				{
+					parentA: decodeURIComponent(listId),
+					parentB: decodeURIComponent(rawPage),
+					rankModifier: Number(rawRankModifier) || 0,
+					type: `result`,
+					userId: rawPalNumber,
+				},
+			);
+			return;
+		}
+
+		if (action === `mutation-back-result`) {
+			await handleMutationResultBack(interaction);
+			return;
+		}
+
+		if (action === `mutation-back-list`) {
+			await handleMutationListBack(interaction);
 			return;
 		}
 
@@ -353,6 +499,33 @@ module.exports = {
 		await interaction.update({
 			embeds: [buildListEmbed(state, page)],
 			components: buildListComponents(listId, page, totalPages, state),
+		});
+	},
+
+	async handleSelectMenu(interaction) {
+		const [, action, listId] = interaction.customId.split(`:`);
+		const state = getList(listId);
+
+		if (action !== `mutation-select` || !state) {
+			await interaction.reply({ content: `This breeding list has expired. Run the command again.`, flags: MessageFlags.Ephemeral });
+			return;
+		}
+		if (state.userId !== interaction.user.id) {
+			await interaction.reply({ content: `Only the original searcher can use this menu.`, flags: MessageFlags.Ephemeral });
+			return;
+		}
+		const pair = state.mutationPairs?.[Number(interaction.values[0])];
+		if (!pair) {
+			await interaction.reply({ content: `I couldn't find that breeding pair.`, flags: MessageFlags.Ephemeral });
+			return;
+		}
+		const selectedIndex = Number(interaction.values[0]);
+		await replyWithPairMutationChildren(interaction, pair.parentA, pair.parentB, {
+			label: state.mutationBackLabel,
+			listId,
+			page: Math.floor(selectedIndex / PAGE_SIZE),
+			type: `list`,
+			userId: interaction.user.id,
 		});
 	},
 };

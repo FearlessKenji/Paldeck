@@ -225,10 +225,14 @@ function validateTreasureMapLootCards(itemData) {
 
 function validateRegionalSummaryCards(regionalSummaries) {
 	const { serializedBounty, serializedEffigy } = regionalSummaries;
+	const generationRules = require(`../../data/mapGenerationRules.json`);
 	assert(
+		generationRules.schemaVersion === 1 && generationRules.naming.singleItemSuffix === `locations` &&
+		generationRules.naming.sharedMapSuffix === `sources` &&
 		itemSourcePresentation({ type: `Treasure Map` }).color === `#d4af37` &&
 		itemSourcePresentation({ type: `Oilrig Treasure Goal` }).color === `#000000` &&
-		itemSourcePresentation({ type: `Ancient Ruin` }).style === `outlined` &&
+		itemSourcePresentation({ type: `Ancient Ruin` }).style === `special` &&
+		itemSourcePresentation({ type: `Ore Cluster` }).style === `special` &&
 		itemSourcePresentation({ type: `Dungeon` }).style === `diamond`,
 		`Item source maps should use the standardized Treasure Map, Oil Rig, and Dungeon presentation.`,
 	);
