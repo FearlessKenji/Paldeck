@@ -8,7 +8,7 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## v1.10.2 - 2026-08-16 - Breeding and Map Improvements
 
-- Breeding results now use current game-file combinations and eligibility, including gender-dependent Katress/Wixen children and breeding-item bonuses. Mutation views identify the parent pair, sort children by chance, and provide contextual navigation back to direct results, parent pairs, or partners.
+- Breeding results now support mutated children, showing each possible Alpha child and its percentage from direct results, parent-pair lists, and partner lists. Results also use current game-file combinations and eligibility, including gender-dependent Katress/Wixen children and breeding-item bonuses, with contextual navigation between views.
 - Pal descriptions retain corrected grammar, and Partner Skill names now match the game, including **Too Cool to be Seen**, **Grenadier Panda**, **Gloomhowl**, **Unknown Invader**, and **Unknown Intruder**.
 - **View Dropping Pals** now prefixes special drop results with their variant, such as **Rampaging Gorirat**, **Alpha Smokie Cryst**, or **World Tree Aegidron**; regular drops retain the plain Pal name.
 - Ancient Ruin locations now use larger, emphasized map pins for easier identification.
