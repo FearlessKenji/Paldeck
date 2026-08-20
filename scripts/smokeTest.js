@@ -6,7 +6,7 @@ const os = require(`node:os`);
 const path = require(`node:path`);
 const { compareGameItemData, compareGamePalAvailability } = require(`../utils/gameDataAudit.js`);
 const { curatedPalHabitats } = require(`../utils/curatedPalHabitats.js`);
-const { legendLabel } = require(`./lib/item-map-rendering.js`);
+const { legendLabel } = require(`./lib/maps/item-map-rendering.js`);
 const { validateItemLookupAndDroppingPals } = require(`./smoke/item-smoke.js`);
 const {
 	validateBreedAutocompleteUsesPalData, validateBreedResultsUsePlainNames, validateEncounterDropData,

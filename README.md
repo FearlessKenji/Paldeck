@@ -232,7 +232,7 @@ To spot-check calculated breeding outcomes against PalDB's live two-parent endpo
 $ npm run audit:palworld-breeding-results
 ```
 
-That command samples parent pairs by default. Use `node scripts/audit-palworld-breeding-results.js --sample 250` for a larger sample, or `npm run audit:palworld-breeding-results:full` for every local parent pair.
+That command samples parent pairs by default. Use `node scripts/breeding/audit-results.js --sample 250` for a larger sample, or `npm run audit:palworld-breeding-results:full` for every local parent pair.
 
 To audit whether PalDB exposes any breeding outcomes that still need source overrides, dry-run first:
 
@@ -270,7 +270,7 @@ $ npm run audit:palworld-data:ci
 To pass custom options, run the script directly:
 
 ```console
-$ node scripts/audit-palworld-data.js --limit 10
+$ node scripts/breeding/audit-paldb.js --limit 10
 ```
 
 ## Suggestions and voting

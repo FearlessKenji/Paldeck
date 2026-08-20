@@ -3,7 +3,7 @@ const path = require(`node:path`);
 const { itemDescriptionParts, normalizeItemDescription } = require(`../../utils/itemDescription.js`);
 const { UNAVAILABLE_ITEM_IDS, needsAvailabilityReview, shouldHideItem } = require(`../../utils/itemVisibility.js`);
 const { sourceText } = require(`../../utils/itemCards.js`);
-const { itemSourcePresentation } = require(`../lib/item-map-rendering.js`);
+const { itemSourcePresentation } = require(`../lib/maps/item-map-rendering.js`);
 
 const projectRoot = path.resolve(__dirname, `..`, `..`);
 

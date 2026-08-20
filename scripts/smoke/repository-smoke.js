@@ -3,8 +3,8 @@ const os = require(`node:os`);
 const { assert, fs, listFiles, path, readJson, relative, requireFresh, resolveProject, runGit, serializeDiscordPayload } = require(`./shared.js`);
 
 async function validateHtmlTextHelpers() {
-	const { decodeHtml, stripTags } = requireFresh(`scripts`, `lib`, `html-text.js`);
-	const { parseItemCards, parseItemDetails } = requireFresh(`scripts`, `lib`, `paldb-items.js`);
+	const { decodeHtml, stripTags } = requireFresh(`scripts`, `lib`, `shared`, `html-text.js`);
+	const { parseItemCards, parseItemDetails } = requireFresh(`scripts`, `lib`, `items`, `paldb-items.js`);
 	const encodedTagText = stripTags(`&lt;script&gt;alert(1)&lt;/script&gt;Relaxaurus`);
 	const doubleEncodedTagText = stripTags(`&amp;lt;script&amp;gt;Relaxaurus&amp;lt;/script&amp;gt;`);
 	const nestedTagText = stripTags(`<scr<script>ipt>alert(1)</script>`);
@@ -39,7 +39,7 @@ async function validateHtmlTextHelpers() {
 		`Item-card parsing should retain cached header identity without borrowing a recipe ingredient code.`,
 	);
 
-	const { compareData } = requireFresh(`scripts`, `lib`, `paldb-data.js`);
+	const { compareData } = requireFresh(`scripts`, `lib`, `paldb`, `paldb-data.js`);
 	const palDiff = compareData(
 		[{ breedingId: `test`, element: ``, name: `Test Pal`, number: `001`, suitability: `` }],
 		{ Pals: [{ breeding: { id: `test` }, element: `Water`, name: `Test Pal`, number: `001`, suitability: `Watering 1` }] },
@@ -49,7 +49,7 @@ async function validateHtmlTextHelpers() {
 		palDiff.changedPals.length === 0 && palDiff.coverageGaps[0].fields.length === 2,
 		`Blank upstream Pal fields should be reported as coverage gaps rather than data changes.`,
 	);
-	const updaterSource = fs.readFileSync(resolveProject(`scripts`, `update-palworld-items.js`), `utf8`);
+	const updaterSource = fs.readFileSync(resolveProject(`scripts`, `items`, `update-paldb.js`), `utf8`);
 	assert(
 		updaterSource.includes(`String(item.code || \`\`).toLowerCase()`),
 		`Item refreshes should match cached PalDB codes case-insensitively and preserve stable local identities.`,
@@ -315,14 +315,14 @@ function validateMapDeduplicationSafety() {
 		fs.writeFileSync(sameSizeButDifferent, Buffer.from(`other payload`));
 		fs.writeFileSync(itemDataPath, JSON.stringify({ maps: [relative(first), relative(duplicate), relative(sameSizeButDifferent)] }));
 		process.env.PALDECK_ITEM_DATA_PATH = itemDataPath;
-		const { deduplicate } = requireFresh(`scripts`, `optimize-item-maps.js`);
+		const { deduplicate } = requireFresh(`scripts`, `maps`, `optimize.js`);
 		assert(deduplicate([first, duplicate, sameSizeButDifferent]) === 1, `Only byte-identical maps should be deduplicated.`);
 		assert(fs.existsSync(first) && !fs.existsSync(duplicate) && fs.existsSync(sameSizeButDifferent),
 			`Same-size maps with different bytes must remain separate.`);
 
 		fs.writeFileSync(duplicate, Buffer.from(`first payload`));
 		process.env.PALDECK_ITEM_DATA_PATH = path.join(directory, `missing`, `itemData.json`);
-		const failingOptimizer = requireFresh(`scripts`, `optimize-item-maps.js`);
+		const failingOptimizer = requireFresh(`scripts`, `maps`, `optimize.js`);
 		let failedBeforeDeletion = false;
 		try {
 			failingOptimizer.deduplicate([first, duplicate]);
@@ -433,6 +433,25 @@ function validateCiWorkflow() {
 	assert(workflow.includes(`npm audit --audit-level=moderate`), `CI workflow does not run dependency audit.`);
 }
 
+function validateScriptOrganization() {
+	const packageFile = requireFresh(`package.json`);
+	const allowedRootScripts = new Set([`lint.js`, `smokeTest.js`]);
+	const rootScripts = listFiles(resolveProject(`scripts`), filePath => path.dirname(filePath) === resolveProject(`scripts`) && filePath.endsWith(`.js`));
+
+	assert(rootScripts.every(filePath => allowedRootScripts.has(path.basename(filePath))),
+		`Only repository-wide lint and smoke entry points should remain at the scripts root.`);
+	for (const [name, command] of Object.entries(packageFile.scripts)) {
+		const entryPoint = /^node (scripts\/\S+\.js)(?:\s|$)/u.exec(command)?.[1];
+		if (!entryPoint) {
+			continue;
+		}
+		assert(fs.existsSync(resolveProject(...entryPoint.split(`/`))), `${name}: missing script entry point ${entryPoint}.`);
+	}
+	const rootHelpers = listFiles(resolveProject(`scripts`, `lib`), filePath =>
+		path.dirname(filePath) === resolveProject(`scripts`, `lib`) && filePath.endsWith(`.js`));
+	assert(rootHelpers.length === 0, `Reusable script helpers should be grouped under a lib domain.`);
+}
+
 function validateGithubPagesDocs() {
 	const config = fs.readFileSync(resolveProject(`docs`, `_config.yml`), `utf8`);
 	const index = fs.readFileSync(resolveProject(`docs`, `index.md`), `utf8`);
@@ -494,4 +513,5 @@ module.exports = {
 	validateDmForwarding, validateEventsLoad, validateGitHygiene, validateGithubPagesDocs,
 	validateHiddenPalPlaceholdersStayHidden, validateHtmlTextHelpers, validateItemSourceQuantities,
 	validateMapDeduplicationSafety, validateMutationCandidateRankBoundaries, validatePalData, validateReleaseWorkflow,
+	validateScriptOrganization,
 };
