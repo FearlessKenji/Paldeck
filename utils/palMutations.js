@@ -73,6 +73,34 @@ function eligibleMutationChildren(pals) {
 	);
 }
 
+function mutationCandidateRankRanges(candidates) {
+	const winnersByRank = new Map();
+	for (const candidate of candidates) {
+		const current = winnersByRank.get(candidate.breeding.rank);
+		if (!current || compareMutationCandidates(candidate, current) < 0) {
+			winnersByRank.set(candidate.breeding.rank, candidate);
+		}
+	}
+	const winners = [...winnersByRank.values()].sort((first, second) => first.breeding.rank - second.breeding.rank);
+	return new Map(winners.map((candidate, index) => {
+		const previous = winners[index - 1];
+		const next = winners[index + 1];
+		let minimum = Number.NEGATIVE_INFINITY;
+		let maximum = Number.POSITIVE_INFINITY;
+		if (previous) {
+			const sum = previous.breeding.rank + candidate.breeding.rank;
+			const winsTie = sum % 2 === 0 && compareMutationCandidates(candidate, previous) < 0;
+			minimum = Math.floor(sum / 2) + (winsTie ? 0 : 1);
+		}
+		if (next) {
+			const sum = candidate.breeding.rank + next.breeding.rank;
+			const losesTie = sum % 2 === 0 && compareMutationCandidates(candidate, next) > 0;
+			maximum = Math.floor(sum / 2) - (losesTie ? 1 : 0);
+		}
+		return [candidate.name, { maximum, minimum }];
+	}));
+}
+
 module.exports = {
 	MUTATION_RANDOM_COEFFICIENT,
 	MUTATION_RATE,
@@ -80,7 +108,9 @@ module.exports = {
 	MUTATION_RANK_DIFFERENCE_PENALTY,
 	eligibleMutationChildren,
 	mutationChildrenForParents,
+	mutationCandidateRankRanges,
 	mutationOutcomesForParents,
 	mutationRateForBonus,
 	mutationTargetRange,
+	nearestMutationCandidate,
 };

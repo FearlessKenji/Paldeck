@@ -5,6 +5,7 @@ const { itemControlRows, itemResponseEmbeds } = require(`./itemCardControls.js`)
 const { itemDescriptionParts } = require(`./itemDescription.js`);
 const { nonPalDrops, searchablePalDrops } = require(`./itemDropSources.js`);
 const { itemWorkbench } = require(`./itemWorkbench.js`);
+const implantPassives = require(`../data/implantPassives.json`);
 
 const ITEM_RARITY_COLORS = {
 	Common: 0x9ca3af, Uncommon: 0x22c55e, Rare: 0x3b82f6, Epic: 0xa855f7, Legendary: 0xf59e0b,
@@ -125,6 +126,8 @@ function chunkLines(lines, limit = 1024) {
 }
 
 function itemEffect(item) {
+	const grantedPassive = implantPassives[String(item.code || ``).split(`/`).at(-1)];
+	if (grantedPassive) {return { label: `Granted Passive:`, value: grantedPassive };}
 	if (item.properties?.typeB === `Accessory`) {
 		const description = String(item.description || ``);
 		const start = description.indexOf(`. `);
@@ -141,10 +144,9 @@ function relicRecyclerResult(acquisition, relicName) {
 	if (!chances.length) {return null;}
 	// Recycler tables use three independently rolled reward slots; combine them into the useful per-recycling chance.
 	const percentage = (1 - chances.reduce((miss, chance) => miss * (1 - chance), 1)) * 100;
-	const quantities = new Set(matches.map(pool => pool.quantity).filter(Boolean));
 	return {
-		probability: `${percentage.toFixed(3).replace(/0+$/u, ``).replace(/\.$/u, ``)}%`,
-		quantity: quantities.size === 1 ? [...quantities][0] : null,
+		probability: percentage < 0.001 ? `<0.001%` : `${percentage.toFixed(3).replace(/0+$/u, ``).replace(/\.$/u, ``)}%`,
+		quantity: numericRange(matches.map(pool => pool.quantity)) || `1`,
 	};
 }
 
@@ -161,8 +163,7 @@ function compactLootPoolLine(category, pools) {
 	const probabilities = pools.map(pool => Number.parseFloat(pool.probability)).filter(Number.isFinite);
 	const probability = probabilities.length ? formatNumber(Math.max(...probabilities)) : null;
 	const variedProbability = new Set(probabilities).size > 1;
-	// A single guaranteed item is implicit; retain quantities only when the reward amount itself varies or exceeds one.
-	const quantityText = quantity && quantity !== `1` ? ` ×${quantity}` : ``;
+	const quantityText = ` ×${quantity || `1`}`;
 	return `${category}${quantityText}${probability ? `: ${variedProbability ? `up to ` : ``}${probability}%` : ``}`;
 }
 
@@ -304,7 +305,7 @@ function sourceEntrySuffix(acquisition, source, entry) {
 		recyclerResult = relicRecyclerResult(acquisition, entry.location);
 	}
 	const cost = String(entry.cost || ``).replace(/^1 (.+)s$/u, `1 $1`);
-	const quantity = entry.quantity || recyclerResult?.quantity;
+	const quantity = entry.quantity || recyclerResult?.quantity || `1`;
 	const probability = entry.probability || recyclerResult?.probability;
 	const suffix = `${quantity ? ` ×${formatNumber(quantity)}` : ``}` +
 		`${probability ? `: ${probability}` : ``}${cost ? `: ${cost}` : ``}`;
@@ -315,15 +316,15 @@ function countedSourceLocation(source, entry) {
 	const countedLocation = entry.location.match(/^(\d+) (Palpagos|World Tree) locations$/u);
 	if (countedLocation && [`Locations`, `Resource Nodes`, `Effigy Locations`].includes(source.type)) {
 		const label = source.type === `Locations` ? `Fixed Locations` : source.type;
-		return `${label} (${countedLocation[2]}): ${formatNumber(countedLocation[1])} locations`;
+		return `${label} (${countedLocation[2]}) ×1: ${formatNumber(countedLocation[1])} locations`;
 	}
 	const singleLocation = entry.location.match(/^(Palpagos|World Tree) location$/u);
 	if (singleLocation && source.type === `Locations`) {
-		return `Fixed Location (${singleLocation[1]})`;
+		return `Fixed Location (${singleLocation[1]}) ×1`;
 	}
 	const eggSpawns = entry.location.match(/^(\d+) (Palpagos|World Tree) egg spawns$/u);
 	if (eggSpawns && source.type === `Spawn Locations`) {
-		return `Egg Spawns (${eggSpawns[2]}): ${formatNumber(eggSpawns[1])} locations`;
+		return `Egg Spawns (${eggSpawns[2]}) ×1: ${formatNumber(eggSpawns[1])} locations`;
 	}
 	return null;
 }
@@ -332,7 +333,7 @@ function sourceEntryText(acquisition, source, entry) {
 	const suffix = sourceEntrySuffix(acquisition, source, entry);
 	const qualify = (label, qualifier) =>
 		`${label} (${String(qualifier).replace(/: Lvl (?=\d)/u, `, Lv. `)})${suffix}`;
-	if (source.type === `Ancient Ruin` && /^Fixed location$/iu.test(entry.location)) {return source.type;}
+	if (source.type === `Ancient Ruin` && /^Fixed location$/iu.test(entry.location)) {return `${source.type} ×1`;}
 	const countedLocation = countedSourceLocation(source, entry);
 	if (countedLocation) {return countedLocation;}
 	if (source.type === `Ancient Relics`) {return qualify(`Ancient Relic Recycler`, entry.location);}
@@ -350,7 +351,7 @@ function sourceEntryText(acquisition, source, entry) {
 function addTreasureSources({ acquisition, source, sections, seen }) {
 	for (const chestTier of new Set(source.entries.map(entry => entry.chestTier).filter(Boolean))) {
 		if ((acquisition?.lootPools || []).some(pool => lootPoolCategory(acquisition, pool) === chestTier)) {continue;}
-		if (!seen.has(chestTier)) {sections.push(chestTier);}
+		if (!seen.has(chestTier)) {sections.push(`${chestTier} ×1`);}
 		seen.add(chestTier);
 	}
 }
@@ -373,13 +374,13 @@ function addCuratedSource({ acquisition, source, sections, seen }) {
 	if (summary) {
 		const decoded = (acquisition?.lootPools || []).some(pool =>
 			(LOOT_POOL_LABELS[pool.category] || pool.category) === summary && pool.probability);
-		if (!decoded && !seen.has(summary)) {sections.push(summary);}
+		if (!decoded && !seen.has(summary)) {sections.push(`${summary} ×1`);}
 		seen.add(summary);
 		return true;
 	}
 	if ([`Pal Critic`, `Pal Critics`].includes(source.type)) {
 		const critics = source.entries.map(entry => entry.location).filter(Boolean).sort((a, b) => a.localeCompare(b));
-		sections.push(`Arrogant Pal Critics (${critics.join(`, `)})`);
+		sections.push(`Arrogant Pal Critics (${critics.join(`, `)}) ×1`);
 		return true;
 	}
 	if ([`Dungeon Treasure Chests`, `Dungeon Chests`].includes(source.type)) {
@@ -441,11 +442,11 @@ function sourceText(acquisition, merchantLocations, droppedBy = []) {
 		if (merchantLocations && PROCEDURAL_MERCHANT_SOURCES.has(source.type)) {continue;}
 		if (addCuratedSource({ acquisition, source, sections, seen })) {continue;}
 		const entries = source.entries.map(entry => sourceEntryText(acquisition, source, entry)).join(`\n`);
-		sections.push(entries || source.type);
+		sections.push(entries || `${source.type} ×1`);
 		seen.add(source.type);
 	}
 	for (const merchant of fixedMerchantTypes(merchantLocations)) {
-		if (!seen.has(merchant)) {sections.push(merchant);}
+		if (!seen.has(merchant)) {sections.push(`${merchant} ×1`);}
 		seen.add(merchant);
 	}
 	appendDropSources(droppedBy, sections, seen);

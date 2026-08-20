@@ -20,7 +20,7 @@ function validateNonPalBossSource(context) {
 	const legendaryMeowmere = context.itemData.Items.find(item => item.name === `Legendary Meowmere`);
 	const payload = context.paldeck.buildItemResponse(legendaryMeowmere, null, `item-owner`);
 	const serialized = serializeDiscordPayload(payload);
-	assert(serialized.includes(`Moon Lord: 22.22%`), `Legendary Meowmere should name Moon Lord as its source.`);
+	assert(serialized.includes(`Moon Lord ×1: 22.22%`), `Legendary Meowmere should name Moon Lord and its acquired quantity.`);
 	assert(!serialized.includes(`Pal Drops: 22.22%`), `Non-Pal bosses should not be summarized as Pal Drops.`);
 	assert(
 		!payload.components.flatMap(row => row.components).some(component => component.data.label === `View Dropping Pals`),

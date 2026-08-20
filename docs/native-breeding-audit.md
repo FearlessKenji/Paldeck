@@ -29,4 +29,4 @@ The current fixed-combination table contains 258 rows: 122 redundant same-specie
 - Ophydia + Ophydia resolves only to Eidrolon Ignis. Its target range is 116–138, and the variant remains eligible because its game row has `IgnoreCombi: false`.
 - Whalaska + Whalaska has target range 356–426. Its complete file-derived pool is Whalaska Ignis, Moldron Cryst, Flaracle, Blazamut, Azurmane, and Starryon Primo; observed hatches currently confirm Flaracle, Blazamut, and Azurmane.
 
-`scripts/ghidra` contains the repeatable string, reflection-property, address, and decompilation helpers used for this trace. `scripts/scan-native-breeding-offsets.js` provides a fast first pass for locating code that references the mutation setting offsets in a later executable.
+The Ghidra-only string, reflection-property, address, and decompilation helpers used for this trace are external development tooling and are not stored in this runtime repository. `scripts/scan-native-breeding-offsets.js` provides a JavaScript first pass for locating code that references the mutation setting offsets in a later executable.

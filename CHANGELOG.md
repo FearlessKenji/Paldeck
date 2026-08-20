@@ -4,6 +4,17 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+## v1.11.0 - 2026-08-20
+
+- Updated Paldeck's package and release metadata to v1.11.0.
+- Added the tracked PM2 ecosystem configuration required by `npm run pm2:start` for reproducible production startup.
+- Removed Ghidra-specific Java audit helpers from the runtime repository and excluded local copies from version control.
+- Added installed passive names to all 68 searchable permanent and disposable implant cards, including `Disposable Implant: Skymarcher` granting `Sky Strider`, with complete mapping validation.
+- Restored seven Legendary schematic associations omitted when their Decayed Ancient Relic chances rounded to zero, display their positive chances as `<0.001%`, and require positive recycler rows to retain loot metadata.
+- Included server names alongside guild IDs in patch-note broadcast results, including skipped and failed deliveries.
+- Replaced parent-result mutation selectors with inverse mutated-egg parent lookup, including conditional pair probabilities, availability-aware controls, return navigation, and exhaustive mutation-rank boundary coverage; partner searches retain per-pair mutation inspection.
+- Standardized item-source presentation so every acquisition pathway displays its per-result item quantity, including explicit single-item quantities.
+
 ## v1.10.2 - 2026-08-16
 
 - Updated Paldeck's package and release metadata to v1.10.2.

@@ -102,6 +102,41 @@ async function validateHiddenPalPlaceholdersStayHidden() {
 	assert(calculator.calculateChild(`PinkKangaroo`, `PinkKangaroo`) === null, `Hidden placeholders should not be accepted as direct breeding inputs.`);
 }
 
+function validateMutationCandidateRankBoundaries() {
+	const pals = requireFresh(`data`, `palData.json`).Pals;
+	const {
+		eligibleMutationChildren,
+		mutationCandidateRankRanges,
+		nearestMutationCandidate,
+	} = requireFresh(`utils`, `palMutations.js`);
+	const candidates = eligibleMutationChildren(pals);
+	const ranges = [...mutationCandidateRankRanges(candidates)];
+
+	// Cover every native integer target rank, including all midpoint and priority tie boundaries.
+	for (let targetRank = 0; targetRank <= 5000; targetRank += 1) {
+		const expected = nearestMutationCandidate(candidates, targetRank)?.name;
+		const actual = ranges.find(([, range]) => targetRank >= range.minimum && targetRank <= range.maximum)?.[0];
+		assert(actual === expected, `Mutation candidate range mismatch at target rank ${targetRank}: expected ${expected}, received ${actual}.`);
+	}
+}
+
+function validateItemSourceQuantities() {
+	const { sourceText } = requireFresh(`utils`, `itemCards.js`);
+	const { resolvedItemData } = requireFresh(`utils`, `itemData.js`);
+	const itemData = resolvedItemData(requireFresh(`data`, `itemData.json`));
+
+	for (const item of itemData.Items) {
+		const note = item.acquisition?.note || ``;
+		const sourceLines = sourceText(item.acquisition, item.merchantLocations, item.droppedBy).split(`\n`).filter(Boolean);
+		for (const sourceLine of sourceLines) {
+			if (note.includes(sourceLine)) {
+				continue;
+			}
+			assert(sourceLine.includes(`×`), `${item.name}: source line does not show its acquired quantity: ${sourceLine}`);
+		}
+	}
+}
+
 async function validateEventsLoad() {
 	const eventFiles = listFiles(resolveProject(`events`), filePath => filePath.endsWith(`.js`));
 	const eventNames = new Set();
@@ -148,9 +183,9 @@ async function validateEventsLoad() {
 function validateBroadcastSummary(announceCommand) {
 	const broadcastSummary = announceCommand.summarizeResults([
 		...Array.from({ length: 12 }, (_, index) => ({ guildId: `sent-${index}`, message: `Sent.`, ok: true, skipped: false })),
-		{ guildId: `skipped-guild`, message: `No updates channel is configured.`, ok: true, skipped: true },
-		{ guildId: `failed-guild`, message: `Missing Send Messages permission.`, ok: false, skipped: false },
-		{ guildId: `long-failure`, message: `x`.repeat(2000), ok: false, skipped: false },
+		{ guildId: `skipped-guild`, guildName: `Skipped Server`, message: `No updates channel is configured.`, ok: true, skipped: true },
+		{ guildId: `failed-guild`, guildName: `Failed Server`, message: `Missing Send Messages permission.`, ok: false, skipped: false },
+		{ guildId: `long-failure`, guildName: `Long Failure Server`, message: `x`.repeat(2000), ok: false, skipped: false },
 	]);
 	const completeBroadcastSummary = broadcastSummary.join(`\n`);
 
@@ -158,6 +193,8 @@ function validateBroadcastSummary(announceCommand) {
 	assert(completeBroadcastSummary.includes(`Sent: 12`), `Broadcast result summaries should condense successful deliveries into the sent total.`);
 	assert(completeBroadcastSummary.includes(`skipped-guild`) && completeBroadcastSummary.includes(`failed-guild`) && completeBroadcastSummary.includes(`long-failure`),
 		`Broadcast result summaries should include every skipped and failed result.`);
+	assert(completeBroadcastSummary.includes(`Skipped Server (skipped-guild): skipped.`),
+		`Broadcast result summaries should identify exceptional deliveries by server name and ID.`);
 	assert(!completeBroadcastSummary.includes(`more result`), `Broadcast result summaries should never replace results with an overflow count.`);
 }
 
@@ -260,6 +297,7 @@ async function validateAnnouncementHelpers() {
 	await announcements.sendLatestPatchNotesToGuild(client, guildId, { force: true });
 
 	assert(!firstFailure.message.includes(`server owner was notified`), `Failed announcement delivery should not directly message the server owner.`);
+	assert(firstFailure.guildName === `Smoke Guild`, `Failed announcement delivery should retain the server name.`);
 	await validateManagerAnnouncementWarnings(announcements, guildId, PermissionFlagsBits);
 	await JoinedServers.destroy({ where: { guild_id: guildId } });
 }
@@ -454,6 +492,6 @@ function validateGitHygiene(warn = console.warn) {
 module.exports = {
 	validateAnnouncementHelpers, validateCiWorkflow, validateConfigValueHelpers, validateDatabaseModels,
 	validateDmForwarding, validateEventsLoad, validateGitHygiene, validateGithubPagesDocs,
-	validateHiddenPalPlaceholdersStayHidden, validateHtmlTextHelpers, validateMapDeduplicationSafety,
-	validatePalData, validateReleaseWorkflow,
+	validateHiddenPalPlaceholdersStayHidden, validateHtmlTextHelpers, validateItemSourceQuantities,
+	validateMapDeduplicationSafety, validateMutationCandidateRankBoundaries, validatePalData, validateReleaseWorkflow,
 };

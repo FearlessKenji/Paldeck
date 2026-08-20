@@ -166,6 +166,7 @@ async function getAnnouncementSettings(guildId) {
 
 	return {
 		guildId: normalizedGuildId,
+		guildName: server?.guild_name || `Unknown Server`,
 		paldeckAnnouncementChannelId: server?.paldeck_announcement_channel_id || null,
 		paldeckAnnouncementLastId: server?.paldeck_announcement_last_id || null,
 	};
@@ -371,18 +372,19 @@ async function sendLatestPatchNotesToGuild(client, guildId, { force = false } = 
 	const note = getLatestPatchNotes();
 
 	if (!note) {
-		return { guildId: normalizedGuildId, ok: false, sent: 0, skipped: true, message: `No patch notes were found.` };
+		return { guildId: normalizedGuildId, guildName: settings.guildName, ok: false, sent: 0, skipped: true, message: `No patch notes were found.` };
 	}
 
 	if (!force && settings.paldeckAnnouncementLastId === note.id) {
-		return { guildId: normalizedGuildId, ok: true, patchNoteId: note.id, sent: 0, skipped: true, message: `Latest patch notes were already sent.` };
+		return { guildId: normalizedGuildId, guildName: settings.guildName, ok: true, patchNoteId: note.id, sent: 0, skipped: true, message: `Latest patch notes were already sent.` };
 	}
 
 	const guild = await fetchGuild(client, normalizedGuildId);
 
 	if (!guild) {
-		return { guildId: normalizedGuildId, ok: false, patchNoteId: note.id, sent: 0, skipped: true, message: `Guild is unavailable.` };
+		return { guildId: normalizedGuildId, guildName: settings.guildName, ok: false, patchNoteId: note.id, sent: 0, skipped: true, message: `Guild is unavailable.` };
 	}
+	const guildName = guild.name || settings.guildName;
 
 	const channelResult = await fetchAnnouncementChannel(guild, settings.paldeckAnnouncementChannelId);
 
@@ -391,6 +393,7 @@ async function sendLatestPatchNotesToGuild(client, guildId, { force = false } = 
 
 		return {
 			guildId: normalizedGuildId,
+			guildName,
 			ok: false,
 			patchNoteId: note.id,
 			sent: 0,
@@ -409,6 +412,7 @@ async function sendLatestPatchNotesToGuild(client, guildId, { force = false } = 
 
 	return {
 		guildId: normalizedGuildId,
+		guildName,
 		ok: true,
 		patchNoteId: note.id,
 		sent: messages.length,
@@ -419,7 +423,7 @@ async function sendLatestPatchNotesToGuild(client, guildId, { force = false } = 
 
 async function broadcastLatestPatchNotes(client, { force = false } = {}) {
 	const servers = await JoinedServers.findAll({
-		attributes: [`guild_id`],
+		attributes: [`guild_id`, `guild_name`],
 		raw: true,
 		where: {
 			paldeck_announcement_channel_id: { [Op.ne]: null },
@@ -429,11 +433,13 @@ async function broadcastLatestPatchNotes(client, { force = false } = {}) {
 
 	for (const server of servers) {
 		try {
-			results.push(await sendLatestPatchNotesToGuild(client, server.guild_id, { force }));
+			const result = await sendLatestPatchNotesToGuild(client, server.guild_id, { force });
+			results.push({ ...result, guildName: result.guildName || server.guild_name || `Unknown Server` });
 		} catch (err) {
 			error(`Failed to send Paldeck patch notes for guild ${server.guild_id}:`, err);
 			results.push({
 				guildId: server.guild_id,
+				guildName: server.guild_name || `Unknown Server`,
 				ok: false,
 				sent: 0,
 				skipped: true,

@@ -6,6 +6,13 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+## v1.11.0 - 2026-08-20 - Mutation Lookup and Item Improvements
+
+- Every implant card now names the passive it grants, such as **Disposable Implant: Skymarcher** granting **Sky Strider**.
+- Seven Legendary schematics now show their extremely rare Decayed Ancient Relic source as **<0.001%** instead of listing it without a chance.
+- Breeding-parent results now provide **View Mutated Egg Parents** when applicable, listing every pair that can produce the selected Pal from a mutated egg and each pair's conditional chance.
+- Item source lists now show the quantity acquired from every source, including **×1** for single-item results.
+
 ## v1.10.2 - 2026-08-16 - Breeding and Map Improvements
 
 - Breeding results now support mutated children, showing each possible Alpha child and its percentage from direct results, parent-pair lists, and partner lists. Results also use current game-file combinations and eligibility, including gender-dependent Katress/Wixen children and breeding-item bonuses, with contextual navigation between views.

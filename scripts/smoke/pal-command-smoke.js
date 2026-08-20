@@ -108,8 +108,18 @@ async function runBreedCommand(breed, subcommand, values) {
 	return replyPayload;
 }
 
+function validateBreedCommandOptions(breed) {
+	const breedOptions = breed.data.toJSON().options;
+	const resultOptions = breedOptions.find(option => option.name === `result`).options;
+	const parentOptions = breedOptions.find(option => option.name === `parents`).options;
+
+	assert(!resultOptions.some(option => option.name === `combi_rank_bonus`), `/breed result should not expose CombiRankBonus.`);
+	assert(!parentOptions.some(option => option.name === `mutation_parent`), `/breed parents should not expose a mutation-parent filter.`);
+}
+
 async function validateBreedResultsUsePlainNames() {
 	const breed = requireFresh(`commands`, `globalCommands`, `utility`, `breed.js`);
+	validateBreedCommandOptions(breed);
 	const numberPrefixedPalPattern = /#\d{1,3}[A-Z]?\s+[A-Za-z]/;
 	const formulaDetailLabels = [
 		`Child Rank`,
@@ -138,17 +148,18 @@ async function validateBreedResultsUsePlainNames() {
 		parent1: `Katress`,
 		parent2: `Wixen`,
 	});
-	const modifiedResultPayload = await runBreedCommand(breed, `result`, {
-		combi_rank_bonus: 10,
-		parent1: `Lamball`,
-		parent2: `Cattiva`,
-	});
 	await validateMutationButton(breed, hartalisResultPayload);
 	const parentsPayload = await runBreedCommand(breed, `parents`, {
 		child: `Lamball`,
 	});
 	const uniqueParentsPayload = await runBreedCommand(breed, `parents`, {
 		child: `Relaxaurus Lux`,
+	});
+	const mutationParentsPayload = await runBreedCommand(breed, `parents`, {
+		child: `Aegidron`,
+	});
+	const unavailableMutationParentsPayload = await runBreedCommand(breed, `parents`, {
+		child: `Hartalis`,
 	});
 	const partnerPayload = await runBreedCommand(breed, `partner`, {
 		child: `Lamball`,
@@ -158,7 +169,7 @@ async function validateBreedResultsUsePlainNames() {
 		child: `Relaxaurus Lux`,
 		parent: `Relaxaurus`,
 	});
-	await validateMutationListNavigation(breed, parentsPayload, `Back to Parent Pairs`);
+	await validateMutationParentNavigation(breed, mutationParentsPayload);
 	await validateMutationListNavigation(breed, partnerPayload, `Back to Partners`);
 	const serializedOutput = [
 		serializeDiscordPayload(resultPayload),
@@ -168,7 +179,6 @@ async function validateBreedResultsUsePlainNames() {
 		serializeDiscordPayload(partnerPayload),
 		serializeDiscordPayload(uniquePartnerPayload),
 		serializeDiscordPayload(genderedResultPayload),
-		serializeDiscordPayload(modifiedResultPayload),
 	].join(`\n`);
 
 	assert(resultPayload?.embeds?.length, `/breed result did not produce an embed.`);
@@ -177,17 +187,46 @@ async function validateBreedResultsUsePlainNames() {
 	assert(uniqueParentsPayload?.embeds?.length, `/breed parents did not produce a unique-combination embed.`);
 	assert(partnerPayload?.embeds?.length, `/breed partner did not produce an embed.`);
 	assert(uniquePartnerPayload?.embeds?.length, `/breed partner did not produce a unique-combination embed.`);
-	assert(serializedOutput.includes(`breed:mutation-select:`), `Breeding lists should provide mutation selectors.`);
-	assert(serializedOutput.includes(`View Mutation Chances`), `Breeding-list mutation selectors should describe their action.`);
+	assert(serializeDiscordPayload(mutationParentsPayload).includes(`View Mutated Egg Parents`), `Eligible parent results should provide inverse mutation lookup.`);
+	assert(!serializeDiscordPayload(unavailableMutationParentsPayload).includes(`breed:mutation-parents:`), `Parent results should hide unavailable inverse mutation lookup.`);
+	assert(!serializeDiscordPayload(parentsPayload).includes(`breed:mutation-select:`), `Parent results should not use pair mutation selectors.`);
+	assert(serializeDiscordPayload(partnerPayload).includes(`View Mutation Chances`), `Partner results should retain pair mutation selectors.`);
 	assert(serializedOutput.includes(`Katress (female) + Wixen (male) -> Katress Ignis`), `Gendered Katress/Wixen breeding result is missing.`);
 	assert(serializedOutput.includes(`Katress (male) + Wixen (female) -> Wixen Noct`), `Reverse-gender Katress/Wixen breeding result is missing.`);
-	assert(serializedOutput.includes(`Nox`), `CombiRankBonus should change the Lamball/Cattiva fallback child to Nox.`);
-	assert(serializedOutput.includes(`CombiRankBonus +10`), `Modified breeding result should identify the applied CombiRankBonus.`);
 	assert(serializedOutput.includes(`Lamball`), `/breed command smoke output should include the test Pal name.`);
 	assert(!numberPrefixedPalPattern.test(serializedOutput), `/breed results should show plain Pal names without number prefixes.`);
 	for (const label of formulaDetailLabels) {
 		assert(!serializedOutput.includes(label), `/breed results should not show formula detail label: ${label}.`);
 	}
+}
+
+async function validateMutationParentNavigation(breed, parentsPayload) {
+	const mutationParentsButton = parentsPayload?.components?.flatMap(row => row.components || [])
+		.find(component => component.data?.custom_id?.startsWith(`breed:mutation-parents:`));
+	let mutationParentsPayload = null;
+	await breed.handleButton({
+		customId: mutationParentsButton?.data?.custom_id,
+		update: payload => {
+			mutationParentsPayload = payload;
+		},
+		user: { id: `smoke-test-user` },
+	});
+	const serializedMutationParents = serializeDiscordPayload(mutationParentsPayload);
+	assert(serializedMutationParents.includes(`Aegidron — Mutated Egg Parents`), `Inverse mutation lookup should identify its child.`);
+	assert(serializedMutationParents.includes(`Aegidron + Aegidron (100%)`), `Inverse mutation lookup should include weighted parent pairs.`);
+	const backButton = mutationParentsPayload?.components?.flatMap(row => row.components || [])
+		.find(component => component.data?.label === `Back to Parent Pairs`);
+	assert(backButton, `Inverse mutation lookup should return to parent pairs.`);
+	let returnedPayload = null;
+	await breed.handleButton({
+		customId: backButton.data.custom_id,
+		update: payload => {
+			returnedPayload = payload;
+		},
+		user: { id: `smoke-test-user` },
+	});
+	assert(serializeDiscordPayload(returnedPayload).includes(`Breeding Parents`),
+		`Back to Parent Pairs should restore the originating parent list.`);
 }
 
 async function validateMutationListNavigation(breed, listPayload, expectedBackLabel) {

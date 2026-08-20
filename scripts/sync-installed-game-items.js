@@ -10,6 +10,7 @@ const curatedTreasureMapSources = require(`../data/curatedTreasureMapSources.jso
 const curatedSlabFragmentSources = require(`../data/curatedSlabFragmentSources.json`);
 const curatedSchematicSources = require(`../data/curatedSchematicSources.json`);
 const gameSourceData = require(`../data/gameSourceData.json`);
+const implantPassives = require(`../data/implantPassives.json`);
 const { compactItemData, resolvedItemData } = require(`../utils/itemData.js`);
 const { applyTowerBossSources } = require(`../utils/towerBossSources.js`);
 const { removeIndirectTreasureMapMarkers } = require(`../utils/itemMapSources.js`);
@@ -276,6 +277,44 @@ function installedAcquisitionSources(snapshot) {
 	return byItem;
 }
 
+// Cross-table guards make this deliberately branchy while keeping each restored association auditable.
+// eslint-disable-next-line complexity
+function applyMissingAncientRelicLoot(itemData, snapshot) {
+	const fieldRows = new Map(decodedTableEntries(snapshot, `/DT_FieldLotteryNameDataTable`)
+		.map(entry => [entry.Key, entry.Value]));
+	const relicRows = tableEntries(snapshot, `itemLottery`).filter(entry =>
+		/^AncientRelicRecycler_WorldTreeRelic_0[1-5]$/u.test(entry.Value.FieldName));
+	const slotWeights = new Map();
+	for (const entry of relicRows) {
+		const key = `${entry.Value.FieldName}:${entry.Value.SlotNo}`;
+		slotWeights.set(key, (slotWeights.get(key) || 0) + Number(entry.Value.WeightInSlot || 0));
+	}
+	const itemsById = new Map(itemData.Items.map(item => [normalizedId(rawGameId(item)), item]));
+	let restored = 0;
+	for (const entry of relicRows) {
+		const row = entry.Value;
+		const activation = Number(fieldRows.get(row.FieldName)?.[`ItemSlot${row.SlotNo}_ProbabilityPercent`] || 0);
+		const totalWeight = slotWeights.get(`${row.FieldName}:${row.SlotNo}`) || 0;
+		const item = itemsById.get(normalizedId(row.StaticItemId));
+		if (!item || activation <= 0 || totalWeight <= 0 ||
+			item.acquisition?.lootPools?.some(pool => pool.pool === row.FieldName)) {continue;}
+		// Corroborating HTML rounds sub-0.001% rows to zero; retain the positive decoded game-table chance.
+		const probability = activation * Number(row.WeightInSlot || 0) / totalWeight;
+		item.acquisition ||= { sources: [] };
+		item.acquisition.lootPools ||= [];
+		item.acquisition.lootPools.push({
+			pool: row.FieldName,
+			category: `Relic Recycler`,
+			quantity: Number(row.MinNum) === Number(row.MaxNum) ? String(row.MinNum) : `${row.MinNum}–${row.MaxNum}`,
+			probability: `${probability.toFixed(6).replace(/0+$/u, ``).replace(/\.$/u, ``)}%`,
+		});
+		restored += 1;
+	}
+	return restored;
+}
+
+// Report the precise broken join rather than collapsing source and probability failures into one check.
+// eslint-disable-next-line complexity
 function validateAncientRelicCatalog(itemData, snapshot) {
 	const fieldRows = new Map(decodedTableEntries(snapshot, `/DT_FieldLotteryNameDataTable`)
 		.map(entry => [entry.Key, entry.Value]));
@@ -292,14 +331,43 @@ function validateAncientRelicCatalog(itemData, snapshot) {
 		const relicId = /^AncientRelicRecycler_(WorldTreeRelic_0[1-5])$/u.exec(row.FieldName)?.[1];
 		const relicName = RELIC_NAMES[relicId];
 		const source = item?.acquisition?.sources?.find(value => value.type === `Ancient Relics`);
+		const lootPool = item?.acquisition?.lootPools?.find(value => value.pool === row.FieldName);
 		if (!item) {
 			problems.push(`${row.StaticItemId}: relic pool ${row.FieldName} has no catalog item.`);
 		} else if (!source?.entries?.some(value => value.location === relicName)) {
 			problems.push(`${item.name}: missing ${relicName} source from ${row.FieldName}.`);
+		} else if (!lootPool || Number.parseFloat(lootPool.probability) <= 0) {
+			problems.push(`${item.name}: missing positive loot metadata for ${row.FieldName}.`);
 		}
 	}
 	if (problems.length) {throw new Error(`${problems.length} Ancient Relic catalog problem(s):\n${problems.join(`\n`)}`);}
 	console.log(`Validated ${relicRows.length} positive Ancient Relic loot rows across ${new Set(relicRows.map(entry => normalizedId(entry.Value.StaticItemId))).size} catalog items.`);
+}
+
+function validateImplantPassiveNames(itemData, snapshot) {
+	const passiveNames = new Map(decodedTableEntries(snapshot, `/en/Pal/DataTable/Text/DT_SkillNameText_Common`)
+		.map(entry => [entry.Key, entry.Value.TextData?.LocalizedString]));
+	const implants = itemData.Items.filter(item => item.searchable !== false &&
+		[`ConsumePassiveSkillChange`, `Essential_PassiveSkillChange`].includes(item.properties?.typeB));
+	const problems = [];
+	for (const item of implants) {
+		const itemId = rawGameId(item);
+		const suffix = itemId.replace(/^PalPassiveSkillChange_(?:Consumable_)?/u, ``);
+		const keys = [
+			`PASSIVE_${suffix}`,
+			`PASSIVE_${suffix.replace(/_Passive$/u, ``)}`,
+			...(suffix === `HatchingSpeed_Up` ? [`PASSIVE_Test_PalEgg_HatchingSpeed_Up`] : []),
+		];
+		const installedName = keys.map(key => passiveNames.get(key)).find(Boolean);
+		if (!installedName) {problems.push(`${item.name}: no installed passive localization found.`);} else if (implantPassives[itemId] !== installedName) {
+			problems.push(`${item.name}: expected ${JSON.stringify(installedName)}, found ${JSON.stringify(implantPassives[itemId])}.`);
+		}
+	}
+	if (Object.keys(implantPassives).length !== implants.length) {
+		problems.push(`Expected ${implants.length} searchable implant mappings, found ${Object.keys(implantPassives).length}.`);
+	}
+	if (problems.length) {throw new Error(`${problems.length} implant passive problem(s):\n${problems.join(`\n`)}`);}
+	console.log(`Validated installed passive names for ${implants.length} searchable implants.`);
 }
 
 function applyFixedSpecialShopLocations(item, sources) {
@@ -742,6 +810,7 @@ function main() {
 	applyV103Descriptions(itemData);
 	applyV103MoonLordRewards(itemData, snapshot);
 	changes.treasureMap = applyTreasureMapLoot(itemData, treasureLoot);
+	changes.ancientRelic = applyMissingAncientRelicLoot(itemData, snapshot);
 	// Treasure Map items need the physical game-backed sources of the maps themselves, not their possible destinations.
 	applyCuratedAcquisitionSources(itemData);
 	// Tower rewards live in boss Blueprint defaults that the decoded DataTable snapshot cannot currently expose.
@@ -751,6 +820,7 @@ function main() {
 	normalizeItemMapPresentation(itemData);
 	applyTreasureChestGrades(itemData, snapshot);
 	validateAncientRelicCatalog(itemData, snapshot);
+	validateImplantPassiveNames(itemData, snapshot);
 
 	const manifest = installedAvailabilityManifest(availabilityManifest, itemData.Items, snapshot);
 	restoreReviewedVisibility(itemData.Items, manifest);
