@@ -2,6 +2,7 @@ const {
 	UNAVAILABLE_ITEM_IDS, assert, itemDescriptionParts, needsAvailabilityReview,
 	normalizeItemDescription, path, shouldHideItem,
 } = require(`./item-shared.js`);
+const implantPassives = require(`../../data/implantPassives.json`);
 
 function validateItemDescriptions(context) {
 	const { availabilityManifest, itemData } = context;
@@ -171,6 +172,14 @@ function validateAncientRelicSources(context) {
 			`Glistening Ancient Relic) ×1: 0.145%`].every(value => ancientManualSources?.includes(value)),
 		`Ancient Technical Manual should show combined per-recycling chances for every Ancient Relic tier.`,
 	);
+
+	const lightweightLegendary = itemData.Items.find(item => item.name === `Lightweight Ancient Armor Schematic 4`);
+	const lightweightSources = paldeck.buildItemResponse(lightweightLegendary, null, `relic-rounding-owner`)
+		.embeds[0].toJSON().fields.find(field => field.name === `Sources:`)?.value;
+	assert(
+		lightweightSources?.includes(`Ancient Relic Recycler (Decayed Ancient Relic) ×1: <0.001%`),
+		`Positive Ancient Relic chances below the normal precision should remain visible.`,
+	);
 }
 
 function validatePalReverserMap(context) {
@@ -224,9 +233,23 @@ function validateRelicAndSchematicMaps(context, searchableItems) {
 	validateUnmappedSchematics(context.paldeck, searchableItems);
 }
 
+function validateImplantPassives(context) {
+	const implants = context.itemData.Items.filter(item => item.searchable !== false &&
+		[`ConsumePassiveSkillChange`, `Essential_PassiveSkillChange`].includes(item.properties?.typeB));
+	assert(implants.length === Object.keys(implantPassives).length,
+		`Every searchable implant should have exactly one installed passive mapping.`);
+	for (const item of implants) {
+		const passive = implantPassives[item.code.split(`/`).at(-1)];
+		const fields = context.paldeck.buildItemResponse(item, null, `implant-passive-owner`).embeds[0].toJSON().fields || [];
+		assert(passive && fields.some(field => field.name === `Granted Passive:` && field.value === passive),
+			`${item.name}: item card should identify its granted passive.`);
+	}
+}
+
 function validateSchematicAndRelicItems(context, searchableItems) {
 	validateSchematicRecipes(context, searchableItems);
 	validateRelicAndSchematicMaps(context, searchableItems);
+	validateImplantPassives(context);
 }
 
 function requiresCardConsistencyCheck(item) {

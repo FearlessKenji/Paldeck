@@ -1,4 +1,4 @@
-const { eligibleMutationChildren, mutationOutcomesForParents, mutationTargetRange } = require(`./palMutations.js`);
+const { eligibleMutationChildren, mutationCandidateRankRanges, mutationOutcomesForParents, mutationTargetRange } = require(`./palMutations.js`);
 
 function normalizeBreedingName(value) {
 	return String(value || ``).trim().toLowerCase();
@@ -336,9 +336,48 @@ function createPairCalculator(state, helpers) {
 	return calculateForPals;
 }
 
+function collectMutationParentPairs(parentPals, childRange) {
+	const pairs = [];
+	for (let firstIndex = 0; firstIndex < parentPals.length; firstIndex += 1) {
+		for (let secondIndex = firstIndex; secondIndex < parentPals.length; secondIndex += 1) {
+			const parentA = parentPals[firstIndex];
+			const parentB = parentPals[secondIndex];
+			const range = mutationTargetRange(parentA.breedingRank, parentB.breedingRank);
+			const overlapMinimum = Math.max(range.minimum, childRange.minimum);
+			const overlapMaximum = Math.min(range.maximum, childRange.maximum);
+			const rollCount = Math.max(0, overlapMaximum - overlapMinimum + 1);
+			if (rollCount) {
+				pairs.push({ parentA, parentB, probability: rollCount / (range.maximum - range.minimum + 1) });
+			}
+		}
+	}
+	return pairs;
+}
+
+function createMutationParentPairFinder(pals, parentPals, getPal) {
+	const candidates = eligibleMutationChildren(pals);
+	const candidateRanges = mutationCandidateRankRanges(candidates);
+	return childName => {
+		const child = getPal(childName);
+		if (!child || child.hidden || !candidates.some(candidate => candidate.name === child.name)) {
+			return null;
+		}
+		const childRange = candidateRanges.get(child.name);
+		if (!childRange) {
+			return { child, pairs: [] };
+		}
+		const pairs = collectMutationParentPairs(parentPals, childRange);
+		pairs.sort((first, second) => second.probability - first.probability ||
+			first.parentA.name.localeCompare(second.parentA.name) || first.parentB.name.localeCompare(second.parentB.name));
+		return { child, pairs };
+	};
+}
+
 function createBreedingQueries(state, helpers, calculateForPals) {
 	const { childPals, pals, parentPals } = state;
 	const { focusResultChild, getPal, resultHasChild } = helpers;
+	const mutationCandidates = eligibleMutationChildren(pals);
+	const findMutationParentPairs = createMutationParentPairFinder(pals, parentPals, getPal);
 	function getMutatedChildrenForParents(parentAName, parentBName) {
 		const parentA = getPal(parentAName);
 		const parentB = getPal(parentBName);
@@ -348,7 +387,7 @@ function createBreedingQueries(state, helpers, calculateForPals) {
 		const outcomes = mutationOutcomesForParents(
 			parentA.breedingRank,
 			parentB.breedingRank,
-			eligibleMutationChildren(pals),
+			mutationCandidates,
 		);
 		return {
 			children: outcomes.map(outcome => getPal(outcome.name)).filter(Boolean),
@@ -437,6 +476,7 @@ function createBreedingQueries(state, helpers, calculateForPals) {
 		calculateChild,
 		childPals,
 		findParentPairs,
+		findMutationParentPairs,
 		findPartners,
 		formatBreedingMethod,
 		getPal,

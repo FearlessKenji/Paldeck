@@ -41,7 +41,7 @@ function validateAllItemEmbeds(itemData, paldeck) {
 function validateJournalCollections(fixtures) {
 	for (const [index, response] of fixtures.journalResponses.entries()) {
 		const payload = serializeDiscordPayload(response);
-		const expectedLocation = index ? `Fixed Locations (World Tree): 9 locations` : `Fixed Locations (Palpagos): 55 locations`;
+		const expectedLocation = index ? `Fixed Locations (World Tree) ×1: 9 locations` : `Fixed Locations (Palpagos) ×1: 55 locations`;
 		assert(
 			payload.includes(`Category:`) && payload.includes(`Collectible`) &&
 			payload.includes(`Sources:`) && payload.includes(expectedLocation) &&
@@ -176,7 +176,7 @@ function validateTreasureMapSourceCards(context) {
 		.embeds[0].toJSON().fields.find(field => field.name === `Sources:`)?.value;
 
 	assert(
-		[`Dungeons: 10.101%`, `Enemy Camps: up to 100%`, `Salvage: 0.118%`, `Gold Chests`]
+		[`Dungeons ×1: 10.101%`, `Enemy Camps ×1: up to 100%`, `Salvage ×1: 0.118%`, `Gold Chests ×1`]
 			.every(value => legendaryTreasureMapSources.includes(value)) &&
 			!/_|Viking\d|technology-book/iu.test(legendaryTreasureMapSources),
 		`Legendary Treasure Map sources should retain exact chances without exposing internal pool identifiers.`,
@@ -239,8 +239,8 @@ function validateRegionalSummaryCards(regionalSummaries) {
 
 	assert(
 		serializedEffigy.includes(`Sources:`) &&
-		serializedEffigy.includes(`Effigy Locations (Palpagos): 140 locations`) &&
-		serializedEffigy.includes(`Effigy Locations (World Tree): 15 locations`),
+		serializedEffigy.includes(`Effigy Locations (Palpagos) ×1: 140 locations`) &&
+		serializedEffigy.includes(`Effigy Locations (World Tree) ×1: 15 locations`),
 		`Cross-map Effigy cards should use qualified counts for both map panels.`,
 	);
 

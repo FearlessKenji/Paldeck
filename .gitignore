@@ -10,6 +10,7 @@ __pycache__/
 
 # Optional external data-extraction and development helpers
 tools/
+scripts/ghidra/
 
 # Local Codex/agent instructions
 AGENTS.md
@@ -28,5 +29,6 @@ database/database.sqlite
 database/database.sqlite.pre-*
 ecosystem.config.js
 ecosystem.config.cjs
+!config/ecosystem.config.js
 config.json
 config/config.json

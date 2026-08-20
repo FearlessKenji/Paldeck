@@ -179,6 +179,14 @@ function buildListComponents(listId, page, totalPages, state) {
 				}))),
 		));
 	}
+	if (state.mutationParentChild) {
+		rows.push(new ActionRowBuilder().addComponents(
+			new ButtonBuilder()
+				.setCustomId(`breed:mutation-parents:${encodeURIComponent(state.mutationParentChild)}:${listId}:${page}:${state.userId}`)
+				.setLabel(`View Mutated Egg Parents`)
+				.setStyle(ButtonStyle.Primary),
+		));
+	}
 	if (state.originPalNumber && state.originOwnerId) {
 		rows.push(new ActionRowBuilder().addComponents(
 			buildBackToPalButton(state.originPalNumber, state.originOwnerId),
@@ -230,6 +238,11 @@ function formatProbability(outcome) {
 	return `${outcome.name} (${percent}%)`;
 }
 
+function formatMutationParentPair(pair) {
+	const percent = (pair.probability * 100).toFixed(2).replace(/\.00$/, ``);
+	return `${pair.parentA.name} + ${pair.parentB.name} (${percent}%)`;
+}
+
 function sortMutationOutcomes(first, second) {
 	return second.probability - first.probability || first.name.localeCompare(second.name);
 }
@@ -259,15 +272,32 @@ async function replyWithParentPairs(interaction, childName, origin = {}) {
 		return;
 	}
 
+	const mutationParents = calculator.findMutationParentPairs(result.child.name);
 	await replyWithList(interaction, {
 		color: getResultColor(result.child),
 		description: `Parent pairs that produce ${formatPalLabel(result.child)}.`,
 		emptyText: `No parent pairs found.`,
 		lines: result.pairs.map(formatPairLine),
-		mutationBackLabel: `Back to Parent Pairs`,
-		mutationPairs: result.pairs.map(pair => ({ parentA: pair.parentA.name, parentB: pair.parentB.name })),
+		mutationParentChild: mutationParents?.pairs.length ? result.child.name : null,
 		title: `Breeding Parents`,
 		...origin,
+	});
+}
+
+async function replyWithMutationParentPairs(interaction, childName, mutationBackTarget) {
+	const result = calculator.findMutationParentPairs(childName);
+	if (!result) {
+		await interaction.reply({ content: `I couldn't find that Pal in the mutation data.`, flags: MessageFlags.Ephemeral });
+		return;
+	}
+	await replyWithList(interaction, {
+		color: getResultColor(result.child),
+		description: `Parent pairs that can produce ${result.child.name} from a mutated egg. Percentages are conditional on receiving a mutated egg.`,
+		emptyText: `No mutated-egg parent pairs found.`,
+		lines: result.pairs.map(formatMutationParentPair),
+		mutationBackTarget,
+		replaceCurrent: true,
+		title: `${result.child.name} — Mutated Egg Parents`,
 	});
 }
 
@@ -316,6 +346,39 @@ async function handleMutationListBack(interaction) {
 	});
 }
 
+async function handleListPage(interaction, listId, rawPage) {
+	const state = getList(listId);
+	if (!state) {
+		await interaction.reply({ content: `This breeding list has expired. Run the command again.`, flags: MessageFlags.Ephemeral });
+		return;
+	}
+	if (state.userId !== interaction.user.id) {
+		await interaction.reply({ content: `Only the original searcher can page through these results.`, flags: MessageFlags.Ephemeral });
+		return;
+	}
+	const totalPages = getTotalPages(state.lines);
+	const page = clampPage(Number(rawPage), totalPages);
+	await interaction.update({
+		embeds: [buildListEmbed(state, page)],
+		components: buildListComponents(listId, page, totalPages, state),
+	});
+}
+
+async function handleMutationParentsButton(interaction, { childName, ownerId, sourceListId, sourcePage }) {
+	const sourceState = getList(sourceListId);
+	if (ownerId !== interaction.user.id || !sourceState || sourceState.userId !== interaction.user.id) {
+		await interaction.reply({ content: `I'm not your button, pal!`, flags: MessageFlags.Ephemeral });
+		return;
+	}
+	await replyWithMutationParentPairs(interaction, childName, {
+		label: `Back to Parent Pairs`,
+		listId: sourceListId,
+		page: Number(sourcePage) || 0,
+		type: `list`,
+		userId: ownerId,
+	});
+}
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName(`breed`)
@@ -335,13 +398,7 @@ module.exports = {
 						.setName(`parent2`)
 						.setDescription(`Second parent Pal.`)
 						.setAutocomplete(true)
-						.setRequired(true))
-				.addIntegerOption(option =>
-					option
-						.setName(`combi_rank_bonus`)
-						.setDescription(`Breeding item's CombiRankBonus (0-10).`)
-						.setMinValue(0)
-						.setMaxValue(10)),
+						.setRequired(true)),
 		)
 		.addSubcommand(subcommand =>
 			subcommand
@@ -384,11 +441,9 @@ module.exports = {
 		const subcommand = interaction.options.getSubcommand();
 
 		if (subcommand === `result`) {
-			const rankModifier = interaction.options.getInteger?.(`combi_rank_bonus`) ?? 0;
 			const result = calculator.calculateChild(
 				interaction.options.getString(`parent1`),
 				interaction.options.getString(`parent2`),
-				{ rankModifier },
 			);
 
 			if (!result?.child) {
@@ -466,6 +521,16 @@ module.exports = {
 			return;
 		}
 
+		if (action === `mutation-parents`) {
+			await handleMutationParentsButton(interaction, {
+				childName: decodeURIComponent(listId),
+				ownerId: rawRankModifier,
+				sourceListId: rawPage,
+				sourcePage: rawPalNumber,
+			});
+			return;
+		}
+
 		if (action === `mutation-back-result`) {
 			await handleMutationResultBack(interaction);
 			return;
@@ -481,25 +546,7 @@ module.exports = {
 			return;
 		}
 
-		const state = getList(listId);
-
-		if (!state) {
-			await interaction.reply({ content: `This breeding list has expired. Run the command again.`, flags: MessageFlags.Ephemeral });
-			return;
-		}
-
-		if (state.userId !== interaction.user.id) {
-			await interaction.reply({ content: `Only the original searcher can page through these results.`, flags: MessageFlags.Ephemeral });
-			return;
-		}
-
-		const totalPages = getTotalPages(state.lines);
-		const page = clampPage(Number(rawPage), totalPages);
-
-		await interaction.update({
-			embeds: [buildListEmbed(state, page)],
-			components: buildListComponents(listId, page, totalPages, state),
-		});
+		await handleListPage(interaction, listId, rawPage);
 	},
 
 	async handleSelectMenu(interaction) {

@@ -52,7 +52,7 @@ function summarizeResults(results) {
 		const status = result.skipped ? `skipped` : `failed`;
 
 		// Keep every actionable result, splitting across Discord-safe messages when necessary.
-		appendResultText(messages, `- ${result.guildId}: ${status}. ${result.message}`);
+		appendResultText(messages, `- ${result.guildName || `Unknown Server`} (${result.guildId}): ${status}. ${result.message}`);
 	}
 
 	return messages;
@@ -99,6 +99,7 @@ module.exports = {
 					force,
 					results: results.map(result => ({
 						guildId: result.guildId,
+						guildName: result.guildName,
 						message: result.message,
 						ok: result.ok,
 						sent: result.sent,

@@ -279,8 +279,8 @@ function validateWorkbenchPresentation(context, fixtures) {
 	}
 
 	assert(
-		fixtures.serializedFragment.includes(`Dungeon Chests: up to 66.667%`) &&
-		fixtures.serializedFragment.includes(`Treasure Chests (No. 1 Wildlife Sanctuary): 50%`) &&
+		fixtures.serializedFragment.includes(`Dungeon Chests ×1: up to 66.667%`) &&
+		fixtures.serializedFragment.includes(`Treasure Chests (No. 1 Wildlife Sanctuary) ×1: 50%`) &&
 		!fixtures.serializedFragment.includes(`Dungeon Chests (Forest)`),
 		`Slab sources should summarize regional dungeons while retaining the distinct Wildlife Sanctuary pathway.`,
 	);
@@ -296,11 +296,11 @@ function validateWorkbenchPresentation(context, fixtures) {
 
 function validateFixedSourcePresentation(context, fixtures) {
 	const fixedLocationCases = [
-		[`Ominous Egg`, fixtures.serializedOminousEgg, `Egg Spawns (World Tree): 30 locations`],
-		[`Kinship Peach`, fixtures.serializedPeach, `Fixed Locations (Palpagos): 22 locations`],
-		[`Ancient Bone`, fixtures.serializedAncientBone, `Fixed Locations (Palpagos): 10 locations`],
-		[`Ancient Bark`, fixtures.serializedAncientBark, `Fixed Locations (Palpagos): 10 locations`],
-		[`Ancient Lava`, fixtures.serializedAncientLava, `Fixed Locations (Palpagos): 10 locations`],
+		[`Ominous Egg`, fixtures.serializedOminousEgg, `Egg Spawns (World Tree) ×1: 30 locations`],
+		[`Kinship Peach`, fixtures.serializedPeach, `Fixed Locations (Palpagos) ×1: 22 locations`],
+		[`Ancient Bone`, fixtures.serializedAncientBone, `Fixed Locations (Palpagos) ×1: 10 locations`],
+		[`Ancient Bark`, fixtures.serializedAncientBark, `Fixed Locations (Palpagos) ×1: 10 locations`],
+		[`Ancient Lava`, fixtures.serializedAncientLava, `Fixed Locations (Palpagos) ×1: 10 locations`],
 	];
 
 	for (const [name, payload, expected] of fixedLocationCases) {
@@ -360,7 +360,7 @@ function validateItemSourceSummaries(context, fixtures) {
 		`Sol Sphere should include its Sky Island loot sources and map.`,
 	);
 
-	assert(serializeDiscordPayload(fixtures.coalResponse).includes(`Resource Nodes (Palpagos): 553 locations`), `Coal should combine normal resource nodes and clusters.`);
+	assert(serializeDiscordPayload(fixtures.coalResponse).includes(`Resource Nodes (Palpagos) ×1: 553 locations`), `Coal should combine normal resource nodes and clusters with its pickup quantity.`);
 
 	const oreSources = sourceText(itemData.Items.find(item => item.name === `Ore`)?.acquisition);
 
