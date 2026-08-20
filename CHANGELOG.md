@@ -4,6 +4,8 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+- Organized developer scripts into breeding, game, item, journal, map, Pal, and maintenance domains while preserving the existing npm command interface.
+
 ## v1.11.0 - 2026-08-20
 
 - Updated Paldeck's package and release metadata to v1.11.0.
