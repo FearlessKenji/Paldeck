@@ -8,6 +8,7 @@ const { compareGameItemData, compareGamePalAvailability } = require(`../utils/ga
 const { curatedPalHabitats } = require(`../utils/curatedPalHabitats.js`);
 const { legendLabel } = require(`./lib/maps/item-map-rendering.js`);
 const { validateItemLookupAndDroppingPals } = require(`./smoke/item-smoke.js`);
+const { validateDatabaseEncryption } = require(`./smoke/database-encryption-smoke.js`);
 const {
 	validateBreedAutocompleteUsesPalData, validateBreedResultsUsePlainNames, validateEncounterDropData,
 	validateGroupedPalDrops, validatePaldeckBreedingButton, validatePaldeckDropLookup, validatePaldeckLearnedMoves,
@@ -366,6 +367,7 @@ async function main() {
 	await test(`item-map deduplication compares bytes and fails before deletion`, validateMapDeduplicationSafety);
 	await test(`direct messages forward verbatim with sender and owned-server context`, validateDmForwarding);
 	await test(`database models include update announcement fields`, validateDatabaseModels);
+	await test(`database encryption preserves data for Sequelize and read-only tools`, () => validateDatabaseEncryption(projectRoot, assert));
 	await test(`Paldeck data files remain valid`, validatePalData);
 	await test(`oil-rig map levels share one legend label`, validateOilRigLegend);
 	await test(`installed-game item audit compares decoded recipes and legality`, validateInstalledItemAuditFixture);

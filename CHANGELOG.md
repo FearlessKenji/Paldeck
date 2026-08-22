@@ -4,6 +4,7 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+- Added optional SQLCipher database-at-rest encryption, transactional plaintext conversion and verification commands, a Sequelize-compatible encrypted runtime adapter, isolated test-database support, and a read-only HachiGen tool connection.
 - Organized developer scripts into breeding, game, item, journal, map, Pal, and maintenance domains while preserving the existing npm command interface.
 
 ## v1.11.0 - 2026-08-20

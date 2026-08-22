@@ -1,4 +1,4 @@
-const { SchemaMigrations, sequelize } = require(`./dbObjects.js`);
+const { SchemaMigrations, sequelize, databasePath } = require(`./dbObjects.js`);
 const { info, warn } = require(`../utils/writeLog.js`);
 const path = require(`node:path`);
 const fs = require(`node:fs`);
@@ -55,7 +55,7 @@ async function getTableIndexes(tableName) {
 }
 
 async function backupDatabase(reason) {
-	const dbPath = path.join(__dirname, `database.sqlite`);
+	const dbPath = databasePath;
 
 	if (!fs.existsSync(dbPath)) {
 		return null;
@@ -64,8 +64,8 @@ async function backupDatabase(reason) {
 	await sequelize.query(`PRAGMA wal_checkpoint(FULL)`).catch(() => null);
 
 	const backupPath = path.join(
-		__dirname,
-		`database.sqlite.pre-${getBackupLabel(reason)}-${getTimestamp()}`,
+		path.dirname(dbPath),
+		`${path.basename(dbPath)}.pre-${getBackupLabel(reason)}-${getTimestamp()}`,
 	);
 
 	await fs.promises.copyFile(dbPath, backupPath);

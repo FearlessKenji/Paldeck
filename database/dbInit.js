@@ -1,7 +1,6 @@
-const { sequelize, Channels } = require(`./dbObjects.js`);
+const { sequelize, Channels, databasePath } = require(`./dbObjects.js`);
 const { runMigrations } = require(`./migrations.js`);
 const { info } = require(`../utils/writeLog.js`);
-const path = require(`node:path`);
 const fs = require(`node:fs`);
 
 async function seedChannels() {
@@ -13,8 +12,7 @@ async function seedChannels() {
 }
 
 async function dbInit({ force = false } = {}) {
-	const dbPath = path.join(__dirname, `database.sqlite`);
-	const exists = fs.existsSync(dbPath);
+	const exists = fs.existsSync(databasePath);
 
 	await sequelize.sync({ force });
 	await runMigrations();

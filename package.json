@@ -11,7 +11,9 @@
     "deploy:test": "node deploy-test-commands.js",
     "commands:clear": "node delete-all-commands.js",
     "db:init": "node database/dbInit.js",
-    "db:reset": "node database/dbInit.js --force",
+		"db:reset": "node database/dbInit.js --force",
+		"database:encrypt": "node database/databaseEncryptionCli.js --encrypt",
+		"database:verify": "node database/databaseEncryptionCli.js --verify",
     "audit:palworld-data": "node scripts/breeding/audit-paldb.js",
     "audit:palworld-data:summary": "node scripts/breeding/audit-paldb.js --limit 0",
     "audit:palworld-data:json": "node scripts/breeding/audit-paldb.js --json",
@@ -67,6 +69,7 @@
     "pm2:start": "pm2 start config/ecosystem.config.js"
   },
   "dependencies": {
+    "better-sqlite3-multiple-ciphers": "12.11.1",
     "cron": "^3.1.6",
     "discord.js": "^14.27.0",
     "dotenv": "^17.4.2",
