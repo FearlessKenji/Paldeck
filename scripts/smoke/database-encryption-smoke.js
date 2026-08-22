@@ -25,12 +25,19 @@ async function validateDatabaseEncryption(projectRoot, assert) {
 		assert(conversion.rowsCopied === 1 && encryption.databaseFileStatus(encryptedPath).encryptedLikely,
 			`SQLCipher conversion did not preserve the smoke row in an encrypted file.`);
 
-		const toolConnection = require(`../../database/dbToolConnection.js`);
-		fs.writeFileSync(envPath, `PALDECK_DB_KEY=${JSON.stringify(key)}\n`);
-		const toolDb = await toolConnection.openToolDatabase({ dbPath: encryptedPath, envPath, readonly: true, root: projectRoot });
-		const row = await toolDb.get(`SELECT value FROM smoke_rows WHERE id = 1`);
-		await toolDb.close();
-		assert(row?.value === `ready`, `Paldeck's read-only tool connection could not read the encrypted smoke database.`);
+		fs.writeFileSync(envPath, `PALDECK_DB_KEY=${JSON.stringify(`wrong-production-key`)}\n`);
+		const toolScript = [
+			`const tool=require('./database/dbToolConnection.js');`,
+			`tool.openToolDatabase({dbPath:process.env.PALDECK_DATABASE_PATH,envPath:process.env.PALDECK_ENV_PATH,readonly:true,root:process.cwd()})`,
+			`.then(async db=>{const row=await db.get('SELECT value FROM smoke_rows WHERE id = 1');await db.close();`,
+			`if(row?.value!=='ready')throw Error('row mismatch');}).catch(error=>{console.error(error);process.exitCode=1;});`,
+		].join(``);
+		const toolRuntime = spawnSync(process.execPath, [`-e`, toolScript], {
+			cwd: projectRoot,
+			encoding: `utf8`,
+			env: { ...process.env, PALDECK_DATABASE_PATH: encryptedPath, PALDECK_DB_KEY: key, PALDECK_ENV_PATH: envPath },
+		});
+		assert(toolRuntime.status === 0, `Paldeck's read-only tool connection could not prefer the injected testing key: ${toolRuntime.stderr || toolRuntime.stdout}`);
 
 		const runtimeScript = [
 			`const encryption=require('./database/dbEncryption.js');`,

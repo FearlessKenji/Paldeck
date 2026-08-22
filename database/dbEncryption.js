@@ -137,8 +137,10 @@ function readDatabaseKeyFromEnv(env = process.env, cwd = process.cwd()) {
 function readDatabaseKeyFromEnvFile(envPath = path.resolve(`.env`), baseEnv = process.env, cwd = process.cwd()) {
 	const parsedEnv = fs.existsSync(envPath) ? parseDotEnvContent(fs.readFileSync(envPath, `utf8`)) : {};
 	return readDatabaseKeyFromEnv({
-		...baseEnv,
 		...parsedEnv,
+		// HachiGen injects isolated testing keys for one child process. Explicit
+		// process values must take precedence over the production repository .env.
+		...baseEnv,
 	}, cwd);
 }
 

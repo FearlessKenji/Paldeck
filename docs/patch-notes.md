@@ -6,6 +6,7 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+- Encrypted test databases now use their own HachiGen-protected key instead of the production database key.
 - Paldeck databases can now be encrypted at rest and managed through HachiGen, including read-only production and testing database viewing. Conversion creates a timestamped recovery copy and restores the original database if verification fails.
 
 ## v1.11.0 - 2026-08-20 - Mutation Lookup and Item Improvements
