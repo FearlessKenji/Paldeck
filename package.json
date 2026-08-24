@@ -13,6 +13,7 @@
     "db:init": "node database/dbInit.js",
 		"db:reset": "node database/dbInit.js --force",
 		"database:encrypt": "node database/databaseEncryptionCli.js --encrypt",
+		"database:rotate": "node database/databaseEncryptionCli.js --rotate",
 		"database:verify": "node database/databaseEncryptionCli.js --verify",
     "audit:palworld-data": "node scripts/breeding/audit-paldb.js",
     "audit:palworld-data:summary": "node scripts/breeding/audit-paldb.js --limit 0",

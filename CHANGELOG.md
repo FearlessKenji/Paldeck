@@ -4,6 +4,7 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+- Added an atomic `database:rotate` adapter that backs up and rekeys an encrypted database, verifies the new key, updates the existing key store, and restores the prior database, environment, and key if rotation fails.
 - Isolated HachiGen testing keys now override repository `.env` database keys only within the testing process, preventing encrypted test viewers from attempting to use the production key.
 - Added optional SQLCipher database-at-rest encryption, transactional plaintext conversion and verification commands, a Sequelize-compatible encrypted runtime adapter, isolated test-database support, and a read-only HachiGen tool connection.
 - Organized developer scripts into breeding, game, item, journal, map, Pal, and maintenance domains while preserving the existing npm command interface.

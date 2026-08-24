@@ -7,6 +7,7 @@ const {
 	convertPlainDatabaseToEncrypted,
 	databaseFileStatus,
 	readDatabaseKeyFromEnvFile,
+	rekeyEncryptedDatabase,
 	verifyEncryptedDatabaseFile,
 } = require(`./dbEncryption.js`);
 
@@ -138,13 +139,57 @@ function encrypt() {
 	}
 }
 
+function rotate() {
+	const before = databaseFileStatus(databasePath);
+	if (!before.encryptedLikely) {
+		throw new Error(`Paldeck database is not encrypted. Use database:encrypt first.`);
+	}
+	const oldKeyInfo = ensureKey(before);
+	const newKey = crypto.randomBytes(32).toString(`base64url`);
+	const timestamp = new Date().toISOString().replace(/\D/gu, ``).slice(0, 14);
+	const recoveryPath = `${databasePath}.pre-key-rotation-${timestamp}`;
+	const originalEnv = fs.existsSync(envPath) ? fs.readFileSync(envPath, `utf8`) : ``;
+	const originalKeyFile = oldKeyInfo.keyFilePath && fs.existsSync(oldKeyInfo.keyFilePath) ? fs.readFileSync(oldKeyInfo.keyFilePath, `utf8`) : null;
+	fs.copyFileSync(databasePath, recoveryPath, fs.constants.COPYFILE_EXCL);
+	try {
+		rekeyEncryptedDatabase({ dbPath: databasePath, oldKey: oldKeyInfo.key, newKey, root: projectRoot });
+		verifyEncryptedDatabaseFile({ dbPath: databasePath, key: newKey, root: projectRoot });
+		if (oldKeyInfo.keyFilePath) {
+			fs.writeFileSync(oldKeyInfo.keyFilePath, `${newKey}\n`, { mode: 0o600 });
+			fs.writeFileSync(envPath, updateEnv(originalEnv, {
+				PALDECK_DB_ENCRYPTION: `encrypted`,
+				PALDECK_DB_KEY: ``,
+				PALDECK_DB_KEY_FILE: oldKeyInfo.keyFilePath,
+			}), `utf8`);
+		} else {
+			fs.writeFileSync(envPath, updateEnv(originalEnv, {
+				PALDECK_DB_ENCRYPTION: `encrypted`,
+				PALDECK_DB_KEY: newKey,
+				PALDECK_DB_KEY_FILE: ``,
+			}), `utf8`);
+		}
+		verifyEncryptedDatabaseFile({ dbPath: databasePath, key: newKey, root: projectRoot });
+		process.stdout.write(JSON.stringify({ backupPath: recoveryPath, ok: true, rotated: true }));
+	} catch (error) {
+		fs.copyFileSync(recoveryPath, databasePath);
+		removeSidecars(databasePath);
+		fs.writeFileSync(envPath, originalEnv, `utf8`);
+		if (oldKeyInfo.keyFilePath && originalKeyFile !== null) {
+			fs.writeFileSync(oldKeyInfo.keyFilePath, originalKeyFile, { mode: 0o600 });
+		}
+		throw error;
+	}
+}
+
 try {
 	if (process.argv.includes(`--verify`)) {
 		verify();
+	} else if (process.argv.includes(`--rotate`)) {
+		rotate();
 	} else if (process.argv.includes(`--encrypt`)) {
 		encrypt();
 	} else {
-		throw new Error(`Use --encrypt or --verify.`);
+		throw new Error(`Use --encrypt, --rotate, or --verify.`);
 	}
 } catch (error) {
 	console.error(error.message || String(error));
