@@ -36,7 +36,7 @@ function createItemSourceFilters(pals) {
 		{ label: `Effigy Locations`, matches: item => hasSource(item, [`Effigy Locations`]) },
 		{ label: `Enemy Camps`, matches: item => hasSource(item, [`Enemy Camps`]) },
 		{ label: `Expeditions`, matches: item => hasSource(item, [`Expeditions`]) },
-		{ label: `Fishing`, matches: item => hasSource(item, [`Fishing`, `World Tree Fishing`]) },
+		{ label: `Fishing Spots`, matches: item => hasSource(item, [`Fishing`, `World Tree Fishing`]) },
 		{ label: `Fishing Ponds`, matches: item => hasSource(item, [`Fishing Ponds`]) },
 		{ label: `Junk`, matches: item => hasSource(item, [`Junk`, `World Tree Junk`]) },
 		{ label: `Medal Merchants`, matches: item => hasSource(item, [`Medal Merchants`]) },

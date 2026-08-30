@@ -1,5 +1,9 @@
 // Resolves compact item-data presets at runtime and regenerates deterministic, readable preset references.
 const rawItemData = require(`../data/itemData.json`);
+const mapGenerationRules = require(`../data/mapGenerationRules.json`);
+
+const CHEST_GRADE_BY_LABEL = Object.fromEntries(Object.entries(mapGenerationRules.chestGrades)
+	.map(([grade, presentation]) => [presentation.label, Number(grade)]));
 
 const REGIONAL_CHEST_RULES = [
 	{
@@ -21,10 +25,16 @@ function regionalChestMapPath(mapPath) {
 	return mapPath;
 }
 
-function addMarkerToPanel(panel, marker) {
+function addMarkerToPanel(panel, marker, identity = marker) {
 	panel.markers ||= [];
-	if (panel.markers.some(existing => sameMarker(existing, marker))) {
-		return false;
+	const existingIndex = panel.markers.findIndex(existing => sameMarker(existing, identity));
+	if (existingIndex >= 0) {
+		if (JSON.stringify(panel.markers[existingIndex]) === JSON.stringify(marker)) {
+			return false;
+		}
+		// Regional marker identity is stable, while its tier presentation is item-specific.
+		panel.markers[existingIndex] = { ...marker };
+		return true;
 	}
 	panel.markers.push({ ...marker });
 	return true;
@@ -52,18 +62,21 @@ function addRegionalChest(acquisition, rule) {
 	if (!treasure.entries.some(entry => entry.location === rule.location)) {
 		treasure.entries.push({ location: rule.location, probability: `varies` });
 	}
+	const chestTier = treasure.entries.find(entry => entry.lotteryField === rule.pool)?.chestTier;
+	const grade = CHEST_GRADE_BY_LABEL[chestTier];
+	const marker = { ...rule.marker, ...(grade ? { treasureGrade: grade } : {}) };
 	if (!acquisition.map || !acquisition.mapSources) {
 		return false;
 	}
 
 	if (acquisition.mapSources.maps) {
-		return addMarkerToPanel(regionalChestPanel(acquisition.mapSources, rule), rule.marker);
+		return addMarkerToPanel(regionalChestPanel(acquisition.mapSources, rule), marker, rule.marker);
 	}
 
 	if (acquisition.mapSources.map === rule.map) {
-		return addMarkerToPanel(acquisition.mapSources, rule.marker);
+		return addMarkerToPanel(acquisition.mapSources, marker, rule.marker);
 	}
-	acquisition.mapSources = { maps: [acquisition.mapSources, { map: rule.map, markers: [{ ...rule.marker }] }] };
+	acquisition.mapSources = { maps: [acquisition.mapSources, { map: rule.map, markers: [marker] }] };
 	return true;
 }
 

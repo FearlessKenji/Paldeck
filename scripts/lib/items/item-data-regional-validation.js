@@ -1,7 +1,7 @@
 const fs = require(`node:fs`);
 const path = require(`node:path`);
 const journalData = require(`../../../data/journalData.json`);
-const curatedTowerBossSources = require(`../../../data/curatedTowerBossSources.json`);
+const { towerBossSources } = require(`../../../utils/towerBossSources.js`);
 const { isTreasureMapItem } = require(`../../../utils/itemMapSources.js`);
 
 const PROJECT_ROOT = path.resolve(__dirname, `..`, `..`, `..`);
@@ -143,7 +143,7 @@ function validateJournalData(itemData, problems) {
 		problems.push(`Every journal item must include its game ID, title, text, placed marker, and individual map.`);
 	}
 	if (journalData.Journals?.length !== 64 || journalData.Journals.some(journal =>
-		!journal.description || !/^data\/item-maps\/(?:(?:journal-)?(?:palpagos|worldtree)(?:-journals)?-.+|(?:palpagos|worldtree)-journals)\.png$/u.test(journal.map || ``) ||
+		!journal.description || !/^data\/item-maps\/[a-z0-9]+(?:-[a-z0-9]+)*\.png$/u.test(journal.map || ``) ||
 		!fs.existsSync(path.join(PROJECT_ROOT, journal.map)))) {
 		problems.push(`The /journal catalog must contain all 64 localized texts with valid journal maps.`);
 	}
@@ -228,7 +228,7 @@ function validateSlabData(itemData, problems) {
 }
 
 function validateTowerRewardData(itemData, problems) {
-	for (const [itemId, expected] of Object.entries(curatedTowerBossSources)) {
+	for (const [itemId, expected] of Object.entries(towerBossSources(itemData))) {
 		const item = itemData.Items.find(value => value.id === itemId);
 		const source = item?.acquisition?.sources?.find(value => value.type === `Tower Boss`);
 		if (!item || JSON.stringify(source?.entries) !== JSON.stringify(expected.entries)) {

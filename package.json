@@ -1,6 +1,6 @@
 {
   "name": "paldeck",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "private": true,
   "license": "GPL-3.0-only",
   "scripts": {
@@ -12,12 +12,19 @@
     "commands:clear": "node delete-all-commands.js",
     "db:init": "node database/dbInit.js",
     "db:reset": "node database/dbInit.js --force",
+    "database:encrypt": "node database/databaseEncryptionCli.js --encrypt",
+    "database:plaintext": "node database/databaseEncryptionCli.js --plaintext",
+    "database:rotate": "node database/databaseEncryptionCli.js --rotate",
+    "database:verify": "node database/databaseEncryptionCli.js --verify",
     "audit:palworld-data": "node scripts/breeding/audit-paldb.js",
     "audit:palworld-data:summary": "node scripts/breeding/audit-paldb.js --limit 0",
     "audit:palworld-data:json": "node scripts/breeding/audit-paldb.js --json",
     "audit:palworld-data:ci": "node scripts/breeding/audit-paldb.js --fail-on-drift",
     "audit:palworld-breeding-results": "node scripts/breeding/audit-results.js",
     "audit:palworld-breeding-results:full": "node scripts/breeding/audit-results.js --full",
+    "audit:encounter-recommendations": "node scripts/encounters/audit.js",
+    "extract:encounter-data": "node scripts/encounters/extract-installed.js",
+    "extract:encounter-data:write": "node scripts/encounters/extract-installed.js --write",
     "update:palworld-data": "node scripts/pals/update-paldb.js",
     "update:palworld-data:write": "node scripts/pals/update-paldb.js --write",
     "add:missing-paldata": "node scripts/pals/add-missing.js",
@@ -52,6 +59,7 @@
     "validate:item-availability": "node scripts/items/audit-availability.js",
     "maps:items": "node scripts/maps/generate-items.js",
     "maps:items:write": "node scripts/maps/generate-items.js --write-data",
+    "maps:encounters": "node scripts/maps/generate-encounters.js",
     "maps:items:prune": "node scripts/maps/prune.js",
     "maps:items:prune:write": "node scripts/maps/prune.js --write",
     "maps:pals": "node scripts/maps/generate-pals.js",
@@ -67,6 +75,7 @@
     "pm2:start": "pm2 start config/ecosystem.config.js"
   },
   "dependencies": {
+    "better-sqlite3-multiple-ciphers": "12.11.1",
     "cron": "^3.1.6",
     "discord.js": "^14.27.0",
     "dotenv": "^17.4.2",

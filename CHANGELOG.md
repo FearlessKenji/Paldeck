@@ -4,7 +4,32 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+- Appended variant-specific percentages to Pal names in drop-filtered Paldeck searches and View Dropping Pals results while retaining the aligned three-column layout.
+- Added a build-keyed extraction of all 47,515 coordinate-bearing gameplay actors, mapped all elemental-chest item sources, and distinguished the eight dedicated Sunreach elemental spawners from the 38 World Tree spawners' weighted regular/electric/fire/water chest lottery.
+- Removed the obsolete repository-local database-backup rotation layer after HachiGen migrated and assumed ownership of Paldeck backups.
+- Split database encryption configuration from SQLCipher operations and decomposed plaintext conversion validation and transaction handling to satisfy repository complexity and file-size limits without changing the public API.
+- Replaced hand-authored encounter facts with build-stamped installed-game extracts, corrected all Hard tower levels and reward lists, added recorded Training Crystals and other repeatable drops, exposed game-defined time limits, represented regular/Alpha raid eggs as one guaranteed weighted reward, removed redundant one-of reward labels, regenerated affected source maps, and expanded encounter audits against the installed build.
+- Rebuilt encounter recommendations around the extracted phase elements, levels, and damage modifiers: tower results cover each useful counter element with interchangeable, progression-appropriate Pal examples; raid results use flexible counter coverage instead of prescribing 15 identical base Pals; and upgraded raids display their actual Ultra or Master labels. Readiness results omit internal base-health inputs and outgoing-damage factors that are not meaningful without the game's final-damage context. Normal raids scale to the available roster, while Ultra guidance combines game-defined combat facts with clearly labeled community tactics for full-group deployment, reserves, or Hartalis withdrawal timing; the five-at-a-time Necromus plan remains specific to Hard Astralym. Added rendered-output coverage for every recommendation's exact completion-reward list and Discord field limits.
+- Replaced tower-boss habitat attachments with dedicated encounter-location maps, ordered encounter output as recommendation, map, then rewards, removed redundant Raid autocomplete prefixes, and made Hard Astralym identical through `/tower` and `/raid`.
+
+## v1.12.0 - 2026-08-27
+
+- Updated Paldeck's package and release metadata to v1.12.0.
+- Renamed the expanded item-source view to Source Details, added equal-rate multi-region Supply Drop coverage, labeled single-region Supply Drops inline, corrected internal SkyIsland labels to Sunreach, and preserved Gold and Gold Key chest tiers on regional source-map legends.
+- Added Normal and Hard `/raid` and `/tower` recommendations with alias-aware encounter autocomplete, progression-aware five-Pal parties, per-Pal passives, derived boss HP, damage readiness factors, named raid armies with explicit deployment patterns, complete percentage-based rewards, and tower location maps. Recommendations use the current encounter-level ladders and respect the level-80 player and owned-Pal cap; Hard Astralym uses a sustain/support personal party, five-Pal Necromus waves, its one-player HP baseline, and both verified item rewards. Panthalus is identified as a Normal-only story encounter, while Hard Astralym is available through both commands.
+- Added a build-pinned installed-game audit for encounter maps, base HP, scaling, elements, mitigation, outgoing damage, recommended moves and passives, raid rewards, and egg probabilities.
+- Corrected breeding eligibility so Astralym is neither a parent nor child and Panthalus remains a parent but cannot appear as a breedable child; parent lookup now explains each legal restriction, and Astralym no longer publishes unused ordinary-actor drops.
+
+- Added a guarded plaintext-runtime adapter for HachiGen database restores. It only disables SQLCipher settings after confirming the restored database is plain SQLite, and retains existing key files for recovery.
+
+- Distinguished natural Fishing Spots from buildable Fishing Ponds throughout item source output and regenerated fishing-backed item maps with their game-matched common and rare spot families.
+- Added an atomic `database:rotate` adapter that backs up and rekeys an encrypted database, verifies the new key, updates the existing key store, and restores the prior database, environment, and key if rotation fails.
+- Isolated HachiGen testing keys now override repository `.env` database keys only within the testing process, preventing encrypted test viewers from attempting to use the production key.
+- Added optional SQLCipher database-at-rest encryption, transactional plaintext conversion and verification commands, a Sequelize-compatible encrypted runtime adapter, isolated test-database support, and a read-only HachiGen tool connection.
 - Organized developer scripts into breeding, game, item, journal, map, Pal, and maintenance domains while preserving the existing npm command interface.
+- Added an optional `force` flag to `/updates send-latest` so administrators can resend the current patch notes and recheck announcement-channel delivery.
+- Removed redundant Source Details buttons when varying loot rows collapse to one displayed location, while distinguishing east Lv. 55 and southwest Lv. 60 Oil Rig rates when both apply.
+- Gave Small, east Lv. 55, and southwest Lv. 60 Oil Rigs distinct shared map-pin rules and added a focused oil-rig map rebuild mode.
 
 ## v1.11.0 - 2026-08-20
 
@@ -46,7 +71,7 @@ Notable changes to Paldeck are documented here.
 - Replaced hash-derived acquisition, merchant-map, item-map, and icon identifiers with descriptive names and explicit variant suffixes; map deduplication now confirms byte equality without cryptographic hashes.
 - Centralized Discord interaction dispatch and separated the administrative ban workflow into explicit user, server-owner, and guild-removal paths.
 - Renamed Source Details to Source Chances, bounded probability pages, removed redundant single-page pagination labels, and omitted the unsupported inferred loot-region map.
-- Centralized curated Pal habitats across map generation and audits; corrected Eidrolon to include its World Tree Alpha and Skymarch dungeon encounters and outlined single-point Ancient Ruin item markers.
+- Centralized curated Pal habitats across map generation and audits; corrected Eidrolon to include its World Tree Alpha and Sunreach Skies dungeon encounters and outlined single-point Ancient Ruin item markers.
 - Simplified Bounty Officer and Arena Merchant location responses by removing merchant-name repetition while retaining their maps and item thumbnails.
 - Restored direct `/item name:<name>` lookup, added mutually exclusive `/item source:<source>` browsing, normalized schematic rarity selection, and converted item, merchant, Pal-drop, breeding, and related-item controls to owner-bound replace-in-place navigation.
 - Preserved all 8,529 decoded nonzero item-loot associations with quantities and probabilities, restored missing direct sources, and rebuilt item maps with complete legends, exact chest and Oil Rig markers, shared-map variants, and safe obsolete-asset pruning. Broad salvage, ground Ancient Relics, player-built Fishing Ponds, and ordinary Supply Drops remain intentionally unpinned.

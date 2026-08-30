@@ -44,7 +44,12 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName(`send-latest`)
-				.setDescription(`Send the latest Paldeck patch notes to this server's updates channel.`),
+				.setDescription(`Send the latest Paldeck patch notes to this server's updates channel.`)
+				.addBooleanOption(option =>
+					option
+						.setName(`force`)
+						.setDescription(`Send the notes again even if this server already received them.`),
+				),
 		),
 
 	async execute(interaction) {
@@ -75,7 +80,8 @@ module.exports = {
 			}
 
 			if (subcommand === `send-latest`) {
-				const result = await sendLatestPatchNotesToGuild(interaction.client, guild.id);
+				const force = interaction.options.getBoolean(`force`) ?? false;
+				const result = await sendLatestPatchNotesToGuild(interaction.client, guild.id, { force });
 				await interaction.editReply(result.message);
 				return;
 			}

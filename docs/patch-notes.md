@@ -6,6 +6,22 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 
 ## Unreleased
 
+## v1.12.0 - 2026-08-27 - Encounter Recommendations and Source Maps
+
+- Single-region Supply Drops now name their region directly. Items available from multiple Supply Drop regions list them under **Source Details**, including when their chances are equal; Sunreach is no longer incorrectly labeled Skymarch.
+- Regional chest maps now distinguish **Gold Chests** from **Gold Key Chests** in their legends.
+- Pal searches filtered by an item, including **View Dropping Pals**, append each drop chance to the matching Pal's name.
+- Items obtained from elemental chests show **Elemental Treasure Chests** on their source maps, including eight dedicated Sunreach locations and all 38 World Tree locations that can randomly spawn regular, electric, fire, or water chests.
+- `/raid normal`, `/raid hard`, `/tower normal`, and `/tower hard` provide encounter recommendations, calculated HP, damage reduction, time limits, and percentage-based completion rewards from current encounter data. Tower results display the recommendation, location map, and rewards in that order. Raid autocomplete uses plain boss names, and Hard Astralym returns the same result through `/tower` and `/raid`.
+- Normal raids give flexible recommendations, while Ultra raids recommend sustained mixed-group pressure where appropriate. Player-reported tactics are clearly labeled, including Hartalis withdrawal timing and Hard Astralym's five-at-a-time Necromus strategy.
+- The eight standard Hard towers now list their guaranteed Training Crystals, repeatable boss hats, Large Lotus rewards, and schematic rewards. World Tree Hard lists its guaranteed Zenara Hat and Psycho Gravity Skill Fruit.
+- Raid eggs are shown as one guaranteed egg with its Alpha chance. Mutually exclusive handbook rewards show their individual quantities and chances without a redundant one-of label.
+- Astralym no longer appears in breeding searches or displays unavailable generic drops. Panthalus can still be used as one parent, but Paldeck no longer claims that an impossible Panthalus + Panthalus pairing can produce it.
+- Item cards now distinguish **Fishing Spots** from **Fishing Ponds**, and items obtained from natural fishing spots show their eligible common and rare locations on source maps.
+- Server administrators can use `/updates send-latest force:true` to resend the current patch notes, including when testing or repairing an updates channel.
+- Source Details no longer repeats a single location's item-card summary and now distinguishes the east Lv. 55 and southwest Lv. 60 Oil Rig rates when both apply.
+- Item-source maps identify the Small, east Lv. 55, and southwest Lv. 60 Oil Rigs with distinct pins and legend entries, including maps containing only one rig.
+
 ## v1.11.0 - 2026-08-20 - Mutation Lookup and Item Improvements
 
 - Every implant card now names the passive it grants, such as **Disposable Implant: Skymarcher** granting **Sky Strider**.
@@ -37,7 +53,7 @@ developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/b
 - Item maps now use consistent legends and direct-source markers, including the correct chest tiers, Oil Rigs, towers, camps, dungeons, fishing spots, and Ancient Ruins. Single Ancient Ruins use outlined pins for visibility.
 - Reward-item maps no longer show locations that merely provide a Treasure Map. Treasure Map cards show where the maps are obtained, while reward cards show only their direct physical sources.
 - Normal first-clear Key Sphere rewards and Hard-mode schematic drops now show their exact quantities and chances. Applicable cards include their tower and World Tree locations.
-- Eidrolon's card now includes both its World Tree Alpha encounter and its Skymarch dungeon availability.
+- Eidrolon's card now includes both its World Tree Alpha encounter and its Sunreach Skies dungeon availability.
 - Bounty Officer and Arena Merchant location views now focus on the relevant map without repeating merchant names already shown by the button.
 
 ## v1.9.2 - 2026-08-04

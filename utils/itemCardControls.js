@@ -39,7 +39,7 @@ function addNavigationActions(addButton, { item, pal, ownerId, backItemId, hasSo
 		addButton(standardButton(`item:back:${backItemId}:${ownerId}`, `Back`));
 	}
 	if (hasSourceDetails) {
-		addButton(standardButton(`item:sources:${item.id}:0`, `Source Chances`));
+		addButton(standardButton(`item:sources:${item.id}:0`, `Source Details`));
 	}
 }
 

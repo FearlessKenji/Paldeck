@@ -32,7 +32,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/grenade-launcher-schematic-1-sources.png",
+    "map": "data/item-maps/grenade-launcher-schematic-sources.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -108,7 +108,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/grenade-launcher-schematic-2-sources.png",
+    "map": "data/item-maps/grenade-launcher-schematic-2-locations.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -202,7 +202,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/grenade-launcher-schematic-3-sources.png",
+    "map": "data/item-maps/grenade-launcher-schematic-sources.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -300,7 +300,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/grenade-launcher-schematic-4-sources.png",
+    "map": "data/item-maps/grenade-launcher-schematic-4-locations.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -432,7 +432,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/beginner-fishing-rod-gumoss-schematic-sources.png",
+    "map": "data/item-maps/beginner-fishing-rod-gumoss-schematic-locations.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [

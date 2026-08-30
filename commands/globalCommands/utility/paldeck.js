@@ -291,7 +291,28 @@ function buildCriteriaLine(criteria) {
 	return `Element: ${criteria.element}\nSuitability: ${criteria.suitability}\nRarity:        ${criteria.rarity}\n Drops:        ${criteria.drops}\nFarmable:      ${criteria.farmable}`;
 }
 
+function dropProbability(item, palName, variant = null) {
+	if (!item) {
+		return `Unknown`;
+	}
+	const matches = (item.droppedBy || []).filter(drop =>
+		normalizeText(drop.pal) === normalizeText(palName) &&
+		(variant === null || normalizeText(drop.variant) === normalizeText(variant)));
+	const probabilities = [...new Set(matches.map(drop => drop.probability).filter(Boolean))];
+	return probabilities.length ? probabilities.join(` / `) : `Unknown`;
+}
+
+function filteredDropItem(dropName) {
+	const exact = itemFile.Items.find(item => normalizeText(item.name) === normalizeText(dropName));
+	if (exact) {
+		return exact;
+	}
+	const partial = itemFile.Items.filter(item => normalizeText(item.name).includes(normalizeText(dropName)));
+	return partial.length === 1 ? partial[0] : null;
+}
+
 function findSearchResults(criteria) {
+	const dropItem = criteria.drops ? filteredDropItem(criteria.drops) : null;
 	return PALS.filter(pal => {
 		if (criteria.element && !normalizeText(pal.element).includes(normalizeText(criteria.element))) {
 			return false;
@@ -318,6 +339,7 @@ function findSearchResults(criteria) {
 		element: pal.element,
 		name: pal.name,
 		number: pal.number,
+		probability: criteria.drops ? dropProbability(dropItem, pal.name) : null,
 		rarity: getRarity(pal),
 	}));
 }
@@ -338,6 +360,7 @@ function droppingPalResults(item) {
 			element: pal.element,
 			name: variant ? `${variant} ${pal.name}` : pal.name,
 			number: pal.number,
+			probability: dropProbability(item, pal.name, variant),
 			rarity: getRarity(pal),
 		});
 	}
@@ -385,15 +408,17 @@ function buildSearchEmbed(criteria, results, page) {
 	const pageResults = results.slice(currentPage * RESULTS_PER_PAGE, (currentPage + 1) * RESULTS_PER_PAGE);
 
 	const footer = totalPages > 1 ? `Page ${currentPage + 1}/${totalPages} | ${results.length} result(s)` : `${results.length} result(s)`;
+	const fields = [
+		{ name: `Name\n-------\n`, value: pageResults.map(result =>
+			criteria.drops ? `${result.name} (${result.probability || `Unknown`})` : result.name).join(`\n-------\n`), inline: true },
+		{ name: `Element\n-------\n`, value: pageResults.map(result => result.element).join(`\n-------\n`), inline: true },
+		{ name: `Rarity\n-------\n`, value: pageResults.map(result => result.rarity).join(`\n-------\n`), inline: true },
+	];
 	return new EmbedBuilder()
 		.setTitle(`Matching:`)
 		.setDescription(buildCriteriaLine(criteria))
 		.setFooter({ text: footer })
-		.addFields(
-			{ name: `Name\n-------\n`, value: pageResults.map(result => result.name).join(`\n-------\n`), inline: true },
-			{ name: `Element\n-------\n`, value: pageResults.map(result => result.element).join(`\n-------\n`), inline: true },
-			{ name: `Rarity\n-------\n`, value: pageResults.map(result => result.rarity).join(`\n-------\n`), inline: true },
-		);
+		.addFields(fields);
 }
 
 function buildNumberMatchesEmbed(number, results) {

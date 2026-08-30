@@ -90,18 +90,22 @@ function selectMarkers(map, filters) {
 	return map.markers.filter(marker => filters.some(filter => {
 		const matchesFields = Object.entries(filter).every(([key, value]) =>
 			// Array-valued filters compactly select several game-backed pools that share one legend group.
-			[`style`, `color`, `label`, `legendType`, `bounds`, `grade`, `treasureGrade`, `lotteryFields`].includes(key) ||
+			[`style`, `color`, `label`, `legendType`, `bounds`, `grade`, `treasureGrade`, `lotteryFields`, `commentPrefix`].includes(key) ||
 			(Array.isArray(value) ? value.includes(marker[key]) : marker[key] === value),
 		);
+		const matchesCommentPrefix = !filter.commentPrefix || filter.commentPrefix.some(prefix => marker.comment?.startsWith(prefix));
 		const bounds = filter.bounds;
 		// Oil-rig reward markers share a type, so coordinate bounds distinguish each physical rig.
 		const matchesBounds = !bounds || (marker.pos?.X >= bounds.minX && marker.pos.X <= bounds.maxX &&
 			marker.pos?.Y >= bounds.minY && marker.pos.Y <= bounds.maxY);
-		return matchesFields && matchesBounds;
+		return matchesFields && matchesBounds && matchesCommentPrefix;
 	}));
 }
 
 function fixedLocationMarkers(locationSet) {
+	if (locationSet.coordinateTransform === `unrealWorld`) {
+		return locationSet.markers.map(([X, Y, Z]) => ({ pos: { X, Y, Z } }));
+	}
 	if (locationSet.coordinateTransform !== `worldTreeMap`) {
 		throw new Error(`Unsupported fixed-location coordinate transform: ${locationSet.coordinateTransform}`);
 	}
@@ -168,7 +172,9 @@ async function renderMap(map, groups, target, bottomRight = false) {
 	const crop = map.crop || [0, 0, 1024, 1024];
 	const width = crop[2] - crop[0];
 	const height = crop[3] - crop[1];
-	const visible = groups.filter(group => group.markers.length || group.legendOnly);
+	// Draw potential elemental variants after ordinary chests when both share one physical spawner.
+	const visible = groups.filter(group => group.markers.length || group.legendOnly)
+		.sort((left, right) => Number(left.sourceType === `Treasure Element`) - Number(right.sourceType === `Treasure Element`));
 	const pins = visible.flatMap(group => group.markers.map(marker => {
 		const [x, y] = toPixel(marker.pos, map.config, crop);
 		return markerSvg(x, y, group.color, group.style);

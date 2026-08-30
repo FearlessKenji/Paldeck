@@ -1,0 +1,4507 @@
+{
+	"schemaVersion": 1,
+	"buildId": "24575825",
+	"extractedAt": "2026-08-29T04:50:38.106Z",
+	"sourceTables": {
+		"actors": "Pal/Content/Pal/DataTable/Character/DT_PalMonsterParameter",
+		"raids": "Pal/Content/Pal/Blueprint/RaidBoss/DT_PalRaidBoss"
+	},
+	"actors": {
+		"GYM_ElecPanda": {
+			"OverrideNameTextID": "PAL_NAME_GrassBoss",
+			"NamePrefixID": "GYM_NAME_Meadow",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::ElecPanda",
+			"BPClass": "GYM_ElecPanda",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 8,
+			"ElementType1": "EPalElementType::Electricity",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 105,
+			"MeleeAttack": 100,
+			"ShotAttack": 100,
+			"Defense": 100,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3.8,
+			"Friendship_ShotAttack": 2.5,
+			"Friendship_Defense": 2.5,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 12,
+			"EnemyReceiveDamageRate": 1,
+			"EnemyInflictDamageRate": 1,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 7048,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 80,
+			"WalkSpeed": 140,
+			"RunSpeed": 600,
+			"RideSprintSpeed": 1100,
+			"TransportSpeed": 287,
+			"SwimSpeed": 180,
+			"SwimDashSpeed": 300,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 475,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 6,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": true,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 0,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 220,
+			"MeshCapsuleRadius": 80,
+			"MeshRelativeLocation": {
+				"X": -20,
+				"Y": 0,
+				"Z": -30
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::GenerateElectricity",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 3,
+			"WorkSuitability_Handcraft": 2,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 2,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 3,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_ElecPanda_2": {
+			"OverrideNameTextID": "PAL_NAME_GrassBoss",
+			"NamePrefixID": "GYM_NAME_Meadow",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::ElecPanda",
+			"BPClass": "GYM_ElecPanda",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 8,
+			"ElementType1": "EPalElementType::Electricity",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 105,
+			"MeleeAttack": 100,
+			"ShotAttack": 100,
+			"Defense": 100,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3.8,
+			"Friendship_ShotAttack": 2.5,
+			"Friendship_Defense": 2.5,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 100,
+			"EnemyReceiveDamageRate": 0.1,
+			"EnemyInflictDamageRate": 13,
+			"EnemyWazaCoolTimeRate": 3,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 7048,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 80,
+			"WalkSpeed": 140,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 1100,
+			"TransportSpeed": 287,
+			"SwimSpeed": 180,
+			"SwimDashSpeed": 300,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 475,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 6,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": true,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 0,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 220,
+			"MeshCapsuleRadius": 80,
+			"MeshRelativeLocation": {
+				"X": -20,
+				"Y": 0,
+				"Z": -30
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::GenerateElectricity",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 3,
+			"WorkSuitability_Handcraft": 2,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 2,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 3,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_LilyQueen": {
+			"OverrideNameTextID": "PAL_NAME_ForestBoss",
+			"NamePrefixID": "GYM_NAME_Forest",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::LilyQueen",
+			"BPClass": "GYM_LilyQueen",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 9,
+			"ElementType1": "EPalElementType::Leaf",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 110,
+			"MeleeAttack": 100,
+			"ShotAttack": 110,
+			"Defense": 105,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3.5,
+			"Friendship_ShotAttack": 2.1,
+			"Friendship_Defense": 2.3,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 25,
+			"EnemyReceiveDamageRate": 1,
+			"EnemyInflictDamageRate": 1,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 6854,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 60,
+			"WalkSpeed": 100,
+			"RunSpeed": 450,
+			"RideSprintSpeed": 650,
+			"TransportSpeed": 275,
+			"SwimSpeed": 450,
+			"SwimDashSpeed": 450,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 475,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 6,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 0,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 250,
+			"MeshCapsuleRadius": 80,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -270
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Seeding",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 3,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 2,
+			"WorkSuitability_Collection": 2,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 3,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_LilyQueen_2": {
+			"OverrideNameTextID": "PAL_NAME_ForestBoss",
+			"NamePrefixID": "GYM_NAME_Forest",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::LilyQueen",
+			"BPClass": "GYM_LilyQueen",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 9,
+			"ElementType1": "EPalElementType::Leaf",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 110,
+			"MeleeAttack": 100,
+			"ShotAttack": 110,
+			"Defense": 105,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3.5,
+			"Friendship_ShotAttack": 2.1,
+			"Friendship_Defense": 2.3,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 100,
+			"EnemyReceiveDamageRate": 0.12,
+			"EnemyInflictDamageRate": 10,
+			"EnemyWazaCoolTimeRate": 3,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 31,
+			"Price": 6854,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 60,
+			"WalkSpeed": 100,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 650,
+			"TransportSpeed": 275,
+			"SwimSpeed": 450,
+			"SwimDashSpeed": 450,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 475,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 6,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 0,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 250,
+			"MeshCapsuleRadius": 80,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -270
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Seeding",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 3,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 2,
+			"WorkSuitability_Collection": 2,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 3,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_ThunderDragonMan": {
+			"OverrideNameTextID": "PAL_NAME_VolcanoBoss",
+			"NamePrefixID": "GYM_NAME_Volcano",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::ThunderDragonMan",
+			"BPClass": "GYM_ThunderDragonMan",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 9,
+			"ElementType1": "EPalElementType::Dragon",
+			"ElementType2": "EPalElementType::Electricity",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 100,
+			"MeleeAttack": 100,
+			"ShotAttack": 130,
+			"Defense": 110,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 4,
+			"Friendship_ShotAttack": 1.3,
+			"Friendship_Defense": 2.1,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 25,
+			"EnemyReceiveDamageRate": 1,
+			"EnemyInflictDamageRate": 1,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 8272,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 100,
+			"WalkSpeed": 185,
+			"RunSpeed": 900,
+			"RideSprintSpeed": 1300,
+			"TransportSpeed": 542,
+			"SwimSpeed": 1620,
+			"SwimDashSpeed": 2160,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 475,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 7,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 100,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 110,
+			"MeshCapsuleRadius": 80,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -110
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::GenerateElectricity",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 8,
+			"WorkSuitability_Handcraft": 2,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 3,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_ThunderDragonMan_2": {
+			"OverrideNameTextID": "PAL_NAME_VolcanoBoss",
+			"NamePrefixID": "GYM_NAME_Volcano",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::ThunderDragonMan",
+			"BPClass": "GYM_ThunderDragonMan",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 9,
+			"ElementType1": "EPalElementType::Dragon",
+			"ElementType2": "EPalElementType::Electricity",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 100,
+			"MeleeAttack": 100,
+			"ShotAttack": 130,
+			"Defense": 110,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 4,
+			"Friendship_ShotAttack": 1.3,
+			"Friendship_Defense": 2.1,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 110,
+			"EnemyReceiveDamageRate": 0.15,
+			"EnemyInflictDamageRate": 10,
+			"EnemyWazaCoolTimeRate": 2.5,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 32,
+			"Price": 8272,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 100,
+			"WalkSpeed": 185,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 1300,
+			"TransportSpeed": 542,
+			"SwimSpeed": 1620,
+			"SwimDashSpeed": 2160,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 475,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 7,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 100,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 110,
+			"MeshCapsuleRadius": 80,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -110
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::GenerateElectricity",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 8,
+			"WorkSuitability_Handcraft": 2,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 3,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_Horus": {
+			"OverrideNameTextID": "PAL_NAME_DessertBoss",
+			"NamePrefixID": "GYM_NAME_Desert",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::Horus",
+			"BPClass": "GYM_Horus",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 9,
+			"ElementType1": "EPalElementType::Fire",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Bird",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 100,
+			"MeleeAttack": 100,
+			"ShotAttack": 105,
+			"Defense": 110,
+			"Support": 90,
+			"CraftSpeed": 100,
+			"Friendship_HP": 4,
+			"Friendship_ShotAttack": 2.3,
+			"Friendship_Defense": 2.1,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 27,
+			"EnemyReceiveDamageRate": 1,
+			"EnemyInflictDamageRate": 1,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 5370,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 150,
+			"WalkSpeed": 200,
+			"RunSpeed": 1000,
+			"RideSprintSpeed": 1500,
+			"TransportSpeed": 500,
+			"SwimSpeed": 1000,
+			"SwimDashSpeed": 1000,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 525,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 8,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 100,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 300,
+			"MeshCapsuleRadius": 120,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -300
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::EmitFlame",
+			"WorkSuitability_EmitFlame": 3,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 3,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_Horus_2": {
+			"OverrideNameTextID": "PAL_NAME_DessertBoss",
+			"NamePrefixID": "GYM_NAME_Desert",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::Horus",
+			"BPClass": "GYM_Horus",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 9,
+			"ElementType1": "EPalElementType::Fire",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Bird",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 100,
+			"MeleeAttack": 100,
+			"ShotAttack": 105,
+			"Defense": 110,
+			"Support": 90,
+			"CraftSpeed": 100,
+			"Friendship_HP": 4,
+			"Friendship_ShotAttack": 2.3,
+			"Friendship_Defense": 2.1,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 110,
+			"EnemyReceiveDamageRate": 0.15,
+			"EnemyInflictDamageRate": 8,
+			"EnemyWazaCoolTimeRate": 2.5,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 33,
+			"Price": 5370,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 150,
+			"WalkSpeed": 200,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 1500,
+			"TransportSpeed": 500,
+			"SwimSpeed": 1000,
+			"SwimDashSpeed": 1000,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 525,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 8,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 100,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 300,
+			"MeshCapsuleRadius": 120,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -300
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::EmitFlame",
+			"WorkSuitability_EmitFlame": 3,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 3,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_BlackGriffon": {
+			"OverrideNameTextID": "PAL_NAME_SnowBoss",
+			"NamePrefixID": "GYM_NAME_Snow",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::BlackGriffon",
+			"BPClass": "GYM_BlackGriffon",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Dark",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::FourLegged",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 120,
+			"MeleeAttack": 130,
+			"ShotAttack": 120,
+			"Defense": 140,
+			"Support": 90,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3,
+			"Friendship_ShotAttack": 1.7,
+			"Friendship_Defense": 1,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 28,
+			"EnemyReceiveDamageRate": 1,
+			"EnemyInflictDamageRate": 1,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 6490,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 80,
+			"WalkSpeed": 80,
+			"RunSpeed": 850,
+			"RideSprintSpeed": 1300,
+			"TransportSpeed": 465,
+			"SwimSpeed": 255,
+			"SwimDashSpeed": 360,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 525,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 8,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": true,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 100,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 130,
+			"MeshCapsuleRadius": 120,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -30
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Collection",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 1,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_BlackGriffon_2": {
+			"OverrideNameTextID": "PAL_NAME_SnowBoss",
+			"NamePrefixID": "GYM_NAME_Snow",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::BlackGriffon",
+			"BPClass": "GYM_BlackGriffon",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Dark",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::FourLegged",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 120,
+			"MeleeAttack": 130,
+			"ShotAttack": 120,
+			"Defense": 140,
+			"Support": 90,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3,
+			"Friendship_ShotAttack": 1.7,
+			"Friendship_Defense": 1,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 100,
+			"EnemyReceiveDamageRate": 0.25,
+			"EnemyInflictDamageRate": 12,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 34,
+			"Price": 6490,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 80,
+			"WalkSpeed": 80,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 1300,
+			"TransportSpeed": 465,
+			"SwimSpeed": 255,
+			"SwimDashSpeed": 360,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 525,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 8,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": true,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 100,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 130,
+			"MeshCapsuleRadius": 120,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -30
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Collection",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 1,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_MoonQueen": {
+			"OverrideNameTextID": "PAL_NAME_SakurajimaBoss",
+			"NamePrefixID": "GYM_NAME_Sakurajima",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::MoonQueen",
+			"BPClass": "GYM_MoonQueen",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 9,
+			"ElementType1": "EPalElementType::Dark",
+			"ElementType2": "EPalElementType::Normal",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 130,
+			"MeleeAttack": 100,
+			"ShotAttack": 115,
+			"Defense": 110,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 2.5,
+			"Friendship_ShotAttack": 1.9,
+			"Friendship_Defense": 2.1,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 54,
+			"EnemyReceiveDamageRate": 1,
+			"EnemyInflictDamageRate": 1,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 8190,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 60,
+			"WalkSpeed": 150,
+			"RunSpeed": 450,
+			"RideSprintSpeed": 550,
+			"TransportSpeed": 275,
+			"SwimSpeed": 150,
+			"SwimDashSpeed": 150,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": true,
+			"BiologicalGrade": 0,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 0,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 179.11,
+			"MeshCapsuleRadius": 80,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -191
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Handcraft",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 1,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 1,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_MoonQueen_2": {
+			"OverrideNameTextID": "PAL_NAME_SakurajimaBoss",
+			"NamePrefixID": "GYM_NAME_Sakurajima",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::MoonQueen",
+			"BPClass": "GYM_MoonQueen",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 9,
+			"ElementType1": "EPalElementType::Dark",
+			"ElementType2": "EPalElementType::Normal",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 130,
+			"MeleeAttack": 100,
+			"ShotAttack": 115,
+			"Defense": 110,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 2.5,
+			"Friendship_ShotAttack": 1.9,
+			"Friendship_Defense": 2.1,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 93,
+			"EnemyReceiveDamageRate": 0.2,
+			"EnemyInflictDamageRate": 9,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 35,
+			"Price": 8190,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 60,
+			"WalkSpeed": 150,
+			"RunSpeed": 450,
+			"RideSprintSpeed": 550,
+			"TransportSpeed": 275,
+			"SwimSpeed": 150,
+			"SwimDashSpeed": 150,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": true,
+			"BiologicalGrade": 0,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 0,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 179.11,
+			"MeshCapsuleRadius": 80,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -191
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Handcraft",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 1,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 1,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_SnowTigerBeastman": {
+			"OverrideNameTextID": "PAL_NAME_VikingBoss",
+			"NamePrefixID": "GYM_NAME_Viking",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::SnowTigerBeastman",
+			"BPClass": "GYM_SnowTigerBeastman",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Ice",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 140,
+			"MeleeAttack": 100,
+			"ShotAttack": 130,
+			"Defense": 120,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 2,
+			"Friendship_ShotAttack": 1.3,
+			"Friendship_Defense": 1.7,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 62,
+			"EnemyReceiveDamageRate": 1,
+			"EnemyInflictDamageRate": 1,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 8850,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 120,
+			"WalkSpeed": 225,
+			"RunSpeed": 700,
+			"RideSprintSpeed": 900,
+			"TransportSpeed": -1,
+			"SwimSpeed": 225,
+			"SwimDashSpeed": 330,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 6,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 5,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 60,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 150,
+			"MeshCapsuleRadius": 80,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -150
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Cool",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 2,
+			"WorkSuitability_Mining": 2,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 8,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_SnowTigerBeastman_2": {
+			"OverrideNameTextID": "PAL_NAME_VikingBoss",
+			"NamePrefixID": "GYM_NAME_Viking",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::SnowTigerBeastman",
+			"BPClass": "GYM_SnowTigerBeastman_2",
+			"ZukanIndex": -2,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Ice",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::None",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 140,
+			"MeleeAttack": 100,
+			"ShotAttack": 130,
+			"Defense": 120,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 2,
+			"Friendship_ShotAttack": 1.3,
+			"Friendship_Defense": 1.7,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 75,
+			"EnemyReceiveDamageRate": 0.18,
+			"EnemyInflictDamageRate": 10,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 8850,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 120,
+			"WalkSpeed": 225,
+			"RunSpeed": 700,
+			"RideSprintSpeed": 900,
+			"TransportSpeed": -1,
+			"SwimSpeed": 225,
+			"SwimDashSpeed": 330,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 6,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 5,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 60,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 150,
+			"MeshCapsuleRadius": 80,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -150
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Cool",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 2,
+			"WorkSuitability_Mining": 2,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 8,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_BlueSkyDragon": {
+			"OverrideNameTextID": "PAL_NAME_SorajimaBoss",
+			"NamePrefixID": "GYM_NAME_Sorajima",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::BlueSkyDragon",
+			"BPClass": "GYM_BlueSkyDragon",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 9,
+			"ElementType1": "EPalElementType::Dragon",
+			"ElementType2": "EPalElementType::Water",
+			"GenusCategory": "EPalGenusCategoryType::Dragon",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 168,
+			"MeleeAttack": 100,
+			"ShotAttack": 135,
+			"Defense": 120,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 0.6,
+			"Friendship_ShotAttack": 1.1,
+			"Friendship_Defense": 1.7,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 50,
+			"EnemyReceiveDamageRate": 1,
+			"EnemyInflictDamageRate": 0.9,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 9062,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 50,
+			"WalkSpeed": 300,
+			"RunSpeed": 1400,
+			"RideSprintSpeed": 2800,
+			"TransportSpeed": 450,
+			"SwimSpeed": 1400,
+			"SwimDashSpeed": 1400,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 620,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 9,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 67.55,
+			"MeshCapsuleRadius": 40,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -67.547
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Watering",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 8,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 5,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_BlueSkyDragon_2": {
+			"OverrideNameTextID": "PAL_NAME_SorajimaBoss",
+			"NamePrefixID": "GYM_NAME_Sorajima",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::BlueSkyDragon",
+			"BPClass": "GYM_BlueSkyDragon",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 9,
+			"ElementType1": "EPalElementType::Dragon",
+			"ElementType2": "EPalElementType::Water",
+			"GenusCategory": "EPalGenusCategoryType::Dragon",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 120,
+			"MeleeAttack": 100,
+			"ShotAttack": 100,
+			"Defense": 100,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3,
+			"Friendship_ShotAttack": 2.5,
+			"Friendship_Defense": 2.5,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 88,
+			"EnemyReceiveDamageRate": 0.2,
+			"EnemyInflictDamageRate": 12,
+			"EnemyWazaCoolTimeRate": 2.5,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 9062,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 50,
+			"WalkSpeed": 300,
+			"RunSpeed": 700,
+			"RideSprintSpeed": -1,
+			"TransportSpeed": 450,
+			"SwimSpeed": 700,
+			"SwimDashSpeed": 700,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::TowerBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 67.55,
+			"MeshCapsuleRadius": 40,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -67.547
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Watering",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 8,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 5,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"BOSS_KingWhale": {
+			"OverrideNameTextID": "PAL_NAME_KingWhale",
+			"NamePrefixID": "BOSS_NAME_KingWhale",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::KingWhale",
+			"BPClass": "BOSS_KingWhale",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 8,
+			"ElementType1": "EPalElementType::Water",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Fish",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 216,
+			"MeleeAttack": 100,
+			"ShotAttack": 120,
+			"Defense": 200,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 0.1,
+			"Friendship_ShotAttack": 1.7,
+			"Friendship_Defense": 1,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 42,
+			"EnemyReceiveDamageRate": 1.2,
+			"EnemyInflictDamageRate": 0.83,
+			"EnemyWazaCoolTimeRate": 1,
+			"CaptureRateCorrect": 0.7,
+			"ExpRatio": 10,
+			"Price": 9826,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 500,
+			"WalkSpeed": 500,
+			"RunSpeed": 500,
+			"RideSprintSpeed": 500,
+			"TransportSpeed": 500,
+			"SwimSpeed": 500,
+			"SwimDashSpeed": 500,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::KingWhale",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": true,
+			"MaxFullStomach": 600,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 9,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 20,
+			"CombiDuplicatePriority": 2000,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 0,
+			"MeshCapsuleRadius": 0,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": 0
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::EmitFlame",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "Legend",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_WorldTreeDragon": {
+			"OverrideNameTextID": "PAL_NAME_LastBoss",
+			"NamePrefixID": "GYM_NAME_LastBoss",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::WorldTreeDragon",
+			"BPClass": "GYM_WorldTreeDragon",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 8,
+			"ElementType1": "EPalElementType::None",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::None",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 240,
+			"MeleeAttack": 100,
+			"ShotAttack": 200,
+			"Defense": 200,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 1,
+			"Friendship_ShotAttack": 1,
+			"Friendship_Defense": 1,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 40,
+			"EnemyReceiveDamageRate": 1,
+			"EnemyInflictDamageRate": 0.7,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 20000,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": -1,
+			"WalkSpeed": 400,
+			"RunSpeed": -1,
+			"RideSprintSpeed": -1,
+			"TransportSpeed": -1,
+			"SwimSpeed": -1,
+			"SwimDashSpeed": -1,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::WorldTreeDragon",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": true,
+			"MaxFullStomach": 600,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 9,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 10,
+			"CombiDuplicatePriority": 1000,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 67.55,
+			"MeshCapsuleRadius": 40,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -67.547
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::EmitFlame",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"GYM_WorldTreeDragon_2": {
+			"OverrideNameTextID": "PAL_NAME_LastBoss",
+			"NamePrefixID": "GYM_NAME_LastBoss_Hard",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::WorldTreeDragon",
+			"BPClass": "GYM_WorldTreeDragon_2",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 8,
+			"ElementType1": "EPalElementType::None",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::None",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 288,
+			"MeleeAttack": 100,
+			"ShotAttack": 200,
+			"Defense": 200,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 1,
+			"Friendship_ShotAttack": 1,
+			"Friendship_Defense": 1,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 405,
+			"EnemyReceiveDamageRate": 0.45,
+			"EnemyInflictDamageRate": 5,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 40000,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": -1,
+			"WalkSpeed": 400,
+			"RunSpeed": -1,
+			"RideSprintSpeed": -1,
+			"TransportSpeed": -1,
+			"SwimSpeed": -1,
+			"SwimDashSpeed": -1,
+			"IsBoss": true,
+			"IsTowerBoss": true,
+			"IsRaidBoss": false,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::WorldTreeDragon",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": true,
+			"MaxFullStomach": 600,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 9,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 9,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 10,
+			"CombiDuplicatePriority": 1000,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 67.55,
+			"MeshCapsuleRadius": 40,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -67.547
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::EmitFlame",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"RAID_NightLady": {
+			"OverrideNameTextID": "PAL_NAME_NightLady",
+			"NamePrefixID": "RAID_NAME_NightLady",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::NightLady",
+			"BPClass": "RAID_NightLady",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Dark",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 120,
+			"MeleeAttack": 100,
+			"ShotAttack": 140,
+			"Defense": 100,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3,
+			"Friendship_ShotAttack": 1,
+			"Friendship_Defense": 2.5,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 120,
+			"EnemyReceiveDamageRate": 1,
+			"EnemyInflictDamageRate": 1.5,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 10000,
+			"StatusResistUpRate": 100,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 3000,
+			"WalkSpeed": 3000,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 3000,
+			"TransportSpeed": 3000,
+			"SwimSpeed": 3000,
+			"SwimDashSpeed": 3000,
+			"IsBoss": true,
+			"IsTowerBoss": false,
+			"IsRaidBoss": true,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::RaidBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": true,
+			"BiologicalGrade": 999,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 0,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 400,
+			"MeshCapsuleRadius": 120,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -400
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Handcraft",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 2,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 2,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"RAID_NightLady_Dark": {
+			"OverrideNameTextID": "PAL_NAME_NightLady_Dark",
+			"NamePrefixID": "RAID_NAME_NightLady_Dark",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::NightLady_Dark",
+			"BPClass": "RAID_NightLady_Dark",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Dark",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 120,
+			"MeleeAttack": 100,
+			"ShotAttack": 150,
+			"Defense": 100,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3,
+			"Friendship_ShotAttack": 1,
+			"Friendship_Defense": 2.5,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 120,
+			"EnemyReceiveDamageRate": 0.4,
+			"EnemyInflictDamageRate": 2,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 10000,
+			"StatusResistUpRate": 100,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 3000,
+			"WalkSpeed": 3000,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 3000,
+			"TransportSpeed": 3000,
+			"SwimSpeed": 3000,
+			"SwimDashSpeed": 3000,
+			"IsBoss": true,
+			"IsTowerBoss": false,
+			"IsRaidBoss": true,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::RaidBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": true,
+			"BiologicalGrade": 999,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 0,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 400,
+			"MeshCapsuleRadius": 120,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -400
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::ProductMedicine",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 2,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 2,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"RAID_NightLady_Dark_2": {
+			"OverrideNameTextID": "PAL_NAME_NightLady_Dark",
+			"NamePrefixID": "RAID_NAME_NightLady_Dark_2",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::NightLady_Dark",
+			"BPClass": "RAID_NightLady_Dark",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Dark",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Humanoid",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 120,
+			"MeleeAttack": 100,
+			"ShotAttack": 150,
+			"Defense": 100,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3,
+			"Friendship_ShotAttack": 1,
+			"Friendship_Defense": 2.5,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 420,
+			"EnemyReceiveDamageRate": 0.09,
+			"EnemyInflictDamageRate": 10,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 10000,
+			"StatusResistUpRate": 100,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 3000,
+			"WalkSpeed": 3000,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 3000,
+			"TransportSpeed": 3000,
+			"SwimSpeed": 3000,
+			"SwimDashSpeed": 3000,
+			"IsBoss": true,
+			"IsTowerBoss": false,
+			"IsRaidBoss": true,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::RaidBoss",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": true,
+			"BiologicalGrade": 999,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 0,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 400,
+			"MeshCapsuleRadius": 120,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -400
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::ProductMedicine",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 2,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 2,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"RAID_KingBahamut_Dragon": {
+			"OverrideNameTextID": "PAL_NAME_KingBahamut_Dragon",
+			"NamePrefixID": "RAID_NAME_KingBahamut_Dragon",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::KingBahamut_Dragon",
+			"BPClass": "RAID_KingBahamut_Dragon",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Dragon",
+			"ElementType2": "EPalElementType::Fire",
+			"GenusCategory": "EPalGenusCategoryType::FourLegged",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 105,
+			"MeleeAttack": 150,
+			"ShotAttack": 130,
+			"Defense": 125,
+			"Support": 50,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3.8,
+			"Friendship_ShotAttack": 1.3,
+			"Friendship_Defense": 1.5,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 140,
+			"EnemyReceiveDamageRate": 0.4,
+			"EnemyInflictDamageRate": 2,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 10000,
+			"StatusResistUpRate": 100,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 3000,
+			"WalkSpeed": 3000,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 3000,
+			"TransportSpeed": 3000,
+			"SwimSpeed": 3000,
+			"SwimDashSpeed": 3000,
+			"IsBoss": true,
+			"IsTowerBoss": false,
+			"IsRaidBoss": true,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::RaidBoss_KingBahamut",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 600,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 9,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 999,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 480,
+			"MeshCapsuleRadius": 250,
+			"MeshRelativeLocation": {
+				"X": -120,
+				"Y": 0,
+				"Z": -480
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Mining",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 4,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"RAID_KingBahamut_Dragon_2": {
+			"OverrideNameTextID": "PAL_NAME_KingBahamut_Dragon",
+			"NamePrefixID": "RAID_NAME_KingBahamut_Dragon_2",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::KingBahamut_Dragon",
+			"BPClass": "RAID_KingBahamut_Dragon",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Dragon",
+			"ElementType2": "EPalElementType::Fire",
+			"GenusCategory": "EPalGenusCategoryType::FourLegged",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 105,
+			"MeleeAttack": 150,
+			"ShotAttack": 130,
+			"Defense": 125,
+			"Support": 50,
+			"CraftSpeed": 100,
+			"Friendship_HP": 3.8,
+			"Friendship_ShotAttack": 1.3,
+			"Friendship_Defense": 1.5,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 500,
+			"EnemyReceiveDamageRate": 0.09,
+			"EnemyInflictDamageRate": 8,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 10000,
+			"StatusResistUpRate": 100,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 3000,
+			"WalkSpeed": 3000,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 3000,
+			"TransportSpeed": 3000,
+			"SwimSpeed": 3000,
+			"SwimDashSpeed": 3000,
+			"IsBoss": true,
+			"IsTowerBoss": false,
+			"IsRaidBoss": true,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::RaidBoss_KingBahamut",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 600,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 9,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 999,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 480,
+			"MeshCapsuleRadius": 250,
+			"MeshRelativeLocation": {
+				"X": -120,
+				"Y": 0,
+				"Z": -480
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Mining",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 4,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"RAID_DarkMechaDragon": {
+			"OverrideNameTextID": "PAL_NAME_DarkMechaDragon",
+			"NamePrefixID": "RAID_NAME_DarkMechaDragon",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::DarkMechaDragon",
+			"BPClass": "RAID_DarkMechaDragon",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Dark",
+			"ElementType2": "EPalElementType::Dragon",
+			"GenusCategory": "EPalGenusCategoryType::Bird",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 130,
+			"MeleeAttack": 100,
+			"ShotAttack": 120,
+			"Defense": 120,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 2.5,
+			"Friendship_ShotAttack": 1.7,
+			"Friendship_Defense": 1.7,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 280,
+			"EnemyReceiveDamageRate": 0.35,
+			"EnemyInflictDamageRate": 5,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 10000,
+			"StatusResistUpRate": 100,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 3000,
+			"WalkSpeed": 3000,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 3000,
+			"TransportSpeed": 3000,
+			"SwimSpeed": 3000,
+			"SwimDashSpeed": 3000,
+			"IsBoss": true,
+			"IsTowerBoss": false,
+			"IsRaidBoss": true,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::RaidBoss_DarkMechaDragon",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": true,
+			"BiologicalGrade": 999,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 420,
+			"MeshCapsuleRadius": 140,
+			"MeshRelativeLocation": {
+				"X": -100,
+				"Y": 0,
+				"Z": -60
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Collection",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 1,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"RAID_DarkMechaDragon_2": {
+			"OverrideNameTextID": "PAL_NAME_DarkMechaDragon",
+			"NamePrefixID": "RAID_NAME_DarkMechaDragon_2",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::DarkMechaDragon",
+			"BPClass": "RAID_DarkMechaDragon",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Dark",
+			"ElementType2": "EPalElementType::Dragon",
+			"GenusCategory": "EPalGenusCategoryType::Bird",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 130,
+			"MeleeAttack": 100,
+			"ShotAttack": 120,
+			"Defense": 120,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 2.5,
+			"Friendship_ShotAttack": 1.7,
+			"Friendship_Defense": 1.7,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 420,
+			"EnemyReceiveDamageRate": 0.085,
+			"EnemyInflictDamageRate": 13,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 10000,
+			"StatusResistUpRate": 100,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 3000,
+			"WalkSpeed": 3000,
+			"RunSpeed": 3000,
+			"RideSprintSpeed": 3000,
+			"TransportSpeed": 3000,
+			"SwimSpeed": 3000,
+			"SwimDashSpeed": 3000,
+			"IsBoss": true,
+			"IsTowerBoss": false,
+			"IsRaidBoss": true,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::RaidBoss_DarkMechaDragon",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": true,
+			"BiologicalGrade": 999,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 420,
+			"MeshCapsuleRadius": 140,
+			"MeshRelativeLocation": {
+				"X": -100,
+				"Y": 0,
+				"Z": -60
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Collection",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 1,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"RAID_YakushimaBoss002": {
+			"OverrideNameTextID": "None",
+			"NamePrefixID": "None",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::YakushimaBoss002",
+			"BPClass": "YakushimaBoss002",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::None",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Other",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 100,
+			"MeleeAttack": 100,
+			"ShotAttack": 130,
+			"Defense": 100,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 4,
+			"Friendship_ShotAttack": 1.3,
+			"Friendship_Defense": 2.5,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 130,
+			"EnemyReceiveDamageRate": 1,
+			"EnemyInflictDamageRate": 1,
+			"EnemyWazaCoolTimeRate": 1,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 10000,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": -1,
+			"WalkSpeed": -1,
+			"RunSpeed": -1,
+			"RideSprintSpeed": -1,
+			"TransportSpeed": -1,
+			"SwimSpeed": -1,
+			"SwimDashSpeed": -1,
+			"IsBoss": true,
+			"IsTowerBoss": false,
+			"IsRaidBoss": true,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::RaidBoss_MoonLord",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": true,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 999,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 3100,
+			"CombiDuplicatePriority": 310000,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 88,
+			"MeshCapsuleRadius": 34,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -90
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::EmitFlame",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"RAID_YakushimaBoss002_2": {
+			"OverrideNameTextID": "PAL_NAME_RAID_YakushimaBoss002",
+			"NamePrefixID": "RAID_NAME_YakushimaBoss002_2",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::YakushimaBoss002_2",
+			"BPClass": "YakushimaBoss002_2",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::None",
+			"ElementType2": "EPalElementType::None",
+			"GenusCategory": "EPalGenusCategoryType::Other",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 100,
+			"MeleeAttack": 100,
+			"ShotAttack": 130,
+			"Defense": 100,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 4,
+			"Friendship_ShotAttack": 1.3,
+			"Friendship_Defense": 2.5,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 480,
+			"EnemyReceiveDamageRate": 0.25,
+			"EnemyInflictDamageRate": 7,
+			"EnemyWazaCoolTimeRate": 1,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 10000,
+			"StatusResistUpRate": 1,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": -1,
+			"WalkSpeed": -1,
+			"RunSpeed": -1,
+			"RideSprintSpeed": -1,
+			"TransportSpeed": -1,
+			"SwimSpeed": -1,
+			"SwimDashSpeed": -1,
+			"IsBoss": true,
+			"IsTowerBoss": false,
+			"IsRaidBoss": true,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::RaidBoss_MoonLord",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": true,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 999,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 3100,
+			"CombiDuplicatePriority": 310000,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 88,
+			"MeshCapsuleRadius": 34,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -90
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::EmitFlame",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 0,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"RAID_LegendDeer": {
+			"OverrideNameTextID": "PAL_NAME_LegendDeer",
+			"NamePrefixID": "RAID_NAME_LegendDeer",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::LegendDeer",
+			"BPClass": "RAID_LegendDeer",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Water",
+			"ElementType2": "EPalElementType::Leaf",
+			"GenusCategory": "EPalGenusCategoryType::FourLegged",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 130,
+			"MeleeAttack": 100,
+			"ShotAttack": 120,
+			"Defense": 120,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 2.5,
+			"Friendship_ShotAttack": 1.7,
+			"Friendship_Defense": 1.7,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 180,
+			"EnemyReceiveDamageRate": 0.5,
+			"EnemyInflictDamageRate": 4,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 10000,
+			"StatusResistUpRate": 100,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 400,
+			"WalkSpeed": 600,
+			"RunSpeed": 3600,
+			"RideSprintSpeed": 7600,
+			"TransportSpeed": 1800,
+			"SwimSpeed": 1440,
+			"SwimDashSpeed": 2160,
+			"IsBoss": true,
+			"IsTowerBoss": false,
+			"IsRaidBoss": true,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::RaidBoss_LegendDeer",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 999,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 375,
+			"MeshCapsuleRadius": 150,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -375
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Collection",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 1,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		},
+		"RAID_LegendDeer_2": {
+			"OverrideNameTextID": "PAL_NAME_LegendDeer",
+			"NamePrefixID": "RAID_NAME_LegendDeer_2",
+			"OverridePartnerSkillNameTextID": "None",
+			"OverridePartnerSkillDescTextID": "None",
+			"IsPal": true,
+			"Tribe": "EPalTribeID::LegendDeer",
+			"BPClass": "RAID_LegendDeer",
+			"ZukanIndex": -1,
+			"ZukanIndexSuffix": "",
+			"Size": "EPalSizeType::XL",
+			"Rarity": 10,
+			"ElementType1": "EPalElementType::Water",
+			"ElementType2": "EPalElementType::Leaf",
+			"GenusCategory": "EPalGenusCategoryType::FourLegged",
+			"Organization": "EPalOrganizationType::None",
+			"Weapon": "EPalWeaponType::None",
+			"WeaponEquip": false,
+			"Hp": 130,
+			"MeleeAttack": 100,
+			"ShotAttack": 120,
+			"Defense": 120,
+			"Support": 100,
+			"CraftSpeed": 100,
+			"Friendship_HP": 2.5,
+			"Friendship_ShotAttack": 1.7,
+			"Friendship_Defense": 1.7,
+			"Friendship_CraftSpeed": 0,
+			"EnemyMaxHPRate": 320,
+			"EnemyReceiveDamageRate": 0.2,
+			"EnemyInflictDamageRate": 13,
+			"EnemyWazaCoolTimeRate": 2,
+			"CaptureRateCorrect": 1,
+			"ExpRatio": 30,
+			"Price": 10000,
+			"StatusResistUpRate": 100,
+			"AIResponse": "Boss",
+			"AISightResponse": "None",
+			"SlowWalkSpeed": 400,
+			"WalkSpeed": 600,
+			"RunSpeed": 3600,
+			"RideSprintSpeed": 7600,
+			"TransportSpeed": 1800,
+			"SwimSpeed": 1440,
+			"SwimDashSpeed": 2160,
+			"IsBoss": true,
+			"IsTowerBoss": false,
+			"IsRaidBoss": true,
+			"UseBossHPGauge": true,
+			"BattleBGM": "EPalBattleBGMType::RaidBoss_LegendDeer2",
+			"IgnoreLeanBack": true,
+			"IgnoreBlowAway": true,
+			"IgnoreStun": false,
+			"MaxFullStomach": 150,
+			"FullStomachDecreaseRate": 1,
+			"FoodAmount": 2,
+			"ViewingDistance": 25,
+			"ViewingAngle": 90,
+			"HearingRate": 1,
+			"NooseTrap": false,
+			"Nocturnal": false,
+			"BiologicalGrade": 999,
+			"Predator": false,
+			"Edible": true,
+			"Stamina": 100,
+			"MaleProbability": 50,
+			"CombiRank": 9999,
+			"CombiDuplicatePriority": 999900,
+			"IgnoreCombi": true,
+			"MeshCapsuleHalfHeight": 375,
+			"MeshCapsuleRadius": 150,
+			"MeshRelativeLocation": {
+				"X": 0,
+				"Y": 0,
+				"Z": -375
+			},
+			"BestWorkSuitability": "EPalWorkSuitability::Collection",
+			"WorkSuitability_EmitFlame": 0,
+			"WorkSuitability_Watering": 0,
+			"WorkSuitability_Seeding": 0,
+			"WorkSuitability_GenerateElectricity": 0,
+			"WorkSuitability_Handcraft": 0,
+			"WorkSuitability_Collection": 1,
+			"WorkSuitability_Deforest": 0,
+			"WorkSuitability_Mining": 0,
+			"WorkSuitability_OilExtraction": 0,
+			"WorkSuitability_ProductMedicine": 0,
+			"WorkSuitability_Cool": 0,
+			"WorkSuitability_Transport": 0,
+			"WorkSuitability_MonsterFarm": 0,
+			"PassiveSkill1": "None",
+			"PassiveSkill2": "None",
+			"PassiveSkill3": "None",
+			"PassiveSkill4": "None",
+			"FirstDefeatRewardItemID": "None"
+		}
+	},
+	"raids": {
+		"PalSummon_NightLady": {
+			"InfoList": [
+				{
+					"PalId": {
+						"Key": "RAID_NightLady"
+					},
+					"Level": 35,
+					"WarpWazaID": "EPalWazaID::Unique_NightLady_WarpBeam_Straight",
+					"BaseCampAttackWazaIDs": [
+						"EPalWazaID::Unique_NightLady_WarpBeam_Straight"
+					],
+					"OverrideInitialElement1": "EPalElementType::None",
+					"OverrideInitialElement2": "EPalElementType::None",
+					"CanModeChange": false,
+					"IgnoreLargeDown": false,
+					"ModeChange_AddStatusToAllWhenModeChgange": "EPalStatusID::None",
+					"ModeChange_Element1": "EPalElementType::None",
+					"ModeChange_Element2": "EPalElementType::None",
+					"ModeChange_AddPassiveSkill": [],
+					"ModeChange_AddWaza": [],
+					"ModeChange_RemoveWaza": [],
+					"AIControllerClass": null
+				}
+			],
+			"SummonMeteor_Num": [],
+			"SummonGeneratorClass": null,
+			"EggPalIDAndWeight": [
+				{
+					"Key": {
+						"Key": "BOSS_NightLady"
+					},
+					"Value": 0.1
+				},
+				{
+					"Key": {
+						"Key": "NightLady"
+					},
+					"Value": 0.9
+				}
+			],
+			"SuccessItemList": [
+				{
+					"ItemName": {
+						"Key": "SkillCard_Apocalypse"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "AncientParts2"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 3
+				},
+				{
+					"ItemName": {
+						"Key": "ExpBoost_04"
+					},
+					"Rate": 100,
+					"Min": 3,
+					"Max": 5
+				}
+			],
+			"SuccessAnyOneItemList": [
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_MonsterFarm"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Transport"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_ProductMedicine"
+					},
+					"Num": 1
+				}
+			],
+			"AchievementId": "11",
+			"OverrideRaidBossBattleActorClass": null
+		},
+		"PalSummon_NightLady_Dark": {
+			"InfoList": [
+				{
+					"PalId": {
+						"Key": "RAID_NightLady_Dark"
+					},
+					"Level": 45,
+					"WarpWazaID": "EPalWazaID::Unique_NightLady_WarpBeam",
+					"BaseCampAttackWazaIDs": [
+						"EPalWazaID::Unique_NightLady_WarpBeam",
+						"EPalWazaID::Unique_NightLady_FlameNightmare"
+					],
+					"OverrideInitialElement1": "EPalElementType::None",
+					"OverrideInitialElement2": "EPalElementType::None",
+					"CanModeChange": true,
+					"IgnoreLargeDown": false,
+					"ModeChange_AddStatusToAllWhenModeChgange": "EPalStatusID::Freeze",
+					"ModeChange_Element1": "EPalElementType::Ice",
+					"ModeChange_Element2": "EPalElementType::None",
+					"ModeChange_AddPassiveSkill": [
+						"PAL_ALLAttack_up2",
+						"Noukin",
+						"PAL_sadist",
+						"PAL_oraora",
+						"ElementBoost_Dark_2_PAL"
+					],
+					"ModeChange_AddWaza": [
+						"EPalWazaID::DiamondFall",
+						"EPalWazaID::IcicleThrow",
+						"EPalWazaID::FrostBreath",
+						"EPalWazaID::IceBlade"
+					],
+					"ModeChange_RemoveWaza": [
+						"EPalWazaID::DarkPulse",
+						"EPalWazaID::DarkCanon",
+						"EPalWazaID::ShadowBall",
+						"EPalWazaID::DarkArrow"
+					],
+					"AIControllerClass": null
+				}
+			],
+			"SummonMeteor_Num": [],
+			"SummonGeneratorClass": null,
+			"EggPalIDAndWeight": [
+				{
+					"Key": {
+						"Key": "BOSS_NightLady_Dark"
+					},
+					"Value": 0.1
+				},
+				{
+					"Key": {
+						"Key": "NightLady_Dark"
+					},
+					"Value": 0.9
+				}
+			],
+			"SuccessItemList": [
+				{
+					"ItemName": {
+						"Key": "AncientParts2"
+					},
+					"Rate": 100,
+					"Min": 2,
+					"Max": 4
+				},
+				{
+					"ItemName": {
+						"Key": "PalSummon_NightLady_Dark_2"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "ExpBoost_04"
+					},
+					"Rate": 100,
+					"Min": 4,
+					"Max": 6
+				},
+				{
+					"ItemName": {
+						"Key": "SkillCard_DarkLegion"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				}
+			],
+			"SuccessAnyOneItemList": [
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_MonsterFarm"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Transport"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_ProductMedicine"
+					},
+					"Num": 1
+				}
+			],
+			"AchievementId": "12",
+			"OverrideRaidBossBattleActorClass": null
+		},
+		"PalSummon_NightLady_Dark_2": {
+			"InfoList": [
+				{
+					"PalId": {
+						"Key": "RAID_NightLady_Dark_2"
+					},
+					"Level": 80,
+					"WarpWazaID": "EPalWazaID::Unique_NightLady_WarpBeam",
+					"BaseCampAttackWazaIDs": [
+						"EPalWazaID::Unique_NightLady_WarpBeam",
+						"EPalWazaID::Unique_NightLady_FlameNightmare"
+					],
+					"OverrideInitialElement1": "EPalElementType::None",
+					"OverrideInitialElement2": "EPalElementType::None",
+					"CanModeChange": true,
+					"IgnoreLargeDown": false,
+					"ModeChange_AddStatusToAllWhenModeChgange": "EPalStatusID::Freeze",
+					"ModeChange_Element1": "EPalElementType::Ice",
+					"ModeChange_Element2": "EPalElementType::None",
+					"ModeChange_AddPassiveSkill": [
+						"PAL_ALLAttack_up3",
+						"Noukin",
+						"PAL_sadist",
+						"PAL_oraora",
+						"Witch"
+					],
+					"ModeChange_AddWaza": [
+						"EPalWazaID::DiamondFall",
+						"EPalWazaID::DoubleIcicleThrow",
+						"EPalWazaID::IceAge",
+						"EPalWazaID::IcicleLine"
+					],
+					"ModeChange_RemoveWaza": [
+						"EPalWazaID::DarkPulse",
+						"EPalWazaID::DarkCanon",
+						"EPalWazaID::ShadowBall",
+						"EPalWazaID::DarkArrow"
+					],
+					"AIControllerClass": null
+				}
+			],
+			"SummonMeteor_Num": [],
+			"SummonGeneratorClass": null,
+			"EggPalIDAndWeight": [
+				{
+					"Key": {
+						"Key": "BOSS_NightLady_Dark"
+					},
+					"Value": 0.1
+				},
+				{
+					"Key": {
+						"Key": "NightLady_Dark"
+					},
+					"Value": 0.9
+				}
+			],
+			"SuccessItemList": [
+				{
+					"ItemName": {
+						"Key": "AncientParts2"
+					},
+					"Rate": 100,
+					"Min": 10,
+					"Max": 10
+				},
+				{
+					"ItemName": {
+						"Key": "HeadEquip001_purple"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "LvUP_01"
+					},
+					"Rate": 100,
+					"Min": 10,
+					"Max": 10
+				},
+				{
+					"ItemName": {
+						"Key": "PalSummon_NightLady_Dark_2"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				}
+			],
+			"SuccessAnyOneItemList": [
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_MonsterFarm"
+					},
+					"Num": 2
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Transport"
+					},
+					"Num": 2
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_ProductMedicine"
+					},
+					"Num": 2
+				}
+			],
+			"AchievementId": "12",
+			"OverrideRaidBossBattleActorClass": null
+		},
+		"PalSummon_KingBahamut_Dragon": {
+			"InfoList": [
+				{
+					"PalId": {
+						"Key": "RAID_KingBahamut_Dragon"
+					},
+					"Level": 55,
+					"WarpWazaID": "EPalWazaID::Unique_KingBahamut_AirCrash",
+					"BaseCampAttackWazaIDs": [
+						"EPalWazaID::Unique_KingBahamut_AirCrash"
+					],
+					"OverrideInitialElement1": "EPalElementType::None",
+					"OverrideInitialElement2": "EPalElementType::None",
+					"CanModeChange": true,
+					"IgnoreLargeDown": false,
+					"ModeChange_AddStatusToAllWhenModeChgange": "EPalStatusID::Electrical",
+					"ModeChange_Element1": "EPalElementType::Electricity",
+					"ModeChange_Element2": "EPalElementType::None",
+					"ModeChange_AddPassiveSkill": [
+						"ElementBoost_Dragon_2_PAL",
+						"Deffence_up2",
+						"PAL_masochist",
+						"Deffence_up1",
+						"MoveSpeed_up_3"
+					],
+					"ModeChange_AddWaza": [
+						"EPalWazaID::ThunderStorm",
+						"EPalWazaID::ThunderRain",
+						"EPalWazaID::RangeThunder",
+						"EPalWazaID::Thunderbolt",
+						"EPalWazaID::LightningStrike"
+					],
+					"ModeChange_RemoveWaza": [
+						"EPalWazaID::DragonMeteor",
+						"EPalWazaID::FlameWall",
+						"EPalWazaID::Eruption",
+						"EPalWazaID::FireBall"
+					],
+					"AIControllerClass": null
+				}
+			],
+			"SummonMeteor_Num": [],
+			"SummonGeneratorClass": null,
+			"EggPalIDAndWeight": [
+				{
+					"Key": {
+						"Key": "BOSS_KingBahamut_Dragon"
+					},
+					"Value": 0.1
+				},
+				{
+					"Key": {
+						"Key": "KingBahamut_Dragon"
+					},
+					"Value": 0.9
+				}
+			],
+			"SuccessItemList": [
+				{
+					"ItemName": {
+						"Key": "AncientParts2"
+					},
+					"Rate": 100,
+					"Min": 2,
+					"Max": 4
+				},
+				{
+					"ItemName": {
+						"Key": "PalSummon_KingBahamut_Dragon_2"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "ExpBoost_04"
+					},
+					"Rate": 100,
+					"Min": 5,
+					"Max": 7
+				},
+				{
+					"ItemName": {
+						"Key": "SkillCard_BeamSlicer"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				}
+			],
+			"SuccessAnyOneItemList": [
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Mining"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Deforest"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Collection"
+					},
+					"Num": 1
+				}
+			],
+			"AchievementId": "14",
+			"OverrideRaidBossBattleActorClass": null
+		},
+		"PalSummon_KingBahamut_Dragon_2": {
+			"InfoList": [
+				{
+					"PalId": {
+						"Key": "RAID_KingBahamut_Dragon_2"
+					},
+					"Level": 80,
+					"WarpWazaID": "EPalWazaID::Unique_KingBahamut_AirCrash",
+					"BaseCampAttackWazaIDs": [
+						"EPalWazaID::Unique_KingBahamut_AirCrash"
+					],
+					"OverrideInitialElement1": "EPalElementType::None",
+					"OverrideInitialElement2": "EPalElementType::None",
+					"CanModeChange": true,
+					"IgnoreLargeDown": false,
+					"ModeChange_AddStatusToAllWhenModeChgange": "EPalStatusID::Electrical",
+					"ModeChange_Element1": "EPalElementType::Electricity",
+					"ModeChange_Element2": "EPalElementType::None",
+					"ModeChange_AddPassiveSkill": [
+						"ElementBoost_Dragon_2_PAL",
+						"Deffence_up2",
+						"PAL_masochist",
+						"Deffence_up1",
+						"MoveSpeed_up_3"
+					],
+					"ModeChange_AddWaza": [
+						"EPalWazaID::ThunderStorm",
+						"EPalWazaID::ThunderRain",
+						"EPalWazaID::RangeThunder",
+						"EPalWazaID::Railbolt",
+						"EPalWazaID::LightningStrike"
+					],
+					"ModeChange_RemoveWaza": [
+						"EPalWazaID::DragonMeteor",
+						"EPalWazaID::Inferno",
+						"EPalWazaID::Eruption",
+						"EPalWazaID::FireBall"
+					],
+					"AIControllerClass": null
+				}
+			],
+			"SummonMeteor_Num": [],
+			"SummonGeneratorClass": null,
+			"EggPalIDAndWeight": [
+				{
+					"Key": {
+						"Key": "BOSS_KingBahamut_Dragon"
+					},
+					"Value": 0.1
+				},
+				{
+					"Key": {
+						"Key": "KingBahamut_Dragon"
+					},
+					"Value": 0.9
+				}
+			],
+			"SuccessItemList": [
+				{
+					"ItemName": {
+						"Key": "AncientParts2"
+					},
+					"Rate": 100,
+					"Min": 10,
+					"Max": 10
+				},
+				{
+					"ItemName": {
+						"Key": "HeadEquip041"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "LvUP_01"
+					},
+					"Rate": 100,
+					"Min": 10,
+					"Max": 10
+				},
+				{
+					"ItemName": {
+						"Key": "PalSummon_KingBahamut_Dragon_2"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				}
+			],
+			"SuccessAnyOneItemList": [
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Mining"
+					},
+					"Num": 2
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Deforest"
+					},
+					"Num": 2
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Collection"
+					},
+					"Num": 2
+				}
+			],
+			"AchievementId": "14",
+			"OverrideRaidBossBattleActorClass": null
+		},
+		"PalSummon_DarkMechaDragon": {
+			"InfoList": [
+				{
+					"PalId": {
+						"Key": "RAID_DarkMechaDragon"
+					},
+					"Level": 65,
+					"WarpWazaID": "EPalWazaID::Unique_DarkMechaDragon_WarpComet",
+					"BaseCampAttackWazaIDs": [
+						"EPalWazaID::Unique_DarkMechaDragon_WarpComet"
+					],
+					"OverrideInitialElement1": "EPalElementType::None",
+					"OverrideInitialElement2": "EPalElementType::None",
+					"CanModeChange": false,
+					"IgnoreLargeDown": false,
+					"ModeChange_AddStatusToAllWhenModeChgange": "EPalStatusID::None",
+					"ModeChange_Element1": "EPalElementType::None",
+					"ModeChange_Element2": "EPalElementType::None",
+					"ModeChange_AddPassiveSkill": [],
+					"ModeChange_AddWaza": [],
+					"ModeChange_RemoveWaza": [],
+					"AIControllerClass": null
+				}
+			],
+			"SummonMeteor_Num": [
+				{
+					"HPRate": 0.7,
+					"SummonPalInfoList": [
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien"
+									},
+									"Value": 3
+								}
+							]
+						}
+					]
+				},
+				{
+					"HPRate": 0.4,
+					"SummonPalInfoList": [
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_WhiteAlienDragon"
+									},
+									"Value": 1
+								},
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien"
+									},
+									"Value": 4
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_WhiteAlienDragon"
+									},
+									"Value": 1
+								},
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien"
+									},
+									"Value": 4
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_WhiteAlienDragon"
+									},
+									"Value": 1
+								},
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien"
+									},
+									"Value": 4
+								}
+							]
+						}
+					]
+				}
+			],
+			"SummonGeneratorClass": {
+				"ObjectName": "BlueprintGeneratedClass'BP_RaidBossMeteorGenerator_C'",
+				"ObjectPath": "Pal/Content/Pal/Blueprint/RaidBoss/SummonGenerator/BP_RaidBossMeteorGenerator.0"
+			},
+			"EggPalIDAndWeight": [
+				{
+					"Key": {
+						"Key": "BOSS_DarkMechaDragon"
+					},
+					"Value": 0.1
+				},
+				{
+					"Key": {
+						"Key": "DarkMechaDragon"
+					},
+					"Value": 0.9
+				}
+			],
+			"SuccessItemList": [
+				{
+					"ItemName": {
+						"Key": "AncientParts2"
+					},
+					"Rate": 100,
+					"Min": 3,
+					"Max": 6
+				},
+				{
+					"ItemName": {
+						"Key": "PalSummon_DarkMechaDragon_2"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "LvUP_01"
+					},
+					"Rate": 100,
+					"Min": 4,
+					"Max": 5
+				},
+				{
+					"ItemName": {
+						"Key": "SkillCard_DragonMeteor"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				}
+			],
+			"SuccessAnyOneItemList": [
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Handcraft"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_GenerateElectricity"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Cool"
+					},
+					"Num": 1
+				}
+			],
+			"AchievementId": "33",
+			"OverrideRaidBossBattleActorClass": null
+		},
+		"PalSummon_DarkMechaDragon_2": {
+			"InfoList": [
+				{
+					"PalId": {
+						"Key": "RAID_DarkMechaDragon_2"
+					},
+					"Level": 80,
+					"WarpWazaID": "EPalWazaID::Unique_DarkMechaDragon_WarpComet",
+					"BaseCampAttackWazaIDs": [
+						"EPalWazaID::Unique_DarkMechaDragon_WarpComet"
+					],
+					"OverrideInitialElement1": "EPalElementType::None",
+					"OverrideInitialElement2": "EPalElementType::None",
+					"CanModeChange": false,
+					"IgnoreLargeDown": false,
+					"ModeChange_AddStatusToAllWhenModeChgange": "EPalStatusID::None",
+					"ModeChange_Element1": "EPalElementType::None",
+					"ModeChange_Element2": "EPalElementType::None",
+					"ModeChange_AddPassiveSkill": [],
+					"ModeChange_AddWaza": [],
+					"ModeChange_RemoveWaza": [],
+					"AIControllerClass": null
+				}
+			],
+			"SummonMeteor_Num": [
+				{
+					"HPRate": 0.8,
+					"SummonPalInfoList": [
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						}
+					]
+				},
+				{
+					"HPRate": 0.5,
+					"SummonPalInfoList": [
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_WhiteAlienDragon_MAX"
+									},
+									"Value": 1
+								},
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_WhiteAlienDragon_MAX"
+									},
+									"Value": 1
+								},
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_WhiteAlienDragon_MAX"
+									},
+									"Value": 1
+								},
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						}
+					]
+				},
+				{
+					"HPRate": 0.2,
+					"SummonPalInfoList": [
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_WhiteAlienDragon_MAX"
+									},
+									"Value": 1
+								},
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_WhiteAlienDragon_MAX"
+									},
+									"Value": 1
+								},
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_WhiteAlienDragon_MAX"
+									},
+									"Value": 1
+								},
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_WhiteAlienDragon_MAX"
+									},
+									"Value": 1
+								},
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 3
+								}
+							]
+						},
+						{
+							"PalNameAndNum": [
+								{
+									"Key": {
+										"Key": "SUMMON_DarkAlien_MAX"
+									},
+									"Value": 4
+								}
+							]
+						}
+					]
+				}
+			],
+			"SummonGeneratorClass": {
+				"ObjectName": "BlueprintGeneratedClass'BP_RaidBossMeteorGenerator_C'",
+				"ObjectPath": "Pal/Content/Pal/Blueprint/RaidBoss/SummonGenerator/BP_RaidBossMeteorGenerator.0"
+			},
+			"EggPalIDAndWeight": [
+				{
+					"Key": {
+						"Key": "BOSS_DarkMechaDragon"
+					},
+					"Value": 0.1
+				},
+				{
+					"Key": {
+						"Key": "DarkMechaDragon"
+					},
+					"Value": 0.9
+				}
+			],
+			"SuccessItemList": [
+				{
+					"ItemName": {
+						"Key": "AncientParts2"
+					},
+					"Rate": 100,
+					"Min": 10,
+					"Max": 10
+				},
+				{
+					"ItemName": {
+						"Key": "PalSummon_DarkMechaDragon_2"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "LvUP_01"
+					},
+					"Rate": 100,
+					"Min": 10,
+					"Max": 10
+				},
+				{
+					"ItemName": {
+						"Key": "HeadEquip044"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				}
+			],
+			"SuccessAnyOneItemList": [
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Handcraft"
+					},
+					"Num": 2
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_GenerateElectricity"
+					},
+					"Num": 2
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Cool"
+					},
+					"Num": 2
+				}
+			],
+			"AchievementId": "33",
+			"OverrideRaidBossBattleActorClass": null
+		},
+		"PalSummon_YakushimaBoss002": {
+			"InfoList": [
+				{
+					"PalId": {
+						"Key": "RAID_YakushimaBoss002"
+					},
+					"Level": 50,
+					"WarpWazaID": "EPalWazaID::None",
+					"BaseCampAttackWazaIDs": [
+						"EPalWazaID::Unique_YakushimaBoss002_PhantasmalEye"
+					],
+					"OverrideInitialElement1": "EPalElementType::None",
+					"OverrideInitialElement2": "EPalElementType::None",
+					"CanModeChange": false,
+					"IgnoreLargeDown": false,
+					"ModeChange_AddStatusToAllWhenModeChgange": "EPalStatusID::None",
+					"ModeChange_Element1": "EPalElementType::None",
+					"ModeChange_Element2": "EPalElementType::None",
+					"ModeChange_AddPassiveSkill": [],
+					"ModeChange_AddWaza": [],
+					"ModeChange_RemoveWaza": [],
+					"AIControllerClass": {
+						"ObjectName": "BlueprintGeneratedClass'BP_MonsterAIController_YakushimaBoss002_C'",
+						"ObjectPath": "Pal/Content/Pal/Blueprint/Controller/Monster/BP_MonsterAIController_YakushimaBoss002.0"
+					}
+				}
+			],
+			"SummonMeteor_Num": [],
+			"SummonGeneratorClass": null,
+			"EggPalIDAndWeight": [],
+			"SuccessItemList": [
+				{
+					"ItemName": {
+						"Key": "AncientParts2"
+					},
+					"Rate": 100,
+					"Min": 2,
+					"Max": 3
+				},
+				{
+					"ItemName": {
+						"Key": "ExpBoost_04"
+					},
+					"Rate": 100,
+					"Min": 5,
+					"Max": 6
+				},
+				{
+					"ItemName": {
+						"Key": "YakushimaBlade005"
+					},
+					"Rate": 22,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "YakushimaHeadEquip005"
+					},
+					"Rate": 10,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "PalSummon_YakushimaBoss002_2"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "Blueprint_YakushimaBlade002_3"
+					},
+					"Rate": 25,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "Blueprint_YakushimaGun001_3"
+					},
+					"Rate": 25,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "Blueprint_YakushimaLantern001_3"
+					},
+					"Rate": 25,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "Blueprint_YakushimaBlade003_3"
+					},
+					"Rate": 25,
+					"Min": 1,
+					"Max": 1
+				}
+			],
+			"SuccessAnyOneItemList": [
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Seeding"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Handcraft"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Collection"
+					},
+					"Num": 1
+				}
+			],
+			"AchievementId": "",
+			"OverrideRaidBossBattleActorClass": {
+				"ObjectName": "BlueprintGeneratedClass'BP_PalRaidBossBattle_YakushimaBoss002_C'",
+				"ObjectPath": "Pal/Content/Pal/Blueprint/RaidBoss/BP_PalRaidBossBattle_YakushimaBoss002.0"
+			}
+		},
+		"PalSummon_YakushimaBoss002_2": {
+			"InfoList": [
+				{
+					"PalId": {
+						"Key": "RAID_YakushimaBoss002_2"
+					},
+					"Level": 80,
+					"WarpWazaID": "EPalWazaID::None",
+					"BaseCampAttackWazaIDs": [
+						"EPalWazaID::Unique_YakushimaBoss002_PhantasmalEye"
+					],
+					"OverrideInitialElement1": "EPalElementType::None",
+					"OverrideInitialElement2": "EPalElementType::None",
+					"CanModeChange": false,
+					"IgnoreLargeDown": false,
+					"ModeChange_AddStatusToAllWhenModeChgange": "EPalStatusID::None",
+					"ModeChange_Element1": "EPalElementType::None",
+					"ModeChange_Element2": "EPalElementType::None",
+					"ModeChange_AddPassiveSkill": [],
+					"ModeChange_AddWaza": [],
+					"ModeChange_RemoveWaza": [],
+					"AIControllerClass": {
+						"ObjectName": "BlueprintGeneratedClass'BP_MonsterAIController_YakushimaBoss002_2_C'",
+						"ObjectPath": "Pal/Content/Pal/Blueprint/Controller/Monster/BP_MonsterAIController_YakushimaBoss002_2.0"
+					}
+				}
+			],
+			"SummonMeteor_Num": [],
+			"SummonGeneratorClass": null,
+			"EggPalIDAndWeight": [],
+			"SuccessItemList": [
+				{
+					"ItemName": {
+						"Key": "AncientParts2"
+					},
+					"Rate": 100,
+					"Min": 10,
+					"Max": 10
+				},
+				{
+					"ItemName": {
+						"Key": "PalSummon_YakushimaBoss002_2"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "LvUP_01"
+					},
+					"Rate": 100,
+					"Min": 10,
+					"Max": 10
+				},
+				{
+					"ItemName": {
+						"Key": "YakushimaHeadEquip005"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "Blueprint_YakushimaBlade002_5"
+					},
+					"Rate": 25,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "Blueprint_YakushimaGun001_5"
+					},
+					"Rate": 25,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "Blueprint_YakushimaLantern001_5"
+					},
+					"Rate": 25,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "Blueprint_YakushimaBlade003_5"
+					},
+					"Rate": 25,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "Blueprint_YakushimaBoss002_Relic"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				}
+			],
+			"SuccessAnyOneItemList": [
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Seeding"
+					},
+					"Num": 2
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Handcraft"
+					},
+					"Num": 2
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Collection"
+					},
+					"Num": 2
+				}
+			],
+			"AchievementId": "",
+			"OverrideRaidBossBattleActorClass": {
+				"ObjectName": "BlueprintGeneratedClass'BP_PalRaidBossBattle_YakushimaBoss002_C'",
+				"ObjectPath": "Pal/Content/Pal/Blueprint/RaidBoss/BP_PalRaidBossBattle_YakushimaBoss002.0"
+			}
+		},
+		"PalSummon_LegendDeer": {
+			"InfoList": [
+				{
+					"PalId": {
+						"Key": "RAID_LegendDeer"
+					},
+					"Level": 70,
+					"WarpWazaID": "EPalWazaID::Unique_LegendDeer_WarpPillarBurst",
+					"BaseCampAttackWazaIDs": [
+						"EPalWazaID::Unique_LegendDeer_WarpPillarBurst"
+					],
+					"OverrideInitialElement1": "EPalElementType::Leaf",
+					"OverrideInitialElement2": "EPalElementType::Water",
+					"CanModeChange": false,
+					"IgnoreLargeDown": true,
+					"ModeChange_AddStatusToAllWhenModeChgange": "EPalStatusID::None",
+					"ModeChange_Element1": "EPalElementType::Normal",
+					"ModeChange_Element2": "EPalElementType::None",
+					"ModeChange_AddPassiveSkill": [
+						"CoolTimeReduction_Down_1",
+						"PAL_masochist"
+					],
+					"ModeChange_AddWaza": [
+						"EPalWazaID::Unique_LegendDeer_WarpPillarBurst",
+						"EPalWazaID::RadiantBarrage",
+						"EPalWazaID::Unique_LegendDeer_RadiantWingRush",
+						"EPalWazaID::HolyBlast",
+						"EPalWazaID::AirBlade",
+						"EPalWazaID::PowerBall"
+					],
+					"ModeChange_RemoveWaza": [
+						"EPalWazaID::CrossWind",
+						"EPalWazaID::SolarBeam",
+						"EPalWazaID::SeaGush",
+						"EPalWazaID::WallSplash",
+						"EPalWazaID::RipTide",
+						"EPalWazaID::RootLance",
+						"EPalWazaID::WindBurst"
+					],
+					"AIControllerClass": {
+						"ObjectName": "BlueprintGeneratedClass'BP_MonsterAIController_RaidBoss_LegendDeer_C'",
+						"ObjectPath": "Pal/Content/Pal/Blueprint/Controller/Monster/BP_MonsterAIController_RaidBoss_LegendDeer.0"
+					}
+				}
+			],
+			"SummonMeteor_Num": [],
+			"SummonGeneratorClass": null,
+			"EggPalIDAndWeight": [
+				{
+					"Key": {
+						"Key": "BOSS_LegendDeer"
+					},
+					"Value": 0.1
+				},
+				{
+					"Key": {
+						"Key": "LegendDeer"
+					},
+					"Value": 0.9
+				}
+			],
+			"SuccessItemList": [
+				{
+					"ItemName": {
+						"Key": "AncientParts2"
+					},
+					"Rate": 100,
+					"Min": 4,
+					"Max": 7
+				},
+				{
+					"ItemName": {
+						"Key": "PalSummon_LegendDeer_2"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "LvUP_01"
+					},
+					"Rate": 100,
+					"Min": 4,
+					"Max": 6
+				},
+				{
+					"ItemName": {
+						"Key": "SkillCard_HolyBlast"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				}
+			],
+			"SuccessAnyOneItemList": [
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_EmitFlame"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Watering"
+					},
+					"Num": 1
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Seeding"
+					},
+					"Num": 1
+				}
+			],
+			"AchievementId": "57",
+			"OverrideRaidBossBattleActorClass": {
+				"ObjectName": "BlueprintGeneratedClass'BP_PalRaidBossBattle_LegendDeer_C'",
+				"ObjectPath": "Pal/Content/Pal/Blueprint/RaidBoss/BP_PalRaidBossBattle_LegendDeer.0"
+			}
+		},
+		"PalSummon_LegendDeer_2": {
+			"InfoList": [
+				{
+					"PalId": {
+						"Key": "RAID_LegendDeer_2"
+					},
+					"Level": 80,
+					"WarpWazaID": "EPalWazaID::Unique_LegendDeer_WarpPillarBurst",
+					"BaseCampAttackWazaIDs": [
+						"EPalWazaID::Unique_LegendDeer_WarpPillarBurst"
+					],
+					"OverrideInitialElement1": "EPalElementType::Leaf",
+					"OverrideInitialElement2": "EPalElementType::Water",
+					"CanModeChange": false,
+					"IgnoreLargeDown": true,
+					"ModeChange_AddStatusToAllWhenModeChgange": "EPalStatusID::None",
+					"ModeChange_Element1": "EPalElementType::Normal",
+					"ModeChange_Element2": "EPalElementType::None",
+					"ModeChange_AddPassiveSkill": [
+						"CoolTimeReduction_Down_1",
+						"PAL_masochist"
+					],
+					"ModeChange_AddWaza": [
+						"EPalWazaID::Unique_LegendDeer_WarpPillarBurst",
+						"EPalWazaID::RadiantBarrage",
+						"EPalWazaID::Unique_LegendDeer_RadiantWingRush",
+						"EPalWazaID::HolyBlast",
+						"EPalWazaID::AirBlade",
+						"EPalWazaID::PowerBall"
+					],
+					"ModeChange_RemoveWaza": [
+						"EPalWazaID::CrossWind",
+						"EPalWazaID::SolarBeam",
+						"EPalWazaID::SeaGush",
+						"EPalWazaID::WallSplash",
+						"EPalWazaID::RipTide",
+						"EPalWazaID::RootLance",
+						"EPalWazaID::WindBurst"
+					],
+					"AIControllerClass": {
+						"ObjectName": "BlueprintGeneratedClass'BP_MonsterAIController_RaidBoss_LegendDeer_2_C'",
+						"ObjectPath": "Pal/Content/Pal/Blueprint/Controller/Monster/BP_MonsterAIController_RaidBoss_LegendDeer_2.0"
+					}
+				}
+			],
+			"SummonMeteor_Num": [],
+			"SummonGeneratorClass": null,
+			"EggPalIDAndWeight": [
+				{
+					"Key": {
+						"Key": "BOSS_LegendDeer"
+					},
+					"Value": 0.1
+				},
+				{
+					"Key": {
+						"Key": "LegendDeer"
+					},
+					"Value": 0.9
+				}
+			],
+			"SuccessItemList": [
+				{
+					"ItemName": {
+						"Key": "AncientParts2"
+					},
+					"Rate": 100,
+					"Min": 10,
+					"Max": 10
+				},
+				{
+					"ItemName": {
+						"Key": "PalSummon_LegendDeer_2"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				},
+				{
+					"ItemName": {
+						"Key": "LvUP_01"
+					},
+					"Rate": 100,
+					"Min": 10,
+					"Max": 10
+				},
+				{
+					"ItemName": {
+						"Key": "HeadEquip046"
+					},
+					"Rate": 100,
+					"Min": 1,
+					"Max": 1
+				}
+			],
+			"SuccessAnyOneItemList": [
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_EmitFlame"
+					},
+					"Num": 2
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Watering"
+					},
+					"Num": 2
+				},
+				{
+					"ItemName": {
+						"Key": "WorkSuitability_AddTicket_Seeding"
+					},
+					"Num": 2
+				}
+			],
+			"AchievementId": "57",
+			"OverrideRaidBossBattleActorClass": {
+				"ObjectName": "BlueprintGeneratedClass'BP_PalRaidBossBattle_LegendDeer_C'",
+				"ObjectPath": "Pal/Content/Pal/Blueprint/RaidBoss/BP_PalRaidBossBattle_LegendDeer.0"
+			}
+		}
+	}
+}

@@ -8,6 +8,8 @@ const { compareGameItemData, compareGamePalAvailability } = require(`../utils/ga
 const { curatedPalHabitats } = require(`../utils/curatedPalHabitats.js`);
 const { legendLabel } = require(`./lib/maps/item-map-rendering.js`);
 const { validateItemLookupAndDroppingPals } = require(`./smoke/item-smoke.js`);
+const { validateDatabaseEncryption } = require(`./smoke/database-encryption-smoke.js`);
+const { validateEncounterCommands, validateExceptionalBreedingEligibility } = require(`./smoke/encounter-command-smoke.js`);
 const {
 	validateBreedAutocompleteUsesPalData, validateBreedResultsUsePlainNames, validateEncounterDropData,
 	validateGroupedPalDrops, validatePaldeckBreedingButton, validatePaldeckDropLookup, validatePaldeckLearnedMoves,
@@ -259,8 +261,9 @@ function validateCommandsLoad() {
 }
 
 function validateOilRigLegend() {
-	assert(legendLabel(`Oilrig Treasure Goal`, `Lv. 55 Oil Rig`) === `Oil Rig`);
-	assert(legendLabel(`Oilrig Treasure Goal`, `Lv. 60 Oil Rig`) === `Oil Rig`);
+	assert(legendLabel(`Small Oil Rig`) === `Small Oil Rig`);
+	assert(legendLabel(`East Oil Rig`) === `East Oil Rig (Lv. 55)`);
+	assert(legendLabel(`Southwest Oil Rig`) === `Southwest Oil Rig (Lv. 60)`);
 	assert(legendLabel(`Enemy Camp`, `Enemy Camp`) === `Enemy Camps`);
 }
 
@@ -354,6 +357,10 @@ async function main() {
 	await test(`Breed autocomplete uses palData breeding metadata`, validateBreedAutocompleteUsesPalData);
 	await test(`Breed results use plain Pal names`, validateBreedResultsUsePlainNames);
 	await test(`Paldeck breeding button opens parent results`, validatePaldeckBreedingButton);
+	await test(`encounter recommendations and exceptional breeding rules remain valid`, () => {
+		validateExceptionalBreedingEligibility(assert);
+		validateEncounterCommands(assert);
+	});
 	await test(`Paldeck learned-moves button opens level progression`, validatePaldeckLearnedMoves);
 	await test(`Paldeck drop controls send public owned item lookups`, validatePaldeckDropLookup);
 	await test(`Paldeck cards group Pal and Raid Boss drops`, validateGroupedPalDrops);
@@ -366,8 +373,9 @@ async function main() {
 	await test(`item-map deduplication compares bytes and fails before deletion`, validateMapDeduplicationSafety);
 	await test(`direct messages forward verbatim with sender and owned-server context`, validateDmForwarding);
 	await test(`database models include update announcement fields`, validateDatabaseModels);
+	await test(`database encryption preserves data for Sequelize and read-only tools`, () => validateDatabaseEncryption(projectRoot, assert));
 	await test(`Paldeck data files remain valid`, validatePalData);
-	await test(`oil-rig map levels share one legend label`, validateOilRigLegend);
+	await test(`oil-rig maps distinguish all three physical rigs`, validateOilRigLegend);
 	await test(`installed-game item audit compares decoded recipes and legality`, validateInstalledItemAuditFixture);
 	await test(`installed-game Pal audit classifies event and curated encounters`, validateInstalledPalAuditFixture);
 	await test(`curated encounter maps and raid rewards remain published`, validateCuratedEncounterPublication);

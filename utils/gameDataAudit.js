@@ -340,7 +340,7 @@ function compareGameItemData(itemData, snapshot) {
 		gameOnlyRecipeProducts: [...recipesByProduct.keys()].filter(id => !itemById.has(id)).sort(),
 		unsupported: [
 			`Table presence proves that an item is referenced, not that a randomized or event-gated path is reachable in normal play.`,
-			`Item world coordinates still require source-specific map decoders; Pal encounter families are classified separately from this generic item evidence pass.`,
+			`Placed world actors are audited by the build-keyed location snapshot; Pal encounter families are classified separately from this generic item-table evidence pass.`,
 		],
 	};
 }

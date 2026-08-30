@@ -23,6 +23,18 @@ async function validatePaldeckFarmableSearch() {
 		autocompleteChoices.every(choice => !choice.name.startsWith(`Yes - `) && !choice.value.startsWith(`Yes - `)),
 		`Farmable autocomplete should not include the Yes - prefix.`,
 	);
+	let dropSearchPayload = null;
+	await paldeck.execute({
+		options: {
+			getString: name => name === `drops` ? `Wool` : null,
+			getSubcommand: () => `search`,
+		},
+		reply: payload => {dropSearchPayload = payload;},
+		user: { id: `drop-search-user` },
+	});
+	const serializedDropSearch = serializeDiscordPayload(dropSearchPayload);
+	assert(serializedDropSearch.includes(`Lamball (100%)`) && !serializedDropSearch.includes(`Drop Chance\n`),
+		`Drop-filtered Paldeck searches should append percentages to Pal names without adding a wrapping column.`);
 }
 
 async function validatePaldeckSuitabilityListAutocomplete() {

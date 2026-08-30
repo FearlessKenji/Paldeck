@@ -151,6 +151,8 @@ async function validateDroppingPalLookup(itemCommand, dropButton) {
 	assert(resultsPayload?.embeds?.length, `View Dropping Pals should send a Paldeck search embed.`);
 	assert(serializedResults.includes(`Lamball`), `Wool's dropping-Pal results should include Lamball.`);
 	assert(/Drops:\s+Wool/.test(serializedResults), `Dropping-Pal results should identify the selected item filter.`);
+	assert(serializedResults.includes(`Lamball (100%)`) && !serializedResults.includes(`Drop Chance`),
+		`Dropping-Pal results should append each variant's item drop chance without adding a wrapping column.`);
 	for (const test of [
 		{ item: `Predator Core`, expected: [`Rampaging Gorirat`], absent: [`Normal Gorirat`] },
 		{ item: `Ore`, expected: [`Digtoise`, `Alpha Surfent Terra`, `World Tree Knocklem`], absent: [`Normal Digtoise`] },

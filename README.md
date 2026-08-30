@@ -95,6 +95,8 @@ $ npm run db:init
 
 Normal startup also syncs the database and runs tracked migrations. When a migration needs to rebuild a table, Paldeck creates a timestamped SQLite backup next to the database file before making the change.
 
+Paldeck can optionally use SQLCipher-compatible encryption at rest. HachiGen can prepare and verify this mode through `npm run database:encrypt` and `npm run database:verify`. The encryption key is stored in a protected user-level key file and `.env` keeps only `PALDECK_DB_ENCRYPTION=encrypted` and `PALDECK_DB_KEY_FILE=<path>`. Conversion creates a timestamped recovery database before replacing the plaintext file.
+
 To rebuild the database from scratch:
 
 ```console

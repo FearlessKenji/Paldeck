@@ -41,7 +41,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/common-treasure-map-sources.png",
+    "map": "data/item-maps/palpagos-treasure-enemy-camps-dungeon-treasure-map-locations.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -121,7 +121,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/uncommon-treasure-map-sources.png",
+    "map": "data/item-maps/palpagos-treasure-enemy-camps-dungeon-desert02-volcano02-snow02-5-locations.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -205,7 +205,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/rare-treasure-map-sources.png",
+    "map": "data/item-maps/palpagos-treasure-enemy-camps-dungeon-snow02-darkisland02-5-desert1-locations.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -284,7 +284,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/epic-treasure-map-sources.png",
+    "map": "data/item-maps/palpagos-treasure-enemy-camps-dungeon-darkisland02-5-desert1-forest1-locations.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -370,7 +370,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/legendary-treasure-map-sources.png",
+    "map": "data/item-maps/treasure-map-locations.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [

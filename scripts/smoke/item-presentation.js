@@ -332,7 +332,7 @@ function validateFixedSourcePresentation(context, fixtures) {
 	const sourceSummaryCases = [
 		[`Dog Coin`, fixtures.serializedDogCoin, [`Sources:`, `Junk`, `Salvage`, `Elemental Chests`, `Oil Rigs`, `Expeditions`], [`Salvage Rank`]],
 		[`Single-source salvage item`, fixtures.serializedSingleSalvage, [`Sources:`, `Salvage`], [`Salvage Rank`]],
-		[`Ancient Sphere`, fixtures.serializedAncientSphere, [`Sources:`, `Fishing`, `Junk`, `Purple Chests`, `Regular Chests`, `Expeditions`, `Ground Spawns`], [`World Tree Fishing:`, `Treasure Chests`]],
+		[`Ancient Sphere`, fixtures.serializedAncientSphere, [`Sources:`, `Fishing Spots`, `Junk`, `Purple Chests`, `Regular Chests`, `Expeditions`, `Ground Spawns`], [`World Tree Fishing:`, `Treasure Chests`]],
 	];
 
 	for (const [name, payload, included, excluded] of sourceSummaryCases) {
@@ -359,6 +359,18 @@ function validateItemSourceSummaries(context, fixtures) {
 		fixtures.solSphereResponse.files.length === 2,
 		`Sol Sphere should include its Sky Island loot sources and map.`,
 	);
+	const solSphere = context.itemData.Items.find(item => item.name === `Sol Sphere`);
+	const solSphereDetails = serializeDiscordPayload(context.paldeck.buildSourceDetailsResponse(solSphere, 0, false));
+	assert(solSphereDetails.includes(`Sunreach`) && !solSphereDetails.includes(`Skymarch`),
+		`Internal SkyIsland loot pools should use the player-facing Sunreach region name.`);
+	const ancientHelm = context.itemData.Items.find(item => item.name === `Ancient Helm Schematic 4`);
+	assert(sourceText(ancientHelm.acquisition).includes(`Supply Drops (Sunreach) ×1: 0.139%`),
+		`Single-region Supply Drop summaries should identify their player-facing region.`);
+	const gigaSphere = context.itemData.Items.find(item => item.name === `Giga Sphere`);
+	const gigaSphereResponse = context.paldeck.buildItemResponse(gigaSphere, null, `item-owner`);
+	assert(gigaSphereResponse.components.flatMap(row => row.components)
+		.some(component => component.data.label === `Source Details`),
+	`Equal-rate multi-region Supply Drops should remain available through Source Details.`);
 
 	assert(serializeDiscordPayload(fixtures.coalResponse).includes(`Resource Nodes (Palpagos) ×1: 553 locations`), `Coal should combine normal resource nodes and clusters with its pickup quantity.`);
 
@@ -387,7 +399,7 @@ function validateItemSourceSummaries(context, fixtures) {
 		holyWaterSources.split(`\n`).filter(line => line.startsWith(`Pal Drops`)).length === 1 &&
 		holyWaterSources.includes(`Pal Drops ×2–30: up to 100%`) &&
 		holyWaterSources.includes(`Expeditions ×12–38: 100%`) &&
-		holyWaterSources.includes(`Fishing ×9–71: 100%`) &&
+		holyWaterSources.includes(`Fishing Spots ×9–71: 100%`) &&
 		holyWaterSources.includes(`Fishing Ponds ×10–15: 100%`) &&
 		holyWaterSources.includes(`Teafant Springs ×30: 100%`) &&
 		!holyWaterSources.includes(`Ground Spawns`),
@@ -395,10 +407,12 @@ function validateItemSourceSummaries(context, fixtures) {
 	);
 
 	assert(
-		holyWater.acquisition.map === `data/item-maps/worldtree-teafant-springs.png` &&
+		holyWater.acquisition.map === `data/item-maps/world-tree-holy-water-locations.png` &&
 		holyWater.acquisition.mapSources.markers.some(marker => marker.locationSet === `teafantSprings`) &&
+		holyWater.acquisition.mapSources.markers.some(marker => marker.type === `Fishing Spot`) &&
+		holyWater.acquisition.mapSources.markers.some(marker => marker.type === `Rare Fishing Spot`) &&
 		fs.existsSync(resolveProject(holyWater.acquisition.map)),
-		`World Tree Holy Water should attach the repeatable three-spring World Tree map.`,
+		`World Tree Holy Water should map its repeatable springs and natural fishing spots.`,
 	);
 
 	assert(
@@ -412,13 +426,14 @@ function validateItemSourceSummaries(context, fixtures) {
 async function validateSourceDetailsButton(context, fixtures, holyWater) {
 	const { itemCommand, itemData, paldeck } = context;
 	const advancedManual = itemData.Items.find(item => item.name === `Advanced Technical Manual`);
+	const lifeLotus = itemData.Items.find(item => item.name === `Life Lotus (L)`);
 
 	const advancedManualResponse = paldeck.buildItemResponse(advancedManual, null, `original-owner`);
 
 	const sourceDetailsButton = advancedManualResponse.components.flatMap(row => row.components)
-		.find(component => component.data.label === `Source Chances`);
+		.find(component => component.data.label === `Source Details`);
 
-	assert(sourceDetailsButton, `Cards with location-dependent probabilities should include Source Chances.`);
+	assert(sourceDetailsButton, `Cards with location-dependent sources should include Source Details.`);
 
 	let sourceDetailsPayload = null;
 
@@ -431,20 +446,38 @@ async function validateSourceDetailsButton(context, fixtures, holyWater) {
 	const serializedSourceDetails = serializeDiscordPayload(sourceDetailsPayload);
 
 	assert(
-		sourceDetailsPayload?.flags && serializedSourceDetails.includes(`Drop chances vary by location.`) &&
+		sourceDetailsPayload?.flags && serializedSourceDetails.includes(`Source locations and their recorded chances.`) &&
 		serializedSourceDetails.includes(`Forest Enemy Camps: 33.82%`) &&
 		serializedSourceDetails.includes(`Grasslands Enemy Camps: 36.38%`) &&
 		sourceDetailsPayload.embeds.length === 1 && sourceDetailsPayload.files.length === 0 &&
 		!serializedSourceDetails.includes(`Page 1 of 1`) &&
 		!serializedSourceDetails.includes(`I'm not your button, pal!`),
-		`Source Chances should be ephemeral, readable, and remain available to other users.`,
+		`Source Details should be ephemeral, readable, and remain available to other users.`,
 	);
 
 	const holyWaterResponse = paldeck.buildItemResponse(holyWater, null, `item-owner`);
 
 	assert(
-		!holyWaterResponse.components.flatMap(row => row.components).some(component => component.data.label === `Source Chances`),
-		`Items without location-dependent probability variation should not include Source Chances.`,
+		!holyWaterResponse.components.flatMap(row => row.components).some(component => component.data.label === `Source Details`),
+		`Items without meaningful location-dependent details should not include Source Details.`,
+	);
+
+	const lifeLotusResponse = paldeck.buildItemResponse(lifeLotus, null, `item-owner`);
+	const lifeLotusSourceButton = lifeLotusResponse.components.flatMap(row => row.components)
+		.find(component => component.data.label === `Source Details`);
+
+	assert(lifeLotusSourceButton, `Life Lotus (L) should retain Source Details for its two oil rigs.`);
+	let lifeLotusDetails = null;
+	await itemCommand.handleButton({
+		customId: lifeLotusSourceButton.data.custom_id,
+		reply: payload => {lifeLotusDetails = payload;},
+		user: { id: `different-user` },
+	});
+	const serializedLifeLotusDetails = serializeDiscordPayload(lifeLotusDetails);
+	assert(
+		serializedLifeLotusDetails.includes(`East Oil Rig (Lv. 55): 20%`) &&
+		serializedLifeLotusDetails.includes(`Southwest Oil Rig (Lv. 60): 10%`),
+		`Life Lotus (L) Source Details should distinguish its east Lv. 55 and southwest Lv. 60 oil-rig rates.`,
 	);
 }
 
