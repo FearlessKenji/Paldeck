@@ -19,7 +19,7 @@ const {
 	validateAnnouncementHelpers, validateCiWorkflow, validateConfigValueHelpers, validateDatabaseModels,
 	validateDmForwarding, validateEventsLoad, validateGitHygiene, validateGithubPagesDocs,
 	validateHiddenPalPlaceholdersStayHidden, validateHtmlTextHelpers, validateMapDeduplicationSafety,
-	validatePalData, validateReleaseWorkflow,
+	validatePalData, validateReleaseWorkflow, validateStartupConfigurationOrder,
 } = require(`./smoke/repository-smoke.js`);
 
 const projectRoot = path.resolve(__dirname, `..`);
@@ -372,7 +372,10 @@ async function main() {
 	await test(`announcement helpers parse and format patch notes`, validateAnnouncementHelpers);
 	await test(`item-map deduplication compares bytes and fails before deletion`, validateMapDeduplicationSafety);
 	await test(`direct messages forward verbatim with sender and owned-server context`, validateDmForwarding);
-	await test(`database models include update announcement fields`, validateDatabaseModels);
+	await test(`database startup order and models remain valid`, () => {
+		validateStartupConfigurationOrder();
+		validateDatabaseModels();
+	});
 	await test(`database encryption preserves data for Sequelize and read-only tools`, () => validateDatabaseEncryption(projectRoot, assert));
 	await test(`Paldeck data files remain valid`, validatePalData);
 	await test(`oil-rig maps distinguish all three physical rigs`, validateOilRigLegend);

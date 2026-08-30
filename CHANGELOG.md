@@ -4,6 +4,7 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
+- Loaded environment configuration before database modules select their SQLite driver, preventing encrypted databases from being opened through plaintext SQLite during normal PM2 startup.
 - Appended variant-specific percentages to Pal names in drop-filtered Paldeck searches and View Dropping Pals results while retaining the aligned three-column layout.
 - Added a build-keyed extraction of all 47,515 coordinate-bearing gameplay actors, mapped all elemental-chest item sources, and distinguished the eight dedicated Sunreach elemental spawners from the 38 World Tree spawners' weighted regular/electric/fire/water chest lottery.
 - Removed the obsolete repository-local database-backup rotation layer after HachiGen migrated and assumed ownership of Paldeck backups.
