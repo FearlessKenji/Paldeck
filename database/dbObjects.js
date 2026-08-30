@@ -2,6 +2,10 @@ const Sequelize = require(`sequelize`);
 const path = require(`node:path`);
 const { isEncryptedDatabaseRuntimeEnabled } = require(`./dbEncryption.js`);
 
+// Database entry points can run without index.js, so load their environment
+// before selecting the plaintext SQLite or SQLCipher dialect module.
+require(`dotenv`).config({ path: path.resolve(__dirname, `..`, `.env`), quiet: true });
+
 const databasePath = path.resolve(process.env.PALDECK_DATABASE_PATH || path.join(__dirname, `database.sqlite`));
 const encryptedRuntimeEnabled = isEncryptedDatabaseRuntimeEnabled(process.env.PALDECK_DB_ENCRYPTION);
 const sequelizeOptions = {

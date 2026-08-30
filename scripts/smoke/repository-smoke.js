@@ -180,6 +180,15 @@ async function validateEventsLoad() {
 	});
 }
 
+function validateStartupConfigurationOrder() {
+	const source = fs.readFileSync(resolveProject(`index.js`), `utf8`);
+	const configIndex = source.indexOf(`require(\`./config/configCheck.js\`)`);
+	const databaseIndex = source.indexOf(`require(\`./database/dbInit.js\`)`);
+
+	assert(configIndex >= 0 && databaseIndex >= 0 && configIndex < databaseIndex,
+		`index.js must load environment configuration before database modules choose a SQLite driver.`);
+}
+
 function validateBroadcastSummary(announceCommand) {
 	const broadcastSummary = announceCommand.summarizeResults([
 		...Array.from({ length: 12 }, (_, index) => ({ guildId: `sent-${index}`, message: `Sent.`, ok: true, skipped: false })),
@@ -517,5 +526,5 @@ module.exports = {
 	validateDmForwarding, validateEventsLoad, validateGitHygiene, validateGithubPagesDocs,
 	validateHiddenPalPlaceholdersStayHidden, validateHtmlTextHelpers, validateItemSourceQuantities,
 	validateMapDeduplicationSafety, validateMutationCandidateRankBoundaries, validatePalData, validateReleaseWorkflow,
-	validateScriptOrganization,
+	validateScriptOrganization, validateStartupConfigurationOrder,
 };

@@ -1,3 +1,7 @@
+// Load .env before importing database modules because they select the plaintext
+// or SQLCipher driver during module initialization.
+require(`./config/configCheck.js`);
+
 const { Client, Collection, GatewayIntentBits, ActivityType, Events, Partials } = require(`discord.js`);
 const { initCrashHandlers, startLogCleanup, stopLogCleanup, warn, info, error } = require(`./utils/writeLog.js`);
 const { CronJob } = require(`cron`);
@@ -8,7 +12,6 @@ const { dbInit } = require(`./database/dbInit.js`);
 
 initCrashHandlers();
 startLogCleanup({ runImmediately: true });
-require(`./config/configCheck.js`);
 
 // Create a new client instance
 const client = new Client({
