@@ -181,6 +181,27 @@ function rotate() {
 	}
 }
 
+function usePlaintextRuntime() {
+	const status = databaseFileStatus(databasePath);
+	if (status.status !== `plaintext`) {
+		throw new Error(`Refusing to disable database encryption because the restored database is not plain SQLite.`);
+	}
+	const originalEnv = fs.existsSync(envPath) ? fs.readFileSync(envPath, `utf8`) : ``;
+	const temporaryEnvPath = `${envPath}.${process.pid}.plaintext.tmp`;
+	try {
+		fs.writeFileSync(temporaryEnvPath, updateEnv(originalEnv, {
+			PALDECK_DB_ENCRYPTION: ``,
+			PALDECK_DB_KEY: ``,
+			PALDECK_DB_KEY_FILE: ``,
+		}), { encoding: `utf8`, mode: 0o600 });
+		fs.renameSync(temporaryEnvPath, envPath);
+		process.stdout.write(JSON.stringify({ keyMaterialRetained: true, ok: true, plaintext: true }));
+	} catch (error) {
+		fs.rmSync(temporaryEnvPath, { force: true });
+		throw error;
+	}
+}
+
 try {
 	if (process.argv.includes(`--verify`)) {
 		verify();
@@ -188,8 +209,10 @@ try {
 		rotate();
 	} else if (process.argv.includes(`--encrypt`)) {
 		encrypt();
+	} else if (process.argv.includes(`--plaintext`)) {
+		usePlaintextRuntime();
 	} else {
-		throw new Error(`Use --encrypt, --rotate, or --verify.`);
+		throw new Error(`Use --encrypt, --rotate, --verify, or --plaintext.`);
 	}
 } catch (error) {
 	console.error(error.message || String(error));

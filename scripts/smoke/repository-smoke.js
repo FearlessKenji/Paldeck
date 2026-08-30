@@ -225,6 +225,7 @@ async function validateManagerAnnouncementWarnings(announcements, guildId, Permi
 async function validateAnnouncementHelpers() {
 	const announcements = requireFresh(`utils`, `announcements.js`);
 	const announceCommand = requireFresh(`commands`, `globalCommands`, `admin`, `announce.js`);
+	const updatesCommand = requireFresh(`commands`, `globalCommands`, `utility`, `updates.js`);
 	const { PermissionFlagsBits } = require(`discord.js`);
 	const sample = `## Unreleased
 
@@ -250,6 +251,9 @@ async function validateAnnouncementHelpers() {
 	assert(!splitMessages.some(message => /_Part \d+\/\d+_/u.test(message)), `Split patch-note announcements should not add Part X/Y labels.`);
 	assert(announcements.normalizeAnnouncementId({ id: 123456789n }) === `123456789`, `Announcement ID normalization did not handle bigint IDs.`);
 	assert(announcements.splitAnnouncementText(`a`.repeat(3900)).every(chunk => chunk.length <= 1900), `Announcement splitter exceeded Discord-safe chunk size.`);
+	const sendLatestSubcommand = updatesCommand.data.toJSON().options.find(option => option.name === `send-latest`);
+	const forceOption = sendLatestSubcommand?.options?.find(option => option.name === `force`);
+	assert(forceOption?.type === 5 && !forceOption.required, `/updates send-latest should expose an optional force boolean.`);
 	validateBroadcastSummary(announceCommand);
 
 	const realLatest = announcements.getLatestPatchNotes();

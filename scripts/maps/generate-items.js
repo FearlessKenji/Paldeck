@@ -33,7 +33,7 @@ function groupsFor(map, filters) {
 	for (const filter of filters) {
 		const display = presentation(filter);
 		const key = JSON.stringify(display);
-		const current = groups.get(key) || { ...display, markers: [] };
+		const current = groups.get(key) || { ...display, sourceType: filter.legendType || filter.type, markers: [] };
 		const locationSet = filter.locationSet && GAME_SOURCE_DATA.fixedLocationSets[filter.locationSet];
 		if (filter.locationSet && !locationSet) {throw new Error(`Unknown fixed location set: ${filter.locationSet}`);}
 		current.markers.push(...(locationSet ? fixedLocationMarkers(locationSet) : selectMarkers(map, [filter])));

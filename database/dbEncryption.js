@@ -1,9 +1,16 @@
-// SQLCipher database encryption, conversion, rekey, and backup helpers.
-const crypto = require(`node:crypto`);
+// SQLCipher database encryption, conversion, and rekey helpers.
 const fs = require(`node:fs`);
 const os = require(`node:os`);
 const path = require(`node:path`);
 const { Buffer } = require(`node:buffer`);
+const {
+	isDatabaseProtectionEnabled,
+	isEncryptedDatabaseRuntimeEnabled,
+	parseDotEnvContent,
+	readDatabaseKeyFromEnv,
+	readDatabaseKeyFromEnvFile,
+	resolveKeyFilePath,
+} = require(`./dbEncryptionConfig.js`);
 
 // Shared database protection helpers. Paldeck runtime, HachiGen, smoke tests, and
 // database tooling all use this file so encryption behavior stays consistent.
@@ -12,9 +19,6 @@ const { Buffer } = require(`node:buffer`);
 // - key status: where the configured key comes from
 // - access status: whether SQLCipher can actually open the file with that key
 const CIPHER_DRIVER_PACKAGE = `better-sqlite3-multiple-ciphers`;
-const BACKUP_METADATA_TYPE = `paldeck-database-backup`;
-const BACKUP_METADATA_VERSION = 1;
-const KEY_FINGERPRINT_CONTEXT = `paldeck-db-key-v1`;
 
 // Plain SQLite files start with this exact header. SQLCipher databases do not,
 // so this cheap check lets HachiGen identify plaintext databases before opening
@@ -37,324 +41,6 @@ const SQLITE_HEADER = Buffer.from([
 	0x33,
 	0x00,
 ]);
-
-// Duplicated lightly from the env-secret helper so dbEncryption can be loaded by
-// database-only scripts without pulling in all secret-encryption concerns.
-function parseDotEnvContent(content) {
-	const values = {};
-	const lines = String(content || ``).split(/\r?\n/u);
-
-	for (const line of lines) {
-		const trimmed = line.trim();
-
-		if (!trimmed || trimmed.startsWith(`#`)) {
-			continue;
-		}
-
-		const equalsIndex = trimmed.indexOf(`=`);
-
-		if (equalsIndex === -1) {
-			continue;
-		}
-
-		const key = trimmed.slice(0, equalsIndex).trim();
-		let value = trimmed.slice(equalsIndex + 1).trim();
-
-		if (value.startsWith(`"`) && value.endsWith(`"`)) {
-			try {
-				value = JSON.parse(value);
-			} catch {
-				value = value.slice(1, -1);
-			}
-		} else if (value.startsWith(`'`) && value.endsWith(`'`)) {
-			value = value.slice(1, -1);
-		}
-
-		values[key] = value;
-	}
-
-	return values;
-}
-
-// "Protection enabled" accepts historical/preparation labels because HachiGen
-// may read older .env states while migrating them to the current encrypted mode.
-function isDatabaseProtectionEnabled(value) {
-	return [`1`, `on`, `true`, `yes`, `prepared`, `key-ready`, `encrypted`, `runtime`, `active`].includes(String(value || ``).trim().toLowerCase());
-}
-
-// Runtime requires a stricter state: Hachi should use SQLCipher only when the
-// install has explicitly moved into encrypted database operation.
-function isEncryptedDatabaseRuntimeEnabled(value) {
-	return [`encrypted`, `runtime`, `active`].includes(String(value || ``).trim().toLowerCase());
-}
-
-function resolveKeyFilePath(value, cwd = process.cwd()) {
-	const raw = String(value || ``).trim();
-
-	if (!raw) {
-		return ``;
-	}
-
-	if (raw === `~`) {
-		return process.env.HOME || process.env.USERPROFILE || os.homedir() || raw;
-	}
-
-	if (raw.startsWith(`~/`) || raw.startsWith(`~\\`)) {
-		return path.join(process.env.HOME || process.env.USERPROFILE || os.homedir() || `.`, raw.slice(2));
-	}
-
-	return path.isAbsolute(raw) ? raw : path.resolve(cwd, raw);
-}
-
-// Database keys can be direct env values or file pointers. The file-pointer path
-// is preferred because it keeps raw key material out of .env.
-function readDatabaseKeyFromEnv(env = process.env, cwd = process.cwd()) {
-	const directKey = String(env.PALDECK_DB_KEY || ``).trim();
-
-	if (directKey) {
-		return {
-			key: directKey,
-			source: `direct`,
-		};
-	}
-
-	const keyFilePath = resolveKeyFilePath(env.PALDECK_DB_KEY_FILE, cwd);
-
-	if (!keyFilePath) {
-		return {
-			key: ``,
-			source: `none`,
-		};
-	}
-
-	return {
-		key: fs.readFileSync(keyFilePath, `utf8`).trim(),
-		keyFilePath,
-		source: `file`,
-	};
-}
-
-function readDatabaseKeyFromEnvFile(envPath = path.resolve(`.env`), baseEnv = process.env, cwd = process.cwd()) {
-	const parsedEnv = fs.existsSync(envPath) ? parseDotEnvContent(fs.readFileSync(envPath, `utf8`)) : {};
-	return readDatabaseKeyFromEnv({
-		...parsedEnv,
-		// HachiGen injects isolated testing keys for one child process. Explicit
-		// process values must take precedence over the production repository .env.
-		...baseEnv,
-	}, cwd);
-}
-
-// Fingerprints are metadata only. They let HachiGen say "this backup was made
-// with the current key" without storing the key or trying to decrypt every time.
-function databaseKeyFingerprint(key) {
-	const normalizedKey = String(key || ``).trim();
-
-	if (!normalizedKey) {
-		return ``;
-	}
-
-	return `sha256:${crypto
-		.createHash(`sha256`)
-		.update(KEY_FINGERPRINT_CONTEXT)
-		.update(`\0`)
-		.update(normalizedKey)
-		.digest(`hex`)}`;
-}
-
-function databaseKeyFingerprintPreview(fingerprint) {
-	const normalized = String(fingerprint || ``).replace(/^sha256:/u, ``);
-	return normalized ? normalized.slice(0, 12) : ``;
-}
-
-function databaseBackupMetadataPath(backupPath) {
-	return `${backupPath}.meta.json`;
-}
-
-// Backup metadata is advisory. If it is missing or invalid, HachiGen can still
-// inspect the backup file itself and attempt verification with the current key.
-function readDatabaseBackupMetadata(backupPath) {
-	const metadataPath = databaseBackupMetadataPath(backupPath);
-
-	if (!fs.existsSync(metadataPath)) {
-		return null;
-	}
-
-	try {
-		const metadata = JSON.parse(fs.readFileSync(metadataPath, `utf8`));
-
-		if (metadata?.type !== BACKUP_METADATA_TYPE) {
-			return null;
-		}
-
-		return metadata;
-	} catch {
-		return null;
-	}
-}
-
-// Metadata lives beside the backup instead of inside SQLite because encrypted
-// backups cannot be opened without a key, and plaintext backups may be converted
-// later during backup rotation.
-function writeDatabaseBackupMetadata({
-	backupPath,
-	key = ``,
-	reason = `manual`,
-	root = process.cwd(),
-	source = `local`,
-	status = null,
-} = {}) {
-	if (!backupPath) {
-		throw new Error(`No database backup path was provided.`);
-	}
-
-	const now = new Date().toISOString();
-	const existing = readDatabaseBackupMetadata(backupPath);
-	const fileStatus = status || databaseFileStatus(backupPath);
-	const fingerprint = fileStatus.encryptedLikely ? databaseKeyFingerprint(key) : ``;
-	const metadataPath = databaseBackupMetadataPath(backupPath);
-	const metadata = {
-		createdAt: existing?.createdAt || now,
-		encryptedLikely: Boolean(fileStatus.encryptedLikely),
-		file: path.basename(backupPath),
-		keyFingerprint: fingerprint,
-		keyFingerprintPreview: databaseKeyFingerprintPreview(fingerprint),
-		reason,
-		relativePath: path.relative(root, backupPath),
-		size: fileStatus.size || 0,
-		source,
-		status: fileStatus.status,
-		type: BACKUP_METADATA_TYPE,
-		updatedAt: now,
-		version: BACKUP_METADATA_VERSION,
-	};
-
-	fs.writeFileSync(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`, {
-		encoding: `utf8`,
-		mode: 0o600,
-	});
-
-	try {
-		fs.chmodSync(metadataPath, 0o600);
-	} catch {
-		// Windows ACLs may not map cleanly to POSIX modes.
-	}
-
-	return metadata;
-}
-
-// Convert low-level file/key facts into the user-facing backup status shown in
-// HachiGen. This function avoids mutating backups; rotation is a separate action.
-function describeDatabaseBackup({
-	backupPath,
-	currentKey = ``,
-	root = process.cwd(),
-	verifyWithCurrentKey = true,
-} = {}) {
-	const fileStatus = databaseFileStatus(backupPath);
-	const metadata = readDatabaseBackupMetadata(backupPath);
-	const currentFingerprint = databaseKeyFingerprint(currentKey);
-	const backupFingerprint = String(metadata?.keyFingerprint || ``);
-	const fingerprintPreview = databaseKeyFingerprintPreview(backupFingerprint);
-	const base = {
-		detail: fileStatus.detail,
-		dot: fileStatus.dot,
-		keyFingerprint: backupFingerprint,
-		keyFingerprintPreview: fingerprintPreview,
-		metadata,
-		status: fileStatus.status,
-	};
-
-	if (fileStatus.status === `plaintext`) {
-		return {
-			...base,
-			detail: `Backup is plain SQLite and should be encrypted with the current key.`,
-			dot: `warn`,
-			label: `Plain Backup`,
-			status: `plaintext`,
-		};
-	}
-
-	if (!fileStatus.encryptedLikely) {
-		return {
-			...base,
-			label: fileStatus.label || `Invalid Format`,
-		};
-	}
-
-	if (backupFingerprint && currentFingerprint && backupFingerprint === currentFingerprint) {
-		return {
-			...base,
-			detail: `Backup metadata matches the current database key.`,
-			dot: `good`,
-			label: `Current Key`,
-			status: `current-key`,
-		};
-	}
-
-	if (backupFingerprint && currentFingerprint && backupFingerprint !== currentFingerprint) {
-		return {
-			...base,
-			detail: `Backup metadata points to a different database key.`,
-			dot: `warn`,
-			label: `Older Key`,
-			status: `older-key`,
-		};
-	}
-
-	if (backupFingerprint) {
-		return {
-			...base,
-			detail: `Backup has key metadata, but the current key is not available to compare.`,
-			dot: `info`,
-			label: fingerprintPreview ? `Tracked Key ${fingerprintPreview}` : `Tracked Key`,
-			status: `tracked-key`,
-		};
-	}
-
-	if (currentFingerprint && verifyWithCurrentKey) {
-		const access = databaseAccessStatus({
-			dbPath: backupPath,
-			key: currentKey,
-			root,
-		});
-
-		if (access.status === `encrypted`) {
-			return {
-				...base,
-				detail: `Backup opens with the current database key. Rotate Backups can add metadata.`,
-				dot: `good`,
-				label: `Current Key`,
-				status: `current-key`,
-			};
-		}
-
-		return {
-			...base,
-			detail: `Backup could not be opened with the current database key.`,
-			dot: `bad`,
-			label: `Invalid Format`,
-			status: `invalid`,
-		};
-	}
-
-	if (currentFingerprint) {
-		return {
-			...base,
-			detail: `Backup encryption has not been verified against the current key. Use Rotate Backups to verify and tag it.`,
-			dot: `info`,
-			label: `Not Verified`,
-			status: `not-verified`,
-		};
-	}
-
-	return {
-		...base,
-		detail: `Backup is encrypted. Configure the matching key to verify access.`,
-		dot: `warn`,
-		label: `Key Required`,
-		status: `key-required`,
-	};
-}
 
 // Header inspection cannot prove the database opens, but it is fast and safe:
 // plaintext is detected, encrypted-looking files are flagged for key verification.
@@ -712,277 +398,7 @@ function rekeyEncryptedDatabase({
 	});
 }
 
-function removeDatabaseSidecars(dbPath) {
-	for (const filePath of [
-		`${dbPath}-wal`,
-		`${dbPath}-shm`,
-		`${dbPath}-journal`,
-	]) {
-		try {
-			if (fs.existsSync(filePath)) {
-				fs.rmSync(filePath, { force: true });
-			}
-		} catch {
-			// Sidecar cleanup should not hide the main database operation result.
-		}
-	}
-}
-
-function temporarySiblingPath(filePath, label) {
-	const safeLabel = String(label || `tmp`).replace(/[^A-Za-z0-9_.-]/gu, `-`);
-	return `${filePath}.${safeLabel}.${process.pid}.${Date.now()}.tmp`;
-}
-
-function replaceFileFromTemp(tempPath, targetPath) {
-	fs.copyFileSync(tempPath, targetPath);
-	fs.rmSync(tempPath, { force: true });
-}
-
-function encryptPlainDatabaseInPlace({
-	dbPath,
-	key,
-	root = process.cwd(),
-} = {}) {
-	const tempPath = temporarySiblingPath(dbPath, `encrypted`);
-
-	try {
-		const result = convertPlainDatabaseToEncrypted({
-			key,
-			root,
-			sourcePath: dbPath,
-			targetPath: tempPath,
-		});
-		replaceFileFromTemp(tempPath, dbPath);
-		removeDatabaseSidecars(dbPath);
-		return result;
-	} catch (error) {
-		try {
-			if (fs.existsSync(tempPath)) {
-				fs.rmSync(tempPath, { force: true });
-			}
-		} catch {
-			// Preserve the conversion failure.
-		}
-
-		throw error;
-	}
-}
-
-function rotateDatabaseBackupKey({
-	backupPath,
-	includePlaintext = true,
-	newKey,
-	oldKey,
-	root = process.cwd(),
-	source = `local`,
-} = {}) {
-	const normalizedNewKey = String(newKey || ``).trim();
-	const normalizedOldKey = String(oldKey || ``).trim();
-
-	if (!backupPath) {
-		throw new Error(`No database backup path was provided.`);
-	}
-
-	if (!normalizedNewKey) {
-		throw new Error(`No target database key was provided.`);
-	}
-
-	if (!fs.existsSync(backupPath)) {
-		throw new Error(`Database backup does not exist: ${backupPath}`);
-	}
-
-	const before = databaseFileStatus(backupPath);
-	const safetyPath = temporarySiblingPath(backupPath, `before-rekey`);
-
-	fs.copyFileSync(backupPath, safetyPath);
-
-	try {
-		if (before.status === `plaintext`) {
-			if (!includePlaintext) {
-				throw new Error(`Backup is plain SQLite and plaintext conversion is disabled.`);
-			}
-
-			encryptPlainDatabaseInPlace({
-				dbPath: backupPath,
-				key: normalizedNewKey,
-				root,
-			});
-
-			const metadata = writeDatabaseBackupMetadata({
-				backupPath,
-				key: normalizedNewKey,
-				reason: `backup-encrypted`,
-				root,
-				source,
-			});
-
-			return {
-				backupPath,
-				file: path.basename(backupPath),
-				metadata,
-				ok: true,
-				status: `converted`,
-			};
-		}
-
-		if (!before.encryptedLikely) {
-			throw new Error(`Backup is not a recognizable SQLite database.`);
-		}
-
-		if (normalizedOldKey && normalizedOldKey !== normalizedNewKey) {
-			rekeyEncryptedDatabase({
-				dbPath: backupPath,
-				newKey: normalizedNewKey,
-				oldKey: normalizedOldKey,
-				root,
-			});
-		} else {
-			verifyEncryptedDatabaseFile({
-				dbPath: backupPath,
-				key: normalizedNewKey,
-				root,
-			});
-		}
-
-		removeDatabaseSidecars(backupPath);
-
-		const metadata = writeDatabaseBackupMetadata({
-			backupPath,
-			key: normalizedNewKey,
-			reason: normalizedOldKey && normalizedOldKey !== normalizedNewKey ? `backup-rekeyed` : `backup-verified`,
-			root,
-			source,
-		});
-
-		return {
-			backupPath,
-			file: path.basename(backupPath),
-			metadata,
-			ok: true,
-			status: normalizedOldKey && normalizedOldKey !== normalizedNewKey ? `rekeyed` : `verified`,
-		};
-	} catch (error) {
-		try {
-			fs.copyFileSync(safetyPath, backupPath);
-			removeDatabaseSidecars(backupPath);
-		} catch {
-			// Preserve the original backup rotation error.
-		}
-
-		throw error;
-	} finally {
-		try {
-			fs.rmSync(safetyPath, { force: true });
-		} catch {
-			// Temporary safety files can be cleaned up by the OS if still locked.
-		}
-	}
-}
-
-// Backup rotation is best-effort across a directory: current-key encrypted
-// backups are rekeyed, plaintext backups can be converted, and older-key backups
-// are skipped because HachiGen cannot safely guess their missing key.
-function rotateDatabaseBackups({
-	backupDir = path.resolve(`manager`, `backups`, `database`),
-	includePlaintext = true,
-	newKey,
-	oldKey,
-	root = process.cwd(),
-	source = `local`,
-} = {}) {
-	const result = {
-		converted: 0,
-		entries: [],
-		ok: true,
-		rekeyed: 0,
-		skipped: 0,
-		total: 0,
-		verified: 0,
-	};
-
-	if (!fs.existsSync(backupDir)) {
-		return result;
-	}
-
-	const files = fs.readdirSync(backupDir)
-		.filter(file => /\.sqlite$/iu.test(file))
-		.sort((left, right) => left.localeCompare(right));
-
-	result.total = files.length;
-
-	for (const file of files) {
-		const backupPath = path.join(backupDir, file);
-
-		try {
-			const entry = rotateDatabaseBackupKey({
-				backupPath,
-				includePlaintext,
-				newKey,
-				oldKey,
-				root,
-				source,
-			});
-
-			result.entries.push(entry);
-
-			if (entry.status === `converted`) {
-				result.converted += 1;
-			} else if (entry.status === `rekeyed`) {
-				result.rekeyed += 1;
-			} else if (entry.status === `verified`) {
-				result.verified += 1;
-			}
-		} catch (error) {
-			result.skipped += 1;
-			result.entries.push({
-				backupPath,
-				error: error.message || String(error),
-				file,
-				ok: false,
-				status: `skipped`,
-			});
-		}
-	}
-
-	return result;
-}
-
-function databaseBackupRotationSummary(rotation) {
-	if (!rotation?.total) {
-		return `No database backups found.`;
-	}
-
-	const parts = [];
-
-	if (rotation.rekeyed) {
-		parts.push(`${rotation.rekeyed} rekeyed`);
-	}
-
-	if (rotation.converted) {
-		parts.push(`${rotation.converted} encrypted`);
-	}
-
-	if (rotation.verified) {
-		parts.push(`${rotation.verified} verified`);
-	}
-
-	if (rotation.skipped) {
-		parts.push(`${rotation.skipped} skipped`);
-	}
-
-	return parts.length ?
-		`Backups checked: ${parts.join(`, `)}.` :
-		`Backups checked: no changes needed.`;
-}
-
-// Conversion creates a separate encrypted target first. The caller swaps files
-// only after this completes and the encrypted target verifies successfully.
-function convertPlainDatabaseToEncrypted({
-	key,
-	root = process.cwd(),
-	sourcePath = path.resolve(`database`, `database.sqlite`),
-	targetPath,
-} = {}) {
+function validateConversionRequest({ key, sourcePath, targetPath }) {
 	const normalizedKey = String(key || ``).trim();
 
 	if (!normalizedKey) {
@@ -1003,10 +419,59 @@ function convertPlainDatabaseToEncrypted({
 		throw new Error(`Encrypted database target already exists: ${targetPath}`);
 	}
 
+	return normalizedKey;
+}
+
+function copyPlainDatabaseContents(sourceDb, targetDb, result) {
+	targetDb.exec(`PRAGMA foreign_keys = OFF`);
+	targetDb.exec(`BEGIN IMMEDIATE TRANSACTION`);
+
+	try {
+		const tables = getSqliteTables(sourceDb);
+
+		for (const table of tables) {
+			targetDb.exec(table.sql);
+			result.tablesCopied += 1;
+		}
+
+		for (const table of tables) {
+			result.rowsCopied += copySqliteRows(sourceDb, targetDb, table.name);
+		}
+
+		copySqliteSequence(sourceDb, targetDb);
+
+		for (const object of getSqliteObjects(sourceDb)) {
+			targetDb.exec(object.sql);
+			result.objectsCopied += 1;
+		}
+
+		const userVersion = Number.isFinite(result.userVersion) ? result.userVersion : 0;
+		targetDb.pragma(`user_version = ${userVersion}`);
+		targetDb.exec(`COMMIT`);
+	} catch (error) {
+		try {
+			targetDb.exec(`ROLLBACK`);
+		} catch {
+			// Preserve the original conversion error.
+		}
+
+		throw error;
+	}
+}
+
+// Conversion creates and verifies a separate encrypted target before its caller
+// performs any file swap, leaving the plaintext source untouched on failure.
+function convertPlainDatabaseToEncrypted({
+	key,
+	root = process.cwd(),
+	sourcePath = path.resolve(`database`, `database.sqlite`),
+	targetPath,
+} = {}) {
+	const normalizedKey = validateConversionRequest({ key, sourcePath, targetPath });
+
 	const Database = loadCipherDriver(root);
 	let sourceDb = null;
 	let targetDb = null;
-	let committed = false;
 	const result = {
 		objectsCopied: 0,
 		rowsCopied: 0,
@@ -1027,38 +492,7 @@ function convertPlainDatabaseToEncrypted({
 		});
 		result.userVersion = Number(sourceDb.pragma(`user_version`, { simple: true }) || 0);
 
-		targetDb.exec(`PRAGMA foreign_keys = OFF`);
-		targetDb.exec(`BEGIN IMMEDIATE TRANSACTION`);
-
-		for (const table of getSqliteTables(sourceDb)) {
-			targetDb.exec(table.sql);
-			result.tablesCopied += 1;
-		}
-
-		for (const table of getSqliteTables(sourceDb)) {
-			result.rowsCopied += copySqliteRows(sourceDb, targetDb, table.name);
-		}
-
-		copySqliteSequence(sourceDb, targetDb);
-
-		for (const object of getSqliteObjects(sourceDb)) {
-			targetDb.exec(object.sql);
-			result.objectsCopied += 1;
-		}
-
-		targetDb.pragma(`user_version = ${Number.isFinite(result.userVersion) ? result.userVersion : 0}`);
-		targetDb.exec(`COMMIT`);
-		committed = true;
-	} catch (err) {
-		if (targetDb && !committed) {
-			try {
-				targetDb.exec(`ROLLBACK`);
-			} catch {
-				// Preserve the original conversion error.
-			}
-		}
-
-		throw err;
+		copyPlainDatabaseContents(sourceDb, targetDb, result);
 	} finally {
 		if (targetDb) {
 			targetDb.close();
@@ -1238,28 +672,19 @@ function verifyCipherDriverCanOpen({ key, root = process.cwd(), tempDir = os.tmp
 }
 
 module.exports = {
-	databaseBackupMetadataPath,
-	databaseBackupRotationSummary,
-	databaseKeyFingerprint,
-	databaseKeyFingerprintPreview,
 	CIPHER_DRIVER_PACKAGE,
 	cipherDriverStatus,
 	convertPlainDatabaseToEncrypted,
 	databaseAccessStatus,
 	databaseFileStatus,
-	describeDatabaseBackup,
 	isDatabaseProtectionEnabled,
 	isEncryptedDatabaseRuntimeEnabled,
 	parseDotEnvContent,
 	readDatabaseKeyFromEnv,
-	readDatabaseBackupMetadata,
 	readDatabaseKeyFromEnvFile,
 	openSqlCipherDatabase,
 	rekeyEncryptedDatabase,
 	resolveKeyFilePath,
-	rotateDatabaseBackupKey,
-	rotateDatabaseBackups,
 	verifyEncryptedDatabaseFile,
 	verifyCipherDriverCanOpen,
-	writeDatabaseBackupMetadata,
 };

@@ -26,9 +26,9 @@ module.exports = {
 					name: `Item Lookups`,
 					value: [
 						`\`/item name:<name> rarity:<rarity>\` — Look up an item; rarity selects schematic and equipment variants.`,
-						`\`/item source:<source>\` — Browse items from a player-facing source such as Gold Chests, Towers, or Fishing.`,
+						`\`/item source:<source>\` — Browse items from a player-facing source such as Gold Chests, Towers, Fishing Spots, or Fishing Ponds.`,
 						`**View Dropping Pals** opens Paldeck results when drop sources are available.`,
-						`**Source Chances** explains meaningful location-dependent probability differences when available.`,
+						`**Source Details** lists meaningful location-dependent sources and their recorded chances when available.`,
 						`Controls belong to the person who started the lookup; resulting item cards remain public.`,
 					].join(`\n`),
 				},
@@ -38,6 +38,14 @@ module.exports = {
 						`\`/breed result\` — Calculate the child from two parents.`,
 						`\`/breed parents\` — List parent pairs for a child.`,
 						`\`/breed partner\` — Find partners for a parent and desired child.`,
+					].join(`\n`),
+				},
+				{
+					name: `Encounter Recommendations`,
+					value: [
+						`\`/tower normal\` and \`/tower hard\` — Get party builds, readiness factors, rewards, and a location map.`,
+						`\`/raid normal\` and \`/raid hard\` — Get flexible counter guidance, readiness facts, and completion rewards for Summoning Altar raids.`,
+						`Tower autocomplete accepts either the tower name or its boss duo. Panthalus is included as a Normal story encounter.`,
 					].join(`\n`),
 				},
 				{

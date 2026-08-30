@@ -1,0 +1,11 @@
+{
+	"GrassBoss": { "name": "Zoe & Grizzbolt", "map": "palpagos", "marker": { "type": "Tower", "href": "Rayne_Syndicate_Boss_Zoe_%26_Grizzbolt", "legendType": "Tower Boss" } },
+	"ForestBoss": { "name": "Lily & Lyleen", "map": "palpagos", "marker": { "type": "Tower", "href": "Free_Pal_Alliance_Founder_Lily_%26_Lyleen", "legendType": "Tower Boss" } },
+	"ElectricBoss": { "name": "Axel & Orserk", "map": "palpagos", "marker": { "type": "Tower", "href": "Brothers_of_the_Eternal_Pyre_Soul_Leader_Axel_%26_Orserk", "legendType": "Tower Boss" } },
+	"DesertBoss": { "name": "Marcus & Faleris", "map": "palpagos", "marker": { "type": "Tower", "href": "PIDF_Commander_Marcus_%26_Faleris", "legendType": "Tower Boss" } },
+	"SnowBoss": { "name": "Victor & Shadowbeak", "map": "palpagos", "marker": { "type": "Tower", "href": "PAL_Genetic_Research_Unit_Commander_Victor_%26_Shadowbeak", "legendType": "Tower Boss" } },
+	"SakurajimaBoss": { "name": "Saya & Selyne", "map": "palpagos", "marker": { "type": "Tower", "href": "Leader_of_the_Moonflowers_Saya_%26_Selyne", "legendType": "Tower Boss" } },
+	"VikingBoss": { "name": "Bjorn & Bastigor", "map": "palpagos", "marker": { "type": "Tower", "href": "Jarl_of_Feybreak__Bjorn_%26_Bastigor", "legendType": "Tower Boss" } },
+	"SorajimaBoss": { "name": "Auri & Shaolong", "map": "palpagos", "marker": { "type": "Tower", "href": "High_Keeper_of_the_Azure_Covenant_Auri_%26_Shaolong", "legendType": "Tower Boss" } },
+	"WorldTreeBoss": { "name": "Zenara & Astralym", "map": "worldtree", "marker": { "type": "Tower", "href": "Nullstar_Calamity_Zenara_%26_Astralym", "legendType": "Tower Boss" } }
+}

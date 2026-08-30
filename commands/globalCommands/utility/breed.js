@@ -265,6 +265,11 @@ async function replyWithPairMutationChildren(interaction, parentAName, parentBNa
 }
 
 async function replyWithParentPairs(interaction, childName, origin = {}) {
+	const localPal = PAL_DATA_BY_NAME.get(normalizeBreedingName(childName));
+	if (localPal?.breeding?.canBeChild === false && localPal.breeding.unavailableChildReason) {
+		await interaction.reply({ content: localPal.breeding.unavailableChildReason, flags: MessageFlags.Ephemeral });
+		return;
+	}
 	const result = calculator.findParentPairs(childName);
 
 	if (!result) {

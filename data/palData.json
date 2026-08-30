@@ -25099,8 +25099,9 @@
 				"priority": 2000,
 				"index": 546,
 				"canBeParent": true,
-				"canBeChild": true,
+				"canBeChild": false,
 				"canBeStandardChild": false,
+				"unavailableChildReason": "Panthalus cannot be bred because only one Panthalus can be deployed at a base.",
 				"variant": false,
 				"mutatedChildren": [
 					"Aegidron"
@@ -25155,7 +25156,7 @@
 			"description": "Calamitous Devastation Star - A shadow of its former self, this mysterious Pal descended upon the Palpagos long ago. Bringing ruin and calamity, it was sealed away for millennia until it was ultimately defeated by a certain Pal Tamer.",
 			"number": "204",
 			"element": "None",
-			"drops": "Leather, High Quality Pal Oil",
+			"drops": "None",
 			"food": "9/10",
 			"partner": "This Pal's abilities are a mystery...",
 			"suitability": "None",
@@ -25169,9 +25170,11 @@
 				"rank": 10,
 				"priority": 1000,
 				"index": 724,
-				"canBeParent": true,
-				"canBeChild": true,
+				"canBeParent": false,
+				"canBeChild": false,
 				"canBeStandardChild": false,
+				"unavailableParentReason": "Astralym cannot be legally captured or obtained.",
+				"unavailableChildReason": "Astralym cannot be legally captured, obtained, or bred.",
 				"variant": false,
 				"mutatedChildren": [
 					"Aegidron"

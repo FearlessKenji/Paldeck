@@ -72,10 +72,6 @@ const RAID_NAMES = {
 	PalSummon_YakushimaBoss002_2: `[Master] Moon Lord`, PalSummon_LegendDeer: `Hartalis`,
 	PalSummon_LegendDeer_2: `Hartalis (Ultra)`,
 };
-const CURATED_RAID_REWARDS = new Set([
-	`headequip001_purple`, `headequip041`, `headequip044`, `headequip046`, `yakushimaheadequip005`,
-	`palsummon_yakushimaboss002_2`, `blueprint_yakushimaboss002_relic`,
-]);
 const TREASURE_MAP_RARITIES = {
 	TreasureMap01: `Common`, TreasureMap02: `Uncommon`, TreasureMap03: `Rare`,
 	TreasureMap04: `Epic`, TreasureMap05: `Legendary`,
@@ -247,19 +243,33 @@ function addShopProducts(entry, special, procedural, byItem) {
 	}
 }
 
+// Fixed and one-of raid tables deliberately share the same acquisition merge path.
+// eslint-disable-next-line complexity
 function addRaidSources(snapshot, byItem) {
 	for (const entry of tableEntries(snapshot, `raidBoss`)) {
 		const level = Number(entry.Value.InfoList?.[0]?.Level || 0);
 		const boss = RAID_NAMES[entry.Key] || entry.Key;
 		for (const reward of entry.Value.SuccessItemList || []) {
 			const itemId = normalizedId(reward.ItemName?.Key);
-			if (!CURATED_RAID_REWARDS.has(itemId)) {continue;}
 			const sources = byItem.get(itemId) || new Map();
 			const locations = sources.get(`Summoning Altar`) || new Map();
 			locations.set(`${boss}: Lvl ${level}`, {
 				location: `${boss}: Lvl ${level}`,
 				quantity: Number(reward.Min) === Number(reward.Max) ? String(reward.Min) : `${reward.Min}–${reward.Max}`,
 				probability: `${reward.Rate}%`,
+			});
+			sources.set(`Summoning Altar`, locations);
+			byItem.set(itemId, sources);
+		}
+		const oneOfRewards = entry.Value.SuccessAnyOneItemList || [];
+		for (const reward of oneOfRewards) {
+			const itemId = normalizedId(reward.ItemName?.Key);
+			const sources = byItem.get(itemId) || new Map();
+			const locations = sources.get(`Summoning Altar`) || new Map();
+			locations.set(`${boss}: Lvl ${level}`, {
+				location: `${boss}: Lvl ${level}`,
+				quantity: String(reward.Num),
+				probability: formatProbability(100 / oneOfRewards.length),
 			});
 			sources.set(`Summoning Altar`, locations);
 			byItem.set(itemId, sources);
@@ -739,11 +749,13 @@ function applyV103HolyWater(itemData) {
 			// v1.0.3 applies the spring increase at runtime; the underlying lottery row remains the stale 5–10 range.
 			{ location: `3 World Tree locations`, quantity: springReward.quantity, probability: springReward.probability },
 		] }],
-		map: `data/item-maps/worldtree-teafant-springs.png`,
-		mapSources: { map: `worldtree`, markers: [{ type: `Teafant Springs`, locationSet: `teafantSprings` }] },
+		map: `data/item-maps/world-tree-holy-water-locations.png`,
+		mapSources: { map: `worldtree`, markers: [
+			{ type: `Teafant Springs`, locationSet: `teafantSprings` }, { type: `Fishing Spot` }, { type: `Rare Fishing Spot` },
+		] },
 		lootPools: [
-			{ pool: `WorldTree_Treasure_Fishing`, category: `Fishing`, quantity: `9–18`, probability: `100%` },
-			{ pool: `WorldTree02_Fishing`, category: `Fishing`, quantity: `43–71`, probability: `100%` },
+			{ pool: `WorldTree_Treasure_Fishing`, category: `Fishing Spots`, quantity: `9–18`, probability: `100%` },
+			{ pool: `WorldTree02_Fishing`, category: `Fishing Spots`, quantity: `43–71`, probability: `100%` },
 			{ pool: `WorldTree_Treasure_Fishpond`, category: `Fishing Ponds`, quantity: `10–15`, probability: `100%` },
 			{ pool: `Expedition_WorldTree`, category: `Expeditions`, quantity: `12–16`, probability: `100%` },
 			{ pool: `Expedition_WorldTree_Hard`, category: `Expeditions`, quantity: `32–38`, probability: `100%` },
@@ -777,7 +789,13 @@ function applyV103MoonLordRewards(itemData, snapshot) {
 	}
 	for (const entry of tableEntries(snapshot, `raidBoss`).filter(value => bosses.has(value.Key))) {
 		const location = bosses.get(entry.Key);
-		for (const reward of entry.Value.SuccessItemList || []) {
+		const fixedRewards = (entry.Value.SuccessItemList || []).map(reward => ({ ...reward, probability: `${reward.Rate}%` }));
+		const oneOfRewards = entry.Value.SuccessAnyOneItemList || [];
+		const optionalRewards = oneOfRewards.map(reward => ({
+			ItemName: reward.ItemName, Min: reward.Num, Max: reward.Num,
+			probability: formatProbability(100 / oneOfRewards.length),
+		}));
+		for (const reward of [...fixedRewards, ...optionalRewards]) {
 			const item = itemById.get(normalizedId(reward.ItemName?.Key));
 			if (!item) {continue;}
 			item.acquisition ||= { sources: [] };
@@ -785,7 +803,7 @@ function applyV103MoonLordRewards(itemData, snapshot) {
 			if (!source) {source = { type: `Summoning Altar`, entries: [] }; item.acquisition.sources.push(source);}
 			source.entries.push({ location,
 				quantity: Number(reward.Min) === Number(reward.Max) ? String(reward.Min) : `${reward.Min}–${reward.Max}`,
-				probability: `${reward.Rate}%` });
+				probability: reward.probability });
 		}
 	}
 }

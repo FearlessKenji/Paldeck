@@ -1,0 +1,92 @@
+{
+	"schemaVersion": 1,
+	"reviewedAt": "2026-08-29",
+	"strategies": {
+		"bellanoir-libero": {
+			"hard": {
+				"guidance": "keep broad Dragon and Fire coverage available so surviving attackers can continue through the Ice phase.",
+				"sources": [
+					{
+						"url": "https://www.reddit.com/r/Palworld/comments/1vbqa1n/what_is_the_best_strategy_to_beat_bellanoir_libero/",
+						"note": "Recent player discussion describes both broad-roster and player-focused clears rather than one mandatory army."
+					}
+				]
+			}
+		},
+		"blazamut-ryu": {
+			"hard": {
+				"guidance": "use a full capable group and retain Ground coverage for the Electric phase rather than limiting the opening deployment.",
+				"sources": [
+					{
+						"url": "https://www.reddit.com/r/Palworld/comments/1w0xyrz/how_did_you_beat_blazamut_ryu/",
+						"note": "Current player reports vary between Pal-led and player-led damage, supporting flexible composition."
+					}
+				]
+			}
+		},
+		"xenolord": {
+			"hard": {
+				"guidance": "successful default-limit clears favor a full active raid group, with replacement attackers available for its heavy attrition.",
+				"sources": [
+					{
+						"url": "https://www.reddit.com/r/Palworld/comments/1i5ru25/xenolord_ultra_default_damage_settings_15_base_pal/",
+						"note": "A default-settings clear reports success with the standard 15-base-Pal limit."
+					},
+					{
+						"url": "https://www.reddit.com/r/Palworld/comments/1tq04ty/xenolord_ultra_help/",
+						"note": "Recent attempts identify Pal attrition, rather than the time limit alone, as the main failure point."
+					}
+				]
+			}
+		},
+		"moon-lord": {
+			"hard": {
+				"guidance": "clears vary between full Pal groups and player-focused builds, so roster quality matters more than prescribing one army.",
+				"sources": [
+					{
+						"url": "https://www.reddit.com/r/Palworld/comments/1vko84h/gahdamn_ultra_raids/",
+						"note": "Recent discussion reports viable Ultra clears with approximately 15 strong Pals or larger less-invested rosters."
+					},
+					{
+						"url": "https://www.reddit.com/r/Palworld/comments/1ugi06k/i_discovered_true_pain_lastnight/",
+						"note": "Players report cycling injured Pals rather than following a fixed wave size."
+					}
+				]
+			}
+		},
+		"hartalis": {
+			"hard": {
+				"guidance": "withdraw and redeploy the active group around its arena-clearing attack, then use Dark attackers for the player-reported Neutral phase; this protects a full team more effectively than feeding fixed five-Pal waves.",
+				"sources": [
+					{
+						"url": "https://www.reddit.com/r/Palworld/comments/1tk0r96/finally_beat_hartalis_ultra/",
+						"note": "A recent Ultra clear used full phase-specific groups rather than five-Pal rotations."
+					},
+					{
+						"url": "https://www.reddit.com/r/Palworld/comments/1ua9phb/any_tips_for_fighting_xenolord_and_hartalis_they/",
+						"note": "Players recommend Palbox withdrawal during Hartalis's large attack and later redeployment."
+					}
+				]
+			}
+		},
+		"zenara-astralym": {
+			"hard": {
+				"palboxPlan": [
+					"Deployment: Send out five Necromus at a time; replace the wave when it is depleted.",
+					"Army: Necromus ×15 minimum, prepared as three five-Pal waves; keep additional replacement waves if available.",
+					"Passives for every Necromus: Immortality, Legend, Diamond Body, Serenity."
+				],
+				"sources": [
+					{
+						"url": "https://www.reddit.com/r/Palworld/comments/1vjgv4x/hard_mode_astralym/",
+						"note": "Players specifically report success deploying the prepared Necromus army five at a time."
+					},
+					{
+						"url": "https://www.reddit.com/r/Palworld/comments/1vx41rw/astralym_hard/",
+						"note": "Recent discussion warns against deploying the entire army simultaneously because of wipe attacks."
+					}
+				]
+			}
+		}
+	}
+}

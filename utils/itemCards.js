@@ -54,12 +54,13 @@ const TIER_ONE_SCHEMATIC_COMBINATIONS = new Set([
 ]);
 const SOURCE_LABELS = {
 	"Treasure Element": `Elemental Chests`, Supply: `Supply Drops`, Junk: `Junk`,
-	"Salvage Rank1": `Salvage`, "Salvage Rank2": `Salvage`, "World Tree Fishing": `Fishing`, "World Tree Junk": `Junk`,
-	Expeditions: `Expeditions`, "Enemy Camps": `Enemy Camps`, Fishing: `Fishing`, "Fishing Ponds": `Fishing Ponds`,
+	"Salvage Rank1": `Salvage`, "Salvage Rank2": `Salvage`, "World Tree Fishing": `Fishing Spots`, "World Tree Junk": `Junk`,
+	Expeditions: `Expeditions`, "Enemy Camps": `Enemy Camps`, Fishing: `Fishing Spots`, "Fishing Ponds": `Fishing Ponds`,
 	Dungeons: `Dungeons`, "Oil Rigs": `Oil Rigs`, "Skill Fruit Trees": `Skill Fruit Trees`,
 };
 const LOOT_POOL_LABELS = {
 	"Captured Pal Cages": `Factions`, "Dungeon Chests": `Dungeons`, "Relic Recycler": `Ancient Relics`,
+	Fishing: `Fishing Spots`,
 };
 const CHEST_TIER_LABELS = new Set([
 	`Regular Chests`, `Bronze Key Chests`, `Purple Chests`, `Silver Chests`, `Gold Chests`, `Gold Key Chests`,
@@ -164,9 +165,10 @@ function compactLootPoolLine(category, pools) {
 	const probability = probabilities.length ? formatNumber(Math.max(...probabilities)) : null;
 	const variedProbability = new Set(probabilities).size > 1;
 	const quantityText = ` ×${quantity || `1`}`;
-	return `${category}${quantityText}${probability ? `: ${variedProbability ? `up to ` : ``}${probability}%` : ``}`;
+	const locations = new Set(pools.map(poolLocation));
+	const supplyRegion = category === `Supply Drops` && locations.size === 1 ? [...locations][0] : null;
+	return `${supplyRegion ? `${category} (${supplyRegion})` : category}${quantityText}${probability ? `: ${variedProbability ? `up to ` : ``}${probability}%` : ``}`;
 }
-
 function lootPoolCategory(acquisition, pool) {
 	const directCategory = directLootPoolCategory(pool);
 	if (directCategory) {return directCategory;}
@@ -187,7 +189,7 @@ function directLootPoolCategory(pool) {
 
 const REGION_LABELS = {
 	DarkIsland: `Feybreak`, Desert: `Desert`, Dessert: `Desert`, Forest: `Forest`, Grass: `Grasslands`,
-	Sakura: `Sakurajima`, Sakurajima: `Sakurajima`, SkyIsland: `Skymarch`, Snow: `Astral Mountains`,
+	Sakura: `Sakurajima`, Sakurajima: `Sakurajima`, SkyIsland: `Sunreach`, Snow: `Astral Mountains`,
 	Volcano: `Mount Obsidian`, WorldTree: `World Tree`, Yakushima: `World Tree`,
 };
 
@@ -201,7 +203,8 @@ function poolLocation(pool) {
 	if (/_Fishing$/iu.test(name)) {return `${region} Fishing Spots`;}
 	if (/^Expedition_/iu.test(name)) {return `${region}${/_Hard$/iu.test(name) ? ` (Hard)` : ``}`;}
 	if (/^Oilrig_Mini/iu.test(name)) {return `Small Oil Rig`;}
-	if (/^Oilrig_/iu.test(name)) {return `Oil Rig`;}
+	if (/^Oilrig_Large/iu.test(name)) {return `Southwest Oil Rig (Lv. 60)`;}
+	if (/^Oilrig_/iu.test(name)) {return `East Oil Rig (Lv. 55)`;}
 	if (/^Salvage_/iu.test(name)) {return `Salvage`;}
 	if (/^AncientRelicRecycler_/iu.test(name)) {return `Ancient Relic Recycler`;}
 	return region;
@@ -231,14 +234,14 @@ function variableSourceDetails(item) {
 	const blocks = [];
 	for (const [category, locations] of categories) {
 		const rates = new Set([...locations.values()].flatMap(detail => [...detail.rates]));
-		if (rates.size < 2) {continue;}
+		// Multi-region Supply Drops need location detail even when every eligible region has the same chance.
+		if (locations.size < 2 || (category !== `Supply Drops` && rates.size < 2)) {continue;}
 		const lines = [...locations].sort(([left], [right]) => left.localeCompare(right))
 			.map(([location, detail]) => `${location}: ${detail.rates.size > 1 ? `up to ` : ``}${formatNumber(detail.maximum)}%`);
 		blocks.push(`**${category}**\n${lines.join(`\n`)}`);
 	}
 	return blocks.sort((left, right) => left.localeCompare(right));
 }
-
 function detailPages(item, limit = 3600, lineLimit = 15) {
 	const pages = [];
 	let current = ``;
@@ -250,7 +253,6 @@ function detailPages(item, limit = 3600, lineLimit = 15) {
 	if (current) {pages.push(current);}
 	return pages;
 }
-
 function sourceLineOrder(line) {
 	const chestTiers = [`Regular Chests`, `Bronze Key Chests`, `Purple Chests`, `Silver Chests`, `Gold Chests`, `Gold Key Chests`];
 	const relicTiers = Object.keys(RELIC_POOL_BY_NAME);
@@ -615,8 +617,8 @@ function createItemCards({ normalizeText, relatedItem, resolveLocalImage }) {
 	function buildSourceDetailsResponse(item, requestedPage = 0, ephemeral = true) {
 		const pages = detailPages(item);
 		const page = Math.max(0, Math.min(Number(requestedPage) || 0, Math.max(0, pages.length - 1)));
-		const embed = new EmbedBuilder().setTitle(`Source Chances: ${item.name}`)
-			.setDescription(`Drop chances vary by location.\n\n${pages[page] || `No varying location percentages are recorded.`}`)
+		const embed = new EmbedBuilder().setTitle(`Source Details: ${item.name}`)
+			.setDescription(`Source locations and their recorded chances.\n\n${pages[page] || `No location details are recorded.`}`)
 			.setColor(ITEM_RARITY_COLORS[item.rarity] || ITEM_RARITY_COLORS.Common);
 		if (pages.length > 1) {embed.setFooter({ text: `Page ${page + 1} of ${pages.length}` });}
 		const navigation = new ActionRowBuilder();

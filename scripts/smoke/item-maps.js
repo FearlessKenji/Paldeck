@@ -1,4 +1,4 @@
-const { assert, itemSourcePresentation, path, serializeDiscordPayload } = require(`./item-shared.js`);
+const { assert, itemSourcePresentation, path, readJson, serializeDiscordPayload } = require(`./item-shared.js`);
 
 function validateEmbedLimits(item, response) {
 	for (const embed of response.embeds.map(value => value.toJSON())) {
@@ -12,17 +12,17 @@ function validateEmbedLimits(item, response) {
 }
 
 function validateSourceDetailPages(item, paldeck, response) {
-	const hasSourceChances = response.components.flatMap(row => row.components)
-		.some(component => component.data.label === `Source Chances`);
-	if (!hasSourceChances) {
+	const hasSourceDetails = response.components.flatMap(row => row.components)
+		.some(component => component.data.label === `Source Details`);
+	if (!hasSourceDetails) {
 		return;
 	}
 	for (let page = 0; page < 50; page += 1) {
 		const details = paldeck.buildSourceDetailsResponse(item, page);
 		const description = details.embeds[0].toJSON().description || ``;
-		assert(description.split(`\n`).length <= 17, `${item.name} Source Chances page ${page + 1} is too long for mobile.`);
+		assert(description.split(`\n`).length <= 17, `${item.name} Source Details page ${page + 1} is too long for mobile.`);
 		assert(!/\b(?:Viking\d+|DarkIsland|SkyIsland|technology-book pool|Oilrig(?: Large)? 0?\d)\b|_/iu.test(description),
-			`${item.name} Source Chances exposes an internal game identifier.`);
+			`${item.name} Source Details exposes an internal game identifier.`);
 		const hasNext = details.components.flatMap(row => row.components).some(component => component.data.label === `Next`);
 		if (!hasNext) {
 			break;
@@ -53,25 +53,37 @@ function validateJournalCollections(fixtures) {
 	}
 }
 
-function validateRegionalChestSources(itemData) {
-	const journalEntries = itemData.Items.filter(item => item.journalEntry);
+// The cross-product intentionally audits every item against both special regional chest families.
+// eslint-disable-next-line complexity
+function validateRegionalChestItem(item, regionalChestRules, chestGrades) {
+	for (const [pool, map, location, matchesMarker] of regionalChestRules) {
+		if (!item.acquisition?.lootPools?.some(entry => entry.pool === pool)) {
+			continue;
+		}
+		const treasure = item.acquisition.sources?.find(source => source.type === `Treasure`);
+		const panels = item.acquisition.mapSources?.maps || (item.acquisition.mapSources?.map ? [item.acquisition.mapSources] : []);
+		assert(treasure?.entries.some(entry => entry.location === location), `${item.name} should derive its ${pool} source.`);
+		const marker = panels.find(panel => panel.map === map)?.markers?.find(matchesMarker);
+		assert(!item.acquisition.map || marker, `${item.name} should derive its ${pool} map markers.`);
+		const tier = treasure?.entries.find(entry => entry.lotteryField === pool)?.chestTier;
+		assert(!marker || !tier || marker.treasureGrade === chestGrades[tier],
+			`${item.name} ${pool} marker should use its ${tier} presentation.`);
+	}
+}
 
+function validateRegionalChestSources(itemData) {
 	const regionalChestRules = [
 		[`SkyIsland_Treasure`, `palpagos`, `76 Sunreach chest locations`, marker => marker.href === `SkyIsland_Treasure`],
 		[`WorldTree_Treasure`, `worldtree`, `38 World Tree chest locations`, marker => marker.locationSet === `worldTreeTreasureChests`],
 	];
-
+	const chestGrades = {
+		"Regular Chests": 1, "Bronze Key Chests": 2, "Purple Chests": 3,
+		"Silver Chests": 4, "Gold Chests": 5, "Gold Key Chests": 6,
+	};
 	for (const item of itemData.Items) {
-		for (const [pool, map, location, matchesMarker] of regionalChestRules) {
-			if (!item.acquisition?.lootPools?.some(entry => entry.pool === pool)) {
-				continue;
-			}
-			const treasure = item.acquisition.sources?.find(source => source.type === `Treasure`);
-			const panels = item.acquisition.mapSources?.maps || (item.acquisition.mapSources?.map ? [item.acquisition.mapSources] : []);
-			assert(treasure?.entries.some(entry => entry.location === location), `${item.name} should derive its ${pool} source.`);
-			assert(!item.acquisition.map || panels.some(panel => panel.map === map && panel.markers?.some(matchesMarker)), `${item.name} should derive its ${pool} map markers.`);
-		}
+		validateRegionalChestItem(item, regionalChestRules, chestGrades);
 	}
+	const journalEntries = itemData.Items.filter(item => item.journalEntry);
 	assert(
 		journalEntries.length === 64 &&
 		journalEntries.filter(item => item.journalEntry.region === `palpagos`).length === 55 &&
@@ -160,10 +172,71 @@ function validateSpecialRegionalMaps(context, fixtures) {
 		`The Gumoss fishing-rod schematic should map eligible natural fishing spots while leaving buildable ponds and salvage unpinned.`,
 	);
 
+	const fishingSpotItems = itemData.Items.filter(item =>
+		(item.acquisition?.lootPools || []).some(pool => /_Fishing$/u.test(pool.pool)));
+	assert(
+		fishingSpotItems.every(item => (item.acquisition.mapSources?.maps || [item.acquisition.mapSources])
+			.filter(Boolean).some(panel => (panel.markers || []).some(marker => marker.type === `Fishing Spot` || marker.type === `Rare Fishing Spot`))),
+		`Every item obtainable from a natural fishing spot should include eligible fishing-spot markers on its map.`,
+	);
+
+	const elementalChestItems = itemData.Items.filter(item =>
+		(item.acquisition?.lootPools || []).some(pool => pool.category === `Elemental Chests`));
+	assert(
+		elementalChestItems.every(item => {
+			const pools = item.acquisition.lootPools.filter(pool => pool.category === `Elemental Chests`);
+			const panels = item.acquisition.mapSources?.maps || [item.acquisition.mapSources];
+			const markers = panels.filter(Boolean).flatMap(panel => panel.markers || []);
+			const mappedRegions = new Set(markers.filter(marker => marker.type === `Treasure Element`)
+				.flatMap(marker => (Array.isArray(marker.href) ? marker.href : [marker.href]).map(href =>
+					href?.replace(/^Treasure_Element_/u, ``) || {
+						sunreachElementalTreasureChests: `SkyIsland`,
+						worldTreeElementalTreasureChests: `WorldTree`,
+					}[marker.locationSet])));
+			const mapped = pools.every(pool => {
+				const region = pool.pool.match(/^(.+?)_(?:Electric|Fire|Water)Treasure$/u)?.[1];
+				return mappedRegions.has(region);
+			});
+			return mapped;
+		}),
+		`Every elemental-chest source should use its coordinate-backed elemental chest pins.`,
+	);
+
+	const oilRigLegendType = pool => {
+		if (pool.pool.includes(`_Large_`)) {
+			return `Southwest Oil Rig`;
+		}
+		if (pool.pool.includes(`_Mini_`)) {
+			return `Small Oil Rig`;
+		}
+		return `East Oil Rig`;
+	};
+	const oilRigItems = itemData.Items.filter(item =>
+		(item.acquisition?.lootPools || []).some(pool => pool.category === `Oil Rigs`));
+	assert(
+		oilRigItems.length === 278 && oilRigItems.every(item => {
+			const expected = new Set(item.acquisition.lootPools.filter(pool => pool.category === `Oil Rigs`).map(oilRigLegendType));
+			const markers = (item.acquisition.mapSources?.maps || [item.acquisition.mapSources]).filter(Boolean)
+				.flatMap(panel => panel.markers || []);
+			return [...expected].every(type => markers.some(marker => marker.legendType === type)) &&
+				!markers.some(marker => marker.type === `Oilrig Treasure Goal` && !marker.legendType);
+		}),
+		`All 278 Oil Rig item cards should use specific Small, East, or Southwest map-pin rules.`,
+	);
+
 	return { serializedBounty, serializedEffigy, serializedRelic };
 }
 
 function validateRegionalItemMaps(context, fixtures) {
+	const locationData = readJson(`data`, `installedLocationData.json`);
+	const locationClasses = Object.entries(locationData.classes || {});
+	assert(
+		locationData.buildId === `24575825` && locationData.packageFailures === 0 && locationClasses.length === 154 &&
+		locationClasses.reduce((count, [, actors]) => count + actors.length, 0) === 47515 &&
+		locationData.classes.BP_PalMapObjectSpawner_Treasure_Element_SkyIsland_C.length === 8 &&
+		locationData.classes.BP_PalMapObjectSpawner_Treasure_WorldTree_C.length === 38,
+		`Installed location data should retain the complete build-keyed placed-actor extraction.`,
+	);
 	validateGeneralRegionalMaps(context, fixtures);
 	return validateSpecialRegionalMaps(context, fixtures);
 }
@@ -230,7 +303,9 @@ function validateRegionalSummaryCards(regionalSummaries) {
 		generationRules.schemaVersion === 1 && generationRules.naming.singleItemSuffix === `locations` &&
 		generationRules.naming.sharedMapSuffix === `sources` &&
 		itemSourcePresentation({ type: `Treasure Map` }).color === `#d4af37` &&
-		itemSourcePresentation({ type: `Oilrig Treasure Goal` }).color === `#000000` &&
+		itemSourcePresentation({ type: `Small Oil Rig` }).style === `outlined` &&
+		itemSourcePresentation({ type: `East Oil Rig` }).style === `diamond` &&
+		itemSourcePresentation({ type: `Southwest Oil Rig` }).style === `special` &&
 		itemSourcePresentation({ type: `Ancient Ruin` }).style === `special` &&
 		itemSourcePresentation({ type: `Ore Cluster` }).style === `special` &&
 		itemSourcePresentation({ type: `Dungeon` }).style === `diamond`,

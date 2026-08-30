@@ -7,6 +7,11 @@ const path = require(`node:path`);
 const ROOT_DIR = path.resolve(__dirname, `..`, `..`);
 const PAL_DATA_PATH = path.join(ROOT_DIR, `data`, `palData.json`);
 const PAL_BREEDING_PATH = path.join(ROOT_DIR, `data`, `palBreeding.json`);
+const BREEDING_ELIGIBILITY_OVERRIDES = new Map([
+	[`Astralym`, { canBeParent: false, canBeChild: false }],
+	// A single Panthalus can breed with another species, but the one-per-base rule makes Panthalus + Panthalus impossible.
+	[`Panthalus`, { canBeParent: true, canBeChild: false }],
+]);
 
 function parseArgs(argv) {
 	const extractionIndex = argv.indexOf(`--extraction`);
@@ -24,6 +29,13 @@ function installedExtractionPath() {
 
 function normalizeGender(value) {
 	return value && value !== `None` ? value.toLowerCase() : null;
+}
+
+function applyEligibilityOverride(pal) {
+	const eligibilityOverride = BREEDING_ELIGIBILITY_OVERRIDES.get(pal.name);
+	if (eligibilityOverride) {
+		Object.assign(pal.breeding, eligibilityOverride);
+	}
 }
 
 function buildUniqueCombinations(palFile, extracted) {
@@ -70,6 +82,7 @@ function synchronizeBreedingData(palFile, breedingFile, extracted) {
 		pal.breeding.canBeParent = hasRank && !pal.hidden;
 		pal.breeding.canBeChild = hasRank && !pal.hidden;
 		pal.breeding.canBeStandardChild = hasRank && !row.IgnoreCombi && !uniqueChildren.has(pal.name);
+		applyEligibilityOverride(pal);
 	}
 	breedingFile.UniqueCombinations = uniqueCombinations;
 	delete breedingFile.GenderedPairResults;

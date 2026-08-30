@@ -102,7 +102,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/regional-item-sources-ac8045ebe9.png",
+    "map": "data/item-maps/bellanoir-s-slab-fragment-locations.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -252,7 +252,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/regional-item-sources-e12fc98b77.png",
+    "map": "data/item-maps/bellanoir-libero-s-slab-fragment-locations.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -437,7 +437,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/blazamut-ryu-slab-fragment-sources.png",
+    "map": "data/item-maps/blazamut-ryu-slab-fragment-locations.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -613,7 +613,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/xenolord-hartalis-slab-fragment-sources.png",
+    "map": "data/item-maps/slab-fragment-sources.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [
@@ -768,7 +768,7 @@
         ]
       }
     ],
-    "map": "data/item-maps/xenolord-hartalis-slab-fragment-sources.png",
+    "map": "data/item-maps/slab-fragment-sources.png",
     "mapSources": {
       "map": "palpagos",
       "markers": [

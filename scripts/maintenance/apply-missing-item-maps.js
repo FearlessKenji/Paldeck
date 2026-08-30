@@ -17,10 +17,14 @@ const MAPPABLE_CHEST_FIELDS = new Set([
 	`DarkIsland02`, `DarkIsland_Treasure`, `Desert01`, `Desert02`, `Forest01`, `Forest02`, `Grass01`, `Grass02`,
 	`Sakurajima02`, `Snow01`, `Snow02`, `Volcano01`, `Volcano02`,
 ]);
+const MAPPABLE_ELEMENTAL_CHEST_REGIONS = new Set([`Desert`, `Forest`, `Sakurajima`]);
 const OIL_RIG_BOUNDS = {
 	Mini: { minX: -290000, maxX: -230000, minY: 210000, maxY: 270000 },
 	Normal: { minX: -350000, maxX: -300000, minY: 390000, maxY: 460000 },
 	Large: { minX: -830000, maxX: -750000, minY: -660000, maxY: -590000 },
+};
+const OIL_RIG_LEGEND_TYPES = {
+	Mini: `Small Oil Rig`, Normal: `East Oil Rig`, Large: `Southwest Oil Rig`,
 };
 const DUNGEONS_BY_POOL = {
 	Dessert001: `Cavern of the Dunes`, Forest001: `Mountain Stream Grotto`, Forest002: `Mountain Stream Grotto`,
@@ -28,13 +32,23 @@ const DUNGEONS_BY_POOL = {
 	Skyland001: `Sunreach Skies`, Snow001: `Astral Mountains Cavern`, Viking001: `Feybreak Cavern`,
 	Volcano001: `Volcanic Cavern`, Yakushima001: `???`,
 };
-const FISHING_COMMENTS_BY_POOL = {
-	Grass01: [`A_Common`, `A_Rare`, `A_Rare_Mini`, `B_Common`, `B_Rare`, `B_River_Rare_Mini`],
-	Snow01: [`D_Common`, `D_North_River_Common`, `D_North_River_Rare`, `D_North_River_Rare_Mini`, `D_Rare`, `D_SnowMountain_Common`, `D_SnowMountain_Rare`],
-	Sakurajima02: [`H_Common`, `H_Ocean_Common`, `H_Ocean_Rare`, `H_Rare`],
-	Sakurajima_Treasure: [`H_Common`, `H_Ocean_Common`, `H_Ocean_Rare`, `H_Rare`],
-	DarkIsland02: [`I_Common`, `I_Rare`, `I_cold_Common`, `I_cold_Rare`],
+// Fishing lottery rows assign every physical spot family to one item pool. These prefixes mirror that game-backed
+// relationship while retaining PalDB's finer common, rare, river, island, and mini marker distinctions.
+const FISHING_COMMENT_PREFIXES_BY_POOL = {
+	Grass: [`A_`, `B_`, `Dungeon_Forest_`, `Island_Ice_A_`, `Island_Tropical_A_`, `Sanctuary_Grass_`],
+	Forest: [`C_`, `D_`, `Island_Desert_A_`, `Island_Shipwreck_A_`],
+	Desert: [`E_`, `Dungeon_Desert_`, `Island_Ancient_A_`, `Island_Volcano_A_`, `Sanctuary_Dessert_`],
+	Volcano: [`F_`, `Island_Shipwreck_B_`, `Sanctuary_Volcano_`],
+	Snow: [`G_`, `Dungeon_Snow_`],
+	Sakurajima: [`H_`, `Dungeon_Sakurajima_`, `Island_Desert_C_`, `Island_Tropical_B_`, `Island_Tropical_C_`],
+	DarkIsland: [`I_`, `Dungeon_DarkIsland_`, `Island_Ancient_B_`, `Island_Desert_B_`, `Island_Ice_B_`, `Island_Volcano_B_`],
+	SkyIsland: [`SkyIsland_`],
 };
+
+function fishingCommentPrefixes(poolName) {
+	const region = Object.keys(FISHING_COMMENT_PREFIXES_BY_POOL).find(prefix => poolName.startsWith(prefix));
+	return FISHING_COMMENT_PREFIXES_BY_POOL[region] || [];
+}
 
 function unique(values) {
 	return [...new Set(values)];
@@ -54,13 +68,15 @@ function addFishingMarkers(pool, palpagos, worldtree) {
 		worldtree.push({ type: `Fishing Spot` }, { type: `Rare Fishing Spot` });
 		return;
 	}
-	const comments = FISHING_COMMENTS_BY_POOL[pool.pool.replace(/_Fishing$/u, ``)] || [];
-	const common = comments.filter(value => /Common/u.test(value));
-	const rare = comments.filter(value => /Rare/u.test(value));
-	if (common.length) {palpagos.push({ type: `Fishing Spot`, comment: common });}
-	if (rare.length) {palpagos.push({ type: `Rare Fishing Spot`, comment: rare });}
+	const prefixes = fishingCommentPrefixes(pool.pool.replace(/_Fishing$/u, ``));
+	if (prefixes.length) {
+		palpagos.push({ type: `Fishing Spot`, commentPrefix: prefixes });
+		palpagos.push({ type: `Rare Fishing Spot`, commentPrefix: prefixes });
+	}
 }
 
+// Pool classification is intentionally explicit so every decoded physical source remains auditable.
+// eslint-disable-next-line complexity
 function addPoolMarkers(pool, palpagos, worldtree) {
 	if (pool.category === `Enemy Camps`) {
 		const marker = campMarker(pool.pool);
@@ -68,7 +84,7 @@ function addPoolMarkers(pool, palpagos, worldtree) {
 	}
 	if (pool.category === `Oil Rigs`) {
 		const rig = pool.pool.includes(`_Large_`) ? `Large` : pool.pool.includes(`_Mini_`) ? `Mini` : `Normal`;
-		palpagos.push({ type: `Oilrig Treasure Goal`, bounds: OIL_RIG_BOUNDS[rig] });
+		palpagos.push({ type: `Oilrig Treasure Goal`, legendType: OIL_RIG_LEGEND_TYPES[rig], bounds: OIL_RIG_BOUNDS[rig] });
 	}
 	if (pool.category === `Dungeon Chests`) {
 		const prefix = pool.pool.match(/^([A-Za-z]+\d{3})_Dungeon/u)?.[1];
@@ -78,6 +94,18 @@ function addPoolMarkers(pool, palpagos, worldtree) {
 	if (pool.category === `Junk` && pool.pool === `Junk_WorldTree`) {worldtree.push({ type: `Junk` });}
 	if (pool.category === `Treasure Chests` && pool.pool === `WorldTree_Treasure`) {
 		worldtree.push({ type: `Treasure`, locationSet: `worldTreeTreasureChests` });
+	}
+	if (pool.category === `Elemental Chests`) {
+		const region = pool.pool.match(/^(.+?)_(?:Electric|Fire|Water)Treasure$/u)?.[1];
+		if (MAPPABLE_ELEMENTAL_CHEST_REGIONS.has(region)) {
+			palpagos.push({ type: `Treasure Element`, href: `Treasure_Element_${region}` });
+		}
+		if (region === `SkyIsland`) {
+			palpagos.push({ type: `Treasure Element`, locationSet: `sunreachElementalTreasureChests` });
+		}
+		if (region === `WorldTree`) {
+			worldtree.push({ type: `Treasure Element`, locationSet: `worldTreeElementalTreasureChests` });
+		}
 	}
 }
 
@@ -123,7 +151,12 @@ function mergeDefinitions(existing, derived) {
 	for (const definition of [existing, derived].filter(Boolean)) {
 		for (const panel of definition.maps || [definition].filter(value => value.map)) {
 			const markers = panels.get(panel.map) || [];
-			markers.push(...(panel.markers || []));
+			markers.push(...(panel.markers || []).filter(marker => marker.legendType !== `Treasure Map`).map(marker => {
+				if (marker.type !== `Oilrig Treasure Goal` || marker.legendType) {return marker;}
+				const rig = Object.keys(OIL_RIG_BOUNDS).find(key =>
+					JSON.stringify(marker.bounds) === JSON.stringify(OIL_RIG_BOUNDS[key]));
+				return rig ? { ...marker, legendType: OIL_RIG_LEGEND_TYPES[rig] } : marker;
+			}));
 			panels.set(panel.map, markers);
 		}
 	}
@@ -164,8 +197,8 @@ function definitionQualifier(definition) {
 	const values = panels.flatMap(panel => (panel.markers || []).flatMap(marker =>
 		Object.entries(marker)
 			.filter(([key, value]) => ![`type`, `legendType`, `style`, `color`, `bounds`].includes(key) &&
-				[`string`, `number`].includes(typeof value))
-			.map(([, value]) => slug(value)),
+				([`string`, `number`].includes(typeof value) || Array.isArray(value)))
+			.flatMap(([, value]) => (Array.isArray(value) ? value : [value]).map(slug)),
 	));
 	return unique(values.filter(Boolean)).slice(0, 4).join(`-`);
 }
@@ -186,6 +219,11 @@ function readableMapPaths(definitions, assignments) {
 		if (claimed.has(mapPath)) {
 			const qualifier = definitionQualifier(definition);
 			mapPath = `${mapGenerationRules.naming.directory}/${mapLabel(definition)}${qualifier ? `-${qualifier}` : ``}-${suffix}.png`;
+		}
+		if (claimed.has(mapPath)) {
+			// Unrelated shared-map item sets can have identical marker qualifiers; retain readable member names as the final discriminator.
+			const members = items.slice(0, 2).map(item => slug(item.name)).join(`-and-`);
+			mapPath = `${mapGenerationRules.naming.directory}/${mapLabel(definition)}-${members}-${suffix}.png`;
 		}
 		if (claimed.has(mapPath)) {
 			throw new Error(`Map filename collision for ${mapPath}; add a descriptive family naming rule.`);
@@ -237,14 +275,24 @@ function migrateMerchantMaps(items, write) {
 	}
 }
 
-function mapAssignments(items, rebuildAll) {
+function shouldAssignMap(item, rebuildAll, rebuildFishing, rebuildOilRigs) {
+	if (item.searchable === false) {return false;}
+	const generatedMap = /\/item-sources-[a-f0-9]{12}(?:-|\.png$)/u.test(item.acquisition?.map || ``);
+	const hasFishingSpot = (item.acquisition?.lootPools || []).some(pool => /_Fishing$/u.test(pool.pool));
+	const hasOilRig = (item.acquisition?.lootPools || []).some(pool => pool.category === `Oil Rigs`);
+	if (rebuildFishing) {return hasFishingSpot;}
+	if (rebuildOilRigs) {return hasOilRig;}
+	return rebuildAll || !item.acquisition?.map || generatedMap;
+}
+
+function mapAssignments(items, rebuildAll, rebuildFishing, rebuildOilRigs) {
 	const assignments = [];
 	const definitions = new Set();
 	for (const item of items) {
-		const generatedMap = /\/item-sources-[a-f0-9]{12}(?:-|\.png$)/u.test(item.acquisition?.map || ``);
-		if (item.searchable === false || (!rebuildAll && item.acquisition?.map && !generatedMap)) {continue;}
+		if (!shouldAssignMap(item, rebuildAll, rebuildFishing, rebuildOilRigs)) {continue;}
 		const derived = mapDefinition(item);
-		const definition = rebuildAll ? mergeDefinitions(item.acquisition?.mapSources, derived) : derived;
+		const rebuild = rebuildAll || rebuildFishing || rebuildOilRigs;
+		const definition = rebuild ? mergeDefinitions(item.acquisition?.mapSources, derived) : derived;
 		if (!definition) {continue;}
 		const encoded = JSON.stringify(definition);
 		definitions.add(encoded);
@@ -269,8 +317,10 @@ function main() {
 	const source = JSON.parse(fs.readFileSync(ITEM_DATA_PATH, `utf8`));
 	const itemData = resolvedItemData(source);
 	const rebuildAll = process.argv.includes(`--all`);
+	const rebuildFishing = process.argv.includes(`--fishing`);
+	const rebuildOilRigs = process.argv.includes(`--oil-rigs`);
 	migrateMerchantMaps(itemData.Items, write);
-	const { assignments, definitions } = mapAssignments(itemData.Items, rebuildAll);
+	const { assignments, definitions } = mapAssignments(itemData.Items, rebuildAll, rebuildFishing, rebuildOilRigs);
 	const mapPaths = readableMapPaths(definitions, assignments);
 	const changed = applyMapAssignments(assignments, mapPaths, write);
 	console.log(changed.join(`\n`));
