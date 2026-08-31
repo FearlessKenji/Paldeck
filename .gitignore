@@ -25,8 +25,7 @@ node_modules/
 .env
 *.env
 !blank.env
-database/database.sqlite
-database/database.sqlite.pre-*
+database/*.sqlite*
 ecosystem.config.js
 ecosystem.config.cjs
 !config/ecosystem.config.js

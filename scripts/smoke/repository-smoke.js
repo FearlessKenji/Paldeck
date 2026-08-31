@@ -182,11 +182,13 @@ async function validateEventsLoad() {
 
 function validateStartupConfigurationOrder() {
 	const source = fs.readFileSync(resolveProject(`index.js`), `utf8`);
+	const ecosystem = requireFresh(`config`, `ecosystem.config.js`);
 	const configIndex = source.indexOf(`require(\`./config/configCheck.js\`)`);
 	const databaseIndex = source.indexOf(`require(\`./database/dbInit.js\`)`);
 
 	assert(configIndex >= 0 && databaseIndex >= 0 && configIndex < databaseIndex,
 		`index.js must load environment configuration before database modules choose a SQLite driver.`);
+	assert(ecosystem.apps?.[0]?.name === `Paldeck`, `The PM2 process must use the canonical Paldeck name.`);
 }
 
 function validateBroadcastSummary(announceCommand) {

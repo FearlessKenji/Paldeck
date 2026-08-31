@@ -3,7 +3,7 @@ const path = require(`node:path`);
 module.exports = {
 	apps: [
 		{
-			name: `paldeck`,
+			name: `Paldeck`,
 			script: `index.js`,
 			cwd: path.resolve(__dirname, `..`),
 			instances: 1,

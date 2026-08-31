@@ -4,14 +4,9 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
-- Loaded environment configuration before database modules select their SQLite driver, preventing encrypted databases from being opened through plaintext SQLite during normal PM2 startup.
-- Appended variant-specific percentages to Pal names in drop-filtered Paldeck searches and View Dropping Pals results while retaining the aligned three-column layout.
-- Added a build-keyed extraction of all 47,515 coordinate-bearing gameplay actors, mapped all elemental-chest item sources, and distinguished the eight dedicated Sunreach elemental spawners from the 38 World Tree spawners' weighted regular/electric/fire/water chest lottery.
-- Removed the obsolete repository-local database-backup rotation layer after HachiGen migrated and assumed ownership of Paldeck backups.
-- Split database encryption configuration from SQLCipher operations and decomposed plaintext conversion validation and transaction handling to satisfy repository complexity and file-size limits without changing the public API.
-- Replaced hand-authored encounter facts with build-stamped installed-game extracts, corrected all Hard tower levels and reward lists, added recorded Training Crystals and other repeatable drops, exposed game-defined time limits, represented regular/Alpha raid eggs as one guaranteed weighted reward, removed redundant one-of reward labels, regenerated affected source maps, and expanded encounter audits against the installed build.
-- Rebuilt encounter recommendations around the extracted phase elements, levels, and damage modifiers: tower results cover each useful counter element with interchangeable, progression-appropriate Pal examples; raid results use flexible counter coverage instead of prescribing 15 identical base Pals; and upgraded raids display their actual Ultra or Master labels. Readiness results omit internal base-health inputs and outgoing-damage factors that are not meaningful without the game's final-damage context. Normal raids scale to the available roster, while Ultra guidance combines game-defined combat facts with clearly labeled community tactics for full-group deployment, reserves, or Hartalis withdrawal timing; the five-at-a-time Necromus plan remains specific to Hard Astralym. Added rendered-output coverage for every recommendation's exact completion-reward list and Discord field limits.
-- Replaced tower-boss habitat attachments with dedicated encounter-location maps, ordered encounter output as recommendation, map, then rewards, removed redundant Raid autocomplete prefixes, and made Hard Astralym identical through `/tower` and `/raid`.
+- Loaded environment configuration before database modules select their SQLite driver, preventing encrypted databases from being opened through plaintext SQLite during normal PM2 startup, and standardized the PM2 process name as `Paldeck`.
+- Removed obsolete repository-local database artifacts after HachiGen assumed backup ownership and ignored SQLite runtime sidecars and conversion files.
+- Verified Hard Astralym's level-100 encounter definition and multiplayer HP multipliers directly from the installed boss manager, aligned its displayed one-player HP with the in-game 5,030,099 health bar, and added regression coverage for those source-backed values.
 
 ## v1.12.0 - 2026-08-27
 
