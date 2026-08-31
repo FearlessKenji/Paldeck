@@ -4,13 +4,12 @@ Notable changes to Paldeck are documented here.
 
 ## Unreleased
 
-- Loaded environment configuration before database modules select their SQLite driver, preventing encrypted databases from being opened through plaintext SQLite during normal PM2 startup, and standardized the PM2 process name as `Paldeck`.
-- Removed obsolete repository-local database artifacts after HachiGen assumed backup ownership and ignored SQLite runtime sidecars and conversion files.
-- Verified Hard Astralym's level-100 encounter definition and multiplayer HP multipliers directly from the installed boss manager, aligned its displayed one-player HP with the in-game 5,030,099 health bar, and added regression coverage for those source-backed values.
-
 ## v1.12.0 - 2026-08-27
 
 - Updated Paldeck's package and release metadata to v1.12.0.
+- Loaded environment configuration before database modules select their SQLite driver, preventing encrypted databases from being opened through plaintext SQLite during normal PM2 startup, and standardized the PM2 process name as `Paldeck`.
+- Removed obsolete repository-local database artifacts after HachiGen assumed backup ownership and ignored SQLite runtime sidecars and conversion files.
+- Verified Hard Astralym's level-100 encounter definition and multiplayer HP multipliers directly from the installed boss manager, aligned its displayed one-player HP with the in-game 5,030,099 health bar, and added regression coverage for those source-backed values.
 - Renamed the expanded item-source view to Source Details, added equal-rate multi-region Supply Drop coverage, labeled single-region Supply Drops inline, corrected internal SkyIsland labels to Sunreach, and preserved Gold and Gold Key chest tiers on regional source-map legends.
 - Added Normal and Hard `/raid` and `/tower` recommendations with alias-aware encounter autocomplete, progression-aware five-Pal parties, per-Pal passives, derived boss HP, damage readiness factors, named raid armies with explicit deployment patterns, complete percentage-based rewards, and tower location maps. Recommendations use the current encounter-level ladders and respect the level-80 player and owned-Pal cap; Hard Astralym uses a sustain/support personal party, five-Pal Necromus waves, its one-player HP baseline, and both verified item rewards. Panthalus is identified as a Normal-only story encounter, while Hard Astralym is available through both commands.
 - Added a build-pinned installed-game audit for encounter maps, base HP, scaling, elements, mitigation, outgoing damage, recommended moves and passives, raid rewards, and egg probabilities.
