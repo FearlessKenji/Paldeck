@@ -109,6 +109,9 @@ function gameRaidVariant(id, index) {
 
 // Boss display levels can exceed the owned-Pal cap, but their HP stat calculation stops at that cap.
 function derivedEncounterHp(variant) {
+	if (variant.verifiedHp) {
+		return variant.verifiedHp;
+	}
 	const statLevel = Math.min(variant.level, GAME_MAX_LEVEL);
 	const baseHealth = HP_CONSTANT + (5 * statLevel) + (variant.baseHp * HP_LEVEL_MULTIPLIER * statLevel);
 	return Math.floor(baseHealth * variant.hpScale);
@@ -348,7 +351,11 @@ const ENCOUNTERS = [
 			normal: { counterProfiles: [`neutral`], ...gameTowerVariant(`zenara-astralym`, `Normal`),
 				party: profileExamples([`neutral`], false, gameTowerVariant(`zenara-astralym`, `Normal`).level, 5),
 				teamGuidance: towerTeamGuidance([`neutral`], false), notes: [`Typeless encounter: prioritize raw damage and survival rather than elemental counters.`] },
-			hard: { profile: `neutral`, ...gameTowerVariant(`zenara-astralym`, `Hard`), recommendedPlayerLevel: GAME_MAX_LEVEL, recommendedPalLevel: GAME_MAX_LEVEL, party: astralymHardParty(), raidCompositionTitle: `Community Strategy — Palbox Plan`, raidComposition: astralymCommunityStrategy.palboxPlan, strategySources: astralymCommunityStrategy.sources, notes: [`Keep Felbat active to sustain the player while the Necromus waves deal damage.`] },
+			hard: { profile: `neutral`, ...gameTowerVariant(`zenara-astralym`, `Hard`), verifiedHp: 5030099,
+			 recommendedPlayerLevel: GAME_MAX_LEVEL, recommendedPalLevel: GAME_MAX_LEVEL, party: astralymHardParty(),
+			 raidCompositionTitle: `Community Strategy — Palbox Plan`, raidComposition: astralymCommunityStrategy.palboxPlan,
+			 strategySources: astralymCommunityStrategy.sources,
+			 notes: [`Keep Felbat active to sustain the player while the Necromus waves deal damage.`] },
 		},
 	},
 ];

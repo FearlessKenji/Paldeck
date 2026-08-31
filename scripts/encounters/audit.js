@@ -208,6 +208,11 @@ function audit(snapshot) {
 		gameBossData.gameSettings.hpConstant !== 500) {
 		problems.push(`Decoded game settings do not match the reviewed build's HP calculation inputs.`);
 	}
+	const multiplayerHpScale = gameBossData.multiplayerHpScale.map(entry => [entry.key, entry.value]);
+	const expectedHpScale = [[1, 1], [2, 1.4], [3, 1.8], [4, 2.1], [5, 2.4], [6, 2.7], [7, 3], [8, 3.3]];
+	if (JSON.stringify(multiplayerHpScale) !== JSON.stringify(expectedHpScale)) {
+		problems.push(`Decoded multiplayer boss HP scaling differs from the reviewed build.`);
+	}
 	if (String(gameEncounterData.buildId) !== String(snapshot.buildId)) {
 		problems.push(`Encounter source data is build ${gameEncounterData.buildId}; installed snapshot is ${snapshot.buildId}.`);
 	}

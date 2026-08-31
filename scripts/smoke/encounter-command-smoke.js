@@ -154,8 +154,8 @@ function validateEncounterCommands(assert) {
 	const astralymHard = findEncounter(`raid`, `hard`, `zenara-astralym`).variants.hard;
 	assert(astralymHard.level === 100 && astralymHard.recommendedPlayerLevel === 80 && astralymHard.recommendedPalLevel === 80,
 		`Hard Astralym is level 100, but its recommendations must respect the level-80 player and Pal cap.`);
-	assert(derivedEncounterHp(astralymHard) === 5030100,
-		`Astralym's HP should use the owned-Pal stat cap with its Hard encounter multiplier.`);
+	assert(derivedEncounterHp(astralymHard) === 5030099,
+		`Astralym should use its verified one-player HP.`);
 	assert(astralymHard.party.map(member => member.pal).join() === `Felbat,Gobfin,Gobfin Ignis,Solenne,Aegidron`,
 		`Astralym's personal party should use its sustain, player-attack, and mitigation supports.`);
 	assert(astralymHard.raidComposition.some(line => line.includes(`five Necromus at a time`)) &&
