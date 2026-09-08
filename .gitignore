@@ -10,6 +10,10 @@ __pycache__/
 
 # Optional external data-extraction and development helpers
 tools/
+game-audit/
+PalworldDataExtractor-src/
+snapshot-exporter/
+*.usmap
 scripts/ghidra/
 
 # Local Codex/agent instructions

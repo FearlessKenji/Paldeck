@@ -4,7 +4,17 @@ These notes are written for server owners and moderators. They include changes
 that affect setup, day-to-day use, or visible bot behavior. For the full
 developer history, see [CHANGELOG.md](https://github.com/FearlessKenji/Paldeck/blob/main/CHANGELOG.md).
 
-## Unreleased
+## v1.12.1 - 2026-09-08 - Palworld v1.0.4 Data Update
+
+- Every tower and raid now presents food first in one **Strategy** section, followed by relevant team, Palbox, and level-appropriate Base Pal research guidance.
+- Corrected level-70 Radiant Gem sources for ordinary World Tree Pals and their Alpha variants: **Petallia Ignis: Fire to Grass; Majex: Dark to Fire; Wistella, Venusa, and Roujay: Electric to Dark; Mycora: Ground to Grass**.
+- Corrected these additional ordinary level-70 World Tree sources: **Shaolong: Electric to Dragon; Knocklem: Electric to Ground; Faleris: Electric to Fire; Faleris Aqua and Solmora Lux: Electric to Water; Lyleen and Lyleen Noct: Electric to Grass; Selyne: Electric to Dark; Whalaska Ignis: Fire to Ice**. Level-70 **Alpha Univolt Cryst** now lists **Ice** instead of Water Radiant Gems.
+- Added level-70 World Tree **Snock Terra's Ground Radiant Gem** and **Orserk's Dragon Radiant Gem** drops, each **1–3 at 50%**, alongside their existing Electric Radiant Gem drops. The corrected drops above retain **1–3 at 50%** for ordinary variants and **1–3 at 100%** for Alphas.
+- Removed obsolete level-70 item-source entries for ordinary World Tree and Alpha **Smokie Cryst, Nitemary Botan, Polapup Terra, Elgrove, Pierdon Cryst, Carnibora, Snugloo**, and **Alpha Eidrolon**. This removes their old level-70 Radiant Gem, World Tree Holy Water, Ancient Relic, and other drop listings; their other source records, including ordinary Elgrove's level-80 drops, remain.
+- Recommendations use the labels **Active sustain** and **Party support**; general attacker suggestions show only the Pal's name.
+- Hard Astralym now recommends Felbat, Gobfin, Gobfin Ignis, Solenne, and Xenogard for a Plasma Rifle or other eligible energy-weapon setup.
+- Xenogard's **Unknown Intruder** Partner Skill now shows its current energy-weapon damage bonus instead of the obsolete Meteorite Fragment and Pure Quartz effect.
+- **Snock Lux** has been corrected to **Snock Terra** throughout Paldeck and item drop sources.
 
 ## v1.12.0 - 2026-08-27 - Encounter Recommendations and Source Maps
 

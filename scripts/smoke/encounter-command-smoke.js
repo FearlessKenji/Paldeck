@@ -9,14 +9,38 @@ const {
 	completionRewards, derivedEncounterHp, encountersFor, ENCOUNTERS, findEncounter, ROOT_DIR,
 } = require(`../../utils/encounterRecommendations.js`);
 
+function validatePartyHeadings(assert, party, fields) {
+	// Assert visible headings independently of the role metadata so generic labels cannot return unnoticed.
+	for (const member of party) {
+		const role = member.strategy ? (member.pal === `Felbat` ? `Active sustain` : `Party support`) : null;
+		const expectedName = role ? `${member.pal} — ${role}` : member.pal;
+		assert(fields.some(field => field.name === expectedName), `Expected Pal heading: ${expectedName}`);
+	}
+}
+
+function validateStrategyField(assert, encounter, difficulty, fields) {
+	const strategy = fields?.find(field => field.name === `Strategy`);
+	const usesPalboxArmy = encounter.kind === `raid` || (encounter.kind === `tower-raid` && difficulty === `hard`);
+	assert(strategy?.value.startsWith(`• Food:`), `${encounter.name} ${difficulty} strategy must put food first.`);
+	assert(strategy?.value.includes(`Base research:`) === usesPalboxArmy,
+		`${encounter.name} ${difficulty} must show research advice only when a Palbox army participates.`);
+	assert(!strategy?.value.includes(`Boost Gun`), `${encounter.name} ${difficulty} must not recommend Boost Guns.`);
+	assert(!fields?.some(field => [`Flexible Raid Team`, `Recommendation Basis`, `Encounter Notes`].includes(field.name)),
+		`${encounter.name} ${difficulty} must consolidate advice under Strategy.`);
+}
+
 function validateRenderedRecommendation(assert, encounter, difficulty, variant) {
 	const command = encounter.kind === `raid` ? `raid` : `tower`;
 	const payload = buildPayload(command, difficulty, encounter);
 	const embeds = payload.embeds.map(embed => embed.toJSON());
+	if (encounter.kind !== `raid`) {
+		validatePartyHeadings(assert, variant.party, embeds[0].fields);
+	}
 	const difficultyLabel = variant.difficultyLabel || (difficulty === `hard` ? `Hard` : `Normal`);
 	assert(embeds[0].title === `${encounter.name} — ${difficultyLabel}`,
 		`${encounter.name} ${difficulty} must show its actual difficulty name.`);
 	const readiness = embeds[0].fields?.find(field => field.name === `Readiness`);
+	validateStrategyField(assert, encounter, difficulty, embeds[0].fields);
 	assert(!readiness?.value.includes(`Outgoing damage`),
 		`${encounter.name} ${difficulty} must not expose an outgoing-damage factor without final-damage context.`);
 	assert(!readiness?.value.includes(`health stat`),
@@ -110,7 +134,6 @@ function validateEncounterCommands(assert) {
 				assert(variant.raidComposition?.some(line => line.startsWith(`Deployment:`)), `${encounter.name} ${difficulty} needs a deployment pattern.`);
 				assert(variant.raidComposition?.some(line => line.startsWith(`Army:`)), `${encounter.name} ${difficulty} needs a named Palbox army.`);
 				assert(variant.raidComposition?.some(line => line.startsWith(`Passives`)), `${encounter.name} ${difficulty} needs army passives.`);
-				assert(variant.raidCompositionTitle?.startsWith(`Community Strategy`), `${encounter.name} ${difficulty} must distinguish community strategy from game facts.`);
 				assert(variant.strategySources?.length >= 1, `${encounter.name} ${difficulty} needs community-strategy provenance.`);
 			}
 			validateRenderedRecommendation(assert, encounter, difficulty, variant);
@@ -156,8 +179,8 @@ function validateEncounterCommands(assert) {
 		`Hard Astralym is level 100, but its recommendations must respect the level-80 player and Pal cap.`);
 	assert(derivedEncounterHp(astralymHard) === 5030099,
 		`Astralym should use its verified one-player HP.`);
-	assert(astralymHard.party.map(member => member.pal).join() === `Felbat,Gobfin,Gobfin Ignis,Solenne,Aegidron`,
-		`Astralym's personal party should use its sustain, player-attack, and mitigation supports.`);
+	assert(astralymHard.party.map(member => member.pal).join() === `Felbat,Gobfin,Gobfin Ignis,Solenne,Xenogard`,
+		`Astralym's personal party should retain sustain and both Gobfins while identifying its energy-weapon support.`);
 	assert(astralymHard.raidComposition.some(line => line.includes(`five Necromus at a time`)) &&
 		astralymHard.raidComposition.some(line => line.includes(`Necromus ×15`)),
 	`Astralym's Palbox composition should name the army and its five-Pal waves.`);

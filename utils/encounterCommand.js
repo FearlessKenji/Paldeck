@@ -37,7 +37,7 @@ function readinessText(variant) {
 
 function partyFields(variant, difficulty) {
 	return variant.party.map(entry => ({
-		name: `${entry.pal} — ${entry.strategy ? entry.role : `Example counter`}`,
+		name: entry.role ? `${entry.pal} — ${entry.role}` : entry.pal,
 		value: entry.strategy ?
 			`${entry.strategy}\nPassives: ${entry.passives.join(`, `)}` :
 			(difficulty === `hard` ?
@@ -47,18 +47,44 @@ function partyFields(variant, difficulty) {
 	}));
 }
 
-function teamGuidanceField(variant, encounterKind) {
-	return { name: encounterKind === `raid` ? `Flexible Raid Team` : `Recommendation Basis`,
-		value: variant.teamGuidance.map(line => `• ${line}`).join(`\n`), inline: false };
+function usesPalboxArmy(encounterKind, difficulty) {
+	return encounterKind === `raid` || (encounterKind === `tower-raid` && difficulty === `hard`);
+}
+
+function foodGuidance(variant, difficulty, palboxArmy) {
+	if (variant.foodGuidance) {
+		return variant.foodGuidance;
+	}
+	if (difficulty === `normal`) {
+		return `Food: Use an Attack- or Defense-boosting meal appropriate to your progression if the attempt needs it.`;
+	}
+	return palboxArmy ?
+		`Food: Feed Pals Mammorest Curry (+25% Attack), or Galeclaw Nikujaga (+25% Defense) if they die too quickly.` :
+		`Food: Eat and feed the active Pal Mammorest Curry (+25% Attack), or use Galeclaw Nikujaga (+25% Defense) for survival.`;
+}
+
+function researchGuidance(variant) {
+	const recommendedLevel = variant.recommendedPlayerLevel || variant.recommendedPalLevel || variant.level;
+	if (recommendedLevel <= 55) {
+		return `Base research: Treat Base Pal Attack and Defense research as an optional bonus; do not delay this fight for expensive ranks.`;
+	}
+	if (recommendedLevel < GAME_MAX_LEVEL) {
+		return `Base research: Add affordable Base Pal Attack and Defense ranks, but prioritize a viable army and equipment first.`;
+	}
+	return `Base research: Prioritize Base Pal Attack and Defense bonuses for the deployed Palbox army.`;
+}
+
+function strategyField(variant, difficulty, encounterKind) {
+	const palboxArmy = usesPalboxArmy(encounterKind, difficulty);
+	const lines = [foodGuidance(variant, difficulty, palboxArmy),
+		...(palboxArmy ? [researchGuidance(variant)] : []),
+		...(variant.teamGuidance || []), ...(variant.raidComposition || []), ...(variant.notes || [])];
+	return { name: `Strategy`, value: lines.map(line => `• ${line}`).join(`\n`), inline: false };
 }
 
 function recommendationFields(variant, difficulty, encounterKind) {
-	const guidance = variant.teamGuidance ? [teamGuidanceField(variant, encounterKind)] : [];
+	const guidance = [strategyField(variant, difficulty, encounterKind)];
 	return encounterKind === `raid` ? guidance : [...guidance, ...partyFields(variant, difficulty)];
-}
-
-function palboxFieldName(variant) {
-	return variant.raidCompositionTitle || `Palbox Composition`;
 }
 
 function difficultyName(variant, difficulty) {
@@ -85,12 +111,6 @@ function buildPayload(command, difficulty, encounter) {
 		.setTitle(`${encounter.name} — ${difficultyLabel}`)
 		.setDescription(`${typeLabel}${encounter.towerName ? ` · ${encounter.towerName}` : ``}`)
 		.addFields({ name: `Readiness`, value: readinessText(variant) }, ...recommendationFields(variant, difficulty, encounter.kind));
-	if (variant.raidComposition?.length) {
-		strategy.addFields({ name: palboxFieldName(variant), value: variant.raidComposition.map(line => `• ${line}`).join(`\n`) });
-	}
-	if (variant.notes?.length) {
-		strategy.addFields({ name: `Encounter Notes`, value: variant.notes.map(line => `• ${line}`).join(`\n`) });
-	}
 	const rewards = completionRewards(encounter, variant);
 	const embeds = [strategy];
 	const files = [];

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-// Compares recommendation-critical combat facts to the newest installed-game snapshot.
+// Compares recommendation-critical combat facts to the installed build's snapshot.
 const fs = require(`node:fs`);
-const os = require(`node:os`);
 const path = require(`node:path`);
+const { loadInstalledSnapshot } = require(`../game/load-installed-snapshot.js`);
 const { ENCOUNTERS, REVIEWED_BUILD_ID } = require(`../../utils/encounterRecommendations.js`);
 const gameBossData = require(`../../data/gameBossData.json`);
 const gameEncounterData = require(`../../data/gameEncounterData.json`);
@@ -43,13 +43,6 @@ const TOWER_BOSS_TYPES = {
 	"lily-lyleen": `ForestBoss`, "marcus-faleris": `DesertBoss`, "saya-selyne": `SakurajimaBoss`,
 	"victor-shadowbeak": `SnowBoss`, "zenara-astralym": `WorldTreeBoss`, "zoe-grizzbolt": `GrassBoss`,
 };
-
-function latestSnapshot() {
-	const directory = path.join(process.env.LOCALAPPDATA || os.tmpdir(), `Paldeck`, `game-audit`, `snapshots`);
-	return fs.readdirSync(directory).filter(name => /^items-.+\.json$/u.test(name))
-		.map(name => path.join(directory, name))
-		.sort((left, right) => fs.statSync(right).mtimeMs - fs.statSync(left).mtimeMs)[0];
-}
 
 function cleanElement(value) {
 	return String(value || ``).replace(`EPalElementType::`, ``)
@@ -251,11 +244,7 @@ function audit(snapshot) {
 }
 
 function run() {
-	const target = latestSnapshot();
-	if (!target) {
-		throw new Error(`No installed-game snapshot found; refresh the installed-game audit first.`);
-	}
-	const snapshot = JSON.parse(fs.readFileSync(target, `utf8`));
+	const snapshot = loadInstalledSnapshot();
 	const problems = audit(snapshot);
 	console.log(`Encounter recommendation audit: build ${snapshot.buildId}, ${ENCOUNTERS.length} encounters, ${problems.length} problem(s).`);
 	for (const problem of problems) {

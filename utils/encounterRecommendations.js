@@ -6,7 +6,7 @@ const palData = require(`../data/palData.json`);
 const { resolvedItemData } = require(`./itemData.js`);
 
 const ROOT_DIR = path.resolve(__dirname, `..`);
-const REVIEWED_BUILD_ID = `24575825`;
+const REVIEWED_BUILD_ID = `25094871`;
 const GAME_MAX_LEVEL = gameBossData.gameSettings.characterMaxLevel;
 const HP_LEVEL_MULTIPLIER = gameBossData.gameSettings.hpLevelMultiplier;
 const HP_CONSTANT = gameBossData.gameSettings.hpConstant;
@@ -227,21 +227,21 @@ const PROGRESSION_LEVEL_LIMITS = { dark: 55, dragon: 55, fire: 30, ground: 30, i
 function recommendedParty(profile, hard = false, level = 100) {
 	const useProgressionParty = !hard && level <= (PROGRESSION_LEVEL_LIMITS[profile] || 0);
 	const partyProfile = useProgressionParty ? PROGRESSION_PROFILES[profile] : PARTY_PROFILES[profile];
-	return partyProfile.map(([pal, moves], index) => ({
+	return partyProfile.map(([pal, moves]) => ({
 		pal,
-		role: index === 0 ? `Primary example` : `Alternate example`,
 		moves,
 		passives: hard ? HARD_OFFENSE : NORMAL_OFFENSE,
 	}));
 }
 
 function astralymHardParty() {
+	// Favor player energy-weapon pressure while Felbat supplies sustain; keep all species unique for Solenne.
 	return [
 		{ pal: `Felbat`, role: `Active sustain`, passives: HARD_OFFENSE, strategy: `Keep Felbat deployed so Life Steal restores both player and Pal HP while attacking.` },
-		{ pal: `Gobfin`, role: `Player attack support`, passives: PLAYER_SUPPORT, strategy: `Keep in the party for Angry Shark's player Attack increase.` },
-		{ pal: `Gobfin Ignis`, role: `Player attack support`, passives: PLAYER_SUPPORT, strategy: `Keep in the party for a second Angry Shark player Attack increase.` },
-		{ pal: `Solenne`, role: `Unique-party attack support`, passives: PLAYER_SUPPORT, strategy: `Its non-stacking Attack bonus applies because all five party species are different.` },
-		{ pal: `Aegidron`, role: `Defensive support`, passives: PLAYER_SUPPORT, strategy: `Reduces explosive damage to the player and party and grants Stun immunity.` },
+		{ pal: `Gobfin`, role: `Party support`, passives: PLAYER_SUPPORT, strategy: `Keep in the party for Angry Shark's player Attack increase.` },
+		{ pal: `Gobfin Ignis`, role: `Party support`, passives: PLAYER_SUPPORT, strategy: `Keep in the party for a second Angry Shark player Attack increase.` },
+		{ pal: `Solenne`, role: `Party support`, passives: PLAYER_SUPPORT, strategy: `Its non-stacking Attack bonus applies because all five party species are different.` },
+		{ pal: `Xenogard`, role: `Party support`, passives: PLAYER_SUPPORT, strategy: `Keep in the party to boost Plasma Rifle and other eligible energy-weapon damage; this bonus does not apply to all weapons.` },
 	];
 }
 
@@ -353,7 +353,8 @@ const ENCOUNTERS = [
 				teamGuidance: towerTeamGuidance([`neutral`], false), notes: [`Typeless encounter: prioritize raw damage and survival rather than elemental counters.`] },
 			hard: { profile: `neutral`, ...gameTowerVariant(`zenara-astralym`, `Hard`), verifiedHp: 5030099,
 			 recommendedPlayerLevel: GAME_MAX_LEVEL, recommendedPalLevel: GAME_MAX_LEVEL, party: astralymHardParty(),
-			 raidCompositionTitle: `Community Strategy — Palbox Plan`, raidComposition: astralymCommunityStrategy.palboxPlan,
+			 foodGuidance: `Food: Feed early Necromus waves Galeclaw Nikujaga (+25% Defense) and the final wave Mammorest Curry (+25% Attack); eat Mammorest Curry for player damage.`,
+			 raidComposition: astralymCommunityStrategy.palboxPlan,
 			 strategySources: astralymCommunityStrategy.sources,
 			 notes: [`Keep Felbat active to sustain the player while the Necromus waves deal damage.`] },
 		},
