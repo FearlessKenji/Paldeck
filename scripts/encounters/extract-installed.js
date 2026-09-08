@@ -1,16 +1,10 @@
 #!/usr/bin/env node
 const fs = require(`node:fs`);
-const os = require(`node:os`);
 const path = require(`node:path`);
+const { loadInstalledSnapshot } = require(`../game/load-installed-snapshot.js`);
 
 const ROOT = path.resolve(__dirname, `..`, `..`);
-const snapshots = path.join(process.env.LOCALAPPDATA || os.tmpdir(), `Paldeck`, `game-audit`, `snapshots`);
-const source = fs.readdirSync(snapshots).filter(name => /^items-.+\.json$/u.test(name))
-	.map(name => path.join(snapshots, name)).sort((left, right) => fs.statSync(right).mtimeMs - fs.statSync(left).mtimeMs)[0];
-if (!source) {
-	throw new Error(`No installed-game snapshot found.`);
-}
-const snapshot = JSON.parse(fs.readFileSync(source, `utf8`));
+const snapshot = loadInstalledSnapshot();
 const decoded = snapshot.tables?._decodedTables || {};
 const actorTable = decoded[`Pal/Content/Pal/DataTable/Character/DT_PalMonsterParameter`] || {};
 const raidTable = decoded[`Pal/Content/Pal/Blueprint/RaidBoss/DT_PalRaidBoss`] || {};

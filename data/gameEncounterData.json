@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
-	"buildId": "24575825",
-	"extractedAt": "2026-08-29T04:50:38.106Z",
+	"buildId": "25094871",
+	"extractedAt": "2026-09-08T00:40:42.534Z",
 	"sourceTables": {
 		"actors": "Pal/Content/Pal/DataTable/Character/DT_PalMonsterParameter",
 		"raids": "Pal/Content/Pal/Blueprint/RaidBoss/DT_PalRaidBoss"
@@ -101,7 +101,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_ElecPanda_2": {
 			"OverrideNameTextID": "PAL_NAME_GrassBoss",
@@ -197,7 +198,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_LilyQueen": {
 			"OverrideNameTextID": "PAL_NAME_ForestBoss",
@@ -293,7 +295,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_LilyQueen_2": {
 			"OverrideNameTextID": "PAL_NAME_ForestBoss",
@@ -389,7 +392,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_ThunderDragonMan": {
 			"OverrideNameTextID": "PAL_NAME_VolcanoBoss",
@@ -485,7 +489,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_ThunderDragonMan_2": {
 			"OverrideNameTextID": "PAL_NAME_VolcanoBoss",
@@ -581,7 +586,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_Horus": {
 			"OverrideNameTextID": "PAL_NAME_DessertBoss",
@@ -677,7 +683,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_Horus_2": {
 			"OverrideNameTextID": "PAL_NAME_DessertBoss",
@@ -773,7 +780,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_BlackGriffon": {
 			"OverrideNameTextID": "PAL_NAME_SnowBoss",
@@ -869,7 +877,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_BlackGriffon_2": {
 			"OverrideNameTextID": "PAL_NAME_SnowBoss",
@@ -965,7 +974,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_MoonQueen": {
 			"OverrideNameTextID": "PAL_NAME_SakurajimaBoss",
@@ -1061,7 +1071,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_MoonQueen_2": {
 			"OverrideNameTextID": "PAL_NAME_SakurajimaBoss",
@@ -1157,7 +1168,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_SnowTigerBeastman": {
 			"OverrideNameTextID": "PAL_NAME_VikingBoss",
@@ -1253,7 +1265,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_SnowTigerBeastman_2": {
 			"OverrideNameTextID": "PAL_NAME_VikingBoss",
@@ -1349,7 +1362,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_BlueSkyDragon": {
 			"OverrideNameTextID": "PAL_NAME_SorajimaBoss",
@@ -1445,7 +1459,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_BlueSkyDragon_2": {
 			"OverrideNameTextID": "PAL_NAME_SorajimaBoss",
@@ -1541,7 +1556,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"BOSS_KingWhale": {
 			"OverrideNameTextID": "PAL_NAME_KingWhale",
@@ -1637,7 +1653,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": false
 		},
 		"GYM_WorldTreeDragon": {
 			"OverrideNameTextID": "PAL_NAME_LastBoss",
@@ -1733,7 +1750,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"GYM_WorldTreeDragon_2": {
 			"OverrideNameTextID": "PAL_NAME_LastBoss",
@@ -1829,7 +1847,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"RAID_NightLady": {
 			"OverrideNameTextID": "PAL_NAME_NightLady",
@@ -1925,7 +1944,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"RAID_NightLady_Dark": {
 			"OverrideNameTextID": "PAL_NAME_NightLady_Dark",
@@ -2021,7 +2041,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"RAID_NightLady_Dark_2": {
 			"OverrideNameTextID": "PAL_NAME_NightLady_Dark",
@@ -2117,7 +2138,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"RAID_KingBahamut_Dragon": {
 			"OverrideNameTextID": "PAL_NAME_KingBahamut_Dragon",
@@ -2213,7 +2235,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"RAID_KingBahamut_Dragon_2": {
 			"OverrideNameTextID": "PAL_NAME_KingBahamut_Dragon",
@@ -2309,7 +2332,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"RAID_DarkMechaDragon": {
 			"OverrideNameTextID": "PAL_NAME_DarkMechaDragon",
@@ -2405,7 +2429,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"RAID_DarkMechaDragon_2": {
 			"OverrideNameTextID": "PAL_NAME_DarkMechaDragon",
@@ -2501,7 +2526,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"RAID_YakushimaBoss002": {
 			"OverrideNameTextID": "None",
@@ -2597,7 +2623,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"RAID_YakushimaBoss002_2": {
 			"OverrideNameTextID": "PAL_NAME_RAID_YakushimaBoss002",
@@ -2693,7 +2720,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"RAID_LegendDeer": {
 			"OverrideNameTextID": "PAL_NAME_LegendDeer",
@@ -2789,7 +2817,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		},
 		"RAID_LegendDeer_2": {
 			"OverrideNameTextID": "PAL_NAME_LegendDeer",
@@ -2885,7 +2914,8 @@
 			"PassiveSkill2": "None",
 			"PassiveSkill3": "None",
 			"PassiveSkill4": "None",
-			"FirstDefeatRewardItemID": "None"
+			"FirstDefeatRewardItemID": "None",
+			"IsUncapturable": true
 		}
 	},
 	"raids": {

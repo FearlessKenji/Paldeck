@@ -1,6 +1,6 @@
 {
   "name": "paldeck",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "private": true,
   "license": "GPL-3.0-only",
   "scripts": {
@@ -36,6 +36,7 @@
     "update:palworld-item-details": "node scripts/items/update-paldb.js --details-only",
     "update:palworld-item-details:write": "node scripts/items/update-paldb.js --details-only --write",
     "validate:pal-data": "node scripts/pals/validate.js",
+    "audit:installed-game-pals": "node scripts/pals/audit-installed.js",
     "audit:pal-locations": "node scripts/pals/audit-locations.js",
     "validate:item-data": "node scripts/items/validate.js",
     "audit:item-availability": "node scripts/items/audit-availability.js --require-installed-game",

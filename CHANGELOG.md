@@ -2,7 +2,16 @@
 
 Notable changes to Paldeck are documented here.
 
-## Unreleased
+## v1.12.1 - 2026-09-08 - Palworld v1.0.4 Data Update
+
+- Consolidated every tower and raid's preparation advice into a food-first Strategy field, adding progression-aware Palbox research where relevant while retaining encounter-specific deployment tactics.
+- Prepared the Palworld v1.0.4 data release as v1.12.1 with build-pinned extraction checks, ignored local extractor artifacts, and quiet, counted location-scan diagnostics.
+- Added native-reflection mapping repair for nine Palworld schemas, including nested map/enum descriptors and the changed boss settings, combat-gimmick, and sky classes; reject ambiguous property arrays and mismatched or empty Pal snapshots. Encounter extraction and audits now select the installed build explicitly instead of the newest cache file.
+- Synchronized Radiant Gem sources for 24 changed level-70 drop rows from build 25094871 and removed explicit source entries for 15 deleted level-70 rows while retaining default and other-level records; documented exact affected Pals and elements in the patch notes.
+- Synchronized installed-build acquisition metadata and rebuilt fishing and Oil Rig item-map assignments for build 25094871.
+- Simplified rendered recommendation roles to Active sustain and Party support, removed labels from generic attacker options, and added rendered-heading regression coverage.
+- Changed Hard Astralym's personal party from Aegidron to Xenogard for energy-weapon pressure, retaining Felbat, both Gobfins, Solenne, and the existing Necromus army; added regression coverage for the weapon-specific recommendation.
+- Added a build-verified installed-game Pal audit covering Paldeck numbers, elements, work suitability, rarity, descriptions, and Partner Skill titles, including a direct-table fallback for the simplified extractor's misnamed Medicine Production field; corrected Xenogard's obsolete Partner Skill effect and renamed Snock Lux to Snock Terra throughout Pal and item data.
 
 ## v1.12.0 - 2026-08-27
 
