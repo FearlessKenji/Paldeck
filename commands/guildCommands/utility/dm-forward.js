@@ -25,6 +25,10 @@ function channelPermissionWarning(guild, channel) {
 		missing.push(`Send Messages`);
 	}
 
+	if (!permissions?.has(PermissionFlagsBits.ReadMessageHistory)) {
+		missing.push(`Read Message History`);
+	}
+
 	return missing.length ? `\n\n⚠️ Paldeck is missing: ${missing.join(` and `)}.` : ``;
 }
 

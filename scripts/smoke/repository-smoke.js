@@ -407,6 +407,151 @@ async function validateDmForwarding() {
 	await JoinedServers.destroy({ where: { owner_id: userId } });
 }
 
+function createDmReplySmokeFixture() {
+	const config = require(resolveProject(`config`, `configCheck.js`));
+	const { getConfiguredOwnerIds } = requireFresh(`utils`, `configValues.js`);
+	const ownerId = getConfiguredOwnerIds(config)[0];
+	const botId = `777777777777777777`;
+	const recipientId = `666666666666666666`;
+	const destinationId = `555555555555555555`;
+	const reportId = `333333333333333333`;
+	const attachmentUrl = `https://cdn.discordapp.com/attachments/1/2/answer.txt`;
+	const reportMessage = {
+		author: { bot: true, id: botId },
+		embeds: [{
+			fields: [
+				{ name: `User`, value: `DM Smoke User` },
+				{ name: `User ID`, value: recipientId },
+				{ name: `Server(s) Owned`, value: `Owned Smoke Guild` },
+			],
+			title: `Direct Message to Paldeck`,
+		}],
+		id: reportId,
+	};
+	const acknowledgements = [];
+	const state = { failSend: false, sendAttempts: 0, sentPayload: null };
+	const client = {
+		user: { id: botId },
+		users: {
+			fetch: async userId => {
+				assert(userId === recipientId, `DM reply should target only the sender in the referenced report.`);
+				return {
+					send: async payload => {
+						state.sendAttempts += 1;
+						if (state.failSend) {
+							throw new Error(`Simulated closed DMs`);
+						}
+						state.sentPayload = payload;
+					},
+				};
+			},
+		},
+	};
+
+	function makeReply({
+		attachments = new Map([[`attachment`, { name: `answer.txt`, url: attachmentUrl }]]),
+		authorId = ownerId, channelId = destinationId, content = `Reply to user`,
+		fetchReference = async () => referencedMessage, referencedMessage = reportMessage,
+	} = {}) {
+		return {
+			attachments,
+			author: { bot: false, id: authorId, username: `Owner` },
+			channelId,
+			client,
+			content,
+			fetchReference,
+			guildId: `444444444444444444`,
+			id: `222222222222222222`,
+			reference: { channelId, messageId: reportId },
+			reply: async payload => {
+				acknowledgements.push(payload);
+			},
+			stickers: new Map(),
+		};
+	}
+
+	function acknowledgementText(payload) {
+		return typeof payload === `string` ? payload : payload?.content || ``;
+	}
+
+	function failFutureSends() {
+		state.failSend = true;
+	}
+
+	return { acknowledgementText, acknowledgements, botId, destinationId, failFutureSends, makeReply, reportMessage, state };
+}
+
+async function validateDmForwardReplies() {
+	const { handleDmForwardReply, saveDmForwardChannelId, clearDmForwardChannelId } = requireFresh(`utils`, `dmForwarding.js`);
+	const {
+		acknowledgementText, acknowledgements, botId, destinationId,
+		failFutureSends, makeReply, reportMessage, state,
+	} = createDmReplySmokeFixture();
+
+	async function checkRejectedReplies() {
+		acknowledgements.splice(0);
+		assert(await handleDmForwardReply(makeReply({ authorId: `888888888888888888` })),
+			`Unauthorized reply to a DM report should be handled locally.`);
+		assert(state.sendAttempts === 1, `Unauthorized inbox reply must not send a direct message.`);
+		assert(acknowledgementText(acknowledgements[0]), `Unauthorized inbox reply should receive feedback.`);
+
+		acknowledgements.splice(0);
+		assert(!await handleDmForwardReply(makeReply({ channelId: `999999999999999999` })),
+			`Replies outside the configured inbox should not be handled as DM reports.`);
+		assert(state.sendAttempts === 1 && acknowledgements.length === 0, `Unrelated channels should not send or acknowledge DM replies.`);
+
+		const unrelatedMessage = { ...reportMessage, embeds: [{ title: `Unrelated bot notice`, fields: reportMessage.embeds[0].fields }] };
+		assert(!await handleDmForwardReply(makeReply({ referencedMessage: unrelatedMessage })),
+			`Replies to unrelated bot messages should not be handled as DM reports.`);
+		assert(state.sendAttempts === 1 && acknowledgements.length === 0, `Unrelated bot messages should not send or acknowledge DM replies.`);
+
+		const otherAuthorMessage = { ...reportMessage, author: { bot: true, id: `999999999999999999` } };
+		assert(!await handleDmForwardReply(makeReply({ referencedMessage: otherAuthorMessage })),
+			`Replies to reports from a different bot must not choose a DM recipient.`);
+		assert(state.sendAttempts === 1 && acknowledgements.length === 0, `Reports from another bot should not send or acknowledge DM replies.`);
+
+		assert(await handleDmForwardReply(makeReply({ attachments: new Map(), content: `` })),
+			`Empty owner reply to a DM report should be handled locally.`);
+		assert(state.sendAttempts === 1, `Empty owner reply should not send a direct message.`);
+		assert(acknowledgementText(acknowledgements[0]), `Empty owner reply should receive feedback.`);
+
+		acknowledgements.splice(0);
+		const inaccessibleReply = makeReply({
+			fetchReference: async () => {
+				throw new Error(`Missing Read Message History`);
+			},
+		});
+		assert(await handleDmForwardReply(inaccessibleReply),
+			`Inaccessible referenced reports should be handled locally.`);
+		assert(state.sendAttempts === 1, `Inaccessible report should not send a direct message.`);
+		assert(/Read Message History/iu.test(acknowledgementText(acknowledgements[0])),
+			`Inaccessible report should explain that Read Message History permission may be missing.`);
+	}
+
+	await saveDmForwardChannelId(destinationId);
+	try {
+		const handled = await handleDmForwardReply(makeReply({ content: `<@${botId}> Reply to user <@123456789012345678>` }));
+		assert(handled, `Owner reply to an existing DM report should be handled.`);
+		assert(state.sendAttempts === 1, `Owner reply should send one direct message to the report sender.`);
+		assert(state.sentPayload.content === `Reply to user <@123456789012345678>`, `DM reply should preserve text while removing the leading bot mention.`);
+		assert(state.sentPayload.allowedMentions?.parse?.length === 0, `DM reply should not trigger mentions.`);
+		assert(state.sentPayload.files?.length === 1 && serializeDiscordPayload(state.sentPayload.files).includes(`answer.txt`),
+			`DM reply should include the owner's attachment.`);
+		assert(acknowledgementText(acknowledgements[0]), `Successful DM reply should be acknowledged in the inbox.`);
+		const successAcknowledgement = acknowledgementText(acknowledgements[0]);
+
+		await checkRejectedReplies();
+		acknowledgements.splice(0);
+		failFutureSends();
+		assert(await handleDmForwardReply(makeReply()), `Failed delivery to a report sender should still be handled locally.`);
+		assert(state.sendAttempts === 2, `Failed DM delivery should be attempted once.`);
+		assert(acknowledgementText(acknowledgements[0]) && acknowledgementText(acknowledgements[0]) !== successAcknowledgement,
+			`Failed DM delivery should tell the owner that the message was not sent.`);
+	} finally {
+		await clearDmForwardChannelId();
+	}
+}
+
 function validateDatabaseModels() {
 	const dbObjects = require(resolveProject(`database`, `dbObjects.js`));
 	const joinedServerColumns = dbObjects.JoinedServers.rawAttributes;
@@ -525,7 +670,7 @@ function validateGitHygiene(warn = console.warn) {
 
 module.exports = {
 	validateAnnouncementHelpers, validateCiWorkflow, validateConfigValueHelpers, validateDatabaseModels,
-	validateDmForwarding, validateEventsLoad, validateGitHygiene, validateGithubPagesDocs,
+	validateDmForwarding, validateDmForwardReplies, validateEventsLoad, validateGitHygiene, validateGithubPagesDocs,
 	validateHiddenPalPlaceholdersStayHidden, validateHtmlTextHelpers, validateItemSourceQuantities,
 	validateMapDeduplicationSafety, validateMutationCandidateRankBoundaries, validatePalData, validateReleaseWorkflow,
 	validateScriptOrganization, validateStartupConfigurationOrder,

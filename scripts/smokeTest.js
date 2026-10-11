@@ -17,7 +17,7 @@ const {
 } = require(`./smoke/pal-command-smoke.js`);
 const {
 	validateAnnouncementHelpers, validateCiWorkflow, validateConfigValueHelpers, validateDatabaseModels,
-	validateDmForwarding, validateEventsLoad, validateGitHygiene, validateGithubPagesDocs,
+	validateDmForwarding, validateDmForwardReplies, validateEventsLoad, validateGitHygiene, validateGithubPagesDocs,
 	validateHiddenPalPlaceholdersStayHidden, validateHtmlTextHelpers, validateMapDeduplicationSafety,
 	validatePalData, validateReleaseWorkflow, validateStartupConfigurationOrder,
 } = require(`./smoke/repository-smoke.js`);
@@ -371,7 +371,10 @@ async function main() {
 	await test(`events load with valid handlers`, validateEventsLoad);
 	await test(`announcement helpers parse and format patch notes`, validateAnnouncementHelpers);
 	await test(`item-map deduplication compares bytes and fails before deletion`, validateMapDeduplicationSafety);
-	await test(`direct messages forward verbatim with sender and owned-server context`, validateDmForwarding);
+	await test(`direct messages forward and owner inbox replies reach the original sender`, async () => {
+		await validateDmForwarding();
+		await validateDmForwardReplies();
+	});
 	await test(`database startup order and models remain valid`, () => {
 		validateStartupConfigurationOrder();
 		validateDatabaseModels();
