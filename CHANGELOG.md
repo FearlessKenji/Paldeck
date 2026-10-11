@@ -2,6 +2,11 @@
 
 Notable changes to Paldeck are documented here.
 
+## Unreleased
+
+- Added owner-only replies to forwarded DM reports, validating the referenced bot message before sending to its original sender and reporting delivery status in the inbox.
+- Updated audited dependency pins for brace-expansion, moment, sharp, and undici.
+
 ## v1.12.1 - 2026-09-08 - Palworld v1.0.4 Data Update
 
 - Consolidated every tower and raid's preparation advice into a food-first Strategy field, adding progression-aware Palbox research where relevant while retaining encounter-specific deployment tactics.

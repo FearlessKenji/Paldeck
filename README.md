@@ -43,6 +43,8 @@ The bot uses SQLite through Sequelize for local operational data such as joined 
 | `/dm-forward clear` | Owner-only command to disable direct-message forwarding. |
 | `/dm-forward status` | Owner-only command to show the configured direct-message inbox. |
 
+In the configured direct-message inbox, the bot owner can reply to a forwarded DM report to respond to its original sender as Paldeck. Leave the bot mention enabled in Discord's reply so Paldeck can read the response without Message Content Intent. Paldeck replies in the inbox to confirm that it sent the DM or explain why it failed.
+
 Global command updates can take time to appear in Discord. Guild commands are deployed only to the server matched by `guildId` in `config/config.json`, and usually appear much faster for testing.
 
 ## Requirements

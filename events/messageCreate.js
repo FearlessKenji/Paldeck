@@ -2,7 +2,7 @@ const { EmbedBuilder, Events } = require(`discord.js`);
 const config = require(`../config/configCheck.js`);
 const { Channels, Suggestions } = require(`../database/dbObjects.js`);
 const { warn } = require(`../utils/writeLog.js`);
-const { forwardDirectMessage } = require(`../utils/dmForwarding.js`);
+const { forwardDirectMessage, handleDmForwardReply } = require(`../utils/dmForwarding.js`);
 
 const MAX_EMBED_DESCRIPTION = 3500;
 const MAX_FIELD_VALUE = 1024;
@@ -143,6 +143,10 @@ module.exports = {
 		}
 
 		if (!message.reference?.messageId) {
+			return;
+		}
+
+		if (await handleDmForwardReply(message)) {
 			return;
 		}
 
